@@ -1,7 +1,7 @@
 
 'use strict';
 
-const APP_VERSION = 'V10.0-20260613-compact-bottom-bar-force-update';
+const APP_VERSION = 'V11.0-20260613-result-explain-toggle-by-status';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -669,23 +669,61 @@ function submitQuiz(){
 }
 function renderResult(){
   const r=state.lastResult; if(!r) return;
-  els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span><br><span class="muted">Giải thích ưu tiên điểm sai theo đúng thứ tự đọc từ đầu đến cuối; phần phân tích phụ được gom trong khung mở rộng.</span>`;
+  els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span>`;
+
+  function correctReason(q, correctOpt){
+    return `<div class="analysis-row source"><b>Vì sao đúng:</b> Đây là phương án được cột đáp án trong Excel xác định là đúng; các phương án sai bị loại vì thiếu, đổi sai hoặc thêm ý không khớp với phương án này.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>`;
+  }
+  function wrongExplainBlock(correctOpt, op, oi, title){
+    const letter = 'ABCDEF'[oi] || String(oi+1);
+    return `<div class="analysis-row"><b>${escapeHtml(title || ('Phương án ' + letter + ' sai ở đâu:'))}</b><br>${els.showAutoExplain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
+  }
+  function hiddenExplainDetails(q, correctOpt, mode){
+    const blocks = [];
+    if(mode === 'unanswered') blocks.push(correctReason(q, correctOpt));
+    q.options.forEach((op, oi) => {
+      if(op.isCorrect) return;
+      if(mode === 'wrong' && oi === q.userChoice) return;
+      blocks.push(wrongExplainBlock(correctOpt, op, oi));
+    });
+    if(!blocks.length) return '';
+    const label = mode === 'correct'
+      ? 'Ẩn/hiện giải thích các phương án sai còn lại'
+      : (mode === 'wrong' ? 'Ẩn/hiện giải thích các phương án sai khác' : 'Ẩn/hiện giải thích đúng sai cho các phương án');
+    return `<details class="result-extra-explain"><summary>${label}</summary>${blocks.join('')}</details>`;
+  }
+
   els.resultList.innerHTML = state.quiz.map((q, qi) => {
     const chosen = q.userChoice === null ? null : q.options[q.userChoice];
     const correctOpt = q.options.find(o => o.isCorrect) || q.options[0];
     const ok = !!(chosen && chosen.isCorrect);
-    const resultText = q.userChoice === null ? 'Chưa chọn' : (ok ? 'Đúng' : 'Sai');
-    const resultCls = q.userChoice === null ? 'warn' : (ok ? 'ok' : 'bad');
-    const resultPill = q.userChoice === null ? 'warnp' : (ok ? 'okp' : 'warnp');
-    const chosenDiff = (!ok && chosen) ? `<div class="analysis-row focus-diff"><b>Phân tích từ lựa chọn sai của bạn:</b><br>${els.showAutoExplain.checked ? explainDifference(correctOpt.text, chosen.text) : 'Đã tắt phân tích tự động.'}</div>` : '';
+    const mode = q.userChoice === null ? 'unanswered' : (ok ? 'correct' : 'wrong');
+    const resultText = mode === 'unanswered' ? 'Chưa chọn' : (ok ? 'Đúng' : 'Sai');
+    const resultCls = mode === 'unanswered' ? 'warn' : (ok ? 'ok' : 'bad');
+    const resultPill = mode === 'unanswered' ? 'warnp' : (ok ? 'okp' : 'warnp');
+    const chosenDiff = mode === 'wrong'
+      ? `<div class="analysis-row focus-diff"><b>Bạn chọn sai ở đâu so với đáp án đúng:</b><br>${els.showAutoExplain.checked ? explainDifference(correctOpt.text, chosen.text) : 'Đã tắt phân tích tự động.'}</div>`
+      : '';
+    const quickCorrect = mode === 'correct'
+      ? `<div class="analysis-row source compact-ok"><b>Bạn trả lời đúng.</b> Các phương án sai còn lại đã được đưa vào khung ẩn/hiện bên dưới để xem khi cần.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>`
+      : '';
+    const unansweredNote = mode === 'unanswered'
+      ? `<div class="analysis-row compact-unanswered"><b>Bạn chưa chọn câu này.</b> Các phương án được hiển thị đầy đủ; đáp án đúng đã được bôi màu xanh. Phần giải thích mặc định được ẩn bên dưới.</div>`
+      : '';
+
     const rows = q.options.map((op, oi) => {
       const letter = 'ABCDEF'[oi] || String(oi+1);
-      const status = op.isCorrect ? '<span class="ok">Đáp án đúng</span>' : (q.userChoice===oi ? '<span class="bad">Bạn đã chọn - sai</span>' : '<span class="muted">Phương án sai</span>');
-      const explain = op.isCorrect ? `<div class="analysis-row source"><b>Vì sao đúng:</b> Đây là phương án được cột đáp án trong Excel xác định là đúng; các phương án sai bị loại vì thiếu, đổi sai hoặc thêm ý không khớp với phương án này.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>` : `<div class="analysis-row">${els.showAutoExplain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
+      let status = '';
+      if(op.isCorrect && q.userChoice === oi) status = '<span class="ok">Bạn chọn - đúng</span>';
+      else if(op.isCorrect) status = '<span class="ok">Đáp án đúng</span>';
+      else if(q.userChoice === oi) status = '<span class="bad">Bạn chọn - sai</span>';
+      else status = '<span class="muted">Phương án sai</span>';
       const trClass = op.isCorrect ? 'result-status-ok' : (q.userChoice===oi ? 'result-status-bad' : '');
-      return `<tr class="${trClass}"><td data-label="PA" class="nowrap"><b>${letter}</b></td><td data-label="Nội dung">${escapeHtml(op.text)}</td><td data-label="Trạng thái">${status}</td><td data-label="Giải thích">${explain}</td></tr>`;
+      return `<tr class="${trClass}"><td data-label="PA" class="nowrap"><b>${letter}</b></td><td data-label="Nội dung">${escapeHtml(op.text)}</td><td data-label="Trạng thái">${status}</td></tr>`;
     }).join('');
-    return `<article class="question-card"><h3>Câu ${qi+1}. <span class="${resultCls}">${resultText}</span></h3><p><b>${escapeHtml(q.item.question)}</b></p><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${chosenDiff}<div class="table-wrap"><table><thead><tr><th>PA</th><th>Nội dung</th><th>Trạng thái</th><th>Giải thích trọng tâm</th></tr></thead><tbody>${rows}</tbody></table></div></article>`;
+
+    const details = hiddenExplainDetails(q, correctOpt, mode);
+    return `<article class="question-card"><h3>Câu ${qi+1}. <span class="${resultCls}">${resultText}</span></h3><p><b>${escapeHtml(q.item.question)}</b></p><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${chosenDiff}${quickCorrect}${unansweredNote}<div class="table-wrap result-options-only"><table><thead><tr><th>PA</th><th>Nội dung</th><th>Trạng thái</th></tr></thead><tbody>${rows}</tbody></table></div>${details}</article>`;
   }).join('');
 }
 

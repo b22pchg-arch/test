@@ -1,10 +1,7 @@
-Trắc nghiệm Excel Offline PWA V10
+PWA Trắc nghiệm Excel Offline V11
 
-- Mở index.html qua localhost/HTTPS để dùng PWA.
-- Dữ liệu 160 câu đã nhúng sẵn.
-- Khi làm bài/kết quả: bỏ thanh tiêu đề, dùng thanh điều khiển dưới màn hình.
-- Nút “Ép cập nhật PWA” sẽ xóa cache, gỡ service worker cũ và tải lại trang để tránh giữ bản cũ.
-
-Chạy thử nhanh:
-python -m http.server 8080
-Sau đó mở http://localhost:8080
+- Dữ liệu nhúng sẵn 160 câu.
+- Điều khiển dưới màn hình.
+- Nút ép cập nhật PWA.
+- Kết quả hiển thị giải thích theo trạng thái: đúng/sai/chưa chọn.
+- Phần giải thích phụ mặc định ẩn trong khung ẩn/hiện để dùng tốt trên điện thoại.

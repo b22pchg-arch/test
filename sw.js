@@ -1,4 +1,4 @@
-const CACHE='quiz-excel-offline-v10-20260613-compact-force-update';
+const CACHE='quiz-excel-offline-v11-20260613-result-explain-toggle';
 const ASSETS=['./index.html','./app.js','./xlsx.full.min.js','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install', event => { self.skipWaiting(); event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS))); });
 self.addEventListener('activate', event => { event.waitUntil((async()=>{ const names=await caches.keys(); await Promise.all(names.filter(n=>n!==CACHE && n.includes('quiz-excel')).map(n=>caches.delete(n))); await self.clients.claim(); })()); });
