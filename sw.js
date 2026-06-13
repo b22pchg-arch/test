@@ -1,4 +1,4 @@
-const CACHE='quiz-excel-offline-v8-20260613-mobile-compact-no-overflow';
+const CACHE='quiz-excel-offline-v9-20260613-bottom-bar-sequence-first';
 const ASSETS=['./index.html','./app.js','./xlsx.full.min.js','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install', event => { self.skipWaiting(); event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS))); });
 self.addEventListener('activate', event => { event.waitUntil((async()=>{ const names=await caches.keys(); await Promise.all(names.filter(n=>n!==CACHE && n.includes('quiz-excel')).map(n=>caches.delete(n))); await self.clients.claim(); })()); });

@@ -1,7 +1,7 @@
 
 'use strict';
 
-const APP_VERSION = 'V8.0-20260613-mobile-compact-no-overflow';
+const APP_VERSION = 'V9.0-20260613-bottom-bar-sequence-first';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -19,7 +19,8 @@ const state = {
   currentMapping: null,
   quiz: [],
   submitted: false,
-  lastResult: null
+  lastResult: null,
+  lastQuizConfig: null
 };
 
 const VI_STOPWORDS = new Set(`
@@ -28,7 +29,7 @@ la là cua của va và hoac hoặc de để den đến duoc được bi bị tr
 VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnBackToSetup','btnNewQuizResult','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
@@ -229,55 +230,36 @@ function sequenceExplainHtml(correct, wrong){
   const pctCorrectCovered = Math.round((al.lcsLen / Math.max(1, cSeq.length)) * 100);
   const pctBalanced = Math.round((2 * al.lcsLen / Math.max(1, cSeq.length + wSeq.length)) * 100);
   const pref = prefixCount(cSeq, wSeq);
-  const suff = suffixCount(cSeq, wSeq, pref);
-  const prefixPct = Math.round((pref / Math.max(1, cSeq.length)) * 100);
-  const first = al.blocks[0];
-  const biggest = al.blocks.slice().sort((x,y) => (y.del.length + y.add.length) - (x.del.length + x.add.length))[0];
-  const correctMissingInWrong = al.blocks.flatMap(b => b.del || []);
-  const wrongOnly = al.blocks.flatMap(b => b.add || []);
-  const lines = [];
-
-  const correctStart = cSeq.slice(0, Math.min(3, cSeq.length));
-  const wrongStart = wSeq.slice(0, Math.min(3, wSeq.length));
-  const samePrefix = cSeq.slice(0, Math.min(pref, 10));
   const cNext = cSeq[pref];
   const wNext = wSeq[pref];
-  const cRest = cSeq.slice(pref, Math.min(pref + 8, cSeq.length));
-  const wRest = wSeq.slice(pref, Math.min(pref + 8, wSeq.length));
+  const correctStart = cSeq.slice(0, Math.min(4, cSeq.length));
+  const wrongStart = wSeq.slice(0, Math.min(4, wSeq.length));
+  const samePrefix = cSeq.slice(0, Math.min(pref, 10));
+  const cRest = cSeq.slice(pref, Math.min(pref + 10, cSeq.length));
+  const wRest = wSeq.slice(pref, Math.min(pref + 10, wSeq.length));
 
-  lines.push(`<div class="diff-block sequence"><b>So khớp chuỗi từ đầu đến cuối:</b> phương án sai trùng <b>${pctWrongMatched}%</b> nội dung của đáp án đúng; bao phủ <b>${pctCorrectCovered}%</b> ý của đáp án đúng. Độ giống cân bằng: <b>${pctBalanced}%</b>. Riêng phần giống liên tiếp từ đầu là <b>${prefixPct}%</b> (${pref}/${cSeq.length} từ/cụm).</div>`);
+  const lines = [];
+  lines.push(`<div class="diff-block sequence"><b>So khớp từ đầu đến cuối:</b> phương án sai giống <b>${pctBalanced}%</b> so với đáp án đúng. Nó trùng <b>${pctWrongMatched}%</b> chữ của chính nó và bao phủ <b>${pctCorrectCovered}%</b> ý của đáp án đúng.</div>`);
 
   if(pref === 0){
-    lines.push(`<div class="diff-block"><b>Khác ngay từ đầu:</b><br>Đáp án đúng bắt đầu bằng: ${htmlTermTokenList(correctStart, 'need')}.<br>Phương án sai không có phần bắt đầu này, mà bắt đầu bằng: ${htmlTermTokenList(wrongStart, 'wrongterm') || '<span class="muted">không có nội dung</span>'}.<br><b>Kết luận nhanh:</b> phương án sai lệch ngay từ đối tượng/mốc mở đầu nên không thể thay cho đáp án đúng.</div>`);
+    lines.push(`<div class="diff-block focus-sequence"><b>Sai ngay từ đầu chuỗi:</b><br>Đáp án đúng bắt đầu bằng: ${htmlTermTokenList(correctStart, 'need')}.<br>Phương án sai không có phần bắt đầu này, mà bắt đầu bằng: ${htmlTermTokenList(wrongStart, 'wrongterm') || '<span class="muted">không có nội dung</span>'}.<br><b>Cách nhận biết nhanh:</b> chỉ cần nhìn từ/cụm mở đầu đã thấy phương án sai không đi theo đúng đáp án.</div>`);
   } else if(cNext && wNext){
-    lines.push(`<div class="diff-block"><b>Đọc từ đầu đến cuối:</b> hai phương án giống nhau đến trước từ/cụm số <b>${pref + 1}</b> ${samePrefix.length ? '(' + htmlTermTokenList(samePrefix, 'same') + ')' : ''}.<br><b>Từ/cụm bắt đầu khác:</b><br>Đáp án đúng phải có: ${htmlTermTokenList([cNext], 'need')}<br>Phương án sai lại ghi: ${htmlTermTokenList([wNext], 'wrongterm')}<br><b>Điểm cần nhớ:</b> từ/cụm sai đầu tiên này là dấu hiệu tách phương án sai khỏi đáp án đúng.</div>`);
+    lines.push(`<div class="diff-block focus-sequence"><b>Điểm sai đầu tiên khi đọc từ đầu đến cuối:</b><br>Hai phương án giống nhau đến trước từ/cụm số <b>${pref + 1}</b> ${samePrefix.length ? '(' + htmlTermTokenList(samePrefix, 'same') + ')' : ''}.<br>Đến vị trí này, đáp án đúng phải có: ${htmlTermTokenList([cNext], 'need')}<br>Phương án sai lại ghi: ${htmlTermTokenList([wNext], 'wrongterm')}<br><b>Kết luận nhanh:</b> từ/cụm sai đầu tiên này là điểm tách phương án sai khỏi đáp án đúng.</div>`);
   } else if(!wNext && cNext){
-    lines.push(`<div class="diff-block"><b>Phương án sai bị thiếu phần cuối:</b> sau ${pref} từ/cụm đầu đã giống nhau, phương án sai dừng lại hoặc thiếu tiếp nội dung mà đáp án đúng còn yêu cầu: ${htmlTermTokenList(cRest, 'need')}.</div>`);
+    lines.push(`<div class="diff-block focus-sequence"><b>Phương án sai bị thiếu phần cuối:</b> sau ${pref} từ/cụm đầu đã giống nhau, phương án sai dừng lại hoặc thiếu nội dung mà đáp án đúng còn yêu cầu: ${htmlTermTokenList(cRest, 'need')}.</div>`);
   } else if(wNext && !cNext){
-    lines.push(`<div class="diff-block"><b>Phương án sai thêm phần không cần có:</b> nội dung đáp án đúng đã kết thúc, nhưng phương án sai còn thêm: ${htmlTermTokenList(wRest, 'wrongterm')}.</div>`);
+    lines.push(`<div class="diff-block focus-sequence"><b>Phương án sai thêm phần không cần có:</b> đáp án đúng đã kết thúc, nhưng phương án sai còn thêm: ${htmlTermTokenList(wRest, 'wrongterm')}.</div>`);
   } else {
-    lines.push(`<div class="diff-block"><b>Chuỗi chữ giống hoàn toàn:</b> nếu vẫn bị xác định sai, hãy kiểm tra dấu câu, khoảng trắng, cột đáp án đúng trong Excel hoặc cách chuẩn hóa đáp án.</div>`);
+    lines.push(`<div class="diff-block focus-sequence"><b>Chuỗi chữ gần như giống hoàn toàn:</b> nếu vẫn bị xác định sai, hãy kiểm tra dấu câu, khoảng trắng, ký hiệu hoặc cột đáp án đúng trong Excel.</div>`);
   }
 
-  if(correctMissingInWrong.length){
-    lines.push(`<div class="diff-block"><b>Đáp án đúng có nhưng phương án sai thiếu/đổi sai:</b> ${htmlTermTokenList(correctMissingInWrong, 'need')}</div>`);
-  }
-  if(wrongOnly.length){
-    lines.push(`<div class="diff-block"><b>Phương án sai đang dùng thay thế/thêm vào:</b> ${htmlTermTokenList(wrongOnly, 'wrongterm')}</div>`);
-  }
-  if(biggest && biggest !== first){
-    lines.push(`<div class="diff-block"><b>Đoạn lệch lớn nhất:</b><br>Phương án sai ghi: ${htmlTermTokenList(biggest.add, 'wrongterm') || '<span class="muted">thiếu đoạn tương ứng</span>'}<br>Đáp án đúng yêu cầu: ${htmlTermTokenList(biggest.del, 'need') || '<span class="muted">không yêu cầu đoạn này</span>'}</div>`);
-  }
-  if(suff){
-    lines.push(`<div class="diff-block"><b>Phần cuối vẫn giống nhau:</b> ${suff} từ/cụm cuối ${htmlTermTokenList(cSeq.slice(Math.max(cSeq.length-suff,0)).slice(0,10), 'same')}. Phần cuối giống nhau chưa đủ, vì điểm sai đã xuất hiện trước đó.</div>`);
-  }
-  if(al.blocks.length > 1){
-    const more = al.blocks.slice(0, 6).map((b,idx) => {
-      const a = seqText(b.add, 8) || '∅';
-      const d = seqText(b.del, 8) || '∅';
-      return `<div class="small">${idx+1}) Sai ghi: <b>${escapeHtml(a)}</b> → Đúng phải là/cần có: <b>${escapeHtml(d)}</b></div>`;
+  if(al.blocks.length){
+    const ordered = al.blocks.slice(0, 10).map((b,idx) => {
+      const a = seqText(b.add, 10) || '∅';
+      const d = seqText(b.del, 10) || '∅';
+      return `<div class="sequence-point"><b>${idx+1}.</b> Phương án sai ghi: <span class="tag wrongterm">${escapeHtml(a)}</span><br>Đáp án đúng cần có: <span class="tag need">${escapeHtml(d)}</span></div>`;
     }).join('');
-    lines.push(`<details><summary>Các điểm sai theo đúng thứ tự đọc từ đầu đến cuối</summary>${more}</details>`);
+    lines.push(`<div class="diff-block ordered-diff"><b>Các điểm sai theo đúng thứ tự đọc từ đầu đến cuối:</b>${ordered}</div>`);
   }
   return lines.join('');
 }
@@ -302,27 +284,29 @@ function explainDifference(correct, wrong){
   const wrongItems = [...addedFacts.map(f=>f.raw), ...addedTerms, ...addedPol];
   let conclusion = '';
   if(missingFacts.length || addedFacts.length){
-    conclusion = `<b>Nhìn từ phương án sai:</b> phương án này sai chủ yếu vì <b>số liệu/mốc/phạm vi không khớp</b>. Đáp án đúng là đúng vì có ${termListHtml(missingFacts.map(f=>f.raw), 'need') || 'mốc đúng'}, trong khi phương án sai dùng ${termListHtml(addedFacts.map(f=>f.raw), 'wrongterm') || 'mốc khác/thiếu mốc đúng'}.`;
+    conclusion = `<b>Nhìn từ phương án sai:</b> sai chủ yếu vì <b>số liệu/mốc/phạm vi không khớp</b>. Đáp án đúng có ${termListHtml(missingFacts.map(f=>f.raw), 'need') || 'mốc đúng'}, còn phương án sai dùng ${termListHtml(addedFacts.map(f=>f.raw), 'wrongterm') || 'mốc khác/thiếu mốc đúng'}.`;
   } else if(missingPol.length || addedPol.length){
-    conclusion = `<b>Nhìn từ phương án sai:</b> phương án này sai do <b>đổi điều kiện hoặc tính chất</b>. Đáp án đúng giữ điều kiện ${termListHtml(missingPol,'need')||'cần có'}, còn phương án sai lại thể hiện ${termListHtml(addedPol,'wrongterm')||'điều kiện khác/thiếu điều kiện đó'}.`;
+    conclusion = `<b>Nhìn từ phương án sai:</b> sai do <b>đổi điều kiện hoặc tính chất</b>. Đáp án đúng giữ điều kiện ${termListHtml(missingPol,'need')||'cần có'}, còn phương án sai thể hiện ${termListHtml(addedPol,'wrongterm')||'điều kiện khác/thiếu điều kiện đó'}.`;
   } else if(missingTerms.length || addedTerms.length){
-    conclusion = `<b>Nhìn từ phương án sai:</b> phương án này thiếu hoặc đổi <b>từ khóa/đối tượng quyết định</b>. Đáp án đúng là đúng vì có ${termListHtml(missingTerms,'need')||'ý chính cần có'}, còn phương án sai chuyển sang ${termListHtml(addedTerms,'wrongterm')||'ý khác hoặc thiếu ý chính đó'}.`;
+    conclusion = `<b>Nhìn từ phương án sai:</b> sai do thiếu hoặc đổi <b>từ khóa/đối tượng quyết định</b>. Đáp án đúng có ${termListHtml(missingTerms,'need')||'ý chính cần có'}, còn phương án sai chuyển sang ${termListHtml(addedTerms,'wrongterm')||'ý khác hoặc thiếu ý chính đó'}.`;
   } else {
-    conclusion = '<b>Nhìn từ phương án sai:</b> hai phương án rất gần nhau; điểm đúng/sai có thể nằm ở một từ nhỏ, dấu phủ định, hoặc căn cứ pháp lý. Cần đối chiếu lại cột đáp án đúng của Excel.';
+    conclusion = '<b>Nhìn từ phương án sai:</b> hai phương án rất gần nhau; điểm đúng/sai có thể nằm ở một từ nhỏ, dấu phủ định, ký hiệu hoặc căn cứ pháp lý.';
   }
 
-  const parts = [`<div class="diff-conclusion">${conclusion}</div>`];
-  parts.push(sequenceExplainHtml(correct, wrong));
+  const visible = sequenceExplainHtml(correct, wrong);
+  const extra = [];
+  extra.push(`<div class="diff-conclusion">${conclusion}</div>`);
   if(proofItems.length){
-    parts.push(`<div class="diff-block"><b>Vì sao đáp án đúng đúng hơn:</b> nó có ${termListHtml(proofItems, 'need')}. Đây là phần phương án sai không có, thiếu, hoặc đã đổi sai.</div>`);
+    extra.push(`<div class="diff-block"><b>Đáp án đúng có gì mà phương án sai không có:</b> ${termListHtml(proofItems, 'need')}.</div>`);
   }
   if(wrongItems.length){
-    parts.push(`<div class="diff-block"><b>Vì sao phương án này không được chọn:</b> nó dùng ${termListHtml(wrongItems, 'wrongterm')}, không trùng với ý/mốc bắt buộc của đáp án đúng.</div>`);
+    extra.push(`<div class="diff-block"><b>Phương án sai dùng/thêm nội dung nào:</b> ${termListHtml(wrongItems, 'wrongterm')}.</div>`);
   }
   if(sameFacts.length || sameTerms.length){
-    parts.push(`<div class="diff-block"><b>Phần giống nhau chỉ để gây nhầm:</b> ${termListHtml([...sameFacts.map(f=>f.raw), ...sameTerms], 'same') || 'rất ít nội dung trùng nhau'}. Phần giống này chưa đủ làm phương án sai trở thành đúng.</div>`);
+    extra.push(`<div class="diff-block"><b>Phần giống nhau dễ gây nhầm:</b> ${termListHtml([...sameFacts.map(f=>f.raw), ...sameTerms], 'same') || 'rất ít nội dung trùng nhau'}.</div>`);
   }
-  return parts.filter(Boolean).join('');
+  const details = `<details class="more-analysis"><summary>Chạm để đọc thêm phân tích số liệu, từ khóa và phần giống nhau</summary>${extra.join('')}</details>`;
+  return [visible, details].filter(Boolean).join('');
 }
 
 function cloneData(obj){ return JSON.parse(JSON.stringify(obj)); }
@@ -616,6 +600,12 @@ function startQuiz(){
   if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi.', 'bad'); return; }
   const count = Math.max(1, Math.min(Number(els.quizCount.value || 1), state.bank.length));
   const seedText = els.seedInput.value.trim() || new Date().toISOString();
+  state.lastQuizConfig = {
+    count,
+    shuffleQuestions: !!els.shuffleQuestions.checked,
+    shuffleOptions: !!els.shuffleOptions.checked,
+    showAutoExplain: !!els.showAutoExplain.checked
+  };
   const rand = rng(hashSeed(seedText));
   let questions = els.shuffleQuestions.checked ? shuffled(state.bank, rand) : state.bank.slice();
   questions = questions.slice(0, count);
@@ -679,20 +669,23 @@ function submitQuiz(){
 }
 function renderResult(){
   const r=state.lastResult; if(!r) return;
-  els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span><br><span class="muted">Bảng giải thích mới tập trung vào điểm khác biệt cơ bản: số liệu/phạm vi, điều kiện/tính chất, hoặc từ khóa/đối tượng chính.</span>`;
+  els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span><br><span class="muted">Giải thích ưu tiên điểm sai theo đúng thứ tự đọc từ đầu đến cuối; phần phân tích phụ được gom trong khung mở rộng.</span>`;
   els.resultList.innerHTML = state.quiz.map((q, qi) => {
     const chosen = q.userChoice === null ? null : q.options[q.userChoice];
     const correctOpt = q.options.find(o => o.isCorrect) || q.options[0];
     const ok = !!(chosen && chosen.isCorrect);
+    const resultText = q.userChoice === null ? 'Chưa chọn' : (ok ? 'Đúng' : 'Sai');
+    const resultCls = q.userChoice === null ? 'warn' : (ok ? 'ok' : 'bad');
+    const resultPill = q.userChoice === null ? 'warnp' : (ok ? 'okp' : 'warnp');
     const chosenDiff = (!ok && chosen) ? `<div class="analysis-row focus-diff"><b>Phân tích từ lựa chọn sai của bạn:</b><br>${els.showAutoExplain.checked ? explainDifference(correctOpt.text, chosen.text) : 'Đã tắt phân tích tự động.'}</div>` : '';
     const rows = q.options.map((op, oi) => {
       const letter = 'ABCDEF'[oi] || String(oi+1);
-      const status = op.isCorrect ? '<span class="ok">Đáp án đúng</span>' : (q.userChoice===oi ? '<span class="bad">Bạn đã chọn</span>' : '<span class="muted">Phương án sai</span>');
+      const status = op.isCorrect ? '<span class="ok">Đáp án đúng</span>' : (q.userChoice===oi ? '<span class="bad">Bạn đã chọn - sai</span>' : '<span class="muted">Phương án sai</span>');
       const explain = op.isCorrect ? `<div class="analysis-row source"><b>Vì sao đúng:</b> Đây là phương án được cột đáp án trong Excel xác định là đúng; các phương án sai bị loại vì thiếu, đổi sai hoặc thêm ý không khớp với phương án này.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>` : `<div class="analysis-row">${els.showAutoExplain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
       const trClass = op.isCorrect ? 'result-status-ok' : (q.userChoice===oi ? 'result-status-bad' : '');
       return `<tr class="${trClass}"><td data-label="PA" class="nowrap"><b>${letter}</b></td><td data-label="Nội dung">${escapeHtml(op.text)}</td><td data-label="Trạng thái">${status}</td><td data-label="Giải thích">${explain}</td></tr>`;
     }).join('');
-    return `<article class="question-card"><h3>Câu ${qi+1}. ${ok?'<span class="ok">Đúng</span>':'<span class="bad">Sai / chưa chọn</span>'}</h3><p><b>${escapeHtml(q.item.question)}</b></p><div class="result-question-meta"><span class="pill ${ok?'okp':'warnp'}">${ok?'Bạn chọn đúng':'Cần xem lại'}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${chosenDiff}<div class="table-wrap"><table><thead><tr><th>PA</th><th>Nội dung</th><th>Trạng thái</th><th>Giải thích trọng tâm</th></tr></thead><tbody>${rows}</tbody></table></div></article>`;
+    return `<article class="question-card"><h3>Câu ${qi+1}. <span class="${resultCls}">${resultText}</span></h3><p><b>${escapeHtml(q.item.question)}</b></p><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${chosenDiff}<div class="table-wrap"><table><thead><tr><th>PA</th><th>Nội dung</th><th>Trạng thái</th><th>Giải thích trọng tâm</th></tr></thead><tbody>${rows}</tbody></table></div></article>`;
   }).join('');
 }
 
@@ -711,6 +704,25 @@ function exitFocus(){
 }
 function scrollQuizTop(){
   const q = $('quizSection'); if(q) q.scrollTo({top:0, behavior:'smooth'});
+}
+function scrollCurrentTop(){
+  const target = document.body.classList.contains('result-fullscreen') ? $('resultSection') : $('quizSection');
+  if(target) target.scrollTo({top:0, behavior:'smooth'});
+}
+function makeFreshSeed(){
+  return 'de-khac-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+}
+function startNewQuizSameConfig(){
+  if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi để tạo đề.', 'bad'); return; }
+  const cfg = state.lastQuizConfig;
+  if(cfg){
+    if(els.quizCount) els.quizCount.value = String(Math.min(cfg.count || state.bank.length, state.bank.length));
+    if(els.shuffleQuestions) els.shuffleQuestions.checked = !!cfg.shuffleQuestions;
+    if(els.shuffleOptions) els.shuffleOptions.checked = !!cfg.shuffleOptions;
+    if(els.showAutoExplain) els.showAutoExplain.checked = !!cfg.showAutoExplain;
+  }
+  if(els.seedInput) els.seedInput.value = makeFreshSeed();
+  startQuiz();
 }
 function backToSetup(){
   exitFocus();
@@ -749,8 +761,12 @@ function bindEvents(){
   if(els.btnExitFocus) els.btnExitFocus.addEventListener('click', exitFocus);
   if(els.btnExitFocus2) els.btnExitFocus2.addEventListener('click', exitFocus);
   if(els.btnScrollTopQuiz) els.btnScrollTopQuiz.addEventListener('click', scrollQuizTop);
+  if(els.btnScrollTopSticky) els.btnScrollTopSticky.addEventListener('click', scrollCurrentTop);
+  if(els.btnExitSticky) els.btnExitSticky.addEventListener('click', exitFocus);
   if(els.btnBackToSetup) els.btnBackToSetup.addEventListener('click', backToSetup);
-  if(els.btnNewQuizResult) els.btnNewQuizResult.addEventListener('click', backToSetup);
+  if(els.btnBackToSetupSticky) els.btnBackToSetupSticky.addEventListener('click', backToSetup);
+  if(els.btnNewQuizResult) els.btnNewQuizResult.addEventListener('click', startNewQuizSameConfig);
+  if(els.btnNewQuizSticky) els.btnNewQuizSticky.addEventListener('click', startNewQuizSameConfig);
   els.btnClearOldCache.addEventListener('click', clearOldCache);
 }
 function boot(){
