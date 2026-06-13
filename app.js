@@ -1,7 +1,7 @@
 
 'use strict';
 
-const APP_VERSION = 'V13.0-20260613-study-continuous-responsive-fix';
+const APP_VERSION = 'V14.0-20260613-sort-wrong-export-html-study-report';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -34,7 +34,7 @@ la là cua của va và hoac hoặc de để den đến duoc được bi bị tr
 VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','studyStats'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
@@ -395,6 +395,24 @@ function syncStudyConfigFromUI(){
   };
   saveStudyState();
 }
+
+function getStudyRows(){
+  return state.bank.map((q, idx) => {
+    const key = getQuestionKey(q);
+    const p = state.study.progress[key] || {};
+    const correctCount = Number(p.correctCount || 0);
+    const wrongCount = Number(p.wrongCount || 0);
+    const attempts = Number(p.attempts || 0);
+    const learned = !!p.learned || correctCount >= studyThreshold();
+    return {idx, key, q, p, correctCount, wrongCount, attempts, streak:Number(p.streak || 0), learned, manualLearned:!!p.manualLearned, lastAt:p.lastAt || '', learnedAt:p.learnedAt || ''};
+  });
+}
+function saveStudyProgressManual(){
+  syncStudyConfigFromUI();
+  saveStudyState();
+  renderStudyStats();
+  setStatus('✅ Đã lưu tiến độ ôn tập vào bộ nhớ trình duyệt. Lần sau mở lại PWA/HTML có thể bấm “Lượt ôn tiếp” để học tiếp.', 'good');
+}
 function renderStudyStats(){
   if(!els.studyStats) return;
   if(els.studyBatchSize) els.studyBatchSize.value = String(state.study.config.batchSize || 10);
@@ -406,7 +424,10 @@ function renderStudyStats(){
   const active = new Set(state.study.activeIds || []);
   for(const q of state.bank){ const k=getQuestionKey(q); if(isStudyLearned(k)) learned++; if(active.has(k) && !isStudyLearned(k)) practicing++; }
   const remain = Math.max(0,total-learned);
-  els.studyStats.innerHTML = `<span class="pill okp">Đã học: ${learned}/${total}</span><span class="pill ${remain?'warnp':'okp'}">Còn lại: ${remain}</span><span class="pill">Đang ôn: ${practicing || Math.min(studyBatchSize(), remain)}</span><span class="pill">Đạt khi đúng ≥ ${studyThreshold()} lần</span>`;
+  const rows = getStudyRows();
+  const attempts = rows.reduce((s,r)=>s+r.attempts,0);
+  const wrongs = rows.reduce((s,r)=>s+r.wrongCount,0);
+  els.studyStats.innerHTML = `<span class="pill okp">Đã học: ${learned}/${total}</span><span class="pill ${remain?'warnp':'okp'}">Còn lại: ${remain}</span><span class="pill">Đang ôn: ${practicing || Math.min(studyBatchSize(), remain)}</span><span class="pill">Đạt khi đúng ≥ ${studyThreshold()} lần</span><span class="pill">Tổng lượt làm: ${attempts}</span><span class="pill ${wrongs?'warnp':'okp'}">Tổng lượt sai: ${wrongs}</span>`;
 }
 function refreshStudyActiveIds(){
   const bankKeys = new Set(state.bank.map(getQuestionKey));
@@ -703,7 +724,7 @@ function startStudyRound(){
   updateStickyLabels();
   const activeIds = refreshStudyActiveIds();
   if(!activeIds.length){
-    setStatus('✅ Bạn đã học đủ toàn bộ câu hỏi trong ngân hàng. Có thể xóa tiến độ ôn tập để học lại từ đầu.', 'good');
+    setStatus('✅ Bạn đã học đủ toàn bộ câu hỏi trong ngân hàng. Có thể bấm “Xuất HTML thống kê ôn tập” hoặc “Xuất câu sai nhiều” để lưu lại quá trình học.', 'good');
     renderStudyStats();
     return;
   }
@@ -825,9 +846,26 @@ function submitQuiz(){
   enterResultFocus();
   location.hash = '#resultSection';
 }
+
+function resultModeFor(q){
+  const chosen = q.userChoice === null ? null : q.options[q.userChoice];
+  if(!chosen) return 'unanswered';
+  return chosen.isCorrect ? 'correct' : 'wrong';
+}
+function resultRank(mode){
+  if(mode === 'wrong') return 0;
+  if(mode === 'unanswered') return 1;
+  return 2;
+}
+function sortedResultEntries(){
+  return state.quiz.map((q, idx) => ({q, idx, mode: resultModeFor(q)}))
+    .sort((a,b) => resultRank(a.mode) - resultRank(b.mode) || a.idx - b.idx);
+}
 function renderResult(){
   const r=state.lastResult; if(!r) return;
-  els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span>`;
+  const wrongCount = state.quiz.filter(q => resultModeFor(q) === 'wrong').length;
+  const unansweredCount = state.quiz.filter(q => resultModeFor(q) === 'unanswered').length;
+  els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill ${wrongCount?'warnp':'okp'}">Sai ${wrongCount}</span><span class="pill ${unansweredCount?'warnp':'okp'}">Chưa chọn ${unansweredCount}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span><span class="pill">Đã xếp câu sai lên trước</span>`;
 
   function correctReason(q, correctOpt){
     return `<div class="analysis-row source"><b>Vì sao đây là đáp án đúng:</b><br>Phương án này là nội dung được cột đáp án trong Excel xác định là đúng. Khi so với các phương án sai, đáp án đúng giữ đúng từ khóa, điều kiện, mốc số liệu hoặc phạm vi bắt buộc.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>`;
@@ -871,24 +909,77 @@ function renderResult(){
     </div>`;
   }
 
-  els.resultList.innerHTML = state.quiz.map((q, qi) => {
+  const ordered = sortedResultEntries();
+  els.resultList.innerHTML = ordered.map((entry) => {
+    const q = entry.q;
+    const originalNo = entry.idx + 1;
     const chosen = q.userChoice === null ? null : q.options[q.userChoice];
     const correctOpt = q.options.find(o => o.isCorrect) || q.options[0];
     const ok = !!(chosen && chosen.isCorrect);
-    const mode = q.userChoice === null ? 'unanswered' : (ok ? 'correct' : 'wrong');
+    const mode = entry.mode;
     const resultText = mode === 'unanswered' ? 'Chưa chọn' : (ok ? 'Đúng' : 'Sai');
     const resultCls = mode === 'unanswered' ? 'warn' : (ok ? 'ok' : 'bad');
     const resultPill = mode === 'unanswered' ? 'warnp' : (ok ? 'okp' : 'warnp');
     const studyMeta = state.mode === 'study' ? studyQuestionMeta(q.item) : '';
     const shortNote = mode === 'wrong'
-      ? '<div class="analysis-row focus-diff compact-result-note"><b>Bạn trả lời sai.</b> Phương án bạn chọn đã được mở sẵn phần giải thích ngay bên dưới phương án đó. Các phương án khác bấm mũi tên để xem khi cần.</div>'
+      ? '<div class="analysis-row focus-diff compact-result-note"><b>Bạn trả lời sai.</b> Phương án bạn chọn đã được mở sẵn phần giải thích. Các câu sai được xếp lên trước để kiểm tra nhanh.</div>'
       : (mode === 'correct'
         ? '<div class="analysis-row source compact-result-note"><b>Bạn trả lời đúng.</b> Các giải thích được ẩn dưới nút mũi tên ở cuối từng phương án.</div>'
         : '<div class="analysis-row compact-unanswered"><b>Bạn chưa chọn câu này.</b> Đáp án đúng đã được tô chữ xanh. Bấm mũi tên cuối từng phương án để xem giải thích.</div>');
     const optionsHtml = q.options.map((op, oi) => resultOption(q, correctOpt, op, oi, mode)).join('');
-    return `<article class="question-card result-question-card"><h3>Câu ${qi+1}. <span class="${resultCls}">${resultText}</span></h3><div class="question-title result-question-title">${escapeHtml(q.item.question)}</div><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${studyMeta}${shortNote}<div class="result-options-list">${optionsHtml}</div></article>`;
+    return `<article class="question-card result-question-card result-order-${mode}"><h3>Câu ${q.no}. <span class="${resultCls}">${resultText}</span> <span class="muted small">(thứ tự gốc trong đề: ${originalNo})</span></h3><div class="question-title result-question-title">${escapeHtml(q.item.question)}</div><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${studyMeta}${shortNote}<div class="result-options-list">${optionsHtml}</div></article>`;
   }).join('');
   bindResultStudyButtons();
+}
+
+function makeStandaloneHtml(title, contentHtml){
+  const css = Array.from(document.querySelectorAll('style')).map(s => s.textContent || '').join('\n');
+  const stamp = new Date().toLocaleString('vi-VN');
+  return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><style>${css}\nbody{overflow:auto!important}.app{max-width:1280px;margin:auto}.no-print,.stickybar{display:none!important}</style></head><body><main class="app"><div class="card"><h1>${escapeHtml(title)}</h1><p class="muted">Xuất lúc: ${escapeHtml(stamp)}. File này xem offline được, không cần PWA.</p></div>${contentHtml}</main></body></html>`;
+}
+function downloadTextFile(filename, content, mime='text/html;charset=utf-8'){
+  const blob = new Blob([content], {type:mime});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+function fileStamp(){
+  const d = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+}
+function exportCurrentResultHtml(){
+  if(!state.lastResult || !els.resultList || !els.resultList.innerHTML.trim()){
+    setStatus('Chưa có kết quả để xuất HTML. Hãy nộp bài trước.', 'bad'); return;
+  }
+  const title = state.mode === 'study' ? 'Kết quả lượt ôn tập' : 'Kết quả bài thi trắc nghiệm';
+  const body = `<div class="card"><h2>Tóm tắt</h2><div class="status">${els.resultSummary.innerHTML}</div><p class="muted">Các câu sai/chưa chọn đã được xếp lên trước câu đúng.</p></div><div class="card"><h2>Chi tiết</h2>${els.resultList.innerHTML}</div>`;
+  downloadTextFile(`${state.mode === 'study' ? 'ket_qua_on_tap' : 'ket_qua_bai_thi'}_${fileStamp()}.html`, makeStandaloneHtml(title, body));
+  setStatus('✅ Đã xuất HTML kết quả. File có thể lưu lại và mở offline để xem.', 'good');
+}
+function buildStudyStatsHtml(onlyWrong=false){
+  const rows = getStudyRows();
+  const total = rows.length;
+  const learned = rows.filter(r=>r.learned).length;
+  const attempts = rows.reduce((s,r)=>s+r.attempts,0);
+  const correct = rows.reduce((s,r)=>s+r.correctCount,0);
+  const wrong = rows.reduce((s,r)=>s+r.wrongCount,0);
+  let list = rows;
+  if(onlyWrong) list = list.filter(r=>r.wrongCount > 0).sort((a,b)=>b.wrongCount-a.wrongCount || b.attempts-a.attempts || a.idx-b.idx);
+  else list = list.sort((a,b)=>Number(a.learned)-Number(b.learned) || b.wrongCount-a.wrongCount || a.idx-b.idx);
+  const tableRows = list.map((r,i)=>`<tr><td class="nowrap">${i+1}</td><td class="nowrap">${r.idx+1}</td><td>${escapeHtml(r.q.question)}</td><td>${escapeHtml(r.q.correctText || '')}</td><td class="nowrap">${r.correctCount}</td><td class="nowrap">${r.wrongCount}</td><td class="nowrap">${r.attempts}</td><td>${r.learned?'Đã học':'Đang học'}</td><td>${escapeHtml(r.q.source || '')}</td></tr>`).join('') || '<tr><td colspan="9" class="muted">Chưa có câu sai nào được ghi nhận.</td></tr>';
+  return `<div class="card"><h2>${onlyWrong?'Thống kê câu sai nhiều':'Thống kê quá trình ôn tập'}</h2><div class="row"><span class="pill okp">Đã học ${learned}/${total}</span><span class="pill">Tổng lượt làm ${attempts}</span><span class="pill okp">Tổng lượt đúng ${correct}</span><span class="pill ${wrong?'warnp':'okp'}">Tổng lượt sai ${wrong}</span><span class="pill">Ngưỡng đạt ${studyThreshold()} lần đúng</span></div><p class="muted">${onlyWrong?'Danh sách được sắp xếp theo số lần sai giảm dần.':'Danh sách ưu tiên câu chưa học và câu sai nhiều để tiếp tục ôn.'}</p><div class="table-wrap"><table><thead><tr><th>STT</th><th>Câu trong NH</th><th>Câu hỏi</th><th>Đáp án đúng</th><th>Đúng</th><th>Sai</th><th>Lượt</th><th>Trạng thái</th><th>Căn cứ</th></tr></thead><tbody>${tableRows}</tbody></table></div></div>`;
+}
+function exportStudyStatsHtml(){
+  if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi để xuất thống kê.', 'bad'); return; }
+  downloadTextFile(`thong_ke_on_tap_${fileStamp()}.html`, makeStandaloneHtml('Thống kê quá trình ôn tập', buildStudyStatsHtml(false)));
+  setStatus('✅ Đã xuất HTML thống kê quá trình ôn tập.', 'good');
+}
+function exportStudyWrongsHtml(){
+  if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi để xuất thống kê.', 'bad'); return; }
+  downloadTextFile(`cau_sai_nhieu_${fileStamp()}.html`, makeStandaloneHtml('Thống kê câu sai nhiều', buildStudyStatsHtml(true)));
+  setStatus('✅ Đã xuất HTML danh sách câu sai, sắp xếp sai nhiều lên trên cùng.', 'good');
 }
 
 
@@ -986,9 +1077,13 @@ function bindEvents(){
   if(els.btnNextStudy) els.btnNextStudy.addEventListener('click', startStudyRound);
   if(els.btnResetStudy) els.btnResetStudy.addEventListener('click', resetStudyProgress);
   if(els.btnMarkStudyAllLearned) els.btnMarkStudyAllLearned.addEventListener('click', markCurrentStudyRoundLearned);
+  if(els.btnSaveStudyProgress) els.btnSaveStudyProgress.addEventListener('click', saveStudyProgressManual);
+  if(els.btnExportStudyStats) els.btnExportStudyStats.addEventListener('click', exportStudyStatsHtml);
+  if(els.btnExportStudyWrongs) els.btnExportStudyWrongs.addEventListener('click', exportStudyWrongsHtml);
   els.btnSubmitQuiz.addEventListener('click', submitQuiz);
   els.btnSubmitSticky.addEventListener('click', submitQuiz);
   els.btnPrint.addEventListener('click', () => window.print());
+  if(els.btnExportResultHtml) els.btnExportResultHtml.addEventListener('click', exportCurrentResultHtml);
   if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.addEventListener('click', submitQuiz);
   if(els.btnExitFocus) els.btnExitFocus.addEventListener('click', exitFocus);
   if(els.btnExitFocus2) els.btnExitFocus2.addEventListener('click', exitFocus);
