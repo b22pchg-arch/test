@@ -1,7 +1,7 @@
 
 'use strict';
 
-const APP_VERSION = 'V6.0-20260613-reverse-wrong-focus';
+const APP_VERSION = 'V7.0-20260613-prefix-sequence-diff';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -230,38 +230,54 @@ function sequenceExplainHtml(correct, wrong){
   const pctBalanced = Math.round((2 * al.lcsLen / Math.max(1, cSeq.length + wSeq.length)) * 100);
   const pref = prefixCount(cSeq, wSeq);
   const suff = suffixCount(cSeq, wSeq, pref);
+  const prefixPct = Math.round((pref / Math.max(1, cSeq.length)) * 100);
   const first = al.blocks[0];
   const biggest = al.blocks.slice().sort((x,y) => (y.del.length + y.add.length) - (x.del.length + x.add.length))[0];
   const correctMissingInWrong = al.blocks.flatMap(b => b.del || []);
   const wrongOnly = al.blocks.flatMap(b => b.add || []);
   const lines = [];
-  lines.push(`<div class="diff-block sequence"><b>So từ phương án sai sang đáp án đúng:</b> phương án sai trùng <b>${pctWrongMatched}%</b> nội dung của đáp án đúng; nhưng mới bao phủ <b>${pctCorrectCovered}%</b> ý của đáp án đúng. Độ giống cân bằng: <b>${pctBalanced}%</b>.</div>`);
-  lines.push(`<div class="diff-block"><b>Phần đầu giống nhau:</b> ${pref}/${cSeq.length} từ/cụm${pref?': '+htmlTermTokenList(cSeq.slice(0, Math.min(pref, 10)), 'same'):'. Hai phương án khác ngay từ đầu.'}</div>`);
-  if(first){
-    const pos = (Number.isFinite(first.wStart) ? first.wStart + 1 : pref + 1);
-    const correctNeed = first.del.length ? first.del : ['(phương án sai thêm nội dung không có trong đáp án đúng)'];
-    const wrongSaid = first.add.length ? first.add : ['(phương án sai thiếu đoạn này)'];
-    lines.push(`<div class="diff-block"><b>Điểm sai đầu tiên khi đọc phương án sai:</b> tại khoảng từ/cụm số ${pos}.<br>Phương án sai đang ghi: ${htmlTermTokenList(wrongSaid, 'wrongterm')}<br>Đáp án đúng phải có: ${htmlTermTokenList(correctNeed, 'need')}</div>`);
+
+  const correctStart = cSeq.slice(0, Math.min(3, cSeq.length));
+  const wrongStart = wSeq.slice(0, Math.min(3, wSeq.length));
+  const samePrefix = cSeq.slice(0, Math.min(pref, 10));
+  const cNext = cSeq[pref];
+  const wNext = wSeq[pref];
+  const cRest = cSeq.slice(pref, Math.min(pref + 8, cSeq.length));
+  const wRest = wSeq.slice(pref, Math.min(pref + 8, wSeq.length));
+
+  lines.push(`<div class="diff-block sequence"><b>So khớp chuỗi từ đầu đến cuối:</b> phương án sai trùng <b>${pctWrongMatched}%</b> nội dung của đáp án đúng; bao phủ <b>${pctCorrectCovered}%</b> ý của đáp án đúng. Độ giống cân bằng: <b>${pctBalanced}%</b>. Riêng phần giống liên tiếp từ đầu là <b>${prefixPct}%</b> (${pref}/${cSeq.length} từ/cụm).</div>`);
+
+  if(pref === 0){
+    lines.push(`<div class="diff-block"><b>Khác ngay từ đầu:</b><br>Đáp án đúng bắt đầu bằng: ${htmlTermTokenList(correctStart, 'need')}.<br>Phương án sai không có phần bắt đầu này, mà bắt đầu bằng: ${htmlTermTokenList(wrongStart, 'wrongterm') || '<span class="muted">không có nội dung</span>'}.<br><b>Kết luận nhanh:</b> phương án sai lệch ngay từ đối tượng/mốc mở đầu nên không thể thay cho đáp án đúng.</div>`);
+  } else if(cNext && wNext){
+    lines.push(`<div class="diff-block"><b>Đọc từ đầu đến cuối:</b> hai phương án giống nhau đến trước từ/cụm số <b>${pref + 1}</b> ${samePrefix.length ? '(' + htmlTermTokenList(samePrefix, 'same') + ')' : ''}.<br><b>Từ/cụm bắt đầu khác:</b><br>Đáp án đúng phải có: ${htmlTermTokenList([cNext], 'need')}<br>Phương án sai lại ghi: ${htmlTermTokenList([wNext], 'wrongterm')}<br><b>Điểm cần nhớ:</b> từ/cụm sai đầu tiên này là dấu hiệu tách phương án sai khỏi đáp án đúng.</div>`);
+  } else if(!wNext && cNext){
+    lines.push(`<div class="diff-block"><b>Phương án sai bị thiếu phần cuối:</b> sau ${pref} từ/cụm đầu đã giống nhau, phương án sai dừng lại hoặc thiếu tiếp nội dung mà đáp án đúng còn yêu cầu: ${htmlTermTokenList(cRest, 'need')}.</div>`);
+  } else if(wNext && !cNext){
+    lines.push(`<div class="diff-block"><b>Phương án sai thêm phần không cần có:</b> nội dung đáp án đúng đã kết thúc, nhưng phương án sai còn thêm: ${htmlTermTokenList(wRest, 'wrongterm')}.</div>`);
+  } else {
+    lines.push(`<div class="diff-block"><b>Chuỗi chữ giống hoàn toàn:</b> nếu vẫn bị xác định sai, hãy kiểm tra dấu câu, khoảng trắng, cột đáp án đúng trong Excel hoặc cách chuẩn hóa đáp án.</div>`);
   }
+
   if(correctMissingInWrong.length){
-    lines.push(`<div class="diff-block"><b>Đáp án đúng có nhưng phương án sai không có/đổi sai:</b> ${htmlTermTokenList(correctMissingInWrong, 'need')}</div>`);
+    lines.push(`<div class="diff-block"><b>Đáp án đúng có nhưng phương án sai thiếu/đổi sai:</b> ${htmlTermTokenList(correctMissingInWrong, 'need')}</div>`);
   }
   if(wrongOnly.length){
-    lines.push(`<div class="diff-block"><b>Phương án sai có thêm hoặc thay bằng:</b> ${htmlTermTokenList(wrongOnly, 'wrongterm')}</div>`);
+    lines.push(`<div class="diff-block"><b>Phương án sai đang dùng thay thế/thêm vào:</b> ${htmlTermTokenList(wrongOnly, 'wrongterm')}</div>`);
   }
   if(biggest && biggest !== first){
     lines.push(`<div class="diff-block"><b>Đoạn lệch lớn nhất:</b><br>Phương án sai ghi: ${htmlTermTokenList(biggest.add, 'wrongterm') || '<span class="muted">thiếu đoạn tương ứng</span>'}<br>Đáp án đúng yêu cầu: ${htmlTermTokenList(biggest.del, 'need') || '<span class="muted">không yêu cầu đoạn này</span>'}</div>`);
   }
   if(suff){
-    lines.push(`<div class="diff-block"><b>Phần cuối vẫn giống nhau:</b> ${suff} từ/cụm cuối ${htmlTermTokenList(cSeq.slice(Math.max(cSeq.length-suff,0)).slice(0,10), 'same')}</div>`);
+    lines.push(`<div class="diff-block"><b>Phần cuối vẫn giống nhau:</b> ${suff} từ/cụm cuối ${htmlTermTokenList(cSeq.slice(Math.max(cSeq.length-suff,0)).slice(0,10), 'same')}. Phần cuối giống nhau chưa đủ, vì điểm sai đã xuất hiện trước đó.</div>`);
   }
   if(al.blocks.length > 1){
-    const more = al.blocks.slice(0, 5).map((b,idx) => {
+    const more = al.blocks.slice(0, 6).map((b,idx) => {
       const a = seqText(b.add, 8) || '∅';
       const d = seqText(b.del, 8) || '∅';
       return `<div class="small">${idx+1}) Sai ghi: <b>${escapeHtml(a)}</b> → Đúng phải là/cần có: <b>${escapeHtml(d)}</b></div>`;
     }).join('');
-    lines.push(`<details><summary>Các điểm sai theo thứ tự từ đầu đến cuối</summary>${more}</details>`);
+    lines.push(`<details><summary>Các điểm sai theo đúng thứ tự đọc từ đầu đến cuối</summary>${more}</details>`);
   }
   return lines.join('');
 }
