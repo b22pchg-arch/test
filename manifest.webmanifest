@@ -1,0 +1,17 @@
+{
+  "name": "Trắc nghiệm Excel Offline PWA",
+  "short_name": "Excel Quiz",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#eef7f6",
+  "theme_color": "#0f766e",
+  "description": "Đọc Excel offline, tạo đề trắc nghiệm, đảo câu/đáp án và chấm điểm.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
