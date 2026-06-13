@@ -1,18 +1,12 @@
-TRẮC NGHIỆM EXCEL OFFLINE PWA V3
+Trắc nghiệm Excel Offline PWA V4
 
-Cách dùng nhanh:
-1) Mở index.html trong thư mục đã giải nén, hoặc chạy bằng localhost để cài PWA:
-   python -m http.server 8080
-   rồi mở http://localhost:8080/trac_nghiem_excel_pwa_offline_v3_sua_loi/
-2) Khi mở, ứng dụng tự nạp 160 câu hỏi đã nhúng sẵn từ file Excel mới.
-3) Có thể bấm Tạo đề ngay, không cần chọn Excel.
-4) Nếu muốn nạp Excel khác, dùng mục "Nạp Excel khác".
-5) Nếu trình duyệt vẫn mở bản cũ do PWA cache, bấm "Xóa cache/service worker cũ" rồi tải lại trang.
+Nâng cấp chính:
+- Mở lên tự có 160 câu nhúng sẵn từ Excel.
+- Khi tạo đề, khu vực làm bài tự chuyển toàn màn hình.
+- Khi nộp bài, khu vực kết quả/đáp án/giải thích tự chuyển toàn màn hình.
+- Thuật toán giải thích đúng-sai mới tập trung vào khác biệt cơ bản: mốc số liệu/phạm vi, điều kiện/tính chất, từ khóa/đối tượng chính.
+- Vẫn đọc Excel .xls/.xlsx bằng SheetJS offline.
 
-Các file bắt buộc của bản PWA:
-- index.html
-- app.js
-- xlsx.full.min.js
-- sw.js
-- manifest.webmanifest
-- icon.svg
+Cách chạy PWA: giải nén, chạy bằng localhost/HTTPS để service worker hoạt động. Ví dụ: python -m http.server 8080
+
+V5: Bổ sung thuật toán so khớp chuỗi đáp án đúng từ đầu đến cuối, báo % giống, vị trí khác đầu tiên và các đoạn khác theo thứ tự.

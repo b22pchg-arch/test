@@ -1,7 +1,7 @@
 
 'use strict';
 
-const APP_VERSION = 'V3.1-20260613';
+const APP_VERSION = 'V5.0-20260613-sequence-diff';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -25,9 +25,10 @@ const state = {
 const VI_STOPWORDS = new Set(`
 la là cua của va và hoac hoặc de để den đến duoc được bi bị trong ngoai ngoài mot một cac các nhung những ma mà thi thì voi với cho ve về theo tai tại tu từ khi luc lúc nao nào gi gì do đó nay này kia ay ấy tren trên duoi dưới vao vào ra bang bằng nhu như neu nếu hon hơn kem kém da đã dang đang se sẽ can cần phai phải khong không chua chưa cung cùng moi mỗi sau truoc trước phan phần noi nội dung cau câu hoi hỏi phuong phương an án lua lựa chon chọn dap đáp dung đúng sai don đơn vi vị linh lĩnh vuc vực he hệ thong thống hay boi bởi viec việc yeu yêu cau cầu quy quy dinh định
 `.split(/\s+/).filter(Boolean));
+VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnBackToSetup','btnNewQuizResult','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
@@ -55,22 +56,248 @@ function phrases(tks){ const out=[]; for(let n=2;n<=3;n++){ for(let i=0;i<=tks.l
 function jaccard(a,b){ const A=new Set(a), B=new Set(b), U=new Set([...A,...B]); if(!U.size) return 0; let c=0; A.forEach(x=>{ if(B.has(x)) c++; }); return c/U.size; }
 function extractNumbers(v){ const src=norm(v); const re=/(?:tren|duoi|den|tu|khong qua|toi thieu|toi da|lon hon|nho hon|bang|±)?\s*[-+]?\d+(?:[,.]\d+)?\s*(?:kv|v|a|ka|kw|mw|mva|kva|hz|%|phan tram|phut|gio|ngay|thang|nam|m|km)?/g; return unique((src.match(re)||[]).map(s=>s.replace(/\s+/g,' ').trim())); }
 function extractRelations(v){ const src=norm(v); return ['tren','duoi','den','tu','khong qua','toi thieu','toi da','lon hon','nho hon','bang','khong','chua','cam','phai','duoc','cho phep','khong cho phep','truoc','sau','trong','ngoai','dong','cat','mo','cap','ha','cao','sieu cao','ngung','giam','tang'].filter(k => src.includes(k)); }
+function textWords(v, keepStop=false){
+  return String(v ?? '')
+    .replace(/[“”‘’]/g,' ')
+    .replace(/[_.,;:!?()[\]{}<>/\\|+*=~`^"']/g,' ')
+    .replace(/-/g,' ')
+    .split(/\s+/)
+    .map(raw => ({raw: raw.trim(), key: norm(raw)}))
+    .filter(w => w.raw && w.key && w.key.length > 1 && !/^\d/.test(w.key) && (keepStop || !VI_STOPWORDS.has(w.key)));
+}
+function keyTerms(v){
+  const full = textWords(v, true);
+  const filtered = textWords(v, false);
+  const out = [];
+  for(let n=5;n>=2;n--){
+    for(let i=0;i<=full.length-n;i++){
+      const part = full.slice(i,i+n);
+      if(part.every(x => VI_STOPWORDS.has(x.key))) continue;
+      const useful = part.filter(x => !VI_STOPWORDS.has(x.key));
+      if(!useful.length) continue;
+      const key = part.map(x=>x.key).join(' ');
+      const raw = part.map(x=>x.raw).join(' ');
+      if(key.length >= 8) out.push({key, raw});
+    }
+  }
+  filtered.forEach(x => { if(x.key.length >= 3) out.push({key:x.key, raw:x.raw}); });
+  const seen = new Set();
+  return out.filter(t => {
+    if(seen.has(t.key)) return false;
+    seen.add(t.key); return true;
+  });
+}
+function termListHtml(items, cls=''){
+  return unique(items.map(x => typeof x === 'string' ? x : x.raw)).slice(0,10).map(x=>`<span class="tag ${cls}">${escapeHtml(x)}</span>`).join(' ');
+}
+function extractFacts(v){
+  const raw = String(v ?? '');
+  const src = raw.toLowerCase();
+  const relationWords = '(không\\s+vượt\\s+quá|không\\s+quá|vượt\\s+quá|tối\\s+thiểu|tối\\s+đa|lớn\\s+hơn|nhỏ\\s+hơn|trên|dưới|đến|từ|bằng|±)';
+  const unitWords = '(kv|v|ka|a|mw|kw|mva|kva|hz|%|phần\\s*trăm|phút|giờ|ngày|tháng|năm|km|m)';
+  const re = new RegExp(`(?:${relationWords}\\s*)?[-+]?\\d+(?:[,.]\\d+)?\\s*(?:${unitWords})?`, 'gi');
+  const out = [];
+  let m;
+  while((m = re.exec(src))){
+    let s = m[0].replace(/\s+/g,' ').trim();
+    if(!s) continue;
+    const num = (s.match(/[-+]?\d+(?:[,.]\d+)?/)||[''])[0].replace(',', '.');
+    const unit = (s.match(new RegExp(unitWords,'i'))||[''])[0].replace(/\s+/g,' ').trim();
+    const rel = (s.match(new RegExp(relationWords,'i'))||[''])[0].replace(/\s+/g,' ').trim();
+    const key = [rel, String(parseFloat(num)), unit.toLowerCase()].filter(Boolean).join('|');
+    const looseKey = [String(parseFloat(num)), unit.toLowerCase()].filter(Boolean).join('|');
+    out.push({raw:s, key, looseKey, num:parseFloat(num), unit:unit.toLowerCase(), rel});
+  }
+  const seen = new Set();
+  return out.filter(f => { if(seen.has(f.key)) return false; seen.add(f.key); return true; });
+}
+function extractPolarity(v){
+  const src = norm(v);
+  const pairs = [
+    ['cho phep','khong cho phep'], ['duoc','khong duoc'], ['phai','khong phai'], ['co','khong co'],
+    ['dong','cat'], ['mo','dong'], ['tang','giam'], ['truoc','sau'], ['trong','ngoai'],
+    ['truc tiep','cach ly'], ['so lech','qua dong'], ['van hanh','ngung']
+  ];
+  const found=[];
+  pairs.forEach(p => p.forEach(x => { if(src.includes(x)) found.push(x); }));
+  return unique(found);
+}
+function chooseShort(items, max=6){
+  const arr = items.slice().sort((a,b) => (b.raw||b).length - (a.raw||a).length);
+  const chosen=[];
+  for(const it of arr){
+    const key = typeof it === 'string' ? it : it.key;
+    if(chosen.some(c => key.includes(typeof c === 'string' ? c : c.key) || (typeof c !== 'string' && c.key.includes(key)))) continue;
+    chosen.push(it); if(chosen.length >= max) break;
+  }
+  return chosen;
+}
+function chooseContrastTerms(terms, otherTerms, max=6){
+  const otherWords = new Set();
+  otherTerms.forEach(t => String(t.key || '').split(' ').forEach(w => otherWords.add(w)));
+  const scored = terms.map(t => {
+    const words = String(t.key || '').split(' ').filter(Boolean);
+    const uniqueWords = words.filter(w => !otherWords.has(w) && !VI_STOPWORDS.has(w));
+    return {term:t, uniqueCount: uniqueWords.length, len:String(t.raw||'').length};
+  }).filter(x => x.uniqueCount > 0);
+  scored.sort((a,b) => (b.uniqueCount-a.uniqueCount) || (b.len-a.len));
+  const chosen=[];
+  for(const x of scored){
+    const key = x.term.key;
+    if(chosen.some(c => key.includes(c.key) || c.key.includes(key))) continue;
+    chosen.push(x.term);
+    if(chosen.length >= max) break;
+  }
+  return chosen;
+}
+function normSeqToken(raw){
+  let s = String(raw ?? '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/đ/g,'d').replace(/Đ/g,'D')
+    .toLowerCase().trim();
+  s = s.replace(/,/g,'.').replace(/\s+/g,'');
+  s = s.replace(/[^a-z0-9.%+\-]/g,'');
+  return s;
+}
+function sequenceTokens(v, keepStopwords=true){
+  const src = String(v ?? '');
+  const re = /[-+]?\d+(?:[,.]\d+)?\s*(?:mva|kva|kv|ka|kw|mw|hz|v|a|%|phút|giờ|giờ|ngày|tháng|năm|km|m)?|[A-Za-zÀ-ỹĐđ]+/gi;
+  const out = [];
+  let m;
+  while((m = re.exec(src))){
+    const raw = m[0].replace(/\s+/g,' ').trim();
+    const key = normSeqToken(raw);
+    if(!key) continue;
+    if(!keepStopwords && VI_STOPWORDS.has(key)) continue;
+    if(key.length <= 1 && !/\d/.test(key)) continue;
+    out.push({raw, key});
+  }
+  return out;
+}
+function htmlTermTokenList(items, cls=''){
+  return (items || []).slice(0,12).map(x => `<span class="tag ${cls}">${escapeHtml(typeof x === 'string' ? x : x.raw)}</span>`).join(' ');
+}
+function seqText(items, max=16){
+  const arr = (items || []).map(x => typeof x === 'string' ? x : x.raw).filter(Boolean);
+  if(!arr.length) return '';
+  const head = arr.slice(0, max).join(' ');
+  return arr.length > max ? head + ' …' : head;
+}
+function lcsSequence(correctSeq, wrongSeq){
+  const n = correctSeq.length, m = wrongSeq.length;
+  const dp = Array.from({length:n+1}, () => Array(m+1).fill(0));
+  for(let i=n-1;i>=0;i--){
+    for(let j=m-1;j>=0;j--){
+      dp[i][j] = correctSeq[i].key === wrongSeq[j].key ? dp[i+1][j+1] + 1 : Math.max(dp[i+1][j], dp[i][j+1]);
+    }
+  }
+  const ops = [];
+  let i=0, j=0;
+  while(i<n || j<m){
+    if(i<n && j<m && correctSeq[i].key === wrongSeq[j].key){
+      ops.push({type:'match', c:correctSeq[i], w:wrongSeq[j], cIndex:i, wIndex:j}); i++; j++;
+    } else if(j>=m || (i<n && dp[i+1][j] >= dp[i][j+1])){
+      ops.push({type:'del', c:correctSeq[i], cIndex:i, wIndex:j}); i++;
+    } else {
+      ops.push({type:'add', w:wrongSeq[j], cIndex:i, wIndex:j}); j++;
+    }
+  }
+  const blocks = [];
+  let cur = null;
+  function flush(){ if(cur && (cur.del.length || cur.add.length)){ blocks.push(cur); } cur = null; }
+  for(const op of ops){
+    if(op.type === 'match'){ flush(); continue; }
+    if(!cur) cur = {cStart: op.cIndex, wStart: op.wIndex, del:[], add:[]};
+    if(op.type === 'del') cur.del.push(op.c);
+    if(op.type === 'add') cur.add.push(op.w);
+  }
+  flush();
+  return {lcsLen: dp[0][0], ops, blocks};
+}
+function prefixCount(a,b){ let i=0; while(i<a.length && i<b.length && a[i].key === b[i].key) i++; return i; }
+function suffixCount(a,b,prefix=0){
+  let i=a.length-1, j=b.length-1, c=0;
+  while(i>=prefix && j>=prefix && a[i].key === b[j].key){ c++; i--; j--; }
+  return c;
+}
+function sequenceExplainHtml(correct, wrong){
+  const cSeq = sequenceTokens(correct, true);
+  const wSeq = sequenceTokens(wrong, true);
+  if(!cSeq.length || !wSeq.length) return '';
+  const al = lcsSequence(cSeq, wSeq);
+  const pctByCorrect = Math.round((al.lcsLen / Math.max(1, cSeq.length)) * 100);
+  const pctBalanced = Math.round((2 * al.lcsLen / Math.max(1, cSeq.length + wSeq.length)) * 100);
+  const pref = prefixCount(cSeq, wSeq);
+  const suff = suffixCount(cSeq, wSeq, pref);
+  const first = al.blocks[0];
+  const biggest = al.blocks.slice().sort((x,y) => (y.del.length + y.add.length) - (x.del.length + x.add.length))[0];
+  const lines = [];
+  lines.push(`<div class="diff-block sequence"><b>So khớp chuỗi đúng → sai:</b> giống <b>${pctByCorrect}%</b> nội dung của đáp án đúng theo đúng thứ tự; độ giống cân bằng hai phương án: <b>${pctBalanced}%</b>.</div>`);
+  lines.push(`<div class="diff-block"><b>Giống liên tiếp từ đầu:</b> ${pref}/${cSeq.length} từ/cụm${pref?': '+htmlTermTokenList(cSeq.slice(0, Math.min(pref, 10)), 'same'):'. Bắt đầu đã khác.'}</div>`);
+  if(first){
+    const pos = (Number.isFinite(first.cStart) ? first.cStart + 1 : pref + 1);
+    const rightPart = seqText(first.del) || '(không có, phương án sai thêm nội dung)';
+    const wrongPart = seqText(first.add) || '(bị thiếu trong phương án sai)';
+    lines.push(`<div class="diff-block"><b>Khác đầu tiên tại vị trí khoảng từ/cụm số ${pos}:</b><br>Đáp án đúng: ${htmlTermTokenList(first.del.length?first.del:[rightPart], 'need')}<br>Phương án này: ${htmlTermTokenList(first.add.length?first.add:[wrongPart], 'wrongterm')}</div>`);
+  }
+  if(biggest && biggest !== first){
+    lines.push(`<div class="diff-block"><b>Đoạn khác lớn nhất:</b><br>Đáp án đúng có: ${htmlTermTokenList(biggest.del, 'need') || '<span class="muted">không có</span>'}<br>Phương án này có: ${htmlTermTokenList(biggest.add, 'wrongterm') || '<span class="muted">không có</span>'}</div>`);
+  }
+  if(suff){
+    lines.push(`<div class="diff-block"><b>Giống lại ở cuối chuỗi:</b> ${suff} từ/cụm cuối ${htmlTermTokenList(cSeq.slice(Math.max(cSeq.length-suff,0)).slice(0,10), 'same')}</div>`);
+  }
+  if(al.blocks.length > 1){
+    const more = al.blocks.slice(0, 4).map((b,idx) => {
+      const d = seqText(b.del, 8) || '∅';
+      const a = seqText(b.add, 8) || '∅';
+      return `<div class="small">${idx+1}) Đúng: <b>${escapeHtml(d)}</b> ↔ Sai: <b>${escapeHtml(a)}</b></div>`;
+    }).join('');
+    lines.push(`<details><summary>Các đoạn khác theo thứ tự từ đầu đến cuối</summary>${more}</details>`);
+  }
+  return lines.join('');
+}
 function explainDifference(correct, wrong){
-  const ct=tokens(correct), wt=tokens(wrong), cp=phrases(ct), wp=phrases(wt);
-  const common=unique([...intersection(cp,wp),...intersection(ct,wt)]).slice(0,14);
-  const onlyC=unique([...difference(cp,wp),...difference(ct,wt)]).slice(0,14);
-  const onlyW=unique([...difference(wp,cp),...difference(wt,ct)]).slice(0,14);
-  const cn=extractNumbers(correct), wn=extractNumbers(wrong), cr=extractRelations(correct), wr=extractRelations(wrong);
-  const sim=jaccard(unique([...ct,...cp]), unique([...wt,...wp]));
-  const parts=[];
-  parts.push(common.length ? `<b>Giống:</b> ${tagList(common)}` : '<b>Giống:</b> rất ít từ khóa trùng nhau.');
-  if(cn.join('|') !== wn.join('|') && (cn.length || wn.length)) parts.push(`<b>Khác số liệu/mốc:</b> đáp án đúng có ${tagList(cn)||'không rõ'}; phương án này có ${tagList(wn)||'không rõ'}.`);
-  if(cr.join('|') !== wr.join('|') && (cr.length || wr.length)) parts.push(`<b>Khác điều kiện/quan hệ:</b> đáp án đúng có ${tagList(cr)||'không rõ'}; phương án này có ${tagList(wr)||'không rõ'}.`);
-  if(onlyC.length) parts.push(`<b>Từ khóa cần nhớ của đáp án đúng:</b> ${tagList(onlyC)}.`);
-  if(onlyW.length) parts.push(`<b>Dấu hiệu lệch của phương án sai:</b> ${tagList(onlyW)}.`);
-  const note = sim >= 0.78 ? 'Hai phương án rất giống nhau; cần soi kỹ số liệu, phạm vi hoặc từ phủ định.' : sim >= 0.45 ? 'Hai phương án cùng chủ đề nhưng khác điều kiện/từ khóa chính.' : 'Phương án này khác khá nhiều về đối tượng hoặc nội dung chính.';
-  parts.push(`<b>Mức gần nhau:</b> ${(sim*100).toFixed(0)}%. ${escapeHtml(note)}`);
-  return parts.join('<br>');
+  const correctFacts = extractFacts(correct), wrongFacts = extractFacts(wrong);
+  const sameFacts = correctFacts.filter(c => wrongFacts.some(w => w.looseKey === c.looseKey));
+  const missingFacts = correctFacts.filter(c => !wrongFacts.some(w => w.looseKey === c.looseKey));
+  const addedFacts = wrongFacts.filter(w => !correctFacts.some(c => c.looseKey === w.looseKey));
+
+  const correctTerms = keyTerms(correct), wrongTerms = keyTerms(wrong);
+  const sameTermKeys = new Set(wrongTerms.map(t=>t.key));
+  const correctTermKeys = new Set(correctTerms.map(t=>t.key));
+  const sameTerms = chooseShort(correctTerms.filter(t => sameTermKeys.has(t.key)), 5);
+  const missingTerms = chooseContrastTerms(correctTerms.filter(t => !sameTermKeys.has(t.key)), wrongTerms, 6);
+  const addedTerms = chooseContrastTerms(wrongTerms.filter(t => !correctTermKeys.has(t.key)), correctTerms, 6);
+
+  const correctPol = extractPolarity(correct), wrongPol = extractPolarity(wrong);
+  const missingPol = correctPol.filter(x => !wrongPol.includes(x));
+  const addedPol = wrongPol.filter(x => !correctPol.includes(x));
+
+  let conclusion = '';
+  if(missingFacts.length || addedFacts.length){
+    const m = termListHtml(missingFacts.map(f=>f.raw), 'need') || 'không rõ';
+    const a = termListHtml(addedFacts.map(f=>f.raw), 'wrongterm') || 'không rõ';
+    conclusion = `<b>Khác cơ bản:</b> Sai ở <b>mốc/số liệu/phạm vi</b>: đáp án đúng cần ${m}, còn phương án này dùng ${a}.`;
+  } else if(missingPol.length || addedPol.length){
+    conclusion = `<b>Khác cơ bản:</b> Sai ở <b>điều kiện/tính chất</b>: đáp án đúng có ${termListHtml(missingPol,'need')||'không rõ'}, còn phương án này có ${termListHtml(addedPol,'wrongterm')||'không rõ'}.`;
+  } else if(missingTerms.length || addedTerms.length){
+    conclusion = `<b>Khác cơ bản:</b> Sai do <b>đổi từ khóa/đối tượng chính</b>: đáp án đúng nhấn mạnh ${termListHtml(missingTerms,'need')||'không rõ'}, còn phương án này lệch sang ${termListHtml(addedTerms,'wrongterm')||'không rõ'}.`;
+  } else {
+    conclusion = '<b>Khác cơ bản:</b> Hai phương án rất giống nhau; cần đối chiếu lại từng chữ với căn cứ pháp lý hoặc cột đáp án của Excel.';
+  }
+
+  const parts = [`<div class="diff-conclusion">${conclusion}</div>`];
+  parts.push(sequenceExplainHtml(correct, wrong));
+  if(sameFacts.length || sameTerms.length){
+    parts.push(`<div class="diff-block"><b>Phần giống để tránh nhầm:</b> ${termListHtml([...sameFacts.map(f=>f.raw), ...sameTerms], 'same') || 'rất ít nội dung trùng nhau'}.</div>`);
+  }
+  if(missingFacts.length || missingTerms.length || missingPol.length){
+    parts.push(`<div class="diff-block"><b>Cần nhớ ở đáp án đúng:</b> ${termListHtml([...missingFacts.map(f=>f.raw), ...missingTerms, ...missingPol], 'need') || 'không phát hiện từ khóa riêng'}.</div>`);
+  }
+  if(addedFacts.length || addedTerms.length || addedPol.length){
+    parts.push(`<div class="diff-block"><b>Dấu hiệu làm phương án này sai:</b> ${termListHtml([...addedFacts.map(f=>f.raw), ...addedTerms, ...addedPol], 'wrongterm') || 'không phát hiện dấu hiệu riêng'}.</div>`);
+  }
+  return parts.filter(Boolean).join('');
 }
 
 function cloneData(obj){ return JSON.parse(JSON.stringify(obj)); }
@@ -374,9 +601,10 @@ function startQuiz(){
   });
   state.submitted = false; state.lastResult = null;
   renderQuiz();
-  els.btnSubmitQuiz.disabled = false; els.btnSubmitSticky.disabled = false;
+  els.btnSubmitQuiz.disabled = false; els.btnSubmitSticky.disabled = false; if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.disabled = false;
   els.resultSummary.textContent = 'Chưa nộp bài.'; els.resultList.innerHTML = '';
   setStatus(`✅ Đã tạo đề ${count} câu. Mã đảo đề/seed: ${seedText}`, 'good');
+  enterQuizFocus();
   location.hash = '#quizSection';
 }
 function resetQuiz(){
@@ -387,6 +615,7 @@ function resetQuiz(){
   if(els.resultList) els.resultList.innerHTML='';
   if(els.btnSubmitQuiz) els.btnSubmitQuiz.disabled=true;
   if(els.btnSubmitSticky) els.btnSubmitSticky.disabled=true;
+  if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.disabled=true;
   updateProgress();
 }
 function renderQuiz(){
@@ -419,24 +648,48 @@ function submitQuiz(){
   let correct=0; state.quiz.forEach(q => { if(q.userChoice !== null && q.options[q.userChoice]?.isCorrect) correct++; });
   state.submitted=true; state.lastResult={correct,total:state.quiz.length,score10:state.quiz.length?correct/state.quiz.length*10:0,time:new Date().toLocaleString('vi-VN')};
   renderQuiz(); renderResult();
-  els.btnSubmitQuiz.disabled = true; els.btnSubmitSticky.disabled = true;
+  els.btnSubmitQuiz.disabled = true; els.btnSubmitSticky.disabled = true; if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.disabled = true;
+  enterResultFocus();
   location.hash = '#resultSection';
 }
 function renderResult(){
   const r=state.lastResult; if(!r) return;
-  els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span>`;
+  els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span><br><span class="muted">Bảng giải thích mới tập trung vào điểm khác biệt cơ bản: số liệu/phạm vi, điều kiện/tính chất, hoặc từ khóa/đối tượng chính.</span>`;
   els.resultList.innerHTML = state.quiz.map((q, qi) => {
     const chosen = q.userChoice === null ? null : q.options[q.userChoice];
     const correctOpt = q.options.find(o => o.isCorrect) || q.options[0];
     const ok = !!(chosen && chosen.isCorrect);
+    const chosenDiff = (!ok && chosen) ? `<div class="analysis-row focus-diff"><b>Khác biệt chính giữa đáp án đúng và lựa chọn của bạn:</b><br>${els.showAutoExplain.checked ? explainDifference(correctOpt.text, chosen.text) : 'Đã tắt phân tích tự động.'}</div>` : '';
     const rows = q.options.map((op, oi) => {
       const letter = 'ABCDEF'[oi] || String(oi+1);
       const status = op.isCorrect ? '<span class="ok">Đáp án đúng</span>' : (q.userChoice===oi ? '<span class="bad">Bạn đã chọn</span>' : '<span class="muted">Phương án sai</span>');
       const explain = op.isCorrect ? `<div class="analysis-row source"><b>Vì sao đúng:</b> Đây là phương án được cột đáp án trong Excel xác định là đúng.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>` : `<div class="analysis-row">${els.showAutoExplain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
-      return `<tr><td class="nowrap"><b>${letter}</b></td><td>${escapeHtml(op.text)}</td><td>${status}</td><td>${explain}</td></tr>`;
+      const trClass = op.isCorrect ? 'result-status-ok' : (q.userChoice===oi ? 'result-status-bad' : '');
+      return `<tr class="${trClass}"><td class="nowrap"><b>${letter}</b></td><td>${escapeHtml(op.text)}</td><td>${status}</td><td>${explain}</td></tr>`;
     }).join('');
-    return `<article class="question-card"><h3>Câu ${qi+1}. ${ok?'<span class="ok">Đúng</span>':'<span class="bad">Sai / chưa chọn</span>'}</h3><p><b>${escapeHtml(q.item.question)}</b></p><p>Chọn của bạn: <b>${chosen?escapeHtml(chosen.text):'Chưa chọn'}</b><br>Đáp án đúng: <b class="ok">${escapeHtml(correctOpt.text)}</b></p><div class="table-wrap"><table><thead><tr><th>PA</th><th>Nội dung</th><th>Trạng thái</th><th>Cột giải thích khác nhau so với đáp án đúng</th></tr></thead><tbody>${rows}</tbody></table></div></article>`;
+    return `<article class="question-card"><h3>Câu ${qi+1}. ${ok?'<span class="ok">Đúng</span>':'<span class="bad">Sai / chưa chọn</span>'}</h3><p><b>${escapeHtml(q.item.question)}</b></p><div class="result-question-meta"><span class="pill ${ok?'okp':'warnp'}">${ok?'Bạn chọn đúng':'Cần xem lại'}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${chosenDiff}<div class="table-wrap"><table><thead><tr><th>PA</th><th>Nội dung</th><th>Trạng thái</th><th>Giải thích trọng tâm</th></tr></thead><tbody>${rows}</tbody></table></div></article>`;
   }).join('');
+}
+
+function enterQuizFocus(){
+  document.body.classList.remove('result-fullscreen');
+  document.body.classList.add('quiz-fullscreen');
+  setTimeout(() => { const q = $('quizSection'); if(q) q.scrollTo({top:0, behavior:'smooth'}); }, 0);
+}
+function enterResultFocus(){
+  document.body.classList.remove('quiz-fullscreen');
+  document.body.classList.add('result-fullscreen');
+  setTimeout(() => { const r = $('resultSection'); if(r) r.scrollTo({top:0, behavior:'smooth'}); }, 0);
+}
+function exitFocus(){
+  document.body.classList.remove('quiz-fullscreen','result-fullscreen');
+}
+function scrollQuizTop(){
+  const q = $('quizSection'); if(q) q.scrollTo({top:0, behavior:'smooth'});
+}
+function backToSetup(){
+  exitFocus();
+  const btn = $('btnStartQuiz'); if(btn) btn.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
 async function clearOldCache(){
@@ -467,6 +720,12 @@ function bindEvents(){
   els.btnSubmitQuiz.addEventListener('click', submitQuiz);
   els.btnSubmitSticky.addEventListener('click', submitQuiz);
   els.btnPrint.addEventListener('click', () => window.print());
+  if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.addEventListener('click', submitQuiz);
+  if(els.btnExitFocus) els.btnExitFocus.addEventListener('click', exitFocus);
+  if(els.btnExitFocus2) els.btnExitFocus2.addEventListener('click', exitFocus);
+  if(els.btnScrollTopQuiz) els.btnScrollTopQuiz.addEventListener('click', scrollQuizTop);
+  if(els.btnBackToSetup) els.btnBackToSetup.addEventListener('click', backToSetup);
+  if(els.btnNewQuizResult) els.btnNewQuizResult.addEventListener('click', backToSetup);
   els.btnClearOldCache.addEventListener('click', clearOldCache);
 }
 function boot(){
