@@ -1,572 +1,481 @@
+
 'use strict';
 
-const $ = sel => document.querySelector(sel);
-const els = {
-  file: $('#excelFile'), sheet: $('#sheetSelect'), btnParse: $('#btnParse'), btnSave: $('#btnSaveBank'), btnLoad: $('#btnLoadBank'), btnClear: $('#btnClearBank'),
-  btnStart: $('#btnStartQuiz'), btnSubmit: $('#btnSubmitQuiz'), btnSubmitSticky: $('#btnSubmitSticky'), btnPrint: $('#btnPrint'),
-  count: $('#quizCount'), shuffleQ: $('#shuffleQuestions'), shuffleO: $('#shuffleOptions'), explain: $('#showAutoExplain'), seed: $('#seedInput'),
-  status: $('#status'), statPills: $('#statPills'), preview: $('#preview'), quizInfo: $('#quizInfo'), quizList: $('#quizList'),
-  resultSummary: $('#resultSummary'), resultList: $('#resultList'), progressText: $('#progressText'), progressBar: $('#progressBar')
-};
+const APP_VERSION = 'V3.1-20260613';
+const DB_NAME = 'excel_quiz_offline_v3_fixed';
+const STORE_NAME = 'kv';
+const BANK_KEY = 'active_question_bank';
+const $ = (id) => document.getElementById(id);
 
+const els = {};
 const state = {
-  workbook: null,
-  fileName: '',
   bank: [],
   errors: [],
-  mapping: null,
+  meta: {},
+  workbook: null,
+  fileName: '',
+  currentSheet: '',
+  currentRows: [],
+  currentMapping: null,
   quiz: [],
   submitted: false,
   lastResult: null
 };
 
-const DB_NAME = 'excel_quiz_offline_db_v1';
-const STORE = 'kv';
-const BANK_KEY = 'question_bank';
-
 const VI_STOPWORDS = new Set(`
-la cua va hoac de den duoc bi trong ngoai mot cac nhung nhung ma thi voi cho ve theo tai tu khi luc nao gi do nay kia ay tren duoi vao ra bang nhu neu thi hon kem da dang se can phai duoc khong chua cung moi sau truoc phan noi dung cau hoi phuong an lua chon dap an dung sai don vi linh vuc he thong
-là của và hoặc để đến được bị trong ngoài một các những mà thì với cho về theo tại từ khi lúc nào gì đó này kia ấy trên dưới vào ra bằng như nếu hơn kém đã đang sẽ cần phải không chưa cùng mỗi sau trước phần nội dung câu hỏi phương án lựa chọn đáp án đúng sai đơn vị lĩnh vực hệ thống
+la là cua của va và hoac hoặc de để den đến duoc được bi bị trong ngoai ngoài mot một cac các nhung những ma mà thi thì voi với cho ve về theo tai tại tu từ khi luc lúc nao nào gi gì do đó nay này kia ay ấy tren trên duoi dưới vao vào ra bang bằng nhu như neu nếu hon hơn kem kém da đã dang đang se sẽ can cần phai phải khong không chua chưa cung cùng moi mỗi sau truoc trước phan phần noi nội dung cau câu hoi hỏi phuong phương an án lua lựa chon chọn dap đáp dung đúng sai don đơn vi vị linh lĩnh vuc vực he hệ thong thống hay boi bởi viec việc yeu yêu cau cầu quy quy dinh định
 `.split(/\s+/).filter(Boolean));
 
-function setStatus(msg, type='') {
-  els.status.textContent = msg;
+function initElements(){
+  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache'].forEach(id => els[id] = $(id));
+}
+
+function setStatus(message, type='info'){
+  if(!els.status) return;
   els.status.className = 'status ' + type;
+  els.status.textContent = message;
 }
-
-function escapeHtml(s) {
-  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function escapeHtml(v){ return String(v ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+function visibleText(v){ return String(v ?? '').replace(/\r\n/g,'\n').replace(/\s+/g,' ').trim(); }
+function norm(v){
+  return String(v ?? '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/đ/g,'d').replace(/Đ/g,'D')
+    .toLowerCase().replace(/[“”‘’]/g,' ')
+    .replace(/[_.,;:!?()[\]{}<>/\\|+*=~`^"']/g,' ')
+    .replace(/-/g,' ')
+    .replace(/\s+/g,' ').trim();
 }
-
-function normalizeVN(str) {
-  return String(str ?? '')
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-    .toLowerCase()
-    .replace(/[“”‘’]/g, ' ')
-    .replace(/[_.,;:!?()[\]{}<>/\\|+*=~`^"'-]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function visibleText(v) {
-  if (v === null || v === undefined) return '';
-  return String(v).replace(/\r\n/g, '\n').replace(/\s+/g, ' ').trim();
-}
-
-function tokenize(str) {
-  const norm = normalizeVN(str);
-  if (!norm) return [];
-  return norm.split(/\s+/).filter(t => t.length > 1 && !VI_STOPWORDS.has(t));
-}
-
-function unique(arr) { return [...new Set(arr.filter(Boolean))]; }
-function intersection(a, b) { const bs = new Set(b); return a.filter(x => bs.has(x)); }
-function difference(a, b) { const bs = new Set(b); return a.filter(x => !bs.has(x)); }
-function top(arr, n=10) { return unique(arr).slice(0, n); }
-
-function extractNumbers(str) {
-  const src = normalizeVN(str);
-  const re = /(?:tren|duoi|den|tu|khong qua|toi thieu|toi da|lon hon|nho hon)?\s*[-+]?\d+(?:[,.]\d+)?\s*(?:kv|v|a|ka|kw|mw|mva|kva|hz|%|phan tram|phut|gio|ngay|thang|nam|m|km)?/g;
-  return unique((src.match(re) || []).map(x => x.replace(/\s+/g, ' ').trim()).filter(Boolean));
-}
-
-function extractRelationWords(str) {
-  const src = normalizeVN(str);
-  const keys = [
-    'tren','duoi','den','tu','khong qua','toi thieu','toi da','lon hon','nho hon','bang','khong','chua','cam','phai','duoc','truoc','sau','trong','ngoai','dong','cat','mo','cap','ha','cao','sieu cao'
-  ];
-  return keys.filter(k => src.includes(k));
-}
-
-function phraseSet(tokens) {
-  const out = [];
-  for (let n = 2; n <= 3; n++) {
-    for (let i = 0; i <= tokens.length - n; i++) out.push(tokens.slice(i, i+n).join(' '));
-  }
-  return unique(out);
-}
-
-function jaccard(a, b) {
-  const A = new Set(a), B = new Set(b);
-  const uni = new Set([...A, ...B]);
-  if (!uni.size) return 0;
-  let inter = 0; A.forEach(x => { if (B.has(x)) inter++; });
-  return inter / uni.size;
-}
-
-function explainDifference(correct, wrong) {
-  const ct = tokenize(correct), wt = tokenize(wrong);
-  const cp = phraseSet(ct), wp = phraseSet(wt);
-  const common = top([...intersection(cp, wp), ...intersection(ct, wt)], 12);
-  const correctOnly = top([...difference(cp, wp), ...difference(ct, wt)], 12);
-  const wrongOnly = top([...difference(wp, cp), ...difference(wt, ct)], 12);
-  const cNums = extractNumbers(correct), wNums = extractNumbers(wrong);
-  const cRel = extractRelationWords(correct), wRel = extractRelationWords(wrong);
-  const sim = jaccard(unique([...ct, ...cp]), unique([...wt, ...wp]));
-
-  const parts = [];
-  if (common.length) parts.push(`<b>Giống:</b> ${common.map(x => `<span class="tag">${escapeHtml(x)}</span>`).join(' ')}`);
-  else parts.push('<b>Giống:</b> rất ít từ khóa trùng nhau.');
-
-  const numsDiff = cNums.join('|') !== wNums.join('|');
-  if (numsDiff && (cNums.length || wNums.length)) {
-    parts.push(`<b>Khác số liệu/mốc:</b> đúng có ${tagList(cNums) || 'không rõ'}; sai có ${tagList(wNums) || 'không rõ'}.`);
-  }
-  const relDiff = cRel.join('|') !== wRel.join('|');
-  if (relDiff && (cRel.length || wRel.length)) {
-    parts.push(`<b>Khác quan hệ/điều kiện:</b> đúng có ${tagList(cRel) || 'không rõ'}; sai có ${tagList(wRel) || 'không rõ'}.`);
-  }
-  if (correctOnly.length) parts.push(`<b>Đáp án đúng nhấn mạnh:</b> ${tagList(correctOnly)}.`);
-  if (wrongOnly.length) parts.push(`<b>Phương án sai lệch ở:</b> ${tagList(wrongOnly)}.`);
-
-  let note = '';
-  if (sim >= .78) note = 'Hai phương án rất giống nhau; cần chú ý các cụm khóa hoặc số liệu nhỏ khác nhau.';
-  else if (sim >= .45) note = 'Hai phương án cùng chủ đề nhưng khác một số điều kiện/từ khóa quan trọng.';
-  else note = 'Hai phương án khác khá nhiều về đối tượng hoặc nội dung chính.';
+function tokens(v){ return norm(v).split(/\s+/).filter(t => t.length > 1 && !VI_STOPWORDS.has(t)); }
+function unique(a){ return [...new Set(a.filter(Boolean))]; }
+function intersection(a,b){ const B=new Set(b); return a.filter(x=>B.has(x)); }
+function difference(a,b){ const B=new Set(b); return a.filter(x=>!B.has(x)); }
+function tagList(items){ return unique(items).slice(0,14).map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join(' '); }
+function phrases(tks){ const out=[]; for(let n=2;n<=3;n++){ for(let i=0;i<=tks.length-n;i++) out.push(tks.slice(i,i+n).join(' ')); } return unique(out); }
+function jaccard(a,b){ const A=new Set(a), B=new Set(b), U=new Set([...A,...B]); if(!U.size) return 0; let c=0; A.forEach(x=>{ if(B.has(x)) c++; }); return c/U.size; }
+function extractNumbers(v){ const src=norm(v); const re=/(?:tren|duoi|den|tu|khong qua|toi thieu|toi da|lon hon|nho hon|bang|±)?\s*[-+]?\d+(?:[,.]\d+)?\s*(?:kv|v|a|ka|kw|mw|mva|kva|hz|%|phan tram|phut|gio|ngay|thang|nam|m|km)?/g; return unique((src.match(re)||[]).map(s=>s.replace(/\s+/g,' ').trim())); }
+function extractRelations(v){ const src=norm(v); return ['tren','duoi','den','tu','khong qua','toi thieu','toi da','lon hon','nho hon','bang','khong','chua','cam','phai','duoc','cho phep','khong cho phep','truoc','sau','trong','ngoai','dong','cat','mo','cap','ha','cao','sieu cao','ngung','giam','tang'].filter(k => src.includes(k)); }
+function explainDifference(correct, wrong){
+  const ct=tokens(correct), wt=tokens(wrong), cp=phrases(ct), wp=phrases(wt);
+  const common=unique([...intersection(cp,wp),...intersection(ct,wt)]).slice(0,14);
+  const onlyC=unique([...difference(cp,wp),...difference(ct,wt)]).slice(0,14);
+  const onlyW=unique([...difference(wp,cp),...difference(wt,ct)]).slice(0,14);
+  const cn=extractNumbers(correct), wn=extractNumbers(wrong), cr=extractRelations(correct), wr=extractRelations(wrong);
+  const sim=jaccard(unique([...ct,...cp]), unique([...wt,...wp]));
+  const parts=[];
+  parts.push(common.length ? `<b>Giống:</b> ${tagList(common)}` : '<b>Giống:</b> rất ít từ khóa trùng nhau.');
+  if(cn.join('|') !== wn.join('|') && (cn.length || wn.length)) parts.push(`<b>Khác số liệu/mốc:</b> đáp án đúng có ${tagList(cn)||'không rõ'}; phương án này có ${tagList(wn)||'không rõ'}.`);
+  if(cr.join('|') !== wr.join('|') && (cr.length || wr.length)) parts.push(`<b>Khác điều kiện/quan hệ:</b> đáp án đúng có ${tagList(cr)||'không rõ'}; phương án này có ${tagList(wr)||'không rõ'}.`);
+  if(onlyC.length) parts.push(`<b>Từ khóa cần nhớ của đáp án đúng:</b> ${tagList(onlyC)}.`);
+  if(onlyW.length) parts.push(`<b>Dấu hiệu lệch của phương án sai:</b> ${tagList(onlyW)}.`);
+  const note = sim >= 0.78 ? 'Hai phương án rất giống nhau; cần soi kỹ số liệu, phạm vi hoặc từ phủ định.' : sim >= 0.45 ? 'Hai phương án cùng chủ đề nhưng khác điều kiện/từ khóa chính.' : 'Phương án này khác khá nhiều về đối tượng hoặc nội dung chính.';
   parts.push(`<b>Mức gần nhau:</b> ${(sim*100).toFixed(0)}%. ${escapeHtml(note)}`);
   return parts.join('<br>');
 }
 
-function tagList(items) {
-  return unique(items).slice(0, 12).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join(' ');
+function cloneData(obj){ return JSON.parse(JSON.stringify(obj)); }
+function parseEmbedded(){
+  const node = $('embedded-bank');
+  if(!node) throw new Error('Không tìm thấy khối dữ liệu nhúng trong HTML.');
+  const payload = JSON.parse(node.textContent || '{}');
+  const bank = Array.isArray(payload.bank) ? payload.bank : [];
+  state.meta = payload.meta || {};
+  state.bank = normalizeBank(bank);
+  state.errors = [];
+  state.fileName = state.meta.sourceFile || 'Dữ liệu nhúng';
+  state.currentSheet = state.meta.sheetName || 'Dữ liệu nhúng';
+  state.currentRows = [];
+  state.currentMapping = {source:'embedded'};
+  if(els.embeddedInfo){
+    els.embeddedInfo.innerHTML = `<b>${state.bank.length}</b> câu hỏi đã nhúng từ <b>${escapeHtml(state.fileName)}</b>. Mở file là dùng ngay, không cần tải Excel.`;
+  }
+  renderAll();
+}
+function normalizeBank(bank){
+  return bank.map((q,i) => {
+    const options = (q.options || []).map(visibleText).filter(Boolean);
+    let idx = Number.isInteger(q.correctIndex) ? q.correctIndex : inferAnswerIndex(q.answerRaw, options);
+    if(idx < 0 || idx >= options.length) idx = 0;
+    return {
+      id: visibleText(q.id) || String(i+1),
+      sourceRow: q.sourceRow || '',
+      sheetName: q.sheetName || '',
+      question: visibleText(q.question),
+      options,
+      correctIndex: idx,
+      correctText: options[idx] || visibleText(q.correctText),
+      source: visibleText(q.source),
+      answerRaw: visibleText(q.answerRaw)
+    };
+  }).filter(q => q.question && q.options.length >= 2 && q.correctText);
 }
 
-function openDB() {
-  return new Promise((resolve, reject) => {
-    const req = indexedDB.open(DB_NAME, 1);
-    req.onupgradeneeded = () => req.result.createObjectStore(STORE);
+function renderAll(){ renderStats(); renderPreview(); resetQuiz(); }
+function renderStats(){
+  if(!els.bankStats) return;
+  const src = state.currentSheet || state.fileName || 'Dữ liệu';
+  els.bankStats.innerHTML = `<span class="pill okp">${state.bank.length} câu hợp lệ</span><span class="pill ${state.errors.length?'warnp':''}">${state.errors.length} dòng lỗi</span><span class="pill">${escapeHtml(src)}</span><span class="pill">${APP_VERSION}</span>`;
+  if(els.btnStartQuiz) els.btnStartQuiz.disabled = state.bank.length === 0;
+  if(els.btnSaveBank) els.btnSaveBank.disabled = state.bank.length === 0;
+  if(els.quizCount){ els.quizCount.max = String(Math.max(1,state.bank.length)); if(Number(els.quizCount.value || 0) > state.bank.length) els.quizCount.value = String(state.bank.length || 1); }
+}
+function renderPreview(){
+  if(!els.bankPreview) return;
+  if(!state.bank.length){ els.bankPreview.innerHTML = '<table><tbody><tr><td class="muted">Chưa có dữ liệu hợp lệ.</td></tr></tbody></table>'; return; }
+  const rows = state.bank.slice(0,50).map((q,i)=>`<tr><td class="nowrap">${i+1}</td><td>${escapeHtml(q.question)}</td><td>${escapeHtml(q.correctText)}</td><td>${escapeHtml(q.options.join(' | '))}</td><td>${escapeHtml(q.source||'')}</td></tr>`).join('');
+  els.bankPreview.innerHTML = `<table><thead><tr><th>STT</th><th>Câu hỏi</th><th>Đáp án đúng</th><th>Các phương án</th><th>Căn cứ / giải thích</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function openDB(){
+  return new Promise((resolve,reject) => {
+    if(!('indexedDB' in window)) return reject(new Error('Trình duyệt không hỗ trợ IndexedDB'));
+    const req = indexedDB.open(DB_NAME,1);
+    req.onupgradeneeded = () => req.result.createObjectStore(STORE_NAME);
     req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
+    req.onerror = () => reject(req.error || new Error('Không mở được IndexedDB'));
   });
+}
+async function dbPut(key, value){ const db=await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE_NAME,'readwrite'); tx.objectStore(STORE_NAME).put(value,key); tx.oncomplete=()=>res(); tx.onerror=()=>rej(tx.error); }); }
+async function dbGet(key){ const db=await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE_NAME,'readonly'); const req=tx.objectStore(STORE_NAME).get(key); req.onsuccess=()=>res(req.result); req.onerror=()=>rej(req.error); }); }
+async function dbDel(key){ const db=await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE_NAME,'readwrite'); tx.objectStore(STORE_NAME).delete(key); tx.oncomplete=()=>res(); tx.onerror=()=>rej(tx.error); }); }
+async function saveBank(label='ngân hàng hiện tại', silent=false){
+  const payload = {bank: state.bank, errors: state.errors, meta: state.meta, fileName: state.fileName, sheetName: state.currentSheet, savedAt: new Date().toISOString(), version: APP_VERSION};
+  try { await dbPut(BANK_KEY, payload); }
+  catch(e){ localStorage.setItem(DB_NAME + ':' + BANK_KEY, JSON.stringify(payload)); }
+  if(!silent) setStatus(`✅ Đã lưu ${state.bank.length} câu hỏi của ${label} vào database offline.`, 'good');
+}
+async function loadBank(){
+  let payload = null;
+  try { payload = await dbGet(BANK_KEY); } catch(e){ try { payload = JSON.parse(localStorage.getItem(DB_NAME + ':' + BANK_KEY) || 'null'); } catch(_){} }
+  if(!payload || !Array.isArray(payload.bank)){ setStatus('Chưa có ngân hàng đã lưu. Dữ liệu nhúng trong HTML vẫn đang sẵn sàng để dùng.', 'info'); return; }
+  state.bank = normalizeBank(payload.bank); state.errors = payload.errors || []; state.meta = payload.meta || {}; state.fileName = payload.fileName || 'Bộ nhớ đã lưu'; state.currentSheet = payload.sheetName || state.fileName; state.currentRows = []; state.currentMapping = {source:'db'};
+  renderAll();
+  setStatus(`✅ Đã nạp ${state.bank.length} câu hỏi từ database offline.`, 'good');
+}
+async function clearBank(){
+  if(!confirm('Xóa ngân hàng đã lưu trong database offline? Dữ liệu nhúng trong HTML không bị xóa.')) return;
+  try { await dbDel(BANK_KEY); } catch(e){}
+  localStorage.removeItem(DB_NAME + ':' + BANK_KEY);
+  setStatus('✅ Đã xóa database đã lưu. Dữ liệu nhúng trong HTML vẫn còn, bấm “Dùng dữ liệu nhúng” để nạp lại.', 'good');
 }
 
-async function idbPut(key, value) {
-  const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE, 'readwrite');
-    tx.objectStore(STORE).put(value, key);
-    tx.oncomplete = () => resolve(); tx.onerror = () => reject(tx.error);
-  });
+async function fileToArrayBuffer(file){
+  if(file.arrayBuffer) return await file.arrayBuffer();
+  return new Promise((resolve,reject)=>{ const fr=new FileReader(); fr.onload=()=>resolve(fr.result); fr.onerror=()=>reject(fr.error || new Error('FileReader lỗi')); fr.readAsArrayBuffer(file); });
 }
-async function idbGet(key) {
-  const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE, 'readonly');
-    const req = tx.objectStore(STORE).get(key);
-    req.onsuccess = () => resolve(req.result); req.onerror = () => reject(req.error);
-  });
-}
-async function idbDel(key) {
-  const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE, 'readwrite');
-    tx.objectStore(STORE).delete(key);
-    tx.oncomplete = () => resolve(); tx.onerror = () => reject(tx.error);
-  });
-}
-
-async function readWorkbookFromFile(file) {
-  const buf = await file.arrayBuffer();
-  return XLSX.read(buf, {type:'array', cellDates:true, raw:false});
-}
-
-function detectHeaderRow(rows) {
-  let best = {idx:0, score:-1};
-  const maxRows = Math.min(rows.length, 40);
-  for (let r = 0; r < maxRows; r++) {
-    const cells = rows[r] || [];
-    const joined = cells.map(normalizeVN).join(' | ');
-    let score = 0;
-    if (/cau hoi|noi dung|question/.test(joined)) score += 4;
-    if (/dap an|correct|answer|dung/.test(joined)) score += 3;
-    const optMatches = joined.match(/phuong an|lua chon|option|choice/g);
-    if (optMatches) score += optMatches.length * 2;
-    cells.forEach(c => {
-      const n = normalizeVN(c);
-      if (/^(a|b|c|d|e)$/.test(n)) score += 1;
-      if (/^phuong an lua chon \d+$/.test(n)) score += 3;
-    });
-    if (score > best.score) best = {idx:r, score};
+async function readWorkbook(file){
+  if(!window.XLSX) throw new Error('Không tìm thấy thư viện SheetJS XLSX. Hãy đặt xlsx.full.min.js cùng thư mục index.html hoặc dùng bản HTML đơn đã nhúng thư viện.');
+  const buf = await fileToArrayBuffer(file);
+  const bytes = new Uint8Array(buf);
+  try { return XLSX.read(bytes, {type:'array', cellDates:false, raw:false}); }
+  catch(e1){
+    let binary = ''; const chunk = 0x8000;
+    for(let i=0;i<bytes.length;i+=chunk) binary += String.fromCharCode.apply(null, bytes.subarray(i,i+chunk));
+    return XLSX.read(binary, {type:'binary', cellDates:false, raw:false});
   }
-  return best.idx;
 }
-
-function headerScore(cell, kind) {
-  const h = normalizeVN(cell);
-  if (!h) return 0;
-  const has = (...keys) => keys.some(k => h.includes(k));
-  if (kind === 'id') return has('stt','so thu tu','id','ma cau','ma so') ? 5 : 0;
-  if (kind === 'question') {
-    let s = 0;
-    if (has('cau hoi','question')) s += 8;
-    if (has('noi dung')) s += 5;
-    if (has('phuong an','lua chon','dap an')) s -= 8;
-    return s;
+async function handleExcelFile(){
+  const file = els.excelFile && els.excelFile.files && els.excelFile.files[0];
+  if(!file){ setStatus('Chưa chọn file Excel.', 'bad'); return; }
+  setStatus(`Đang đọc file: ${file.name} ...`, 'info');
+  try {
+    state.workbook = await readWorkbook(file);
+    state.fileName = file.name;
+    if(!state.workbook.SheetNames || !state.workbook.SheetNames.length) throw new Error('Workbook không có sheet nào.');
+    els.sheetSelect.innerHTML = state.workbook.SheetNames.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+    parseSelectedSheet(false);
+  } catch(err){
+    console.error(err);
+    setStatus(`❌ Không đọc được file Excel: ${err.message || err}\nDữ liệu nhúng vẫn được giữ nguyên, bạn vẫn có thể tạo đề ngay.`, 'bad');
   }
-  if (kind === 'answer') {
-    let s = 0;
-    if (has('dap an','answer','correct','dung')) s += 8;
-    if (has('phuong an','lua chon','option','choice')) s -= 6;
-    return s;
-  }
-  if (kind === 'option') {
-    let s = 0;
-    if (has('phuong an','lua chon','option','choice')) s += 7;
-    if (/^(a|b|c|d|e|f)$/.test(h)) s += 8;
-    if (/^pa\s*[a-f0-9]?/.test(h)) s += 5;
-    if (has('dap an dung')) s -= 6;
-    return s;
-  }
-  if (kind === 'source') return has('can cu','phap ly','giai thich','explain','reference','ghi chu','nguon') ? 6 : 0;
-  return 0;
 }
-
-function bestColumn(headers, kind, exclude = new Set()) {
-  let best = {idx:-1, score:0};
-  headers.forEach((h, i) => {
-    if (exclude.has(i)) return;
-    const s = headerScore(h, kind);
-    if (s > best.score) best = {idx:i, score:s};
-  });
-  return best.idx;
-}
-
-function detectMapping(rows, headerIdx) {
-  const headers = rows[headerIdx] || [];
-  const exclude = new Set();
-  const idCol = bestColumn(headers, 'id'); if (idCol >= 0) exclude.add(idCol);
-  const questionCol = bestColumn(headers, 'question', exclude); if (questionCol >= 0) exclude.add(questionCol);
-  const answerCol = bestColumn(headers, 'answer', exclude); if (answerCol >= 0) exclude.add(answerCol);
-  const sourceCol = bestColumn(headers, 'source', exclude); if (sourceCol >= 0) exclude.add(sourceCol);
-
-  let optionCols = [];
-  headers.forEach((h, i) => {
-    if ([idCol, questionCol, answerCol, sourceCol].includes(i)) return;
-    if (headerScore(h, 'option') >= 5) optionCols.push(i);
-  });
-  optionCols.sort((a, b) => a - b);
-
-  if (optionCols.length < 2 && questionCol >= 0) {
-    const candidates = [];
-    for (let c = 0; c < Math.max(...rows.slice(headerIdx, Math.min(rows.length, headerIdx+25)).map(r => (r || []).length)); c++) {
-      if ([idCol, questionCol, answerCol, sourceCol].includes(c)) continue;
-      let filled = 0, avgLen = 0;
-      for (let r = headerIdx + 1; r < Math.min(rows.length, headerIdx + 21); r++) {
-        const txt = visibleText((rows[r] || [])[c]);
-        if (txt) { filled++; avgLen += txt.length; }
-      }
-      if (filled >= 3) candidates.push({c, filled, avgLen});
+function rowsFromSheet(sheet){ return XLSX.utils.sheet_to_json(sheet, {header:1, raw:false, defval:''}); }
+function parseSelectedSheet(manual=false){
+  if(!state.workbook){ handleExcelFile(); return; }
+  const sheetName = els.sheetSelect.value || state.workbook.SheetNames[0];
+  const rows = rowsFromSheet(state.workbook.Sheets[sheetName]);
+  state.currentRows = rows;
+  state.currentSheet = sheetName;
+  let mapping = null;
+  if(manual) mapping = manualMappingFromUI(rows);
+  try {
+    const parsed = parseRows(rows, sheetName, mapping);
+    renderMapping(rows, parsed.mapping);
+    if(!parsed.bank.length){
+      state.errors = parsed.errors;
+      setStatus(`❌ Đọc được sheet nhưng chưa nhận diện được câu hỏi hợp lệ. Dữ liệu nhúng cũ vẫn được giữ nguyên.\nHãy mở “Nhận diện thủ công” để chọn đúng cột.`, 'bad');
+      return;
     }
-    optionCols = candidates.sort((a,b) => b.filled - a.filled || b.avgLen - a.avgLen).slice(0, 6).map(x => x.c).sort((a,b)=>a-b);
+    state.bank = parsed.bank; state.errors = parsed.errors; state.currentMapping = parsed.mapping; state.meta = {sourceFile: state.fileName, sheetName, total: parsed.bank.length, version: APP_VERSION};
+    renderStats(); renderPreview(); resetQuiz();
+    setStatus(`✅ Đã nạp ${parsed.bank.length} câu hỏi từ file “${state.fileName}”, sheet “${sheetName}”.\nHàng tiêu đề: ${parsed.mapping.headerIdx+1}; cột câu hỏi: ${colName(parsed.mapping.questionCol)}; cột đáp án: ${parsed.mapping.answerCol>=0?colName(parsed.mapping.answerCol):'không có'}; cột phương án: ${parsed.mapping.optionCols.map(colName).join(', ')}. ${parsed.errors.length?'Có '+parsed.errors.length+' dòng bỏ qua.':''}`, 'good');
+  } catch(err){
+    console.error(err); renderMapping(rows, null);
+    setStatus(`❌ Lỗi nhận diện sheet: ${err.message || err}\nDữ liệu nhúng cũ vẫn được giữ nguyên.`, 'bad');
+  }
+}
+function parseAllSheets(){
+  if(!state.workbook){ handleExcelFile(); return; }
+  let all=[], errs=[], logs=[];
+  for(const s of state.workbook.SheetNames){
+    try { const p = parseRows(rowsFromSheet(state.workbook.Sheets[s]), s, null); all = all.concat(p.bank); errs = errs.concat(p.errors.map(e => ({...e, sheetName:s}))); logs.push(`${s}: ${p.bank.length} câu`); }
+    catch(e){ logs.push(`${s}: lỗi (${e.message || e})`); }
+  }
+  if(!all.length){ setStatus('❌ Không nhận diện được câu hỏi hợp lệ ở bất kỳ sheet nào. Dữ liệu nhúng vẫn được giữ nguyên.\n' + logs.join('\n'), 'bad'); return; }
+  state.bank = all; state.errors = errs; state.currentSheet = 'Tất cả sheet'; state.currentMapping = {source:'all_sheets'}; state.meta = {sourceFile: state.fileName, sheetName:'Tất cả sheet', total: all.length, version: APP_VERSION};
+  renderStats(); renderPreview(); resetQuiz();
+  setStatus(`✅ Đã đọc tất cả sheet. Tổng ${all.length} câu hỏi hợp lệ.\n${logs.join('\n')}${errs.length?'\n⚠️ Bỏ qua '+errs.length+' dòng.':''}`, 'good');
+}
+
+function scoreHeader(row){
+  const text = row.map(visibleText).join(' | '); const n = norm(text);
+  let score = 0;
+  if(/cau hoi|noi dung cau hoi|question/.test(n)) score += 30;
+  if(/dap an|answer|correct|dung/.test(n)) score += 15;
+  const optHits = (n.match(/phuong an|lua chon|option|choice/g) || []).length;
+  score += Math.min(40, optHits * 12);
+  if(/can cu|phap ly|giai thich|nguon/.test(n)) score += 6;
+  const nonEmpty = row.filter(x=>visibleText(x)).length;
+  if(nonEmpty >= 4) score += 8;
+  return score;
+}
+function detectHeaderRow(rows){
+  let best=0, bestScore=-1; const limit=Math.min(25, rows.length);
+  for(let i=0;i<limit;i++){ const s=scoreHeader(rows[i]||[]); if(s>bestScore){ bestScore=s; best=i; } }
+  return bestScore > 10 ? best : 0;
+}
+function findBestCol(headers, patterns, exclude=[]){
+  let best=-1, score=-1;
+  headers.forEach((h,i)=>{ if(exclude.includes(i)) return; const n=norm(h); let s=0; patterns.forEach(p=>{ if(p.test(n)) s += 10; }); if(s>score){ score=s; best=i; } });
+  return score > 0 ? best : -1;
+}
+function detectMapping(rows){
+  const headerIdx = detectHeaderRow(rows), headers = rows[headerIdx] || [], sampleRows = rows.slice(headerIdx+1, Math.min(rows.length, headerIdx+15));
+  const questionCol = findBestCol(headers, [/noi dung cau hoi/, /^cau hoi$/, /cau hoi/, /question/, /noi dung/]);
+  let answerCol = findBestCol(headers, [/^dap an$/, /dap an(?!.*phuong)/, /answer/, /correct/, /dap an dung/], questionCol>=0?[questionCol]:[]);
+  const sourceCol = findBestCol(headers, [/can cu/, /phap ly/, /giai thich/, /nguon/, /reference/, /explain/], [questionCol, answerCol]);
+  const idCol = findBestCol(headers, [/^stt$/, /^tt$/, /^id$/, /so thu tu/], [questionCol, answerCol, sourceCol]);
+  let optionCols = [];
+  headers.forEach((h,i)=>{
+    if([questionCol,answerCol,sourceCol,idCol].includes(i)) return;
+    const n=norm(h);
+    if(/phuong an|lua chon|option|choice/.test(n) || /^[abcd]$/.test(n) || /^pa\s*[1-6a-f]$/.test(n)) optionCols.push(i);
+  });
+  const maxCols = Math.max(...rows.slice(0, Math.min(rows.length, 20)).map(r=>r.length), 0);
+  if(optionCols.length < 2){
+    const candidates=[];
+    for(let c=0;c<maxCols;c++){
+      if([questionCol,answerCol,sourceCol,idCol].includes(c)) continue;
+      let filled=0, avgLen=0;
+      sampleRows.forEach(r=>{ const t=visibleText(r[c]); if(t){ filled++; avgLen += t.length; }});
+      if(filled >= Math.max(2, Math.floor(sampleRows.length*0.35))) candidates.push({c, filled, avgLen: avgLen/(filled||1)});
+    }
+    candidates.sort((a,b)=> b.filled-a.filled || a.c-b.c);
+    optionCols = candidates.map(x=>x.c).slice(0,6);
+  }
+  if(questionCol < 0){
+    let best=-1, len=-1;
+    for(let c=0;c<maxCols;c++){
+      if(optionCols.includes(c) || [answerCol,sourceCol,idCol].includes(c)) continue;
+      const total = sampleRows.reduce((s,r)=>s+visibleText(r[c]).length,0);
+      if(total>len){ len=total; best=c; }
+    }
+    return {headerIdx, headers, idCol, questionCol:best, answerCol, sourceCol, optionCols};
   }
   return {headerIdx, headers, idCol, questionCol, answerCol, sourceCol, optionCols};
 }
-
-function stripOptionMarker(txt) {
-  return visibleText(txt).replace(/^\s*(\*|✓|✔|✅|\[x\]|\(x\)|x\.)\s*/i, '').trim();
-}
-function hasCorrectMarker(txt) {
-  return /^\s*(\*|✓|✔|✅|\[x\]|\(x\)|x\.)\s*/i.test(visibleText(txt));
-}
-
-function resolveCorrectIndex(answerRaw, options) {
-  const ans = visibleText(answerRaw);
-  if (!ans) {
-    const marked = options.findIndex(o => o.marked);
-    return marked >= 0 ? marked : -1;
-  }
-  const aNorm = normalizeVN(ans).trim();
-  const num = aNorm.match(/(?:^|\D)([1-9])(?:\D|$)/);
-  if (num) {
-    const idx = Number(num[1]) - 1;
-    if (idx >= 0 && idx < options.length) return idx;
-  }
-  const letter = aNorm.match(/\b([a-f])\b/);
-  if (letter) {
-    const idx = 'abcdef'.indexOf(letter[1]);
-    if (idx >= 0 && idx < options.length) return idx;
-  }
-  const byChoice = aNorm.match(/lua chon\s*([1-9])|phuong an\s*([1-9])/);
-  if (byChoice) {
-    const idx = Number(byChoice[1] || byChoice[2]) - 1;
-    if (idx >= 0 && idx < options.length) return idx;
-  }
-  const ansClean = normalizeVN(ans);
-  let best = {idx:-1, score:0};
-  options.forEach((o, idx) => {
-    const optNorm = normalizeVN(o.text);
-    let score = optNorm === ansClean ? 1 : jaccard(tokenize(ansClean), tokenize(optNorm));
-    if (optNorm.includes(ansClean) || ansClean.includes(optNorm)) score = Math.max(score, .85);
-    if (score > best.score) best = {idx, score};
-  });
-  return best.score >= .55 ? best.idx : -1;
-}
-
-function parseRows(rows) {
-  const headerIdx = detectHeaderRow(rows);
-  const mapping = detectMapping(rows, headerIdx);
-  const bank = [], errors = [];
-  if (mapping.questionCol < 0 || mapping.optionCols.length < 2) {
-    throw new Error('Không nhận diện được cột câu hỏi hoặc các cột phương án. Hãy kiểm tra hàng tiêu đề của Excel.');
-  }
-  for (let r = headerIdx + 1; r < rows.length; r++) {
-    const row = rows[r] || [];
-    const question = visibleText(row[mapping.questionCol]);
-    if (!question) continue;
-    const options = mapping.optionCols.map((c, idx) => {
-      const raw = visibleText(row[c]);
-      return {originalIndex: idx, text: stripOptionMarker(raw), raw, marked: hasCorrectMarker(raw)};
-    }).filter(o => o.text);
-    if (options.length < 2) {
-      errors.push({row:r+1, reason:'Thiếu phương án lựa chọn', question});
-      continue;
-    }
-    const correctIndex = resolveCorrectIndex(mapping.answerCol >= 0 ? row[mapping.answerCol] : '', options);
-    if (correctIndex < 0 || correctIndex >= options.length) {
-      errors.push({row:r+1, reason:'Không xác định được đáp án đúng', question});
-      continue;
-    }
-    bank.push({
-      id: visibleText(mapping.idCol >= 0 ? row[mapping.idCol] : '') || String(bank.length + 1),
-      sourceRow: r + 1,
-      question,
-      options: options.map(o => o.text),
-      correctIndex,
-      correctText: options[correctIndex].text,
-      source: visibleText(mapping.sourceCol >= 0 ? row[mapping.sourceCol] : ''),
-      answerRaw: visibleText(mapping.answerCol >= 0 ? row[mapping.answerCol] : ''),
-      sheetHeaderRow: headerIdx + 1
-    });
+function parseRows(rows, sheetName, manualMapping){
+  const mapping = manualMapping || detectMapping(rows);
+  if(mapping.questionCol < 0) throw new Error('Không tìm thấy cột câu hỏi.');
+  if(mapping.optionCols.length < 2) throw new Error('Không tìm thấy đủ cột phương án lựa chọn.');
+  const bank=[], errors=[];
+  for(let r=mapping.headerIdx+1; r<rows.length; r++){
+    const row=rows[r] || [];
+    const question = cleanQuestion(row[mapping.questionCol]);
+    const rawOptions = mapping.optionCols.map(c => ({col:c, raw: visibleText(row[c])}));
+    let markedCorrect = -1;
+    let options = rawOptions.map((o,idx) => {
+      const marked = /^\s*(?:\[x\]|\(x\)|✓|✔|\*)\s*/i.test(o.raw) || /\s*(?:\[dung\]|\[đúng\])\s*$/i.test(o.raw);
+      if(marked && markedCorrect < 0) markedCorrect = idx;
+      return cleanOption(o.raw);
+    }).filter(Boolean);
+    const id = mapping.idCol >= 0 ? visibleText(row[mapping.idCol]) : String(bank.length + 1);
+    const source = mapping.sourceCol >= 0 ? visibleText(row[mapping.sourceCol]) : '';
+    const answerRaw = mapping.answerCol >= 0 ? visibleText(row[mapping.answerCol]) : '';
+    let correctIndex = inferAnswerIndex(answerRaw, options);
+    if(correctIndex < 0 && markedCorrect >= 0) correctIndex = markedCorrect;
+    if(!question){ if(row.some(x=>visibleText(x))) errors.push({row:r+1, reason:'Thiếu câu hỏi'}); continue; }
+    if(options.length < 2){ errors.push({row:r+1, reason:'Thiếu phương án lựa chọn', question:question.slice(0,80)}); continue; }
+    if(correctIndex < 0 || correctIndex >= options.length){ errors.push({row:r+1, reason:'Không xác định được đáp án đúng', answerRaw, question:question.slice(0,80)}); continue; }
+    bank.push({id:id || String(bank.length+1), sourceRow:r+1, sheetName, question, options, correctIndex, correctText:options[correctIndex], source, answerRaw});
   }
   return {bank, errors, mapping};
 }
-
-function renderStats() {
-  const sheetName = els.sheet.value || 'Chưa chọn sheet';
-  els.statPills.innerHTML = `
-    <span class="pill">${state.bank.length} câu hợp lệ</span>
-    <span class="pill">${state.errors.length} dòng lỗi</span>
-    <span class="pill">${escapeHtml(sheetName)}</span>
-  `;
-  els.btnStart.disabled = state.bank.length === 0;
-  els.btnSave.disabled = state.bank.length === 0;
-  if (state.bank.length) els.count.max = String(state.bank.length);
+function cleanQuestion(v){ return visibleText(v).replace(/^\s*(?:câu\s*)?\d+[.)\-:]\s*/i,'').trim(); }
+function cleanOption(v){ return visibleText(v).replace(/^\s*(?:\[x\]|\(x\)|✓|✔|\*)\s*/i,'').replace(/\s*(?:\[dung\]|\[đúng\])\s*$/i,'').replace(/^\s*(?:[A-Fa-f]|[1-6])\s*[.)\-:]\s*/,'').trim(); }
+function inferAnswerIndex(answerRaw, options){
+  const a = visibleText(answerRaw); if(!a) return -1;
+  const an = norm(a);
+  if(/^\d+$/.test(an)){ const i=parseInt(an,10)-1; return i>=0&&i<options.length?i:-1; }
+  if(/^[a-f]$/.test(an)){ const i=an.charCodeAt(0)-97; return i>=0&&i<options.length?i:-1; }
+  let m = an.match(/(?:phuong an|lua chon|option|choice|pa)\s*([1-6a-f])/);
+  if(m){ const x=m[1]; const i=/\d/.test(x)?parseInt(x,10)-1:x.charCodeAt(0)-97; return i>=0&&i<options.length?i:-1; }
+  m = an.match(/(?:dap an|answer)\s*[:\-]?\s*([1-6a-f])/);
+  if(m){ const x=m[1]; const i=/\d/.test(x)?parseInt(x,10)-1:x.charCodeAt(0)-97; return i>=0&&i<options.length?i:-1; }
+  const exact = options.findIndex(o => norm(o) === an); if(exact >= 0) return exact;
+  if(an.length > 8){ const contains = options.findIndex(o => norm(o).includes(an) || an.includes(norm(o))); if(contains >= 0) return contains; }
+  return -1;
 }
-
-function renderPreview() {
-  if (!state.bank.length) {
-    els.preview.innerHTML = '<table><tbody><tr><td class="muted">Chưa có dữ liệu hợp lệ.</td></tr></tbody></table>';
-    return;
+function colName(idx){ if(idx<0) return ''; let s='', n=idx+1; while(n>0){ const m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); } return s; }
+function renderMapping(rows, mapping){
+  if(!rows || !rows.length || !els.manualQuestionCol) return;
+  const m = mapping || detectMapping(rows);
+  const headerIdx = Math.max(0, Number(els.manualHeaderRow.value || m.headerIdx+1)-1);
+  const headers = rows[headerIdx] || rows[m.headerIdx] || [];
+  const sample = rows[headerIdx+1] || [];
+  const maxCol = Math.max(headers.length, sample.length, 8);
+  els.manualHeaderRow.value = String(headerIdx + 1);
+  const none = '<option value="-1">-- Không dùng --</option>';
+  let opts = '';
+  for(let c=0;c<maxCol;c++){
+    const head = visibleText(headers[c]) || `(cột ${colName(c)})`;
+    const ex = visibleText(sample[c]);
+    opts += `<option value="${c}">${colName(c)} - ${escapeHtml(head)}${ex?' | VD: '+escapeHtml(ex.slice(0,65)):''}</option>`;
   }
-  const rows = state.bank.slice(0, 30).map((q, i) => `
-    <tr>
-      <td class="nowrap">${i + 1}</td>
-      <td>${escapeHtml(q.question)}</td>
-      <td>${escapeHtml(q.correctText)}</td>
-      <td>${escapeHtml(q.options.join(' | '))}</td>
-      <td>${escapeHtml(q.source || '')}</td>
-    </tr>`).join('');
-  els.preview.innerHTML = `<table><thead><tr><th>STT</th><th>Câu hỏi</th><th>Đáp án đúng</th><th>Phương án</th><th>Căn cứ/giải thích</th></tr></thead><tbody>${rows}</tbody></table>`;
+  els.manualQuestionCol.innerHTML = none + opts;
+  els.manualAnswerCol.innerHTML = none + opts;
+  els.manualSourceCol.innerHTML = none + opts;
+  els.manualOptionCols.innerHTML = opts;
+  const use = mapping || m;
+  els.manualQuestionCol.value = String(use.questionCol);
+  els.manualAnswerCol.value = String(use.answerCol);
+  els.manualSourceCol.value = String(use.sourceCol);
+  [...els.manualOptionCols.options].forEach(o => o.selected = use.optionCols.includes(Number(o.value)));
+}
+function manualMappingFromUI(rows){
+  const headerIdx = Math.max(0, Number(els.manualHeaderRow.value || 1)-1);
+  return {headerIdx, headers: rows[headerIdx] || [], idCol:-1, questionCol:Number(els.manualQuestionCol.value), answerCol:Number(els.manualAnswerCol.value), sourceCol:Number(els.manualSourceCol.value), optionCols:[...els.manualOptionCols.selectedOptions].map(o=>Number(o.value)).filter(v=>v>=0), manual:true};
 }
 
-async function handleFileSelected() {
-  const file = els.file.files && els.file.files[0];
-  if (!file) return;
-  state.fileName = file.name;
-  setStatus('Đang đọc workbook: ' + file.name + ' ...');
-  try {
-    await idle();
-    state.workbook = await readWorkbookFromFile(file);
-    els.sheet.innerHTML = state.workbook.SheetNames.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
-    parseSelectedSheet();
-  } catch (err) {
-    console.error(err);
-    setStatus('❌ Không đọc được Excel: ' + (err.message || err), 'bad');
-  }
-}
-
-function parseSelectedSheet() {
-  if (!state.workbook) return;
-  const sheetName = els.sheet.value || state.workbook.SheetNames[0];
-  const ws = state.workbook.Sheets[sheetName];
-  const rows = XLSX.utils.sheet_to_json(ws, {header:1, raw:false, defval:''});
-  try {
-    const {bank, errors, mapping} = parseRows(rows);
-    state.bank = bank; state.errors = errors; state.mapping = mapping;
-    renderStats(); renderPreview();
-    const msg = [
-      `✅ Đã nạp ${bank.length} câu hỏi hợp lệ từ “${state.fileName || 'workbook'}” / sheet “${sheetName}”.`,
-      `Hàng tiêu đề phát hiện: ${mapping.headerIdx + 1}.`,
-      `Cột câu hỏi: ${colName(mapping.questionCol)}; cột đáp án: ${mapping.answerCol >= 0 ? colName(mapping.answerCol) : 'không có'}; cột phương án: ${mapping.optionCols.map(colName).join(', ')}; cột căn cứ/giải thích: ${mapping.sourceCol >= 0 ? colName(mapping.sourceCol) : 'không có'}.`,
-      errors.length ? `⚠️ Có ${errors.length} dòng chưa nạp được. Ví dụ: dòng ${errors[0].row} - ${errors[0].reason}.` : 'Không có dòng lỗi.'
-    ].join('\n');
-    setStatus(msg);
-  } catch (err) {
-    console.error(err);
-    setStatus('❌ ' + (err.message || err), 'bad');
-  }
-}
-
-function colName(idx) {
-  if (idx < 0) return '';
-  let s = '', n = idx + 1;
-  while (n > 0) { const m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); }
-  return s;
-}
-
-function idle() { return new Promise(res => setTimeout(res, 20)); }
-
-function mulberry32(seed) {
-  let a = seed >>> 0;
-  return function() {
-    a += 0x6D2B79F5;
-    let t = a;
-    t = Math.imul(t ^ t >>> 15, t | 1);
-    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  };
-}
-function hashSeed(str) {
-  const s = String(str || Date.now() + ':' + Math.random());
-  let h = 2166136261;
-  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
-  return h >>> 0;
-}
-function shuffled(arr, rand) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-  return a;
-}
-
-function startQuiz() {
-  if (!state.bank.length) return;
-  const wanted = Math.max(1, Math.min(Number(els.count.value || 1), state.bank.length));
-  const seedText = els.seed.value.trim() || String(Date.now());
-  const rand = mulberry32(hashSeed(seedText));
-  let qs = els.shuffleQ.checked ? shuffled(state.bank, rand) : state.bank.slice();
-  qs = qs.slice(0, wanted);
-  state.quiz = qs.map((q, qi) => {
-    const opts = q.options.map((text, idx) => ({text, sourceIndex: idx, isCorrect: idx === q.correctIndex}));
-    const finalOpts = els.shuffleO.checked ? shuffled(opts, rand) : opts;
-    return {no: qi + 1, item: q, options: finalOpts, userChoice: null};
+function hashSeed(text){ let h=2166136261; const s=String(text || Date.now()); for(let i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h,16777619); } return h>>>0; }
+function rng(seed){ let a=seed>>>0; return function(){ a+=0x6D2B79F5; let t=a; t=Math.imul(t^t>>>15,t|1); t^=t+Math.imul(t^t>>>7,t|61); return ((t^t>>>14)>>>0)/4294967296; }; }
+function shuffled(arr, rand){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(rand()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function startQuiz(){
+  if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi.', 'bad'); return; }
+  const count = Math.max(1, Math.min(Number(els.quizCount.value || 1), state.bank.length));
+  const seedText = els.seedInput.value.trim() || new Date().toISOString();
+  const rand = rng(hashSeed(seedText));
+  let questions = els.shuffleQuestions.checked ? shuffled(state.bank, rand) : state.bank.slice();
+  questions = questions.slice(0, count);
+  state.quiz = questions.map((q, qi) => {
+    const opts = q.options.map((text, idx) => ({text, originalIndex:idx, isCorrect:idx===q.correctIndex}));
+    const finalOpts = els.shuffleOptions.checked ? shuffled(opts, rand) : opts;
+    return {no: qi+1, item: q, options: finalOpts, userChoice: null};
   });
   state.submitted = false; state.lastResult = null;
   renderQuiz();
-  els.btnSubmit.disabled = false; els.btnSubmitSticky.disabled = false;
-  els.resultSummary.textContent = 'Chưa nộp bài.';
-  els.resultList.innerHTML = '';
-  setStatus(`✅ Đã tạo đề ${wanted} câu. Seed mã đề: ${seedText}.`);
+  els.btnSubmitQuiz.disabled = false; els.btnSubmitSticky.disabled = false;
+  els.resultSummary.textContent = 'Chưa nộp bài.'; els.resultList.innerHTML = '';
+  setStatus(`✅ Đã tạo đề ${count} câu. Mã đảo đề/seed: ${seedText}`, 'good');
   location.hash = '#quizSection';
 }
-
-function renderQuiz() {
-  if (!state.quiz.length) {
-    els.quizInfo.textContent = 'Chưa tạo đề.'; els.quizList.innerHTML = ''; updateProgress(); return;
-  }
-  els.quizInfo.innerHTML = `Đề gồm <b>${state.quiz.length}</b> câu. ${els.shuffleQ.checked ? 'Có đảo câu hỏi.' : 'Không đảo câu hỏi.'} ${els.shuffleO.checked ? 'Có đảo phương án.' : 'Không đảo phương án.'}`;
-  els.quizList.innerHTML = state.quiz.map((q, qi) => `
-    <article class="question-card" data-q="${qi}">
-      <div class="question-title">Câu ${q.no}. ${escapeHtml(q.item.question)}</div>
-      ${q.options.map((op, oi) => {
-        const letter = 'ABCDEF'[oi] || String(oi + 1);
-        let cls = 'option';
-        if (state.submitted) {
-          if (op.isCorrect) cls += ' right';
-          if (q.userChoice === oi && !op.isCorrect) cls += ' wrong';
-        } else if (q.userChoice === oi) cls += ' chosen';
-        return `<label class="${cls}"><input type="radio" name="q${qi}" value="${oi}" ${q.userChoice===oi?'checked':''} ${state.submitted?'disabled':''}><span class="letter">${letter}</span><span>${escapeHtml(op.text)}</span></label>`;
-      }).join('')}
-      <div class="muted small">Nguồn dòng Excel: ${escapeHtml(q.item.sourceRow)}${q.item.source ? ' | ' + escapeHtml(q.item.source) : ''}</div>
-    </article>`).join('');
-  els.quizList.querySelectorAll('input[type=radio]').forEach(inp => {
-    inp.addEventListener('change', ev => {
-      const card = ev.target.closest('.question-card');
-      state.quiz[Number(card.dataset.q)].userChoice = Number(ev.target.value);
-      renderQuiz(); updateProgress();
-    });
-  });
+function resetQuiz(){
+  state.quiz=[]; state.submitted=false; state.lastResult=null;
+  if(els.quizInfo) els.quizInfo.textContent='Chưa tạo đề.';
+  if(els.quizList) els.quizList.innerHTML='';
+  if(els.resultSummary) els.resultSummary.textContent='Chưa nộp bài.';
+  if(els.resultList) els.resultList.innerHTML='';
+  if(els.btnSubmitQuiz) els.btnSubmitQuiz.disabled=true;
+  if(els.btnSubmitSticky) els.btnSubmitSticky.disabled=true;
   updateProgress();
 }
-
-function updateProgress() {
-  const total = state.quiz.length, done = state.quiz.filter(q => q.userChoice !== null).length;
-  els.progressText.textContent = `${done}/${total}`;
-  els.progressBar.style.width = total ? `${done / total * 100}%` : '0%';
+function renderQuiz(){
+  if(!state.quiz.length){ els.quizInfo.textContent='Chưa tạo đề.'; els.quizList.innerHTML=''; updateProgress(); return; }
+  els.quizInfo.innerHTML = `Đề gồm <b>${state.quiz.length}</b> câu. ${els.shuffleQuestions.checked?'Có đảo câu hỏi.':'Không đảo câu hỏi.'} ${els.shuffleOptions.checked?'Có đảo phương án.':'Không đảo phương án.'}`;
+  els.quizList.innerHTML = state.quiz.map((q, qi) => {
+    const opts = q.options.map((op, oi) => {
+      const letter = 'ABCDEF'[oi] || String(oi+1);
+      let cls = 'option';
+      if(state.submitted){ if(op.isCorrect) cls += ' right'; if(q.userChoice === oi && !op.isCorrect) cls += ' wrong'; }
+      else if(q.userChoice === oi) cls += ' chosen';
+      return `<label class="${cls}"><input type="radio" name="q${qi}" value="${oi}" ${q.userChoice===oi?'checked':''} ${state.submitted?'disabled':''}><span class="letter">${letter}</span><span>${escapeHtml(op.text)}</span></label>`;
+    }).join('');
+    return `<article class="question-card" data-q="${qi}"><div class="question-title">Câu ${q.no}. ${escapeHtml(q.item.question)}</div>${opts}<div class="muted small">Nguồn: ${escapeHtml(q.item.sheetName||'')} dòng ${escapeHtml(q.item.sourceRow||'')}${q.item.source?' | '+escapeHtml(q.item.source):''}</div></article>`;
+  }).join('');
+  els.quizList.querySelectorAll('input[type=radio]').forEach(input => input.addEventListener('change', ev => {
+    const card = ev.target.closest('.question-card'); state.quiz[Number(card.dataset.q)].userChoice = Number(ev.target.value); renderQuiz(); updateProgress();
+  }));
+  updateProgress();
 }
-
-function submitQuiz() {
-  if (!state.quiz.length) return;
-  const unanswered = state.quiz.filter(q => q.userChoice === null).length;
-  if (unanswered && !confirm(`Còn ${unanswered} câu chưa chọn. Vẫn nộp bài?`)) return;
-  let correct = 0;
-  state.quiz.forEach(q => { if (q.userChoice !== null && q.options[q.userChoice]?.isCorrect) correct++; });
-  const total = state.quiz.length;
-  state.submitted = true;
-  state.lastResult = {correct, total, score10: total ? correct / total * 10 : 0, time: new Date().toLocaleString('vi-VN')};
+function updateProgress(){
+  const total=state.quiz.length, done=state.quiz.filter(q=>q.userChoice !== null).length;
+  if(els.progressText) els.progressText.textContent = `${done}/${total}`;
+  if(els.progressBar) els.progressBar.style.width = total ? `${done/total*100}%` : '0%';
+}
+function submitQuiz(){
+  if(!state.quiz.length) return;
+  const unanswered = state.quiz.filter(q=>q.userChoice === null).length;
+  if(unanswered && !confirm(`Còn ${unanswered} câu chưa chọn. Vẫn nộp bài?`)) return;
+  let correct=0; state.quiz.forEach(q => { if(q.userChoice !== null && q.options[q.userChoice]?.isCorrect) correct++; });
+  state.submitted=true; state.lastResult={correct,total:state.quiz.length,score10:state.quiz.length?correct/state.quiz.length*10:0,time:new Date().toLocaleString('vi-VN')};
   renderQuiz(); renderResult();
-  els.btnSubmit.disabled = true; els.btnSubmitSticky.disabled = true;
+  els.btnSubmitQuiz.disabled = true; els.btnSubmitSticky.disabled = true;
   location.hash = '#resultSection';
 }
-
-function renderResult() {
-  const r = state.lastResult;
-  if (!r) return;
-  els.resultSummary.innerHTML = `<span class="pill">Đúng ${r.correct}/${r.total}</span> <span class="pill">Điểm ${(r.score10).toFixed(2)}/10</span> <span class="pill">${escapeHtml(r.time)}</span>`;
+function renderResult(){
+  const r=state.lastResult; if(!r) return;
+  els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span>`;
   els.resultList.innerHTML = state.quiz.map((q, qi) => {
     const chosen = q.userChoice === null ? null : q.options[q.userChoice];
-    const correctOpt = q.options.find(o => o.isCorrect);
-    const ok = chosen && chosen.isCorrect;
-    const optionRows = q.options.map((op, oi) => {
-      const letter = 'ABCDEF'[oi] || String(oi + 1);
-      const status = op.isCorrect ? '<span class="ok">Đáp án đúng</span>' : (q.userChoice === oi ? '<span class="bad">Bạn đã chọn</span>' : '<span class="muted">Phương án sai</span>');
-      const explain = op.isCorrect
-        ? `<div class="analysis-row source"><b>Vì sao đúng:</b> Đây là phương án được cột đáp án của Excel xác định là đúng.${q.item.source ? '<br><b>Căn cứ:</b> ' + escapeHtml(q.item.source) : ''}</div>`
-        : `<div class="analysis-row">${els.explain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
+    const correctOpt = q.options.find(o => o.isCorrect) || q.options[0];
+    const ok = !!(chosen && chosen.isCorrect);
+    const rows = q.options.map((op, oi) => {
+      const letter = 'ABCDEF'[oi] || String(oi+1);
+      const status = op.isCorrect ? '<span class="ok">Đáp án đúng</span>' : (q.userChoice===oi ? '<span class="bad">Bạn đã chọn</span>' : '<span class="muted">Phương án sai</span>');
+      const explain = op.isCorrect ? `<div class="analysis-row source"><b>Vì sao đúng:</b> Đây là phương án được cột đáp án trong Excel xác định là đúng.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>` : `<div class="analysis-row">${els.showAutoExplain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
       return `<tr><td class="nowrap"><b>${letter}</b></td><td>${escapeHtml(op.text)}</td><td>${status}</td><td>${explain}</td></tr>`;
     }).join('');
-    return `<article class="question-card">
-      <h3>Câu ${qi + 1}. ${ok ? '<span class="ok">Đúng</span>' : '<span class="bad">Sai / chưa chọn</span>'}</h3>
-      <p><b>${escapeHtml(q.item.question)}</b></p>
-      <p>Chọn của bạn: <b>${chosen ? escapeHtml(chosen.text) : 'Chưa chọn'}</b><br>Đáp án đúng: <b class="ok">${escapeHtml(correctOpt.text)}</b></p>
-      <div class="table-wrap"><table><thead><tr><th>PA</th><th>Nội dung</th><th>Trạng thái</th><th>Giải thích khác nhau so với đáp án đúng</th></tr></thead><tbody>${optionRows}</tbody></table></div>
-    </article>`;
+    return `<article class="question-card"><h3>Câu ${qi+1}. ${ok?'<span class="ok">Đúng</span>':'<span class="bad">Sai / chưa chọn</span>'}</h3><p><b>${escapeHtml(q.item.question)}</b></p><p>Chọn của bạn: <b>${chosen?escapeHtml(chosen.text):'Chưa chọn'}</b><br>Đáp án đúng: <b class="ok">${escapeHtml(correctOpt.text)}</b></p><div class="table-wrap"><table><thead><tr><th>PA</th><th>Nội dung</th><th>Trạng thái</th><th>Cột giải thích khác nhau so với đáp án đúng</th></tr></thead><tbody>${rows}</tbody></table></div></article>`;
   }).join('');
 }
 
-async function saveBank() {
-  if (!state.bank.length) return;
-  await idbPut(BANK_KEY, {bank: state.bank, savedAt: new Date().toISOString(), fileName: state.fileName || '', mapping: state.mapping});
-  setStatus(`✅ Đã lưu ${state.bank.length} câu hỏi vào bộ nhớ trình duyệt. Lần sau có thể bấm “Dùng bộ nhớ đã lưu”.`);
+async function clearOldCache(){
+  try {
+    if('serviceWorker' in navigator){ const regs = await navigator.serviceWorker.getRegistrations(); await Promise.all(regs.map(r=>r.unregister())); }
+    if('caches' in window){ const names = await caches.keys(); await Promise.all(names.map(n=>caches.delete(n))); }
+    setStatus('✅ Đã xóa cache/service worker cũ của trình duyệt. Hãy tải lại trang nếu cần.', 'good');
+  } catch(e){ setStatus('Không xóa được cache cũ: ' + (e.message || e), 'bad'); }
 }
-async function loadBank() {
-  const data = await idbGet(BANK_KEY);
-  if (!data || !data.bank) { setStatus('Chưa có ngân hàng đã lưu trong bộ nhớ trình duyệt.'); return; }
-  state.bank = data.bank; state.errors = []; state.mapping = data.mapping || null; state.fileName = data.fileName || 'Bộ nhớ đã lưu';
-  renderStats(); renderPreview();
-  setStatus(`✅ Đã nạp ${state.bank.length} câu hỏi từ bộ nhớ trình duyệt. Thời điểm lưu: ${data.savedAt ? new Date(data.savedAt).toLocaleString('vi-VN') : 'không rõ'}.`);
-}
-async function clearBank() {
-  if (!confirm('Xóa ngân hàng câu hỏi đã lưu trong bộ nhớ trình duyệt?')) return;
-  await idbDel(BANK_KEY);
-  setStatus('Đã xóa ngân hàng đã lưu. Dữ liệu đang mở trên màn hình không bị xóa cho đến khi tải lại trang.');
-}
-
-function registerSW() {
-  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-    navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW register failed:', err));
+function registerSW(){
+  if('serviceWorker' in navigator && location.protocol !== 'file:'){
+    navigator.serviceWorker.register('./sw.js?v=' + encodeURIComponent(APP_VERSION)).catch(err => console.warn('SW register failed:', err));
   }
 }
-
-els.file.addEventListener('change', handleFileSelected);
-els.btnParse.addEventListener('click', () => state.workbook ? parseSelectedSheet() : handleFileSelected());
-els.sheet.addEventListener('change', parseSelectedSheet);
-els.btnStart.addEventListener('click', startQuiz);
-els.btnSubmit.addEventListener('click', submitQuiz);
-els.btnSubmitSticky.addEventListener('click', submitQuiz);
-els.btnSave.addEventListener('click', () => saveBank().catch(e => setStatus('❌ Không lưu được: ' + e.message, 'bad')));
-els.btnLoad.addEventListener('click', () => loadBank().catch(e => setStatus('❌ Không đọc bộ nhớ: ' + e.message, 'bad')));
-els.btnClear.addEventListener('click', () => clearBank().catch(e => setStatus('❌ Không xóa bộ nhớ: ' + e.message, 'bad')));
-els.btnPrint.addEventListener('click', () => window.print());
-registerSW();
-renderStats();
+function bindEvents(){
+  els.excelFile.addEventListener('change', handleExcelFile);
+  els.btnReadSheet.addEventListener('click', () => state.workbook ? parseSelectedSheet(false) : handleExcelFile());
+  els.btnReadAll.addEventListener('click', parseAllSheets);
+  els.sheetSelect.addEventListener('change', () => parseSelectedSheet(false));
+  els.btnRefreshMapping.addEventListener('click', () => state.currentRows.length ? renderMapping(state.currentRows, null) : setStatus('Chưa có sheet để hiển thị cột.', 'bad'));
+  els.btnApplyMapping.addEventListener('click', () => parseSelectedSheet(true));
+  els.btnUseEmbedded.addEventListener('click', () => { parseEmbedded(); setStatus(`✅ Đã nạp lại ${state.bank.length} câu hỏi nhúng trong HTML.`, 'good'); });
+  els.btnSaveEmbedded.addEventListener('click', () => saveBank('dữ liệu nhúng'));
+  els.btnSaveBank.addEventListener('click', () => saveBank('ngân hàng hiện tại'));
+  els.btnLoadBank.addEventListener('click', loadBank);
+  els.btnClearBank.addEventListener('click', clearBank);
+  els.btnStartQuiz.addEventListener('click', startQuiz);
+  els.btnSubmitQuiz.addEventListener('click', submitQuiz);
+  els.btnSubmitSticky.addEventListener('click', submitQuiz);
+  els.btnPrint.addEventListener('click', () => window.print());
+  els.btnClearOldCache.addEventListener('click', clearOldCache);
+}
+function boot(){
+  initElements();
+  try { parseEmbedded(); }
+  catch(e){ console.error(e); setStatus('❌ Lỗi nạp dữ liệu nhúng: ' + (e.message || e), 'bad'); }
+  bindEvents();
+  registerSW();
+  saveBank('dữ liệu nhúng', true).catch(()=>{});
+  setStatus(`✅ Đã tự nạp ${state.bank.length} câu hỏi nhúng từ Excel mới. Có thể bấm “Tạo đề” ngay, không cần chọn file Excel.`, 'good');
+}
+window.addEventListener('DOMContentLoaded', boot);
