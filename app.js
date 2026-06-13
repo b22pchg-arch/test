@@ -1,7 +1,7 @@
 
 'use strict';
 
-const APP_VERSION = 'V7.0-20260613-prefix-sequence-diff';
+const APP_VERSION = 'V8.0-20260613-mobile-compact-no-overflow';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -690,7 +690,7 @@ function renderResult(){
       const status = op.isCorrect ? '<span class="ok">Đáp án đúng</span>' : (q.userChoice===oi ? '<span class="bad">Bạn đã chọn</span>' : '<span class="muted">Phương án sai</span>');
       const explain = op.isCorrect ? `<div class="analysis-row source"><b>Vì sao đúng:</b> Đây là phương án được cột đáp án trong Excel xác định là đúng; các phương án sai bị loại vì thiếu, đổi sai hoặc thêm ý không khớp với phương án này.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>` : `<div class="analysis-row">${els.showAutoExplain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
       const trClass = op.isCorrect ? 'result-status-ok' : (q.userChoice===oi ? 'result-status-bad' : '');
-      return `<tr class="${trClass}"><td class="nowrap"><b>${letter}</b></td><td>${escapeHtml(op.text)}</td><td>${status}</td><td>${explain}</td></tr>`;
+      return `<tr class="${trClass}"><td data-label="PA" class="nowrap"><b>${letter}</b></td><td data-label="Nội dung">${escapeHtml(op.text)}</td><td data-label="Trạng thái">${status}</td><td data-label="Giải thích">${explain}</td></tr>`;
     }).join('');
     return `<article class="question-card"><h3>Câu ${qi+1}. ${ok?'<span class="ok">Đúng</span>':'<span class="bad">Sai / chưa chọn</span>'}</h3><p><b>${escapeHtml(q.item.question)}</b></p><div class="result-question-meta"><span class="pill ${ok?'okp':'warnp'}">${ok?'Bạn chọn đúng':'Cần xem lại'}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${chosenDiff}<div class="table-wrap"><table><thead><tr><th>PA</th><th>Nội dung</th><th>Trạng thái</th><th>Giải thích trọng tâm</th></tr></thead><tbody>${rows}</tbody></table></div></article>`;
   }).join('');
