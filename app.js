@@ -1,7 +1,7 @@
 
 'use strict';
 
-const APP_VERSION = 'V5.0-20260613-sequence-diff';
+const APP_VERSION = 'V6.0-20260613-reverse-wrong-focus';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -225,34 +225,43 @@ function sequenceExplainHtml(correct, wrong){
   const wSeq = sequenceTokens(wrong, true);
   if(!cSeq.length || !wSeq.length) return '';
   const al = lcsSequence(cSeq, wSeq);
-  const pctByCorrect = Math.round((al.lcsLen / Math.max(1, cSeq.length)) * 100);
+  const pctWrongMatched = Math.round((al.lcsLen / Math.max(1, wSeq.length)) * 100);
+  const pctCorrectCovered = Math.round((al.lcsLen / Math.max(1, cSeq.length)) * 100);
   const pctBalanced = Math.round((2 * al.lcsLen / Math.max(1, cSeq.length + wSeq.length)) * 100);
   const pref = prefixCount(cSeq, wSeq);
   const suff = suffixCount(cSeq, wSeq, pref);
   const first = al.blocks[0];
   const biggest = al.blocks.slice().sort((x,y) => (y.del.length + y.add.length) - (x.del.length + x.add.length))[0];
+  const correctMissingInWrong = al.blocks.flatMap(b => b.del || []);
+  const wrongOnly = al.blocks.flatMap(b => b.add || []);
   const lines = [];
-  lines.push(`<div class="diff-block sequence"><b>So khớp chuỗi đúng → sai:</b> giống <b>${pctByCorrect}%</b> nội dung của đáp án đúng theo đúng thứ tự; độ giống cân bằng hai phương án: <b>${pctBalanced}%</b>.</div>`);
-  lines.push(`<div class="diff-block"><b>Giống liên tiếp từ đầu:</b> ${pref}/${cSeq.length} từ/cụm${pref?': '+htmlTermTokenList(cSeq.slice(0, Math.min(pref, 10)), 'same'):'. Bắt đầu đã khác.'}</div>`);
+  lines.push(`<div class="diff-block sequence"><b>So từ phương án sai sang đáp án đúng:</b> phương án sai trùng <b>${pctWrongMatched}%</b> nội dung của đáp án đúng; nhưng mới bao phủ <b>${pctCorrectCovered}%</b> ý của đáp án đúng. Độ giống cân bằng: <b>${pctBalanced}%</b>.</div>`);
+  lines.push(`<div class="diff-block"><b>Phần đầu giống nhau:</b> ${pref}/${cSeq.length} từ/cụm${pref?': '+htmlTermTokenList(cSeq.slice(0, Math.min(pref, 10)), 'same'):'. Hai phương án khác ngay từ đầu.'}</div>`);
   if(first){
-    const pos = (Number.isFinite(first.cStart) ? first.cStart + 1 : pref + 1);
-    const rightPart = seqText(first.del) || '(không có, phương án sai thêm nội dung)';
-    const wrongPart = seqText(first.add) || '(bị thiếu trong phương án sai)';
-    lines.push(`<div class="diff-block"><b>Khác đầu tiên tại vị trí khoảng từ/cụm số ${pos}:</b><br>Đáp án đúng: ${htmlTermTokenList(first.del.length?first.del:[rightPart], 'need')}<br>Phương án này: ${htmlTermTokenList(first.add.length?first.add:[wrongPart], 'wrongterm')}</div>`);
+    const pos = (Number.isFinite(first.wStart) ? first.wStart + 1 : pref + 1);
+    const correctNeed = first.del.length ? first.del : ['(phương án sai thêm nội dung không có trong đáp án đúng)'];
+    const wrongSaid = first.add.length ? first.add : ['(phương án sai thiếu đoạn này)'];
+    lines.push(`<div class="diff-block"><b>Điểm sai đầu tiên khi đọc phương án sai:</b> tại khoảng từ/cụm số ${pos}.<br>Phương án sai đang ghi: ${htmlTermTokenList(wrongSaid, 'wrongterm')}<br>Đáp án đúng phải có: ${htmlTermTokenList(correctNeed, 'need')}</div>`);
+  }
+  if(correctMissingInWrong.length){
+    lines.push(`<div class="diff-block"><b>Đáp án đúng có nhưng phương án sai không có/đổi sai:</b> ${htmlTermTokenList(correctMissingInWrong, 'need')}</div>`);
+  }
+  if(wrongOnly.length){
+    lines.push(`<div class="diff-block"><b>Phương án sai có thêm hoặc thay bằng:</b> ${htmlTermTokenList(wrongOnly, 'wrongterm')}</div>`);
   }
   if(biggest && biggest !== first){
-    lines.push(`<div class="diff-block"><b>Đoạn khác lớn nhất:</b><br>Đáp án đúng có: ${htmlTermTokenList(biggest.del, 'need') || '<span class="muted">không có</span>'}<br>Phương án này có: ${htmlTermTokenList(biggest.add, 'wrongterm') || '<span class="muted">không có</span>'}</div>`);
+    lines.push(`<div class="diff-block"><b>Đoạn lệch lớn nhất:</b><br>Phương án sai ghi: ${htmlTermTokenList(biggest.add, 'wrongterm') || '<span class="muted">thiếu đoạn tương ứng</span>'}<br>Đáp án đúng yêu cầu: ${htmlTermTokenList(biggest.del, 'need') || '<span class="muted">không yêu cầu đoạn này</span>'}</div>`);
   }
   if(suff){
-    lines.push(`<div class="diff-block"><b>Giống lại ở cuối chuỗi:</b> ${suff} từ/cụm cuối ${htmlTermTokenList(cSeq.slice(Math.max(cSeq.length-suff,0)).slice(0,10), 'same')}</div>`);
+    lines.push(`<div class="diff-block"><b>Phần cuối vẫn giống nhau:</b> ${suff} từ/cụm cuối ${htmlTermTokenList(cSeq.slice(Math.max(cSeq.length-suff,0)).slice(0,10), 'same')}</div>`);
   }
   if(al.blocks.length > 1){
-    const more = al.blocks.slice(0, 4).map((b,idx) => {
-      const d = seqText(b.del, 8) || '∅';
+    const more = al.blocks.slice(0, 5).map((b,idx) => {
       const a = seqText(b.add, 8) || '∅';
-      return `<div class="small">${idx+1}) Đúng: <b>${escapeHtml(d)}</b> ↔ Sai: <b>${escapeHtml(a)}</b></div>`;
+      const d = seqText(b.del, 8) || '∅';
+      return `<div class="small">${idx+1}) Sai ghi: <b>${escapeHtml(a)}</b> → Đúng phải là/cần có: <b>${escapeHtml(d)}</b></div>`;
     }).join('');
-    lines.push(`<details><summary>Các đoạn khác theo thứ tự từ đầu đến cuối</summary>${more}</details>`);
+    lines.push(`<details><summary>Các điểm sai theo thứ tự từ đầu đến cuối</summary>${more}</details>`);
   }
   return lines.join('');
 }
@@ -266,36 +275,36 @@ function explainDifference(correct, wrong){
   const sameTermKeys = new Set(wrongTerms.map(t=>t.key));
   const correctTermKeys = new Set(correctTerms.map(t=>t.key));
   const sameTerms = chooseShort(correctTerms.filter(t => sameTermKeys.has(t.key)), 5);
-  const missingTerms = chooseContrastTerms(correctTerms.filter(t => !sameTermKeys.has(t.key)), wrongTerms, 6);
-  const addedTerms = chooseContrastTerms(wrongTerms.filter(t => !correctTermKeys.has(t.key)), correctTerms, 6);
+  const missingTerms = chooseContrastTerms(correctTerms.filter(t => !sameTermKeys.has(t.key)), wrongTerms, 7);
+  const addedTerms = chooseContrastTerms(wrongTerms.filter(t => !correctTermKeys.has(t.key)), correctTerms, 7);
 
   const correctPol = extractPolarity(correct), wrongPol = extractPolarity(wrong);
   const missingPol = correctPol.filter(x => !wrongPol.includes(x));
   const addedPol = wrongPol.filter(x => !correctPol.includes(x));
 
+  const proofItems = [...missingFacts.map(f=>f.raw), ...missingTerms, ...missingPol];
+  const wrongItems = [...addedFacts.map(f=>f.raw), ...addedTerms, ...addedPol];
   let conclusion = '';
   if(missingFacts.length || addedFacts.length){
-    const m = termListHtml(missingFacts.map(f=>f.raw), 'need') || 'không rõ';
-    const a = termListHtml(addedFacts.map(f=>f.raw), 'wrongterm') || 'không rõ';
-    conclusion = `<b>Khác cơ bản:</b> Sai ở <b>mốc/số liệu/phạm vi</b>: đáp án đúng cần ${m}, còn phương án này dùng ${a}.`;
+    conclusion = `<b>Nhìn từ phương án sai:</b> phương án này sai chủ yếu vì <b>số liệu/mốc/phạm vi không khớp</b>. Đáp án đúng là đúng vì có ${termListHtml(missingFacts.map(f=>f.raw), 'need') || 'mốc đúng'}, trong khi phương án sai dùng ${termListHtml(addedFacts.map(f=>f.raw), 'wrongterm') || 'mốc khác/thiếu mốc đúng'}.`;
   } else if(missingPol.length || addedPol.length){
-    conclusion = `<b>Khác cơ bản:</b> Sai ở <b>điều kiện/tính chất</b>: đáp án đúng có ${termListHtml(missingPol,'need')||'không rõ'}, còn phương án này có ${termListHtml(addedPol,'wrongterm')||'không rõ'}.`;
+    conclusion = `<b>Nhìn từ phương án sai:</b> phương án này sai do <b>đổi điều kiện hoặc tính chất</b>. Đáp án đúng giữ điều kiện ${termListHtml(missingPol,'need')||'cần có'}, còn phương án sai lại thể hiện ${termListHtml(addedPol,'wrongterm')||'điều kiện khác/thiếu điều kiện đó'}.`;
   } else if(missingTerms.length || addedTerms.length){
-    conclusion = `<b>Khác cơ bản:</b> Sai do <b>đổi từ khóa/đối tượng chính</b>: đáp án đúng nhấn mạnh ${termListHtml(missingTerms,'need')||'không rõ'}, còn phương án này lệch sang ${termListHtml(addedTerms,'wrongterm')||'không rõ'}.`;
+    conclusion = `<b>Nhìn từ phương án sai:</b> phương án này thiếu hoặc đổi <b>từ khóa/đối tượng quyết định</b>. Đáp án đúng là đúng vì có ${termListHtml(missingTerms,'need')||'ý chính cần có'}, còn phương án sai chuyển sang ${termListHtml(addedTerms,'wrongterm')||'ý khác hoặc thiếu ý chính đó'}.`;
   } else {
-    conclusion = '<b>Khác cơ bản:</b> Hai phương án rất giống nhau; cần đối chiếu lại từng chữ với căn cứ pháp lý hoặc cột đáp án của Excel.';
+    conclusion = '<b>Nhìn từ phương án sai:</b> hai phương án rất gần nhau; điểm đúng/sai có thể nằm ở một từ nhỏ, dấu phủ định, hoặc căn cứ pháp lý. Cần đối chiếu lại cột đáp án đúng của Excel.';
   }
 
   const parts = [`<div class="diff-conclusion">${conclusion}</div>`];
   parts.push(sequenceExplainHtml(correct, wrong));
+  if(proofItems.length){
+    parts.push(`<div class="diff-block"><b>Vì sao đáp án đúng đúng hơn:</b> nó có ${termListHtml(proofItems, 'need')}. Đây là phần phương án sai không có, thiếu, hoặc đã đổi sai.</div>`);
+  }
+  if(wrongItems.length){
+    parts.push(`<div class="diff-block"><b>Vì sao phương án này không được chọn:</b> nó dùng ${termListHtml(wrongItems, 'wrongterm')}, không trùng với ý/mốc bắt buộc của đáp án đúng.</div>`);
+  }
   if(sameFacts.length || sameTerms.length){
-    parts.push(`<div class="diff-block"><b>Phần giống để tránh nhầm:</b> ${termListHtml([...sameFacts.map(f=>f.raw), ...sameTerms], 'same') || 'rất ít nội dung trùng nhau'}.</div>`);
-  }
-  if(missingFacts.length || missingTerms.length || missingPol.length){
-    parts.push(`<div class="diff-block"><b>Cần nhớ ở đáp án đúng:</b> ${termListHtml([...missingFacts.map(f=>f.raw), ...missingTerms, ...missingPol], 'need') || 'không phát hiện từ khóa riêng'}.</div>`);
-  }
-  if(addedFacts.length || addedTerms.length || addedPol.length){
-    parts.push(`<div class="diff-block"><b>Dấu hiệu làm phương án này sai:</b> ${termListHtml([...addedFacts.map(f=>f.raw), ...addedTerms, ...addedPol], 'wrongterm') || 'không phát hiện dấu hiệu riêng'}.</div>`);
+    parts.push(`<div class="diff-block"><b>Phần giống nhau chỉ để gây nhầm:</b> ${termListHtml([...sameFacts.map(f=>f.raw), ...sameTerms], 'same') || 'rất ít nội dung trùng nhau'}. Phần giống này chưa đủ làm phương án sai trở thành đúng.</div>`);
   }
   return parts.filter(Boolean).join('');
 }
@@ -659,11 +668,11 @@ function renderResult(){
     const chosen = q.userChoice === null ? null : q.options[q.userChoice];
     const correctOpt = q.options.find(o => o.isCorrect) || q.options[0];
     const ok = !!(chosen && chosen.isCorrect);
-    const chosenDiff = (!ok && chosen) ? `<div class="analysis-row focus-diff"><b>Khác biệt chính giữa đáp án đúng và lựa chọn của bạn:</b><br>${els.showAutoExplain.checked ? explainDifference(correctOpt.text, chosen.text) : 'Đã tắt phân tích tự động.'}</div>` : '';
+    const chosenDiff = (!ok && chosen) ? `<div class="analysis-row focus-diff"><b>Phân tích từ lựa chọn sai của bạn:</b><br>${els.showAutoExplain.checked ? explainDifference(correctOpt.text, chosen.text) : 'Đã tắt phân tích tự động.'}</div>` : '';
     const rows = q.options.map((op, oi) => {
       const letter = 'ABCDEF'[oi] || String(oi+1);
       const status = op.isCorrect ? '<span class="ok">Đáp án đúng</span>' : (q.userChoice===oi ? '<span class="bad">Bạn đã chọn</span>' : '<span class="muted">Phương án sai</span>');
-      const explain = op.isCorrect ? `<div class="analysis-row source"><b>Vì sao đúng:</b> Đây là phương án được cột đáp án trong Excel xác định là đúng.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>` : `<div class="analysis-row">${els.showAutoExplain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
+      const explain = op.isCorrect ? `<div class="analysis-row source"><b>Vì sao đúng:</b> Đây là phương án được cột đáp án trong Excel xác định là đúng; các phương án sai bị loại vì thiếu, đổi sai hoặc thêm ý không khớp với phương án này.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>` : `<div class="analysis-row">${els.showAutoExplain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
       const trClass = op.isCorrect ? 'result-status-ok' : (q.userChoice===oi ? 'result-status-bad' : '');
       return `<tr class="${trClass}"><td class="nowrap"><b>${letter}</b></td><td>${escapeHtml(op.text)}</td><td>${status}</td><td>${explain}</td></tr>`;
     }).join('');
