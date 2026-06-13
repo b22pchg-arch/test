@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0f766e">
-  <link rel="manifest" href="./manifest.webmanifest?v=V22">
+  <link rel="manifest" href="./manifest.webmanifest?v=V24">
   <link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="description" content="PWA trắc nghiệm Excel offline có dữ liệu nhúng sẵn, đọc Excel bằng SheetJS, tạo đề đảo câu/đáp án, chấm điểm và phân tích đúng sai.">
-  <title>Trắc nghiệm Excel Offline PWA V22</title>
+  <title>Trắc nghiệm Excel Offline PWA V24</title>
   <style>
 :root{--bg:#eef7f6;--panel:#fff;--text:#0f172a;--muted:#475569;--line:#d7e3e2;--primary:#0f766e;--primary2:#115e59;--danger:#b91c1c;--ok:#15803d;--warn:#b45309;--info:#0369a1;--shadow:0 10px 28px rgba(15,23,42,.10);--r:16px}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}body{min-height:100vh}.app{max-width:1280px;margin:0 auto;padding:14px 14px 92px}header{position:sticky;top:0;z-index:30;margin:0;padding:14px;background:linear-gradient(135deg,#0f766e,#0b4f49);color:#fff;box-shadow:var(--shadow)}header .inner{max-width:1280px;margin:0 auto}header h1{margin:0 0 6px;font-size:clamp(20px,4vw,30px);letter-spacing:.2px}header p{margin:0;color:#dffaf7;font-size:14px}.grid{display:grid;grid-template-columns:1fr;gap:12px}@media (min-width:990px){.grid.two{grid-template-columns:430px 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}.card h2,.card h3{margin:0 0 10px}.card h2{font-size:20px}.card h3{font-size:17px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}label{font-weight:800;font-size:13px;color:#1f2937;display:block;margin:8px 0 5px}input,select,textarea,button{font:inherit}input[type=file],input[type=number],input[type=text],select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:10px;background:#fff;color:var(--text)}input[type=checkbox]{transform:scale(1.12);margin-right:6px}select[multiple]{min-height:150px}button{border:0;border-radius:12px;padding:10px 13px;background:var(--primary);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(15,118,110,.22)}button:hover{background:var(--primary2)}button.secondary{background:#334155}button.light{background:#e2e8f0;color:#0f172a;box-shadow:none}button.danger{background:var(--danger)}button.info{background:var(--info)}button:disabled{opacity:.55;cursor:not-allowed}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;background:#ecfeff;color:#155e75;font-weight:900;font-size:12px;border:1px solid #a5f3fc;margin:2px}.pill.okp{background:#f0fdf4;color:#166534;border-color:#86efac}.pill.warnp{background:#fffbeb;color:#92400e;border-color:#fcd34d}.ok{color:var(--ok);font-weight:900}.bad{color:var(--danger);font-weight:900}.warn{color:var(--warn);font-weight:900}.status{border-radius:12px;padding:10px;background:#f8fafc;border:1px dashed #cbd5e1;white-space:pre-wrap}.status.bad{border-color:#fecaca;background:#fff1f2}.status.good{border-color:#bbf7d0;background:#f0fdf4}.status.info{border-color:#bae6fd;background:#f0f9ff}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.table-wrap table{min-width:940px;width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #e2e8f0;padding:9px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#f1f5f9;z-index:1}.nowrap{white-space:nowrap}details{border:1px solid var(--line);border-radius:12px;background:#fbffff;padding:10px;margin:10px 0}summary{font-weight:900;cursor:pointer}.question-card{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:12px;margin:10px 0}.question-title{font-weight:900;margin-bottom:8px}.option{display:flex;gap:8px;align-items:flex-start;border:1px solid #e2e8f0;border-radius:12px;padding:9px;margin:7px 0;background:#f8fafc}.option:hover{background:#eff6ff}.option input{margin-top:4px}.letter{min-width:28px;height:28px;border-radius:999px;background:#dbeafe;display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#1e3a8a}.chosen{border-color:#38bdf8;background:#ecfeff}.right{border-color:#22c55e;background:#f0fdf4}.wrong{border-color:#ef4444;background:#fef2f2}.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:9px 14px;box-shadow:0 -8px 22px rgba(15,23,42,.09)}.stickybar-inner{max-width:1280px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.progress{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden;min-width:170px;flex:1}.progress>span{display:block;height:100%;width:0;background:var(--primary);transition:.2s}.analysis-row{margin:7px 0;padding:9px;border-left:4px solid #0ea5e9;background:#f0f9ff;border-radius:8px}.analysis-row b{color:#0f172a}.analysis-row.source{background:#fefce8;border-left-color:#eab308}.tag{display:inline-block;margin:2px 3px 2px 0;padding:2px 6px;border-radius:999px;background:#e0f2fe;color:#075985;font-size:12px}.mapping-grid{display:grid;grid-template-columns:1fr;gap:8px}@media (min-width:720px){.mapping-grid{grid-template-columns:repeat(2,1fr)}}.banner{padding:11px;border-radius:14px;background:#ecfdf5;border:1px solid #86efac;color:#14532d;margin-bottom:10px}.banner b{font-size:15px}@media (max-width:700px){.app{padding:10px 10px 100px}.card{padding:11px;border-radius:13px}button{width:100%;justify-content:center}.row button{flex:1 1 150px}.stickybar-inner{align-items:stretch}.progress{width:100%;flex-basis:100%}.table-wrap table{min-width:780px}.option{padding:8px}.letter{min-width:26px;height:26px}}
 /* V6: giải thích ngược, lấy phương án sai làm trọng tâm, chỉ rõ đáp án đúng có gì mà sai không có */
@@ -219,12 +219,16 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 /* V22: hướng dẫn sử dụng, xuất HTML nhúng dữ liệu hiện tại, nút xác nhận đã học lượt ôn */
 .guide-card details{background:#f8fafc;border-color:#dbeafe}.guide-card summary{color:#0f766e}.guide-card ol,.guide-card ul{margin-top:6px;padding-left:20px}.guide-card li{margin:4px 0}.guide-card code{background:#e2e8f0;border-radius:6px;padding:1px 5px}.embedded-export-note{background:#f0fdf4;border:1px dashed #86efac;border-radius:12px;padding:8px;margin-top:8px;color:#14532d}.sticky-study-mark{display:none!important}body.study-mode .sticky-study-mark{display:inline-flex!important}.export-current-html{background:#7c3aed!important}.export-current-html:hover{background:#6d28d9!important}.help-grid{display:grid;grid-template-columns:1fr;gap:8px}.help-mini{border:1px solid #e2e8f0;border-radius:12px;padding:9px;background:#fff}@media (min-width:840px){.help-grid{grid-template-columns:repeat(2,1fr)}}@media (max-width:700px){.guide-card details{padding:8px}.sticky-study-mark{font-size:12px!important;padding:7px 6px!important}.export-current-html{width:100%!important}}
 
+/* V24: số câu theo từng bộ = số lượng; đề thi ngẫu nhiên, ôn tập lần lượt theo bộ */
+.bank-manager-card .set-toolbar{display:grid;grid-template-columns:1fr;gap:8px}.bank-manager-card .set-actions{display:flex;gap:8px;flex-wrap:wrap}.bank-set-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px}.bank-set-table{min-width:1040px;width:100%;border-collapse:collapse}.bank-set-table input[type=number]{max-width:110px;padding:7px;border-radius:9px}.bank-set-table .set-name{font-weight:900;color:#0f766e}.bank-set-table .set-note{font-size:12px;color:#475569}.bank-set-table .mini-btn{padding:7px 8px;border-radius:9px;font-size:12px;box-shadow:none}.set-hint{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:12px;padding:8px;margin-top:8px}.set-count-zero{background:#fff}.set-count-used{border-color:#0f766e!important;background:#ecfdf5!important}.set-current-row{background:#f0fdfa}.set-json-file{background:#fff}.set-badge{display:inline-block;border:1px solid #bae6fd;background:#ecfeff;color:#155e75;border-radius:999px;padding:2px 7px;font-size:12px;font-weight:900;margin:1px}
+@media(max-width:700px){.bank-manager-card .set-actions button{width:100%!important}.bank-set-table{min-width:920px}.bank-set-table-wrap{margin-left:-2px;margin-right:-2px}.bank-set-table input[type=number]{max-width:95px}}
+
 </style>
   
 </head>
 <body>
 
-<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V22</h1><p>Dữ liệu nhúng sẵn, đọc Excel offline, lưu lại HTML nhúng dữ liệu mới, ôn tập liên tục và xuất HTML kết quả/thống kê.</p></div></header>
+<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V24</h1><p>Dữ liệu nhúng sẵn, quản lý nhiều bộ câu hỏi; đề thi lấy ngẫu nhiên theo số lượng từng bộ, ôn tập lấy lần lượt theo từng bộ.</p></div></header>
 <main class="app">
   <section class="grid two">
     <div>
@@ -235,7 +239,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
           <button id="btnUseEmbedded" class="info">Dùng dữ liệu nhúng</button>
           <button id="btnSaveEmbedded" class="secondary">Lưu dữ liệu nhúng vào database</button>
         </div>
-        <p class="muted">Bản V22 bổ sung Hướng dẫn sử dụng, xuất HTML nhúng sẵn dữ liệu hiện tại và nút xác nhận đã học cho cả lượt ôn; vẫn giữ vô hạn phương án, nhiều đáp án đúng, phân trang ngân hàng và cập nhật căn cứ.</p>
+        <p class="muted">Bản V24 khóa đúng logic chọn số câu theo từng bộ: đề thi lấy ngẫu nhiên theo số lượng từng bộ; ôn tập lấy lần lượt theo từng bộ, mỗi bộ có tiến độ riêng đến khi học hết.</p>
       </div>
       <div class="card guide-card no-print" id="guideCard">
         <h2>0b) Hướng dẫn sử dụng</h2>
@@ -275,6 +279,17 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
             <li>Tiến độ được tự lưu offline; có thể bấm <b>Lưu</b> ở thanh dưới khi đang ôn để lưu chủ động.</li>
           </ul>
         </details>
+        <details>
+          <summary>Quản lý nhiều ngân hàng/bộ câu hỏi</summary>
+          <ul>
+            <li>Sau khi nạp Excel mới, đặt tên bộ câu hỏi rồi bấm <b>Thêm bộ từ ngân hàng hiện tại</b>.</li>
+            <li>Có thể lưu nhiều bộ trong cùng HTML/PWA, ví dụ: Bộ TT05, Bộ TT06, Bộ an toàn, Bộ thao tác.</li>
+            <li>Ở bảng quản lý bộ câu hỏi, nhập số câu cần lấy ở cột <b>Tạo đề</b> hoặc <b>Ôn tập</b>. Bộ nào không dùng thì để trống hoặc nhập <b>0</b>.</li>
+            <li>Bấm <b>Xuất JSON ngân hàng</b> để chuyển sang máy khác; máy nhận dùng <b>Nhập JSON ngân hàng</b>.</li>
+            <li>Bấm <b>Lưu HTML nhúng dữ liệu hiện tại</b> để tạo HTML mới có sẵn ngân hàng hiện tại và danh sách các bộ đã quản lý.</li>
+          </ul>
+        </details>
+
       </div>
       <div class="card">
         <h2>1) Nạp Excel khác</h2>
@@ -304,6 +319,27 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
           <div class="row" style="margin-top:10px"><button id="btnRefreshMapping" class="light">Cập nhật danh sách cột</button><button id="btnApplyMapping" class="secondary">Áp dụng cấu hình cột</button></div>
         </details>
       </div>
+
+      <div class="card bank-manager-card no-print" id="questionSetCard">
+        <h2>1c) Quản lý ngân hàng / bộ câu hỏi</h2>
+        <p class="muted">Dùng để phân loại nhiều bộ câu hỏi, nhập xuất giữa các máy và chọn số câu theo từng bộ khi tạo đề hoặc ôn tập.</p>
+        <div class="set-toolbar">
+          <div>
+            <label>Tên bộ câu hỏi khi lưu ngân hàng hiện tại</label>
+            <input id="questionSetName" type="text" placeholder="Ví dụ: TT05 - phân phối điện; TT06 - điều độ vận hành...">
+          </div>
+          <div class="set-actions">
+            <button id="btnAddCurrentSet" class="info">Thêm bộ từ ngân hàng hiện tại</button>
+            <button id="btnExportQuestionSets" class="secondary">Xuất JSON ngân hàng</button>
+            <button id="btnImportQuestionSets" class="light">Nhập JSON ngân hàng</button>
+            <button id="btnClearQuestionSets" class="danger">Xóa các bộ đã lưu</button>
+            <input id="questionSetsImportFile" class="set-json-file" type="file" accept=".json,application/json" style="display:none">
+          </div>
+        </div>
+        <div class="set-hint small">Nhập <b>số lượng câu</b> ở cột <b>Tạo đề</b> hoặc <b>Ôn tập</b>. Đây là số câu cần lấy trong bộ, không phải số thứ tự câu. <b>Tạo đề</b>: lấy ngẫu nhiên đúng số lượng từng bộ. <b>Ôn tập</b>: lấy lần lượt số câu chưa học trong từng bộ; khi câu đạt ngưỡng hoặc bấm “Đã học” thì thay bằng câu kế tiếp của chính bộ đó. Bộ nào không chọn thì để trống hoặc nhập <b>0</b>.</div>
+        <div id="questionSetManager" class="bank-set-table-wrap"></div>
+      </div>
+
       <div class="card no-print" id="internetSourceCard">
         <h2>1b) Tra cứu Internet cập nhật cột căn cứ</h2>
         <p class="muted">Dùng khi có mạng để tìm nguồn pháp lý/nội dung bổ sung cho cột căn cứ. Do trình duyệt chặn CORS với nhiều website, cách chắc chắn nhất là mở tra cứu, dán đoạn căn cứ tìm được, rồi cập nhật vào bộ đề. Khi đang offline, dữ liệu đã cập nhật vẫn được lưu trong database PWA.</p>
@@ -422,13 +458,14 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 <script>
 'use strict';
 
-const APP_VERSION = 'V22.0-20260613-guide-export-embedded-study-batch';
+const APP_VERSION = 'V24.0-20260613-set-count-random-exam-sequential-study';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
 const STUDY_PROGRESS_KEY = 'excel_quiz_study_progress_v13';
 const STUDY_ACTIVE_KEY = 'excel_quiz_study_active_ids_v13';
 const STUDY_CONFIG_KEY = 'excel_quiz_study_config_v13';
+const QUESTION_SETS_KEY = 'excel_quiz_question_sets_v23';
 const $ = (id) => document.getElementById(id);
 
 const els = {};
@@ -449,6 +486,7 @@ const state = {
   mode: 'exam',
   bankPage: 1,
   bankPageSize: 20,
+  questionSets: [],
   study: { progress: {}, activeIds: [], config: { batchSize: 10, threshold: 10, shuffleQuestions: true, shuffleOptions: true } }
 };
 
@@ -458,7 +496,7 @@ la là cua của va và hoac hoặc de để den đến duoc được bi bị tr
 VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','pwaInstallStatus','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','internetQuestionSelect','internetSearchTemplate','internetProposedSource','internetStatus','internetApiUrl','btnInternetRefreshList','btnInternetAutoBuildSource','btnInternetEnrichAllByLegalRef','btnInternetOpenSearch','btnInternetOpenOfficial','btnInternetFetchApi','btnInternetSuggestSource','btnInternetApplySource','btnInternetAppendSource','btnInternetSaveDb','btnInternetExportXlsx','btnInternetExportLinks','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnInstallPWA','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','pwaInstallStatus','questionSetName','questionSetManager','btnAddCurrentSet','btnExportQuestionSets','btnImportQuestionSets','btnClearQuestionSets','questionSetsImportFile','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','internetQuestionSelect','internetSearchTemplate','internetProposedSource','internetStatus','internetApiUrl','btnInternetRefreshList','btnInternetAutoBuildSource','btnInternetEnrichAllByLegalRef','btnInternetOpenSearch','btnInternetOpenOfficial','btnInternetFetchApi','btnInternetSuggestSource','btnInternetApplySource','btnInternetAppendSource','btnInternetSaveDb','btnInternetExportXlsx','btnInternetExportLinks','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnInstallPWA','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
@@ -751,6 +789,12 @@ function parseEmbedded(){
   state.currentSheet = state.meta.sheetName || 'Dữ liệu nhúng';
   state.currentRows = [];
   state.currentMapping = {source:'embedded'};
+  if(Array.isArray(payload.sets)){
+    state.questionSets = normalizeQuestionSets(payload.sets);
+    saveQuestionSets();
+  } else {
+    loadQuestionSets();
+  }
   if(els.embeddedInfo){
     els.embeddedInfo.innerHTML = `<b>${state.bank.length}</b> câu hỏi đã nhúng từ <b>${escapeHtml(state.fileName)}</b>. Mở file là dùng ngay, không cần tải Excel.`;
   }
@@ -780,7 +824,7 @@ function normalizeBank(bank){
 }
 
 
-function renderAll(){ renderStats(); renderPreview(); renderInternetTools(); resetQuiz(); }
+function renderAll(){ renderStats(); renderPreview(); renderInternetTools(); renderQuestionSetManager(); resetQuiz(); }
 function renderStats(){
   if(!els.bankStats) return;
   const src = state.currentSheet || state.fileName || 'Dữ liệu';
@@ -790,6 +834,7 @@ function renderStats(){
   updateExportStandaloneButton();
   if(els.quizCount){ els.quizCount.max = String(Math.max(1,state.bank.length)); if(Number(els.quizCount.value || 0) > state.bank.length) els.quizCount.value = String(state.bank.length || 1); }
   renderStudyStats();
+  renderQuestionSetManager();
 }
 
 function getQuestionKey(q){
@@ -924,6 +969,205 @@ function renderPreview(){
   }));
 }
 
+
+
+function makeQuestionSetFromBank(name, bank){
+  const now = new Date().toISOString();
+  return {
+    id: 'set_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8),
+    name: visibleText(name) || ('Bộ câu hỏi ' + new Date().toLocaleString('vi-VN')),
+    createdAt: now,
+    updatedAt: now,
+    sourceFile: state.fileName || state.meta?.sourceFile || '',
+    sheetName: state.currentSheet || state.meta?.sheetName || '',
+    questions: normalizeBank(cloneData(bank || []))
+  };
+}
+function normalizeQuestionSets(sets){
+  return (sets || []).map((s, i) => ({
+    id: visibleText(s.id) || ('set_import_' + i + '_' + Date.now().toString(36)),
+    name: visibleText(s.name) || ('Bộ câu hỏi ' + (i+1)),
+    createdAt: s.createdAt || '',
+    updatedAt: s.updatedAt || '',
+    sourceFile: visibleText(s.sourceFile || ''),
+    sheetName: visibleText(s.sheetName || ''),
+    questions: normalizeBank(Array.isArray(s.questions) ? s.questions : (Array.isArray(s.bank) ? s.bank : []))
+  })).filter(s => s.questions.length);
+}
+function loadQuestionSets(){
+  try { state.questionSets = normalizeQuestionSets(JSON.parse(localStorage.getItem(QUESTION_SETS_KEY) || '[]')); }
+  catch(e){ state.questionSets = []; }
+}
+function saveQuestionSets(){
+  try { localStorage.setItem(QUESTION_SETS_KEY, JSON.stringify(state.questionSets || [])); }
+  catch(e){ console.warn('Không lưu được danh sách bộ câu hỏi', e); }
+}
+function getAllQuestionSetRows(){
+  const current = state.bank && state.bank.length ? [{id:'__current__', name:'Ngân hàng hiện tại', isCurrent:true, questions:state.bank, sourceFile:state.fileName, sheetName:state.currentSheet}] : [];
+  return current.concat(state.questionSets || []);
+}
+function setQuestionsWithSetInfo(set, mode){
+  return normalizeBank(set.questions || []).map((q, idx) => {
+    const c = cloneData(q);
+    c._setId = set.id;
+    c._setName = set.name;
+    c.id = `${set.id}::${q.id || idx+1}`;
+    return c;
+  });
+}
+function renderQuestionSetManager(){
+  if(!els.questionSetManager) return;
+  loadQuestionSets();
+  const rows = getAllQuestionSetRows();
+  if(!rows.length){
+    els.questionSetManager.innerHTML = '<div class="set-hint">Chưa có ngân hàng câu hỏi. Hãy nạp Excel hoặc dùng dữ liệu nhúng trước.</div>';
+    return;
+  }
+  const body = rows.map((s, i) => {
+    const learned = (s.questions || []).filter((q, idx) => isStudyLearned(`${s.id}::${q.id || idx+1}`)).length;
+    const meta = [s.sourceFile, s.sheetName].filter(Boolean).join(' · ');
+    return `<tr class="${s.isCurrent?'set-current-row':''}">
+      <td class="nowrap">${i+1}</td>
+      <td><div class="set-name">${escapeHtml(s.name)}</div><div class="set-note">${escapeHtml(meta || (s.isCurrent?'đang dùng trên màn hình':'bộ đã lưu'))}</div>${s.isCurrent?'<span class="set-badge">Hiện tại</span>':'<span class="set-badge">Đã lưu</span>'}</td>
+      <td class="nowrap"><b>${(s.questions||[]).length}</b> câu</td>
+      <td><input class="set-count-input set-count-zero" data-mode="exam" data-id="${escapeHtml(s.id)}" type="number" min="0" max="${(s.questions||[]).length}" placeholder="0"></td>
+      <td><input class="set-count-input set-count-zero" data-mode="study" data-id="${escapeHtml(s.id)}" type="number" min="0" max="${(s.questions||[]).length}" placeholder="0"></td>
+      <td class="nowrap"><span class="pill">Đã học ${learned}/${(s.questions||[]).length}</span></td>
+      <td class="nowrap">
+        ${s.isCurrent ? '' : `<button type="button" class="light mini-btn set-load-btn" data-id="${escapeHtml(s.id)}">Nạp xem</button><button type="button" class="danger mini-btn set-del-btn" data-id="${escapeHtml(s.id)}">Xóa</button>`}
+      </td>
+    </tr>`;
+  }).join('');
+  els.questionSetManager.innerHTML = `<table class="bank-set-table"><thead><tr><th>STT</th><th>Bộ câu hỏi</th><th>Số câu</th><th>Tạo đề lấy</th><th>Ôn tập lấy</th><th>Tiến độ</th><th>Thao tác</th></tr></thead><tbody>${body}</tbody></table>`;
+  els.questionSetManager.querySelectorAll('.set-count-input').forEach(inp => inp.addEventListener('input', () => {
+    inp.classList.toggle('set-count-used', Number(inp.value || 0) > 0);
+  }));
+  els.questionSetManager.querySelectorAll('.set-load-btn').forEach(btn => btn.addEventListener('click', () => loadQuestionSetToCurrent(btn.dataset.id)));
+  els.questionSetManager.querySelectorAll('.set-del-btn').forEach(btn => btn.addEventListener('click', () => deleteQuestionSet(btn.dataset.id)));
+}
+function addCurrentBankAsQuestionSet(){
+  if(!state.bank.length){ setStatus('Chưa có ngân hàng hiện tại để thêm thành bộ câu hỏi.', 'bad'); return; }
+  const name = els.questionSetName?.value?.trim() || state.fileName || state.currentSheet || ('Bộ câu hỏi ' + (state.questionSets.length+1));
+  loadQuestionSets();
+  const set = makeQuestionSetFromBank(name, state.bank);
+  state.questionSets.push(set);
+  saveQuestionSets();
+  renderQuestionSetManager();
+  setStatus(`✅ Đã thêm bộ “${set.name}” gồm ${set.questions.length} câu. Có thể nhập số câu ở cột Tạo đề/Ôn tập để lấy câu từ bộ này.`, 'good');
+}
+function loadQuestionSetToCurrent(id){
+  loadQuestionSets();
+  const set = state.questionSets.find(s => s.id === id);
+  if(!set){ setStatus('Không tìm thấy bộ câu hỏi đã chọn.', 'bad'); return; }
+  state.bank = normalizeBank(cloneData(set.questions));
+  state.fileName = set.name;
+  state.currentSheet = set.sheetName || set.name;
+  state.meta = {sourceFile:set.sourceFile || set.name, sheetName:set.sheetName || set.name, total:state.bank.length, version:APP_VERSION, questionSetId:set.id};
+  state.errors = [];
+  state.bankPage = 1;
+  renderAll();
+  setStatus(`✅ Đã nạp bộ “${set.name}” thành ngân hàng hiện tại để xem/tạo đề.`, 'good');
+}
+function deleteQuestionSet(id){
+  loadQuestionSets();
+  const set = state.questionSets.find(s => s.id === id);
+  if(!set) return;
+  if(!confirm(`Xóa bộ câu hỏi “${set.name}”?`)) return;
+  state.questionSets = state.questionSets.filter(s => s.id !== id);
+  saveQuestionSets();
+  renderQuestionSetManager();
+  setStatus(`✅ Đã xóa bộ “${set.name}”.`, 'good');
+}
+function clearQuestionSets(){
+  if(!confirm('Xóa toàn bộ các bộ câu hỏi đã lưu trong trình duyệt? Ngân hàng hiện tại không bị xóa.')) return;
+  state.questionSets = [];
+  saveQuestionSets();
+  renderQuestionSetManager();
+  setStatus('✅ Đã xóa danh sách bộ câu hỏi đã lưu.', 'good');
+}
+function exportQuestionSetsJson(){
+  loadQuestionSets();
+  const payload = {version:APP_VERSION, exportedAt:new Date().toISOString(), currentBank: state.bank, currentMeta: state.meta, sets: state.questionSets || []};
+  downloadTextFile(`ngan_hang_cau_hoi_${fileStamp()}.json`, JSON.stringify(payload, null, 2), 'application/json;charset=utf-8');
+  setStatus(`✅ Đã xuất JSON gồm ${state.questionSets.length} bộ câu hỏi đã lưu và ngân hàng hiện tại.`, 'good');
+}
+async function importQuestionSetsJson(file){
+  if(!file){ setStatus('Chưa chọn file JSON ngân hàng.', 'bad'); return; }
+  try{
+    const text = await file.text();
+    const payload = JSON.parse(text);
+    let sets = [];
+    if(Array.isArray(payload.sets)) sets = sets.concat(normalizeQuestionSets(payload.sets));
+    if(Array.isArray(payload.questionSets)) sets = sets.concat(normalizeQuestionSets(payload.questionSets));
+    if(Array.isArray(payload.bank)) sets.push(makeQuestionSetFromBank(payload.meta?.title || payload.fileName || 'Ngân hàng nhập JSON', payload.bank));
+    if(Array.isArray(payload.currentBank)) sets.push(makeQuestionSetFromBank(payload.currentMeta?.title || 'Ngân hàng hiện tại từ JSON', payload.currentBank));
+    if(!sets.length) throw new Error('File JSON không có bộ câu hỏi hợp lệ.');
+    loadQuestionSets();
+    const existing = new Set(state.questionSets.map(s=>s.id));
+    sets.forEach(s => { if(existing.has(s.id)) s.id = 'set_import_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8); state.questionSets.push(s); });
+    saveQuestionSets();
+    renderQuestionSetManager();
+    setStatus(`✅ Đã nhập ${sets.length} bộ câu hỏi từ JSON.`, 'good');
+  }catch(e){ setStatus('❌ Không nhập được JSON ngân hàng: ' + (e.message || e), 'bad'); }
+}
+function getSetById(id){
+  if(id === '__current__') return {id:'__current__', name:'Ngân hàng hiện tại', questions:state.bank, isCurrent:true};
+  loadQuestionSets();
+  return state.questionSets.find(s => s.id === id) || null;
+}
+function getSelectedSetRequests(mode){
+  const inputs = [...document.querySelectorAll(`.set-count-input[data-mode="${mode}"]`)];
+  return inputs.map(inp => ({id:inp.dataset.id, count:Math.max(0, Number(inp.value || 0))})).filter(x => x.count > 0);
+}
+function collectQuestionsFromSelectedSets(mode, rand, shuffleWithin){
+  const reqs = getSelectedSetRequests(mode);
+  if(!reqs.length) return null;
+  let out = [], summary = [];
+  for(const r of reqs){
+    const set = getSetById(r.id);
+    if(!set || !set.questions?.length) continue;
+    const countNeed = Math.max(0, Math.min(Number(r.count || 0), (set.questions || []).length));
+    if(!countNeed) continue;
+    const qs = setQuestionsWithSetInfo(set, mode);
+
+    if(mode === 'exam'){
+      // V24: số nhập trong từng bộ là SỐ LƯỢNG CÂU. Đề thi luôn lấy ngẫu nhiên trong từng bộ,
+      // không hiểu là lấy từ câu số mấy đến câu số mấy. Tùy chọn “Đảo câu hỏi” chỉ ảnh hưởng thứ tự hiển thị sau khi đã lấy đủ số lượng.
+      const take = shuffled(qs, rand).slice(0, Math.min(countNeed, qs.length));
+      out = out.concat(take);
+      summary.push(`${set.name}: lấy ngẫu nhiên ${take.length}/${countNeed}`);
+      continue;
+    }
+
+    if(mode === 'study'){
+      // V24: ôn tập theo từng bộ có tiến độ riêng. Mỗi bộ giữ nhóm câu đang ôn;
+      // câu đã học/đạt ngưỡng bị loại khỏi nhóm và thay bằng câu kế tiếp theo đúng thứ tự trong chính bộ đó.
+      const keyToQuestion = new Map(qs.map(q => [getQuestionKey(q), q]));
+      const setKeys = new Set(keyToQuestion.keys());
+      const currentActive = new Set((state.study.activeIds || []).filter(k => setKeys.has(k) && !isStudyLearned(k)));
+      const activeKeys = [];
+      // Giữ thứ tự gốc của bộ câu hỏi, kể cả các câu đang ôn từ lượt trước.
+      for(const q of qs){
+        const key = getQuestionKey(q);
+        if(currentActive.has(key) && !isStudyLearned(key)) activeKeys.push(key);
+      }
+      // Bổ sung câu kế tiếp chưa học cho đến đủ số lượng yêu cầu của bộ.
+      for(const q of qs){
+        if(activeKeys.length >= countNeed) break;
+        const key = getQuestionKey(q);
+        if(activeKeys.includes(key)) continue;
+        if(!isStudyLearned(key)) activeKeys.push(key);
+      }
+      const take = activeKeys.slice(0, countNeed).map(k => keyToQuestion.get(k)).filter(Boolean);
+      out = out.concat(take);
+      const learnedCount = qs.filter(q => isStudyLearned(getQuestionKey(q))).length;
+      const remainCount = Math.max(0, qs.length - learnedCount);
+      summary.push(`${set.name}: ôn lần lượt ${take.length}/${countNeed}, còn ${remainCount}`);
+      continue;
+    }
+  }
+  return out.length ? {questions:out, summary:summary.join('; ')} : null;
+}
 
 
 const LEGAL_DOC_META = {
@@ -1191,7 +1435,7 @@ async function dbPut(key, value){ const db=await openDB(); return new Promise((r
 async function dbGet(key){ const db=await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE_NAME,'readonly'); const req=tx.objectStore(STORE_NAME).get(key); req.onsuccess=()=>res(req.result); req.onerror=()=>rej(req.error); }); }
 async function dbDel(key){ const db=await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE_NAME,'readwrite'); tx.objectStore(STORE_NAME).delete(key); tx.oncomplete=()=>res(); tx.onerror=()=>rej(tx.error); }); }
 async function saveBank(label='ngân hàng hiện tại', silent=false){
-  const payload = {bank: state.bank, errors: state.errors, meta: state.meta, fileName: state.fileName, sheetName: state.currentSheet, savedAt: new Date().toISOString(), version: APP_VERSION};
+  const payload = {bank: state.bank, errors: state.errors, meta: state.meta, fileName: state.fileName, sheetName: state.currentSheet, questionSets: state.questionSets || [], savedAt: new Date().toISOString(), version: APP_VERSION};
   try { await dbPut(BANK_KEY, payload); }
   catch(e){ localStorage.setItem(DB_NAME + ':' + BANK_KEY, JSON.stringify(payload)); }
   if(!silent) setStatus(`✅ Đã lưu ${state.bank.length} câu hỏi của ${label} vào database offline.`, 'good');
@@ -1200,7 +1444,7 @@ async function loadBank(){
   let payload = null;
   try { payload = await dbGet(BANK_KEY); } catch(e){ try { payload = JSON.parse(localStorage.getItem(DB_NAME + ':' + BANK_KEY) || 'null'); } catch(_){} }
   if(!payload || !Array.isArray(payload.bank)){ setStatus('Chưa có ngân hàng đã lưu. Dữ liệu nhúng trong HTML vẫn đang sẵn sàng để dùng.', 'info'); return; }
-  state.bank = normalizeBank(payload.bank); state.errors = payload.errors || []; state.meta = payload.meta || {}; state.fileName = payload.fileName || 'Bộ nhớ đã lưu'; state.currentSheet = payload.sheetName || state.fileName; state.currentRows = []; state.currentMapping = {source:'db'};
+  state.bank = normalizeBank(payload.bank); state.errors = payload.errors || []; state.meta = payload.meta || {}; state.fileName = payload.fileName || 'Bộ nhớ đã lưu'; state.currentSheet = payload.sheetName || state.fileName; state.currentRows = []; state.currentMapping = {source:'db'}; if(Array.isArray(payload.questionSets)){ state.questionSets = normalizeQuestionSets(payload.questionSets); saveQuestionSets(); }
   renderAll();
   setStatus(`✅ Đã nạp ${state.bank.length} câu hỏi từ database offline.`, 'good');
 }
@@ -1505,18 +1749,29 @@ function shuffled(arr, rand){ const a=arr.slice(); for(let i=a.length-1;i>0;i--)
 function startQuiz(){
   state.mode = 'exam';
   updateStickyLabels();
-  if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi.', 'bad'); return; }
-  const count = Math.max(1, Math.min(Number(els.quizCount.value || 1), state.bank.length));
+  if(!state.bank.length && !getAllQuestionSetRows().length){ setStatus('Chưa có ngân hàng câu hỏi.', 'bad'); return; }
   const seedText = els.seedInput.value.trim() || new Date().toISOString();
+  const rand = rng(hashSeed(seedText));
+  const selectedSets = collectQuestionsFromSelectedSets('exam', rand, !!els.shuffleQuestions.checked);
+  let questions, count, selectionSummary = '';
+  if(selectedSets){
+    questions = selectedSets.questions;
+    count = questions.length;
+    selectionSummary = selectedSets.summary;
+    if(els.shuffleQuestions.checked) questions = shuffled(questions, rand);
+  } else {
+    if(!state.bank.length){ setStatus('Chưa có ngân hàng hiện tại. Hãy nhập số câu trong từng bộ đã lưu hoặc nạp một ngân hàng.', 'bad'); return; }
+    count = Math.max(1, Math.min(Number(els.quizCount.value || 1), state.bank.length));
+    questions = els.shuffleQuestions.checked ? shuffled(state.bank, rand) : state.bank.slice();
+    questions = questions.slice(0, count);
+  }
   state.lastQuizConfig = {
     count,
+    setSelection: selectionSummary,
     shuffleQuestions: !!els.shuffleQuestions.checked,
     shuffleOptions: !!els.shuffleOptions.checked,
     showAutoExplain: !!els.showAutoExplain.checked
   };
-  const rand = rng(hashSeed(seedText));
-  let questions = els.shuffleQuestions.checked ? shuffled(state.bank, rand) : state.bank.slice();
-  questions = questions.slice(0, count);
   state.quiz = questions.map((q, qi) => {
     const correctSet = new Set(getCorrectIndexes(q));
     const opts = q.options.map((text, idx) => ({text, originalIndex:idx, isCorrect:correctSet.has(idx)}));
@@ -1528,28 +1783,38 @@ function startQuiz(){
   els.btnSubmitQuiz.disabled = false; els.btnSubmitSticky.disabled = false; if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.disabled = false;
   els.resultSummary.textContent = 'Chưa nộp bài.'; els.resultList.innerHTML = '';
   const multiCount = state.quiz.filter(q=>isMultiQuestion(q.item)).length;
-  setStatus(`✅ Đã tạo đề ${count} câu. ${multiCount?`Có ${multiCount} câu chọn nhiều đáp án. `:''}Mã đảo đề/seed: ${seedText}`, 'good');
+  setStatus(`✅ Đã tạo đề ${count} câu. ${selectionSummary?`Nguồn: ${selectionSummary}. `:''}${multiCount?`Có ${multiCount} câu chọn nhiều đáp án. `:''}Mã đảo đề/seed: ${seedText}`, 'good');
   enterQuizFocus();
   location.hash = '#quizSection';
 }
 
 
 function startStudyRound(){
-  if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi để ôn tập.', 'bad'); return; }
+  if(!state.bank.length && !getAllQuestionSetRows().length){ setStatus('Chưa có ngân hàng câu hỏi để ôn tập.', 'bad'); return; }
   state.mode = 'study';
   syncStudyConfigFromUI();
   updateStickyLabels();
-  const activeIds = refreshStudyActiveIds();
-  if(!activeIds.length){
-    setStatus('✅ Bạn đã học đủ toàn bộ câu hỏi trong ngân hàng. Có thể bấm “Xuất HTML thống kê ôn tập” hoặc “Xuất câu sai nhiều” để lưu lại quá trình học.', 'good');
-    renderStudyStats();
-    return;
-  }
-  const idSet = new Set(activeIds);
-  let questions = state.bank.filter(q => idSet.has(getQuestionKey(q)));
   const seedText = 'on-tap-' + new Date().toISOString();
   const rand = rng(hashSeed(seedText));
-  if(state.study.config.shuffleQuestions) questions = shuffled(questions, rand);
+  const selectedSets = collectQuestionsFromSelectedSets('study', rand, !!state.study.config.shuffleQuestions);
+  let questions, selectionSummary = '';
+  if(selectedSets){
+    questions = selectedSets.questions;
+    selectionSummary = selectedSets.summary;
+    state.study.activeIds = questions.map(q => getQuestionKey(q));
+    saveStudyState();
+  } else {
+    if(!state.bank.length){ setStatus('Chưa có ngân hàng hiện tại. Hãy nhập số câu ôn tập trong từng bộ đã lưu hoặc nạp một ngân hàng.', 'bad'); return; }
+    const activeIds = refreshStudyActiveIds();
+    if(!activeIds.length){
+      setStatus('✅ Bạn đã học đủ toàn bộ câu hỏi trong ngân hàng. Có thể bấm “Xuất HTML thống kê ôn tập” hoặc “Xuất câu sai nhiều” để lưu lại quá trình học.', 'good');
+      renderStudyStats();
+      return;
+    }
+    const idSet = new Set(activeIds);
+    questions = state.bank.filter(q => idSet.has(getQuestionKey(q)));
+    if(state.study.config.shuffleQuestions) questions = shuffled(questions, rand);
+  }
   state.quiz = questions.map((q, qi) => {
     const correctSet = new Set(getCorrectIndexes(q));
     const opts = q.options.map((text, idx) => ({text, originalIndex:idx, isCorrect:correctSet.has(idx)}));
@@ -1562,7 +1827,7 @@ function startStudyRound(){
   els.btnSubmitQuiz.disabled = false; els.btnSubmitSticky.disabled = false; if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.disabled = false;
   els.resultSummary.textContent = 'Chưa nộp bài.'; els.resultList.innerHTML = '';
   const multiCount = state.quiz.filter(q=>isMultiQuestion(q.item)).length;
-  setStatus(`📚 Đã tạo lượt ôn tập ${questions.length} câu. ${multiCount?`Có ${multiCount} câu chọn nhiều đáp án. `:''}Câu nào đúng đủ ${studyThreshold()} lần hoặc được xác nhận đã học sẽ được thay bằng câu mới ở lượt tiếp.`, 'good');
+  setStatus(`📚 Đã tạo lượt ôn tập ${questions.length} câu. ${selectionSummary?`Nguồn: ${selectionSummary}. `:''}${multiCount?`Có ${multiCount} câu chọn nhiều đáp án. `:''}Câu nào đúng đủ ${studyThreshold()} lần hoặc được xác nhận đã học sẽ được thay bằng câu kế tiếp của chính bộ đó ở lượt sau.`, 'good');
   enterQuizFocus();
   location.hash = '#quizSection';
 }
@@ -1995,7 +2260,7 @@ function buildCurrentEmbeddedPayload(){
     version: APP_VERSION,
     note: 'File HTML này đã nhúng sẵn ngân hàng câu hỏi hiện tại. Mở file là dùng ngay, không cần tải Excel.'
   });
-  return { meta, bank: state.bank, skipped: state.errors || [] };
+  return { meta, bank: state.bank, sets: state.questionSets || [], skipped: state.errors || [] };
 }
 function exportStandaloneHtmlWithCurrentBank(){
   if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi để lưu thành HTML nhúng dữ liệu.', 'bad'); return; }
@@ -2005,13 +2270,17 @@ function exportStandaloneHtmlWithCurrentBank(){
     if(!bankScript) throw new Error('Không tìm thấy vùng dữ liệu nhúng #embedded-bank.');
     bankScript.textContent = safeJsonForEmbedded(buildCurrentEmbeddedPayload());
     const title = doc.querySelector('title');
-    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V22 - HTML nhúng dữ liệu';
+    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V24 - HTML nhúng dữ liệu';
     const h1 = doc.querySelector('header h1');
-    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V22';
+    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V24';
     const subtitle = doc.querySelector('header p');
     if(subtitle) subtitle.textContent = 'HTML đã nhúng sẵn ngân hàng câu hỏi hiện tại, mở offline là dùng ngay.';
     const body = doc.querySelector('body');
     if(body) body.className = '';
+    const preview = doc.querySelector('#bankPreview');
+    if(preview) preview.innerHTML = '<div class="bank-pager"><span class="muted">Đang nạp dữ liệu nhúng...</span></div>';
+    const setManager = doc.querySelector('#questionSetManager');
+    if(setManager) setManager.innerHTML = '<div class="set-hint">Đang nạp danh sách bộ câu hỏi...</div>';
     doc.querySelectorAll('input[type=file]').forEach(inp => { try{ inp.value = ''; }catch(e){} });
     const htmlOut = '<!doctype html>\n' + doc.outerHTML;
     const baseName = (state.fileName || 'ngan_hang_cau_hoi').replace(/\.[^.]+$/,'').replace(/[^\p{L}\p{N}_-]+/gu,'_').replace(/_+/g,'_').slice(0,80) || 'ngan_hang_cau_hoi';
@@ -2038,6 +2307,11 @@ function bindEvents(){
   els.btnSaveBank.addEventListener('click', () => saveBank('ngân hàng hiện tại'));
   const btnExportStandaloneHtml = document.getElementById('btnExportStandaloneHtml');
   if(btnExportStandaloneHtml) btnExportStandaloneHtml.addEventListener('click', exportStandaloneHtmlWithCurrentBank);
+  if(els.btnAddCurrentSet) els.btnAddCurrentSet.addEventListener('click', addCurrentBankAsQuestionSet);
+  if(els.btnExportQuestionSets) els.btnExportQuestionSets.addEventListener('click', exportQuestionSetsJson);
+  if(els.btnImportQuestionSets) els.btnImportQuestionSets.addEventListener('click', () => els.questionSetsImportFile && els.questionSetsImportFile.click());
+  if(els.questionSetsImportFile) els.questionSetsImportFile.addEventListener('change', () => importQuestionSetsJson(els.questionSetsImportFile.files && els.questionSetsImportFile.files[0]));
+  if(els.btnClearQuestionSets) els.btnClearQuestionSets.addEventListener('click', clearQuestionSets);
   const btnMarkStudyRoundSticky = document.getElementById('btnMarkStudyRoundSticky');
   if(btnMarkStudyRoundSticky) btnMarkStudyRoundSticky.addEventListener('click', markCurrentStudyRoundLearned);
   els.btnLoadBank.addEventListener('click', loadBank);
@@ -2086,12 +2360,14 @@ function boot(){
   initElements();
   setupPWAInstallPrompt();
   loadStudyState();
+  loadQuestionSets();
   try { parseEmbedded(); }
   catch(e){ console.error(e); setStatus('❌ Lỗi nạp dữ liệu nhúng: ' + (e.message || e), 'bad'); }
   bindEvents();
   registerSW();
   saveBank('dữ liệu nhúng', true).catch(()=>{});
   setStatus(`✅ Đã tự nạp ${state.bank.length} câu hỏi nhúng từ Excel mới. Có thể bấm “Tạo đề” ngay, không cần chọn file Excel.`, 'good');
+  setTimeout(() => { renderStats(); renderPreview(); renderQuestionSetManager(); }, 0);
 }
 window.addEventListener('DOMContentLoaded', boot);
 

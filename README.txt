@@ -1,9 +1,8 @@
-Trắc nghiệm Excel Offline PWA V22
+Trắc nghiệm Excel Offline PWA V24
 
-Cách dùng PWA:
-1. Giải nén thư mục này.
-2. Chạy bằng localhost, ví dụ: python -m http.server 8080
-3. Mở http://localhost:8080
-4. Bấm Ép cập nhật PWA nếu đang có bản cũ, sau đó bấm Cài PWA.
+Điểm mới V24:
+- Cột Tạo đề/Ôn tập trong từng bộ là số lượng câu cần lấy, không phải số thứ tự câu.
+- Tạo đề: lấy ngẫu nhiên đúng số lượng trong từng bộ.
+- Ôn tập: lấy lần lượt nhóm câu chưa học trong từng bộ; khi câu đạt ngưỡng hoặc được xác nhận đã học thì thay bằng câu kế tiếp của chính bộ đó.
 
-Bản V22 bổ sung Hướng dẫn sử dụng ngay trong HTML, xuất HTML nhúng dữ liệu hiện tại sau khi nạp/cập nhật Excel, và nút xác nhận Đã học cho cả lượt ôn.
+Chạy qua localhost/HTTPS để cài PWA.

@@ -1,14 +1,14 @@
 {
-  "id": "/trac-nghiem-excel-offline-v22/",
-  "name": "Trắc nghiệm Excel Offline V22",
-  "short_name": "Trắc nghiệm V22",
-  "description": "PWA trắc nghiệm Excel offline, vô hạn phương án, nhiều đáp án đúng, ôn tập liên tục, hướng dẫn sử dụng và xuất HTML nhúng dữ liệu.",
-  "start_url": "./index.html?source=pwa_v22",
+  "id": "excel-quiz-offline-pwa-v24",
+  "name": "Trắc nghiệm Excel Offline V24",
+  "short_name": "Trắc nghiệm V24",
+  "description": "PWA trắc nghiệm Excel offline; quản lý nhiều bộ câu hỏi, đề thi lấy ngẫu nhiên theo số lượng từng bộ, ôn tập lấy lần lượt theo từng bộ.",
+  "start_url": "./index.html?source=pwa-v24",
   "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#eef7f6",
   "theme_color": "#0f766e",
-  "orientation": "any",
   "icons": [
     {
       "src": "./icon-192.png",
@@ -21,12 +21,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    },
-    {
-      "src": "./icon.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any"
     }
   ]
 }
