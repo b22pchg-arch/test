@@ -1,10 +1,9 @@
-Trắc nghiệm Excel Offline PWA V21
+Trắc nghiệm Excel Offline PWA V22
 
-- Sửa lỗi xem trước ngân hàng câu hỏi không hiển thị.
-- Thêm phân trang ngân hàng câu hỏi.
-- Sửa tràn khung mô đun tra cứu/cập nhật căn cứ.
-- Bỏ dòng nguồn/căn cứ trong giao diện làm bài, chỉ còn câu hỏi và phương án.
-- Giữ hỗ trợ vô hạn phương án và câu nhiều đáp án đúng.
+Cách dùng PWA:
+1. Giải nén thư mục này.
+2. Chạy bằng localhost, ví dụ: python -m http.server 8080
+3. Mở http://localhost:8080
+4. Bấm Ép cập nhật PWA nếu đang có bản cũ, sau đó bấm Cài PWA.
 
-Chạy PWA bằng localhost/HTTPS để cài đặt đầy đủ:
-python -m http.server 8080
+Bản V22 bổ sung Hướng dẫn sử dụng ngay trong HTML, xuất HTML nhúng dữ liệu hiện tại sau khi nạp/cập nhật Excel, và nút xác nhận Đã học cho cả lượt ôn.
