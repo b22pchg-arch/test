@@ -1,7 +1,8 @@
-PWA Trắc nghiệm Excel Offline V11
+Trắc nghiệm Excel Offline PWA V12
 
-- Dữ liệu nhúng sẵn 160 câu.
-- Điều khiển dưới màn hình.
-- Nút ép cập nhật PWA.
-- Kết quả hiển thị giải thích theo trạng thái: đúng/sai/chưa chọn.
-- Phần giải thích phụ mặc định ẩn trong khung ẩn/hiện để dùng tốt trên điện thoại.
+- Dữ liệu 160 câu nhúng sẵn.
+- Kết quả hiển thị phương án giống giao diện làm bài.
+- Đáp án đúng có chữ màu xanh.
+- Mỗi phương án có nút mũi tên để mở/ẩn giải thích nguyên nhân đúng sai.
+- Nút Thoát ở thanh dưới được làm gọn.
+- Có nút Ép cập nhật PWA.

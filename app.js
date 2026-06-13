@@ -1,7 +1,7 @@
 
 'use strict';
 
-const APP_VERSION = 'V11.0-20260613-result-explain-toggle-by-status';
+const APP_VERSION = 'V12.0-20260613-result-options-arrow-explain';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -672,25 +672,45 @@ function renderResult(){
   els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span>`;
 
   function correctReason(q, correctOpt){
-    return `<div class="analysis-row source"><b>Vì sao đúng:</b> Đây là phương án được cột đáp án trong Excel xác định là đúng; các phương án sai bị loại vì thiếu, đổi sai hoặc thêm ý không khớp với phương án này.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>`;
+    return `<div class="analysis-row source"><b>Vì sao đây là đáp án đúng:</b><br>Phương án này là nội dung được cột đáp án trong Excel xác định là đúng. Khi so với các phương án sai, đáp án đúng giữ đúng từ khóa, điều kiện, mốc số liệu hoặc phạm vi bắt buộc.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>`;
   }
   function wrongExplainBlock(correctOpt, op, oi, title){
     const letter = 'ABCDEF'[oi] || String(oi+1);
     return `<div class="analysis-row"><b>${escapeHtml(title || ('Phương án ' + letter + ' sai ở đâu:'))}</b><br>${els.showAutoExplain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
   }
-  function hiddenExplainDetails(q, correctOpt, mode){
-    const blocks = [];
-    if(mode === 'unanswered') blocks.push(correctReason(q, correctOpt));
-    q.options.forEach((op, oi) => {
-      if(op.isCorrect) return;
-      if(mode === 'wrong' && oi === q.userChoice) return;
-      blocks.push(wrongExplainBlock(correctOpt, op, oi));
-    });
-    if(!blocks.length) return '';
-    const label = mode === 'correct'
-      ? 'Ẩn/hiện giải thích các phương án sai còn lại'
-      : (mode === 'wrong' ? 'Ẩn/hiện giải thích các phương án sai khác' : 'Ẩn/hiện giải thích đúng sai cho các phương án');
-    return `<details class="result-extra-explain"><summary>${label}</summary>${blocks.join('')}</details>`;
+  function optionExplanation(q, correctOpt, op, oi, mode){
+    if(op.isCorrect) return correctReason(q, correctOpt);
+    const letter = 'ABCDEF'[oi] || String(oi+1);
+    if(mode === 'wrong' && oi === q.userChoice){
+      return wrongExplainBlock(correctOpt, op, oi, 'Bạn chọn phương án ' + letter + ' nên sai ở đâu so với đáp án đúng:');
+    }
+    return wrongExplainBlock(correctOpt, op, oi, 'Phương án ' + letter + ' sai ở đâu so với đáp án đúng:');
+  }
+  function optionStatus(q, op, oi){
+    if(op.isCorrect && q.userChoice === oi) return '<span class="mini-status ok">Bạn chọn đúng</span>';
+    if(op.isCorrect) return '<span class="mini-status ok">Đáp án đúng</span>';
+    if(q.userChoice === oi) return '<span class="mini-status bad">Bạn chọn sai</span>';
+    return '<span class="mini-status muted">Phương án sai</span>';
+  }
+  function resultOption(q, correctOpt, op, oi, mode){
+    const letter = 'ABCDEF'[oi] || String(oi+1);
+    const isUserWrongChoice = mode === 'wrong' && oi === q.userChoice && !op.isCorrect;
+    const open = isUserWrongChoice ? ' open' : '';
+    const cls = ['result-option','option'];
+    if(op.isCorrect) cls.push('right','result-correct-option');
+    if(q.userChoice === oi && !op.isCorrect) cls.push('wrong','result-user-wrong');
+    if(q.userChoice === oi && op.isCorrect) cls.push('chosen','result-user-correct');
+    const textCls = op.isCorrect ? 'option-text correct-answer-text' : 'option-text';
+    const explanation = optionExplanation(q, correctOpt, op, oi, mode);
+    const arrowTitle = op.isCorrect ? 'Xem vì sao đây là đáp án đúng' : 'Xem vì sao phương án này sai';
+    return `<div class="${cls.join(' ')}${open}">
+      <div class="result-option-main">
+        <span class="letter">${letter}</span>
+        <span class="${textCls}">${escapeHtml(op.text)} ${optionStatus(q, op, oi)}</span>
+        <button type="button" class="option-arrow" title="${arrowTitle}" aria-label="${arrowTitle}" aria-expanded="${open?'true':'false'}" onclick="const p=this.closest('.result-option');p.classList.toggle('open');this.setAttribute('aria-expanded',p.classList.contains('open')?'true':'false');this.textContent=p.classList.contains('open')?'⌃':'⌄';">${open?'⌃':'⌄'}</button>
+      </div>
+      <div class="option-explain-panel">${explanation}</div>
+    </div>`;
   }
 
   els.resultList.innerHTML = state.quiz.map((q, qi) => {
@@ -701,31 +721,16 @@ function renderResult(){
     const resultText = mode === 'unanswered' ? 'Chưa chọn' : (ok ? 'Đúng' : 'Sai');
     const resultCls = mode === 'unanswered' ? 'warn' : (ok ? 'ok' : 'bad');
     const resultPill = mode === 'unanswered' ? 'warnp' : (ok ? 'okp' : 'warnp');
-    const chosenDiff = mode === 'wrong'
-      ? `<div class="analysis-row focus-diff"><b>Bạn chọn sai ở đâu so với đáp án đúng:</b><br>${els.showAutoExplain.checked ? explainDifference(correctOpt.text, chosen.text) : 'Đã tắt phân tích tự động.'}</div>`
-      : '';
-    const quickCorrect = mode === 'correct'
-      ? `<div class="analysis-row source compact-ok"><b>Bạn trả lời đúng.</b> Các phương án sai còn lại đã được đưa vào khung ẩn/hiện bên dưới để xem khi cần.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>`
-      : '';
-    const unansweredNote = mode === 'unanswered'
-      ? `<div class="analysis-row compact-unanswered"><b>Bạn chưa chọn câu này.</b> Các phương án được hiển thị đầy đủ; đáp án đúng đã được bôi màu xanh. Phần giải thích mặc định được ẩn bên dưới.</div>`
-      : '';
-
-    const rows = q.options.map((op, oi) => {
-      const letter = 'ABCDEF'[oi] || String(oi+1);
-      let status = '';
-      if(op.isCorrect && q.userChoice === oi) status = '<span class="ok">Bạn chọn - đúng</span>';
-      else if(op.isCorrect) status = '<span class="ok">Đáp án đúng</span>';
-      else if(q.userChoice === oi) status = '<span class="bad">Bạn chọn - sai</span>';
-      else status = '<span class="muted">Phương án sai</span>';
-      const trClass = op.isCorrect ? 'result-status-ok' : (q.userChoice===oi ? 'result-status-bad' : '');
-      return `<tr class="${trClass}"><td data-label="PA" class="nowrap"><b>${letter}</b></td><td data-label="Nội dung">${escapeHtml(op.text)}</td><td data-label="Trạng thái">${status}</td></tr>`;
-    }).join('');
-
-    const details = hiddenExplainDetails(q, correctOpt, mode);
-    return `<article class="question-card"><h3>Câu ${qi+1}. <span class="${resultCls}">${resultText}</span></h3><p><b>${escapeHtml(q.item.question)}</b></p><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${chosenDiff}${quickCorrect}${unansweredNote}<div class="table-wrap result-options-only"><table><thead><tr><th>PA</th><th>Nội dung</th><th>Trạng thái</th></tr></thead><tbody>${rows}</tbody></table></div>${details}</article>`;
+    const shortNote = mode === 'wrong'
+      ? '<div class="analysis-row focus-diff compact-result-note"><b>Bạn trả lời sai.</b> Phương án bạn chọn đã được mở sẵn phần giải thích ngay bên dưới phương án đó. Các phương án khác bấm mũi tên để xem khi cần.</div>'
+      : (mode === 'correct'
+        ? '<div class="analysis-row source compact-result-note"><b>Bạn trả lời đúng.</b> Các giải thích được ẩn dưới nút mũi tên ở cuối từng phương án.</div>'
+        : '<div class="analysis-row compact-unanswered"><b>Bạn chưa chọn câu này.</b> Đáp án đúng đã được tô chữ xanh. Bấm mũi tên cuối từng phương án để xem giải thích.</div>');
+    const optionsHtml = q.options.map((op, oi) => resultOption(q, correctOpt, op, oi, mode)).join('');
+    return `<article class="question-card result-question-card"><h3>Câu ${qi+1}. <span class="${resultCls}">${resultText}</span></h3><div class="question-title result-question-title">${escapeHtml(q.item.question)}</div><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${shortNote}<div class="result-options-list">${optionsHtml}</div></article>`;
   }).join('');
 }
+
 
 function enterQuizFocus(){
   document.body.classList.remove('result-fullscreen');
