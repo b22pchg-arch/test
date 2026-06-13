@@ -1,7 +1,6 @@
-
 'use strict';
 
-const APP_VERSION = 'V14.0-20260613-sort-wrong-export-html-study-report';
+const APP_VERSION = 'V15.0-20260613-full-width-study-save-sticky';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -34,7 +33,7 @@ la là cua của va và hoac hoặc de để den đến duoc được bi bị tr
 VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
@@ -444,8 +443,10 @@ function refreshStudyActiveIds(){
   return state.study.activeIds;
 }
 function updateStickyLabels(){
+  document.body.classList.toggle('study-mode', state.mode === 'study');
   if(els.btnNewQuizSticky) els.btnNewQuizSticky.textContent = state.mode === 'study' ? 'Lượt tiếp' : 'Đề khác';
   if(els.btnBackToSetupSticky) els.btnBackToSetupSticky.textContent = state.mode === 'study' ? 'Thiết lập' : 'Thiết lập';
+  if(els.btnSaveStudyProgressSticky) els.btnSaveStudyProgressSticky.title = state.mode === 'study' ? 'Lưu tiến độ ôn tập' : 'Lưu tiến độ';
 }
 function renderPreview(){
   if(!els.bankPreview) return;
@@ -935,7 +936,7 @@ function renderResult(){
 function makeStandaloneHtml(title, contentHtml){
   const css = Array.from(document.querySelectorAll('style')).map(s => s.textContent || '').join('\n');
   const stamp = new Date().toLocaleString('vi-VN');
-  return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><style>${css}\nbody{overflow:auto!important}.app{max-width:1280px;margin:auto}.no-print,.stickybar{display:none!important}</style></head><body><main class="app"><div class="card"><h1>${escapeHtml(title)}</h1><p class="muted">Xuất lúc: ${escapeHtml(stamp)}. File này xem offline được, không cần PWA.</p></div>${contentHtml}</main></body></html>`;
+  return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><style>${css}\nbody{overflow:auto!important}.app{max-width:none!important;width:100%!important;margin:0!important;padding:12px!important}.card{max-width:none!important;width:100%!important;margin-left:0!important;margin-right:0!important}.no-print,.stickybar{display:none!important}.table-wrap table{min-width:1280px}</style></head><body class="standalone-export"><main class="app"><div class="card report-card-full"><h1>${escapeHtml(title)}</h1><p class="muted">Xuất lúc: ${escapeHtml(stamp)}. File này xem offline được, không cần PWA.</p></div>${contentHtml}</main></body></html>`;
 }
 function downloadTextFile(filename, content, mime='text/html;charset=utf-8'){
   const blob = new Blob([content], {type:mime});
@@ -954,7 +955,7 @@ function exportCurrentResultHtml(){
     setStatus('Chưa có kết quả để xuất HTML. Hãy nộp bài trước.', 'bad'); return;
   }
   const title = state.mode === 'study' ? 'Kết quả lượt ôn tập' : 'Kết quả bài thi trắc nghiệm';
-  const body = `<div class="card"><h2>Tóm tắt</h2><div class="status">${els.resultSummary.innerHTML}</div><p class="muted">Các câu sai/chưa chọn đã được xếp lên trước câu đúng.</p></div><div class="card"><h2>Chi tiết</h2>${els.resultList.innerHTML}</div>`;
+  const body = `<div class="card report-card-full"><h2>Tóm tắt</h2><div class="status">${els.resultSummary.innerHTML}</div><p class="muted">Các câu sai/chưa chọn đã được xếp lên trước câu đúng.</p></div><div class="card report-card-full"><h2>Chi tiết</h2>${els.resultList.innerHTML}</div>`;
   downloadTextFile(`${state.mode === 'study' ? 'ket_qua_on_tap' : 'ket_qua_bai_thi'}_${fileStamp()}.html`, makeStandaloneHtml(title, body));
   setStatus('✅ Đã xuất HTML kết quả. File có thể lưu lại và mở offline để xem.', 'good');
 }
@@ -969,7 +970,7 @@ function buildStudyStatsHtml(onlyWrong=false){
   if(onlyWrong) list = list.filter(r=>r.wrongCount > 0).sort((a,b)=>b.wrongCount-a.wrongCount || b.attempts-a.attempts || a.idx-b.idx);
   else list = list.sort((a,b)=>Number(a.learned)-Number(b.learned) || b.wrongCount-a.wrongCount || a.idx-b.idx);
   const tableRows = list.map((r,i)=>`<tr><td class="nowrap">${i+1}</td><td class="nowrap">${r.idx+1}</td><td>${escapeHtml(r.q.question)}</td><td>${escapeHtml(r.q.correctText || '')}</td><td class="nowrap">${r.correctCount}</td><td class="nowrap">${r.wrongCount}</td><td class="nowrap">${r.attempts}</td><td>${r.learned?'Đã học':'Đang học'}</td><td>${escapeHtml(r.q.source || '')}</td></tr>`).join('') || '<tr><td colspan="9" class="muted">Chưa có câu sai nào được ghi nhận.</td></tr>';
-  return `<div class="card"><h2>${onlyWrong?'Thống kê câu sai nhiều':'Thống kê quá trình ôn tập'}</h2><div class="row"><span class="pill okp">Đã học ${learned}/${total}</span><span class="pill">Tổng lượt làm ${attempts}</span><span class="pill okp">Tổng lượt đúng ${correct}</span><span class="pill ${wrong?'warnp':'okp'}">Tổng lượt sai ${wrong}</span><span class="pill">Ngưỡng đạt ${studyThreshold()} lần đúng</span></div><p class="muted">${onlyWrong?'Danh sách được sắp xếp theo số lần sai giảm dần.':'Danh sách ưu tiên câu chưa học và câu sai nhiều để tiếp tục ôn.'}</p><div class="table-wrap"><table><thead><tr><th>STT</th><th>Câu trong NH</th><th>Câu hỏi</th><th>Đáp án đúng</th><th>Đúng</th><th>Sai</th><th>Lượt</th><th>Trạng thái</th><th>Căn cứ</th></tr></thead><tbody>${tableRows}</tbody></table></div></div>`;
+  return `<div class="card wide-report study-report"><h2>${onlyWrong?'Thống kê câu sai nhiều':'Thống kê quá trình ôn tập'}</h2><div class="row"><span class="pill okp">Đã học ${learned}/${total}</span><span class="pill">Tổng lượt làm ${attempts}</span><span class="pill okp">Tổng lượt đúng ${correct}</span><span class="pill ${wrong?'warnp':'okp'}">Tổng lượt sai ${wrong}</span><span class="pill">Ngưỡng đạt ${studyThreshold()} lần đúng</span></div><p class="muted">${onlyWrong?'Danh sách được sắp xếp theo số lần sai giảm dần.':'Danh sách ưu tiên câu chưa học và câu sai nhiều để tiếp tục ôn.'}</p><div class="table-wrap"><table><thead><tr><th>STT</th><th>Câu trong NH</th><th>Câu hỏi</th><th>Đáp án đúng</th><th>Đúng</th><th>Sai</th><th>Lượt</th><th>Trạng thái</th><th>Căn cứ</th></tr></thead><tbody>${tableRows}</tbody></table></div></div>`;
 }
 function exportStudyStatsHtml(){
   if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi để xuất thống kê.', 'bad'); return; }
@@ -984,17 +985,19 @@ function exportStudyWrongsHtml(){
 
 
 function enterQuizFocus(){
+  updateStickyLabels();
   document.body.classList.remove('result-fullscreen');
   document.body.classList.add('quiz-fullscreen');
   setTimeout(() => { const q = $('quizSection'); if(q) q.scrollTo({top:0, behavior:'smooth'}); }, 0);
 }
 function enterResultFocus(){
+  updateStickyLabels();
   document.body.classList.remove('quiz-fullscreen');
   document.body.classList.add('result-fullscreen');
   setTimeout(() => { const r = $('resultSection'); if(r) r.scrollTo({top:0, behavior:'smooth'}); }, 0);
 }
 function exitFocus(){
-  document.body.classList.remove('quiz-fullscreen','result-fullscreen');
+  document.body.classList.remove('quiz-fullscreen','result-fullscreen','study-mode');
 }
 function scrollQuizTop(){
   const q = $('quizSection'); if(q) q.scrollTo({top:0, behavior:'smooth'});
@@ -1078,6 +1081,7 @@ function bindEvents(){
   if(els.btnResetStudy) els.btnResetStudy.addEventListener('click', resetStudyProgress);
   if(els.btnMarkStudyAllLearned) els.btnMarkStudyAllLearned.addEventListener('click', markCurrentStudyRoundLearned);
   if(els.btnSaveStudyProgress) els.btnSaveStudyProgress.addEventListener('click', saveStudyProgressManual);
+  if(els.btnSaveStudyProgressSticky) els.btnSaveStudyProgressSticky.addEventListener('click', saveStudyProgressManual);
   if(els.btnExportStudyStats) els.btnExportStudyStats.addEventListener('click', exportStudyStatsHtml);
   if(els.btnExportStudyWrongs) els.btnExportStudyWrongs.addEventListener('click', exportStudyWrongsHtml);
   els.btnSubmitQuiz.addEventListener('click', submitQuiz);

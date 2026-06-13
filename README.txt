@@ -1,7 +1,8 @@
-Trắc nghiệm Excel Offline PWA V14
+Trắc nghiệm Excel Offline PWA V15
 
-- Mở index.html qua localhost/HTTPS để cài PWA.
-- Bản HTML đơn có thể mở trực tiếp offline.
-- V14: sau khi nộp bài, câu sai/chưa chọn được xếp lên trước câu đúng.
-- Có nút xuất HTML kết quả bài thi/lượt ôn.
-- Ôn tập liên tục tự lưu tiến độ offline; có nút lưu tiến độ, xuất thống kê ôn tập và xuất riêng danh sách câu sai nhiều.
+- Tận dụng toàn màn hình hơn trên máy tính.
+- Bảng thống kê/xuất HTML không bị ép trong khung hẹp.
+- Nút Lưu tiến độ ôn tập đã được đưa vào thanh tiến độ dưới màn hình trong chế độ ôn tập.
+- Vẫn nhúng sẵn 160 câu hỏi và đọc Excel bằng SheetJS offline.
+
+Chạy PWA bằng localhost/HTTPS để service worker hoạt động.

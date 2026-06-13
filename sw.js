@@ -1,5 +1,5 @@
-const CACHE='quiz-excel-offline-v14-20260613-sort-wrong-export-study';
-const ASSETS=['./index.html','./app.js?v=V14','./xlsx.full.min.js','./manifest.webmanifest','./icon.svg'];
+const CACHE='quiz-excel-offline-v15-20260613-full-width-study-save-sticky';
+const ASSETS=['./index.html','./app.js?v=V15','./xlsx.full.min.js','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install', event => { self.skipWaiting(); event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS))); });
 self.addEventListener('activate', event => { event.waitUntil((async()=>{ const names=await caches.keys(); await Promise.all(names.filter(n=>n!==CACHE && n.includes('quiz-excel')).map(n=>caches.delete(n))); await self.clients.claim(); })()); });
 self.addEventListener('message', event => { if(event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting(); });
