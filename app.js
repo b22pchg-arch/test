@@ -1,10 +1,13 @@
 
 'use strict';
 
-const APP_VERSION = 'V12.0-20260613-result-options-arrow-explain';
+const APP_VERSION = 'V13.0-20260613-study-continuous-responsive-fix';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
+const STUDY_PROGRESS_KEY = 'excel_quiz_study_progress_v13';
+const STUDY_ACTIVE_KEY = 'excel_quiz_study_active_ids_v13';
+const STUDY_CONFIG_KEY = 'excel_quiz_study_config_v13';
 const $ = (id) => document.getElementById(id);
 
 const els = {};
@@ -20,7 +23,9 @@ const state = {
   quiz: [],
   submitted: false,
   lastResult: null,
-  lastQuizConfig: null
+  lastQuizConfig: null,
+  mode: 'exam',
+  study: { progress: {}, activeIds: [], config: { batchSize: 10, threshold: 10, shuffleQuestions: true, shuffleOptions: true } }
 };
 
 const VI_STOPWORDS = new Set(`
@@ -29,7 +34,7 @@ la là cua của va và hoac hoặc de để den đến duoc được bi bị tr
 VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache','btnForceUpdatePWA'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','studyStats'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
@@ -354,6 +359,72 @@ function renderStats(){
   if(els.btnStartQuiz) els.btnStartQuiz.disabled = state.bank.length === 0;
   if(els.btnSaveBank) els.btnSaveBank.disabled = state.bank.length === 0;
   if(els.quizCount){ els.quizCount.max = String(Math.max(1,state.bank.length)); if(Number(els.quizCount.value || 0) > state.bank.length) els.quizCount.value = String(state.bank.length || 1); }
+  renderStudyStats();
+}
+
+function getQuestionKey(q){
+  return String(q?.id || norm(q?.question || '')).trim();
+}
+function loadStudyState(){
+  try { state.study.progress = JSON.parse(localStorage.getItem(STUDY_PROGRESS_KEY) || '{}') || {}; } catch(e){ state.study.progress = {}; }
+  try { state.study.activeIds = JSON.parse(localStorage.getItem(STUDY_ACTIVE_KEY) || '[]') || []; } catch(e){ state.study.activeIds = []; }
+  try {
+    const cfg = JSON.parse(localStorage.getItem(STUDY_CONFIG_KEY) || '{}') || {};
+    state.study.config = Object.assign({batchSize:10, threshold:10, shuffleQuestions:true, shuffleOptions:true}, cfg);
+  } catch(e){}
+}
+function saveStudyState(){
+  try {
+    localStorage.setItem(STUDY_PROGRESS_KEY, JSON.stringify(state.study.progress || {}));
+    localStorage.setItem(STUDY_ACTIVE_KEY, JSON.stringify(state.study.activeIds || []));
+    localStorage.setItem(STUDY_CONFIG_KEY, JSON.stringify(state.study.config || {}));
+  } catch(e){ console.warn('Không lưu được tiến độ ôn tập', e); }
+}
+function studyThreshold(){ return Math.max(1, Number(els.studyMasterThreshold?.value || state.study.config.threshold || 10)); }
+function studyBatchSize(){ return Math.max(1, Math.min(Number(els.studyBatchSize?.value || state.study.config.batchSize || 10), Math.max(1,state.bank.length))); }
+function isStudyLearned(key){
+  const p = state.study.progress[key] || {};
+  return !!p.learned || Number(p.correctCount || 0) >= studyThreshold();
+}
+function syncStudyConfigFromUI(){
+  state.study.config = {
+    batchSize: studyBatchSize(),
+    threshold: studyThreshold(),
+    shuffleQuestions: !!els.studyShuffleQuestions?.checked,
+    shuffleOptions: !!els.studyShuffleOptions?.checked
+  };
+  saveStudyState();
+}
+function renderStudyStats(){
+  if(!els.studyStats) return;
+  if(els.studyBatchSize) els.studyBatchSize.value = String(state.study.config.batchSize || 10);
+  if(els.studyMasterThreshold) els.studyMasterThreshold.value = String(state.study.config.threshold || 10);
+  if(els.studyShuffleQuestions) els.studyShuffleQuestions.checked = !!state.study.config.shuffleQuestions;
+  if(els.studyShuffleOptions) els.studyShuffleOptions.checked = !!state.study.config.shuffleOptions;
+  const total = state.bank.length;
+  let learned = 0, practicing = 0;
+  const active = new Set(state.study.activeIds || []);
+  for(const q of state.bank){ const k=getQuestionKey(q); if(isStudyLearned(k)) learned++; if(active.has(k) && !isStudyLearned(k)) practicing++; }
+  const remain = Math.max(0,total-learned);
+  els.studyStats.innerHTML = `<span class="pill okp">Đã học: ${learned}/${total}</span><span class="pill ${remain?'warnp':'okp'}">Còn lại: ${remain}</span><span class="pill">Đang ôn: ${practicing || Math.min(studyBatchSize(), remain)}</span><span class="pill">Đạt khi đúng ≥ ${studyThreshold()} lần</span>`;
+}
+function refreshStudyActiveIds(){
+  const bankKeys = new Set(state.bank.map(getQuestionKey));
+  const batch = studyBatchSize();
+  let active = (state.study.activeIds || []).filter(k => bankKeys.has(k) && !isStudyLearned(k));
+  const candidates = state.bank
+    .map(q => ({q, key:getQuestionKey(q), p:state.study.progress[getQuestionKey(q)] || {}}))
+    .filter(x => !active.includes(x.key) && !isStudyLearned(x.key))
+    .sort((a,b) => (Number(a.p.correctCount||0)-Number(b.p.correctCount||0)) || (Number(a.p.attempts||0)-Number(b.p.attempts||0)));
+  for(const c of candidates){ if(active.length >= batch) break; active.push(c.key); }
+  state.study.activeIds = active.slice(0,batch);
+  saveStudyState();
+  renderStudyStats();
+  return state.study.activeIds;
+}
+function updateStickyLabels(){
+  if(els.btnNewQuizSticky) els.btnNewQuizSticky.textContent = state.mode === 'study' ? 'Lượt tiếp' : 'Đề khác';
+  if(els.btnBackToSetupSticky) els.btnBackToSetupSticky.textContent = state.mode === 'study' ? 'Thiết lập' : 'Thiết lập';
 }
 function renderPreview(){
   if(!els.bankPreview) return;
@@ -597,6 +668,8 @@ function hashSeed(text){ let h=2166136261; const s=String(text || Date.now()); f
 function rng(seed){ let a=seed>>>0; return function(){ a+=0x6D2B79F5; let t=a; t=Math.imul(t^t>>>15,t|1); t^=t+Math.imul(t^t>>>7,t|61); return ((t^t>>>14)>>>0)/4294967296; }; }
 function shuffled(arr, rand){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(rand()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 function startQuiz(){
+  state.mode = 'exam';
+  updateStickyLabels();
   if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi.', 'bad'); return; }
   const count = Math.max(1, Math.min(Number(els.quizCount.value || 1), state.bank.length));
   const seedText = els.seedInput.value.trim() || new Date().toISOString();
@@ -621,6 +694,90 @@ function startQuiz(){
   setStatus(`✅ Đã tạo đề ${count} câu. Mã đảo đề/seed: ${seedText}`, 'good');
   enterQuizFocus();
   location.hash = '#quizSection';
+}
+
+function startStudyRound(){
+  if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi để ôn tập.', 'bad'); return; }
+  state.mode = 'study';
+  syncStudyConfigFromUI();
+  updateStickyLabels();
+  const activeIds = refreshStudyActiveIds();
+  if(!activeIds.length){
+    setStatus('✅ Bạn đã học đủ toàn bộ câu hỏi trong ngân hàng. Có thể xóa tiến độ ôn tập để học lại từ đầu.', 'good');
+    renderStudyStats();
+    return;
+  }
+  const idSet = new Set(activeIds);
+  let questions = state.bank.filter(q => idSet.has(getQuestionKey(q)));
+  const seedText = 'on-tap-' + new Date().toISOString();
+  const rand = rng(hashSeed(seedText));
+  if(state.study.config.shuffleQuestions) questions = shuffled(questions, rand);
+  state.quiz = questions.map((q, qi) => {
+    const opts = q.options.map((text, idx) => ({text, originalIndex:idx, isCorrect:idx===q.correctIndex}));
+    const finalOpts = state.study.config.shuffleOptions ? shuffled(opts, rand) : opts;
+    return {no: qi+1, item:q, options:finalOpts, userChoice:null};
+  });
+  state.submitted = false; state.lastResult = null;
+  state.lastQuizConfig = {mode:'study', count:questions.length, shuffleQuestions:state.study.config.shuffleQuestions, shuffleOptions:state.study.config.shuffleOptions, showAutoExplain:!!els.showAutoExplain?.checked};
+  renderQuiz();
+  els.btnSubmitQuiz.disabled = false; els.btnSubmitSticky.disabled = false; if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.disabled = false;
+  els.resultSummary.textContent = 'Chưa nộp bài.'; els.resultList.innerHTML = '';
+  setStatus(`📚 Đã tạo lượt ôn tập ${questions.length} câu. Câu nào đúng đủ ${studyThreshold()} lần hoặc được xác nhận đã học sẽ được thay bằng câu mới ở lượt tiếp.`, 'good');
+  enterQuizFocus();
+  location.hash = '#quizSection';
+}
+function resetStudyProgress(){
+  if(!confirm('Xóa toàn bộ tiến độ ôn tập đã lưu?')) return;
+  state.study.progress = {}; state.study.activeIds = [];
+  saveStudyState(); renderStudyStats();
+  setStatus('✅ Đã xóa tiến độ ôn tập. Có thể bắt đầu học lại từ đầu.', 'good');
+}
+function markCurrentStudyRoundLearned(){
+  if(!state.quiz.length){ setStatus('Chưa có lượt ôn tập để xác nhận đã học.', 'bad'); return; }
+  state.quiz.forEach(q => markStudyLearnedByKey(getQuestionKey(q.item), false));
+  refreshStudyActiveIds(); renderResult();
+  setStatus('✅ Đã đánh dấu các câu trong lượt hiện tại là đã học. Bấm “Lượt tiếp” để nạp câu mới.', 'good');
+}
+function markStudyLearnedByKey(key, rerender=true){
+  const p = state.study.progress[key] || {};
+  p.learned = true; p.learnedAt = new Date().toISOString(); p.manualLearned = true;
+  state.study.progress[key] = p;
+  state.study.activeIds = (state.study.activeIds || []).filter(x => x !== key);
+  saveStudyState(); renderStudyStats();
+  if(rerender && state.lastResult) renderResult();
+}
+function applyStudySubmission(){
+  const threshold = studyThreshold();
+  state.quiz.forEach(q => {
+    const key = getQuestionKey(q.item);
+    const p = state.study.progress[key] || {correctCount:0, wrongCount:0, attempts:0, streak:0, learned:false};
+    const ok = q.userChoice !== null && q.options[q.userChoice]?.isCorrect;
+    p.attempts = Number(p.attempts || 0) + 1;
+    p.lastAt = new Date().toISOString();
+    p.lastCorrect = !!ok;
+    if(ok){ p.correctCount = Number(p.correctCount || 0) + 1; p.streak = Number(p.streak || 0) + 1; }
+    else { p.wrongCount = Number(p.wrongCount || 0) + 1; p.streak = 0; }
+    if(Number(p.correctCount || 0) >= threshold){ p.learned = true; p.learnedAt = p.learnedAt || new Date().toISOString(); }
+    state.study.progress[key] = p;
+  });
+  state.study.activeIds = (state.study.activeIds || []).filter(k => !isStudyLearned(k));
+  saveStudyState();
+  renderStudyStats();
+}
+function studyQuestionMeta(item){
+  const key = getQuestionKey(item);
+  const p = state.study.progress[key] || {};
+  const learned = isStudyLearned(key);
+  const correct = Number(p.correctCount || 0), attempts = Number(p.attempts || 0), wrong = Number(p.wrongCount || 0);
+  const btn = learned ? '<span class="pill okp">Đã học</span>' : `<button type="button" class="light btn-mark-learned" data-study-key="${escapeHtml(key)}">Đã học câu này</button>`;
+  return `<div class="study-result-meta"><span class="pill">Ôn tập: đúng ${correct}/${studyThreshold()} lần</span><span class="pill">Đã làm ${attempts} lượt</span><span class="pill ${wrong?'warnp':'okp'}">Sai ${wrong}</span>${btn}</div>`;
+}
+function bindResultStudyButtons(){
+  if(!els.resultList) return;
+  els.resultList.querySelectorAll('.btn-mark-learned').forEach(btn => btn.addEventListener('click', () => {
+    markStudyLearnedByKey(btn.dataset.studyKey);
+    setStatus('✅ Đã xác nhận câu này đã học. Bấm “Lượt tiếp” để thay bằng câu mới.', 'good');
+  }));
 }
 function resetQuiz(){
   state.quiz=[]; state.submitted=false; state.lastResult=null;
@@ -662,6 +819,7 @@ function submitQuiz(){
   if(unanswered && !confirm(`Còn ${unanswered} câu chưa chọn. Vẫn nộp bài?`)) return;
   let correct=0; state.quiz.forEach(q => { if(q.userChoice !== null && q.options[q.userChoice]?.isCorrect) correct++; });
   state.submitted=true; state.lastResult={correct,total:state.quiz.length,score10:state.quiz.length?correct/state.quiz.length*10:0,time:new Date().toLocaleString('vi-VN')};
+  if(state.mode === 'study') applyStudySubmission();
   renderQuiz(); renderResult();
   els.btnSubmitQuiz.disabled = true; els.btnSubmitSticky.disabled = true; if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.disabled = true;
   enterResultFocus();
@@ -721,14 +879,16 @@ function renderResult(){
     const resultText = mode === 'unanswered' ? 'Chưa chọn' : (ok ? 'Đúng' : 'Sai');
     const resultCls = mode === 'unanswered' ? 'warn' : (ok ? 'ok' : 'bad');
     const resultPill = mode === 'unanswered' ? 'warnp' : (ok ? 'okp' : 'warnp');
+    const studyMeta = state.mode === 'study' ? studyQuestionMeta(q.item) : '';
     const shortNote = mode === 'wrong'
       ? '<div class="analysis-row focus-diff compact-result-note"><b>Bạn trả lời sai.</b> Phương án bạn chọn đã được mở sẵn phần giải thích ngay bên dưới phương án đó. Các phương án khác bấm mũi tên để xem khi cần.</div>'
       : (mode === 'correct'
         ? '<div class="analysis-row source compact-result-note"><b>Bạn trả lời đúng.</b> Các giải thích được ẩn dưới nút mũi tên ở cuối từng phương án.</div>'
         : '<div class="analysis-row compact-unanswered"><b>Bạn chưa chọn câu này.</b> Đáp án đúng đã được tô chữ xanh. Bấm mũi tên cuối từng phương án để xem giải thích.</div>');
     const optionsHtml = q.options.map((op, oi) => resultOption(q, correctOpt, op, oi, mode)).join('');
-    return `<article class="question-card result-question-card"><h3>Câu ${qi+1}. <span class="${resultCls}">${resultText}</span></h3><div class="question-title result-question-title">${escapeHtml(q.item.question)}</div><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${shortNote}<div class="result-options-list">${optionsHtml}</div></article>`;
+    return `<article class="question-card result-question-card"><h3>Câu ${qi+1}. <span class="${resultCls}">${resultText}</span></h3><div class="question-title result-question-title">${escapeHtml(q.item.question)}</div><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${studyMeta}${shortNote}<div class="result-options-list">${optionsHtml}</div></article>`;
   }).join('');
+  bindResultStudyButtons();
 }
 
 
@@ -756,6 +916,7 @@ function makeFreshSeed(){
   return 'de-khac-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
 }
 function startNewQuizSameConfig(){
+  if(state.mode === 'study'){ startStudyRound(); return; }
   if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi để tạo đề.', 'bad'); return; }
   const cfg = state.lastQuizConfig;
   if(cfg){
@@ -821,6 +982,10 @@ function bindEvents(){
   els.btnLoadBank.addEventListener('click', loadBank);
   els.btnClearBank.addEventListener('click', clearBank);
   els.btnStartQuiz.addEventListener('click', startQuiz);
+  if(els.btnStartStudy) els.btnStartStudy.addEventListener('click', startStudyRound);
+  if(els.btnNextStudy) els.btnNextStudy.addEventListener('click', startStudyRound);
+  if(els.btnResetStudy) els.btnResetStudy.addEventListener('click', resetStudyProgress);
+  if(els.btnMarkStudyAllLearned) els.btnMarkStudyAllLearned.addEventListener('click', markCurrentStudyRoundLearned);
   els.btnSubmitQuiz.addEventListener('click', submitQuiz);
   els.btnSubmitSticky.addEventListener('click', submitQuiz);
   els.btnPrint.addEventListener('click', () => window.print());
@@ -839,6 +1004,7 @@ function bindEvents(){
 }
 function boot(){
   initElements();
+  loadStudyState();
   try { parseEmbedded(); }
   catch(e){ console.error(e); setStatus('❌ Lỗi nạp dữ liệu nhúng: ' + (e.message || e), 'bad'); }
   bindEvents();

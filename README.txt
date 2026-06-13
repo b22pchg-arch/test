@@ -1,8 +1,2 @@
-Trắc nghiệm Excel Offline PWA V12
-
-- Dữ liệu 160 câu nhúng sẵn.
-- Kết quả hiển thị phương án giống giao diện làm bài.
-- Đáp án đúng có chữ màu xanh.
-- Mỗi phương án có nút mũi tên để mở/ẩn giải thích nguyên nhân đúng sai.
-- Nút Thoát ở thanh dưới được làm gọn.
-- Có nút Ép cập nhật PWA.
+Bản V13: sửa giao diện máy tính/điện thoại, nút thoát gọn, thêm mô đun ôn tập liên tục có lưu tiến độ offline.
+Mở index.html qua localhost/HTTPS để dùng PWA; mở HTML đơn để dùng nhanh offline.
