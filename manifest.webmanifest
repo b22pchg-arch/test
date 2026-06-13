@@ -1,26 +1,16 @@
 {
-  "id": "excel-quiz-offline-pwa-v24",
-  "name": "Trắc nghiệm Excel Offline V24",
-  "short_name": "Trắc nghiệm V24",
-  "description": "PWA trắc nghiệm Excel offline; quản lý nhiều bộ câu hỏi, đề thi lấy ngẫu nhiên theo số lượng từng bộ, ôn tập lấy lần lượt theo từng bộ.",
-  "start_url": "./index.html?source=pwa-v24",
+  "id": "excel-quiz-offline-pwa-v25",
+  "name": "Trắc nghiệm Excel Offline V25",
+  "short_name": "Trắc nghiệm V25",
+  "description": "PWA trắc nghiệm Excel offline; đã sửa SheetJS, mở Excel và xem trước ngân hàng theo phân trang.",
+  "start_url": "./index.html?source=pwa-v25",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#eef7f6",
   "theme_color": "#0f766e",
   "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ]
 }

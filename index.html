@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0f766e">
-  <link rel="manifest" href="./manifest.webmanifest?v=V24">
+  <link rel="manifest" href="./manifest.webmanifest?v=V25">
   <link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="description" content="PWA trắc nghiệm Excel offline có dữ liệu nhúng sẵn, đọc Excel bằng SheetJS, tạo đề đảo câu/đáp án, chấm điểm và phân tích đúng sai.">
-  <title>Trắc nghiệm Excel Offline PWA V24</title>
+  <title>Trắc nghiệm Excel Offline PWA V25</title>
   <style>
 :root{--bg:#eef7f6;--panel:#fff;--text:#0f172a;--muted:#475569;--line:#d7e3e2;--primary:#0f766e;--primary2:#115e59;--danger:#b91c1c;--ok:#15803d;--warn:#b45309;--info:#0369a1;--shadow:0 10px 28px rgba(15,23,42,.10);--r:16px}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}body{min-height:100vh}.app{max-width:1280px;margin:0 auto;padding:14px 14px 92px}header{position:sticky;top:0;z-index:30;margin:0;padding:14px;background:linear-gradient(135deg,#0f766e,#0b4f49);color:#fff;box-shadow:var(--shadow)}header .inner{max-width:1280px;margin:0 auto}header h1{margin:0 0 6px;font-size:clamp(20px,4vw,30px);letter-spacing:.2px}header p{margin:0;color:#dffaf7;font-size:14px}.grid{display:grid;grid-template-columns:1fr;gap:12px}@media (min-width:990px){.grid.two{grid-template-columns:430px 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}.card h2,.card h3{margin:0 0 10px}.card h2{font-size:20px}.card h3{font-size:17px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}label{font-weight:800;font-size:13px;color:#1f2937;display:block;margin:8px 0 5px}input,select,textarea,button{font:inherit}input[type=file],input[type=number],input[type=text],select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:10px;background:#fff;color:var(--text)}input[type=checkbox]{transform:scale(1.12);margin-right:6px}select[multiple]{min-height:150px}button{border:0;border-radius:12px;padding:10px 13px;background:var(--primary);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(15,118,110,.22)}button:hover{background:var(--primary2)}button.secondary{background:#334155}button.light{background:#e2e8f0;color:#0f172a;box-shadow:none}button.danger{background:var(--danger)}button.info{background:var(--info)}button:disabled{opacity:.55;cursor:not-allowed}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;background:#ecfeff;color:#155e75;font-weight:900;font-size:12px;border:1px solid #a5f3fc;margin:2px}.pill.okp{background:#f0fdf4;color:#166534;border-color:#86efac}.pill.warnp{background:#fffbeb;color:#92400e;border-color:#fcd34d}.ok{color:var(--ok);font-weight:900}.bad{color:var(--danger);font-weight:900}.warn{color:var(--warn);font-weight:900}.status{border-radius:12px;padding:10px;background:#f8fafc;border:1px dashed #cbd5e1;white-space:pre-wrap}.status.bad{border-color:#fecaca;background:#fff1f2}.status.good{border-color:#bbf7d0;background:#f0fdf4}.status.info{border-color:#bae6fd;background:#f0f9ff}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.table-wrap table{min-width:940px;width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #e2e8f0;padding:9px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#f1f5f9;z-index:1}.nowrap{white-space:nowrap}details{border:1px solid var(--line);border-radius:12px;background:#fbffff;padding:10px;margin:10px 0}summary{font-weight:900;cursor:pointer}.question-card{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:12px;margin:10px 0}.question-title{font-weight:900;margin-bottom:8px}.option{display:flex;gap:8px;align-items:flex-start;border:1px solid #e2e8f0;border-radius:12px;padding:9px;margin:7px 0;background:#f8fafc}.option:hover{background:#eff6ff}.option input{margin-top:4px}.letter{min-width:28px;height:28px;border-radius:999px;background:#dbeafe;display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#1e3a8a}.chosen{border-color:#38bdf8;background:#ecfeff}.right{border-color:#22c55e;background:#f0fdf4}.wrong{border-color:#ef4444;background:#fef2f2}.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:9px 14px;box-shadow:0 -8px 22px rgba(15,23,42,.09)}.stickybar-inner{max-width:1280px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.progress{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden;min-width:170px;flex:1}.progress>span{display:block;height:100%;width:0;background:var(--primary);transition:.2s}.analysis-row{margin:7px 0;padding:9px;border-left:4px solid #0ea5e9;background:#f0f9ff;border-radius:8px}.analysis-row b{color:#0f172a}.analysis-row.source{background:#fefce8;border-left-color:#eab308}.tag{display:inline-block;margin:2px 3px 2px 0;padding:2px 6px;border-radius:999px;background:#e0f2fe;color:#075985;font-size:12px}.mapping-grid{display:grid;grid-template-columns:1fr;gap:8px}@media (min-width:720px){.mapping-grid{grid-template-columns:repeat(2,1fr)}}.banner{padding:11px;border-radius:14px;background:#ecfdf5;border:1px solid #86efac;color:#14532d;margin-bottom:10px}.banner b{font-size:15px}@media (max-width:700px){.app{padding:10px 10px 100px}.card{padding:11px;border-radius:13px}button{width:100%;justify-content:center}.row button{flex:1 1 150px}.stickybar-inner{align-items:stretch}.progress{width:100%;flex-basis:100%}.table-wrap table{min-width:780px}.option{padding:8px}.letter{min-width:26px;height:26px}}
 /* V6: giải thích ngược, lấy phương án sai làm trọng tâm, chỉ rõ đáp án đúng có gì mà sai không có */
@@ -219,7 +219,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 /* V22: hướng dẫn sử dụng, xuất HTML nhúng dữ liệu hiện tại, nút xác nhận đã học lượt ôn */
 .guide-card details{background:#f8fafc;border-color:#dbeafe}.guide-card summary{color:#0f766e}.guide-card ol,.guide-card ul{margin-top:6px;padding-left:20px}.guide-card li{margin:4px 0}.guide-card code{background:#e2e8f0;border-radius:6px;padding:1px 5px}.embedded-export-note{background:#f0fdf4;border:1px dashed #86efac;border-radius:12px;padding:8px;margin-top:8px;color:#14532d}.sticky-study-mark{display:none!important}body.study-mode .sticky-study-mark{display:inline-flex!important}.export-current-html{background:#7c3aed!important}.export-current-html:hover{background:#6d28d9!important}.help-grid{display:grid;grid-template-columns:1fr;gap:8px}.help-mini{border:1px solid #e2e8f0;border-radius:12px;padding:9px;background:#fff}@media (min-width:840px){.help-grid{grid-template-columns:repeat(2,1fr)}}@media (max-width:700px){.guide-card details{padding:8px}.sticky-study-mark{font-size:12px!important;padding:7px 6px!important}.export-current-html{width:100%!important}}
 
-/* V24: số câu theo từng bộ = số lượng; đề thi ngẫu nhiên, ôn tập lần lượt theo bộ */
+/* V25: số câu theo từng bộ = số lượng; đề thi ngẫu nhiên, ôn tập lần lượt theo bộ */
 .bank-manager-card .set-toolbar{display:grid;grid-template-columns:1fr;gap:8px}.bank-manager-card .set-actions{display:flex;gap:8px;flex-wrap:wrap}.bank-set-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px}.bank-set-table{min-width:1040px;width:100%;border-collapse:collapse}.bank-set-table input[type=number]{max-width:110px;padding:7px;border-radius:9px}.bank-set-table .set-name{font-weight:900;color:#0f766e}.bank-set-table .set-note{font-size:12px;color:#475569}.bank-set-table .mini-btn{padding:7px 8px;border-radius:9px;font-size:12px;box-shadow:none}.set-hint{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:12px;padding:8px;margin-top:8px}.set-count-zero{background:#fff}.set-count-used{border-color:#0f766e!important;background:#ecfdf5!important}.set-current-row{background:#f0fdfa}.set-json-file{background:#fff}.set-badge{display:inline-block;border:1px solid #bae6fd;background:#ecfeff;color:#155e75;border-radius:999px;padding:2px 7px;font-size:12px;font-weight:900;margin:1px}
 @media(max-width:700px){.bank-manager-card .set-actions button{width:100%!important}.bank-set-table{min-width:920px}.bank-set-table-wrap{margin-left:-2px;margin-right:-2px}.bank-set-table input[type=number]{max-width:95px}}
 
@@ -228,7 +228,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 </head>
 <body>
 
-<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V24</h1><p>Dữ liệu nhúng sẵn, quản lý nhiều bộ câu hỏi; đề thi lấy ngẫu nhiên theo số lượng từng bộ, ôn tập lấy lần lượt theo từng bộ.</p></div></header>
+<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V25</h1><p>Dữ liệu nhúng sẵn, quản lý nhiều bộ câu hỏi; đề thi lấy ngẫu nhiên theo số lượng từng bộ, ôn tập lấy lần lượt theo từng bộ.</p></div></header>
 <main class="app">
   <section class="grid two">
     <div>
@@ -239,7 +239,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
           <button id="btnUseEmbedded" class="info">Dùng dữ liệu nhúng</button>
           <button id="btnSaveEmbedded" class="secondary">Lưu dữ liệu nhúng vào database</button>
         </div>
-        <p class="muted">Bản V24 khóa đúng logic chọn số câu theo từng bộ: đề thi lấy ngẫu nhiên theo số lượng từng bộ; ôn tập lấy lần lượt theo từng bộ, mỗi bộ có tiến độ riêng đến khi học hết.</p>
+        <p class="muted">Bản V25 khóa đúng logic chọn số câu theo từng bộ: đề thi lấy ngẫu nhiên theo số lượng từng bộ; ôn tập lấy lần lượt theo từng bộ, mỗi bộ có tiến độ riêng đến khi học hết.</p>
       </div>
       <div class="card guide-card no-print" id="guideCard">
         <h2>0b) Hướng dẫn sử dụng</h2>
@@ -458,7 +458,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 <script>
 'use strict';
 
-const APP_VERSION = 'V24.0-20260613-set-count-random-exam-sequential-study';
+const APP_VERSION = 'V25.0-20260613-fix-sheetjs-preview-pagination';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -926,6 +926,7 @@ function updateStickyLabels(){
 }
 function renderPreview(){
   if(!els.bankPreview) return;
+  try{
   if(!state.bank.length){
     els.bankPreview.innerHTML = '<div class="bank-pager"><span class="muted">Chưa có dữ liệu hợp lệ.</span></div>';
     return;
@@ -942,7 +943,7 @@ function renderPreview(){
   const pageItems = state.bank.slice(start, start + pageSize);
   const rows = pageItems.map((q,i)=>{
     const correctSet = new Set(getCorrectIndexes(q));
-    const optsHtml = (q.options || []).map((opt, idx)=>`<span class="preview-option-item ${correctSet.has(idx)?'is-correct':''}"><b>${escapeHtml(indexToLetters(idx))}.</b> ${escapeHtml(opt)}</span>`).join('');
+    const optsHtml = (q.options || []).map((opt, idx)=>`<span class="preview-option-item ${correctSet.has(idx)?'is-correct':''}"><b>${escapeHtml(optionLabel(idx))}.</b> ${escapeHtml(opt)}</span>`).join('');
     return `<tr><td class="nowrap">${start+i+1}</td><td class="question-cell">${escapeHtml(q.question)}</td><td><span class="pill ${isMultiQuestion(q)?'warnp':'okp'}">${isMultiQuestion(q)?'Nhiều đáp án':'Một đáp án'}</span></td><td class="nowrap">${escapeHtml(answerIndexText(q))}</td><td class="correct-cell">${escapeHtml(q.correctText)}</td><td class="option-list-cell">${optsHtml}</td><td class="source-cell">${escapeHtml(q.source||'')}</td></tr>`;
   }).join('');
   const pageSizeOptions = allowedSizes.map(n=>`<option value="${n}" ${n===pageSize?'selected':''}>${n} câu/trang</option>`).join('');
@@ -967,6 +968,10 @@ function renderPreview(){
     state.bankPage = 1;
     renderPreview();
   }));
+  } catch(err){
+    console.error('renderPreview error', err);
+    els.bankPreview.innerHTML = '<div class="status bad">❌ Lỗi hiển thị ngân hàng câu hỏi: ' + escapeHtml(err && err.message ? err.message : err) + '</div>';
+  }
 }
 
 
@@ -1131,7 +1136,7 @@ function collectQuestionsFromSelectedSets(mode, rand, shuffleWithin){
     const qs = setQuestionsWithSetInfo(set, mode);
 
     if(mode === 'exam'){
-      // V24: số nhập trong từng bộ là SỐ LƯỢNG CÂU. Đề thi luôn lấy ngẫu nhiên trong từng bộ,
+      // V25: số nhập trong từng bộ là SỐ LƯỢNG CÂU. Đề thi luôn lấy ngẫu nhiên trong từng bộ,
       // không hiểu là lấy từ câu số mấy đến câu số mấy. Tùy chọn “Đảo câu hỏi” chỉ ảnh hưởng thứ tự hiển thị sau khi đã lấy đủ số lượng.
       const take = shuffled(qs, rand).slice(0, Math.min(countNeed, qs.length));
       out = out.concat(take);
@@ -1140,7 +1145,7 @@ function collectQuestionsFromSelectedSets(mode, rand, shuffleWithin){
     }
 
     if(mode === 'study'){
-      // V24: ôn tập theo từng bộ có tiến độ riêng. Mỗi bộ giữ nhóm câu đang ôn;
+      // V25: ôn tập theo từng bộ có tiến độ riêng. Mỗi bộ giữ nhóm câu đang ôn;
       // câu đã học/đạt ngưỡng bị loại khỏi nhóm và thay bằng câu kế tiếp theo đúng thứ tự trong chính bộ đó.
       const keyToQuestion = new Map(qs.map(q => [getQuestionKey(q), q]));
       const setKeys = new Set(keyToQuestion.keys());
@@ -1455,12 +1460,29 @@ async function clearBank(){
   setStatus('✅ Đã xóa database đã lưu. Dữ liệu nhúng trong HTML vẫn còn, bấm “Dùng dữ liệu nhúng” để nạp lại.', 'good');
 }
 
+
+function loadLocalSheetJSIfNeeded(){
+  if(window.XLSX) return Promise.resolve(true);
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector('script[data-sheetjs-loader="1"]');
+    if(existing){ existing.addEventListener('load',()=>resolve(true)); existing.addEventListener('error',()=>reject(new Error('Không tải được xlsx.full.min.js'))); return; }
+    const s = document.createElement('script');
+    s.src = './xlsx.full.min.js?v=' + encodeURIComponent(APP_VERSION);
+    s.async = false;
+    s.dataset.sheetjsLoader = '1';
+    s.onload = () => resolve(!!window.XLSX);
+    s.onerror = () => reject(new Error('Không tìm thấy hoặc không tải được xlsx.full.min.js cùng thư mục index.html'));
+    document.head.appendChild(s);
+  });
+}
+
 async function fileToArrayBuffer(file){
   if(file.arrayBuffer) return await file.arrayBuffer();
   return new Promise((resolve,reject)=>{ const fr=new FileReader(); fr.onload=()=>resolve(fr.result); fr.onerror=()=>reject(fr.error || new Error('FileReader lỗi')); fr.readAsArrayBuffer(file); });
 }
 async function readWorkbook(file){
-  if(!window.XLSX) throw new Error('Không tìm thấy thư viện SheetJS XLSX. Hãy đặt xlsx.full.min.js cùng thư mục index.html hoặc dùng bản HTML đơn đã nhúng thư viện.');
+  if(!window.XLSX){ try{ await loadLocalSheetJSIfNeeded(); }catch(_e){} }
+  if(!window.XLSX) throw new Error('Không tìm thấy thư viện SheetJS XLSX. Bản PWA V25 đã kèm xlsx.full.min.js; hãy giải nén đủ file ZIP và mở index.html trong cùng thư mục.');
   const buf = await fileToArrayBuffer(file);
   const bytes = new Uint8Array(buf);
   try { return XLSX.read(bytes, {type:'array', cellDates:false, raw:false}); }
@@ -1627,6 +1649,7 @@ function parseRows(rows, sheetName, manualMapping){
 
 function cleanQuestion(v){ return visibleText(v).replace(/^\s*(?:câu\s*)?\d+[.)\-:]\s*/i,'').trim(); }
 function cleanOption(v){ return visibleText(v).replace(/^\s*(?:\[x\]|\(x\)|✓|✔|\*)\s*/i,'').replace(/\s*(?:\[dung\]|\[đúng\])\s*$/i,'').replace(/^\s*(?:[A-Za-z]{1,3}|\d{1,3})\s*[.)\-:]\s*/,'').trim(); }
+function indexToLetters(idx){ return optionLabel(idx); }
 function optionLabel(idx){
   let s='', n=Number(idx)+1;
   if(!Number.isFinite(n) || n < 1) return '';
@@ -2270,9 +2293,9 @@ function exportStandaloneHtmlWithCurrentBank(){
     if(!bankScript) throw new Error('Không tìm thấy vùng dữ liệu nhúng #embedded-bank.');
     bankScript.textContent = safeJsonForEmbedded(buildCurrentEmbeddedPayload());
     const title = doc.querySelector('title');
-    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V24 - HTML nhúng dữ liệu';
+    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V25 - HTML nhúng dữ liệu';
     const h1 = doc.querySelector('header h1');
-    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V24';
+    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V25';
     const subtitle = doc.querySelector('header p');
     if(subtitle) subtitle.textContent = 'HTML đã nhúng sẵn ngân hàng câu hỏi hiện tại, mở offline là dùng ngay.';
     const body = doc.querySelector('body');
@@ -2366,7 +2389,7 @@ function boot(){
   bindEvents();
   registerSW();
   saveBank('dữ liệu nhúng', true).catch(()=>{});
-  setStatus(`✅ Đã tự nạp ${state.bank.length} câu hỏi nhúng từ Excel mới. Có thể bấm “Tạo đề” ngay, không cần chọn file Excel.`, 'good');
+  setStatus(`✅ Đã tự nạp ${state.bank.length} câu hỏi nhúng từ Excel mới. SheetJS: ${window.XLSX ? 'đã sẵn sàng' : 'chưa tải'}. Có thể bấm “Tạo đề” ngay, không cần chọn file Excel.`, 'good');
   setTimeout(() => { renderStats(); renderPreview(); renderQuestionSetManager(); }, 0);
 }
 window.addEventListener('DOMContentLoaded', boot);
