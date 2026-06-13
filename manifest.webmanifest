@@ -1,16 +1,41 @@
 {
-  "name": "Trắc nghiệm Excel Offline V17 V17",
-  "short_name": "Quiz Excel V16",
-  "start_url": "./index.html",
+  "id": "trac-nghiem-excel-offline-a1",
+  "name": "Trắc nghiệm Excel Offline A1 V18",
+  "short_name": "Quiz A1 V18",
+  "start_url": "./index.html?source=pwa-v18",
+  "scope": "./",
   "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
   "background_color": "#eef7f6",
   "theme_color": "#0f766e",
-  "description": "PWA offline tạo đề trắc nghiệm từ Excel, dữ liệu nhúng sẵn, ôn tập liên tục, xuất HTML và mô đun tra cứu Internet cập nhật cột căn cứ.",
+  "description": "PWA offline tạo đề trắc nghiệm từ Excel, dữ liệu nhúng sẵn, ôn tập liên tục, xuất HTML và cập nhật căn cứ pháp lý từ cột cuối.",
+  "orientation": "any",
+  "categories": [
+    "education",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "icon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

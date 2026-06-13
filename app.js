@@ -1,6 +1,6 @@
 'use strict';
 
-const APP_VERSION = 'V17.0-20260613-legal-reference-from-source-column';
+const APP_VERSION = 'V18.0-20260613-pwa-install-fixed';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -10,6 +10,7 @@ const STUDY_CONFIG_KEY = 'excel_quiz_study_config_v13';
 const $ = (id) => document.getElementById(id);
 
 const els = {};
+let deferredInstallPrompt = null;
 const state = {
   bank: [],
   errors: [],
@@ -33,7 +34,7 @@ la là cua của va và hoac hoặc de để den đến duoc được bi bị tr
 VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','internetQuestionSelect','internetSearchTemplate','internetProposedSource','internetStatus','internetApiUrl','btnInternetRefreshList','btnInternetAutoBuildSource','btnInternetEnrichAllByLegalRef','btnInternetOpenSearch','btnInternetOpenOfficial','btnInternetFetchApi','btnInternetSuggestSource','btnInternetApplySource','btnInternetAppendSource','btnInternetSaveDb','btnInternetExportXlsx','btnInternetExportLinks','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','pwaInstallStatus','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','internetQuestionSelect','internetSearchTemplate','internetProposedSource','internetStatus','internetApiUrl','btnInternetRefreshList','btnInternetAutoBuildSource','btnInternetEnrichAllByLegalRef','btnInternetOpenSearch','btnInternetOpenOfficial','btnInternetFetchApi','btnInternetSuggestSource','btnInternetApplySource','btnInternetAppendSource','btnInternetSaveDb','btnInternetExportXlsx','btnInternetExportLinks','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnInstallPWA','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
@@ -1272,6 +1273,74 @@ function backToSetup(){
   const btn = $('btnStartQuiz'); if(btn) btn.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
+
+function setPWAInstallStatus(message, type='info'){
+  if(!els.pwaInstallStatus) return;
+  els.pwaInstallStatus.className = 'status ' + type;
+  els.pwaInstallStatus.textContent = message;
+}
+function isStandalonePWA(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+function updateInstallButtonState(){
+  if(!els.btnInstallPWA) return;
+  if(isStandalonePWA()){
+    els.btnInstallPWA.disabled = true;
+    els.btnInstallPWA.textContent = 'Đã cài PWA';
+    setPWAInstallStatus('✅ Ứng dụng đang chạy ở chế độ PWA đã cài đặt.', 'good');
+    return;
+  }
+  if(location.protocol === 'file:'){
+    els.btnInstallPWA.disabled = true;
+    els.btnInstallPWA.textContent = 'Cài PWA';
+    setPWAInstallStatus('⚠️ Đang mở bằng file:// nên trình duyệt thường chỉ cho “Tạo lối tắt”. Muốn có nút “Cài đặt ứng dụng”, hãy dùng bản PWA ZIP qua localhost/HTTPS, ví dụ: python -m http.server 8080 rồi mở http://localhost:8080', 'bad');
+    return;
+  }
+  if(deferredInstallPrompt){
+    els.btnInstallPWA.disabled = false;
+    els.btnInstallPWA.textContent = 'Cài PWA';
+    setPWAInstallStatus('✅ Đủ điều kiện cài PWA. Bấm “Cài PWA” để cài ứng dụng offline.', 'good');
+  } else {
+    els.btnInstallPWA.disabled = true;
+    els.btnInstallPWA.textContent = 'Cài PWA';
+    setPWAInstallStatus('ℹ️ Chưa thấy sự kiện cài PWA. Hãy chờ vài giây, bấm “Ép cập nhật PWA”, hoặc kiểm tra đang mở bằng localhost/HTTPS và file manifest/service worker tải được.', 'info');
+  }
+}
+async function installPWA(){
+  try{
+    if(isStandalonePWA()){
+      setPWAInstallStatus('✅ Ứng dụng đã được cài và đang chạy ở chế độ PWA.', 'good');
+      return;
+    }
+    if(!deferredInstallPrompt){
+      updateInstallButtonState();
+      return;
+    }
+    deferredInstallPrompt.prompt();
+    const choice = await deferredInstallPrompt.userChoice;
+    const outcome = choice && choice.outcome ? choice.outcome : 'unknown';
+    deferredInstallPrompt = null;
+    if(outcome === 'accepted') setPWAInstallStatus('✅ Người dùng đã chấp nhận cài PWA.', 'good');
+    else setPWAInstallStatus('ℹ️ Người dùng chưa cài PWA. Có thể bấm lại sau khi trình duyệt cho phép.', 'info');
+    updateInstallButtonState();
+  } catch(e){
+    setPWAInstallStatus('❌ Không gọi được hộp thoại cài PWA: ' + (e.message || e), 'bad');
+  }
+}
+function setupPWAInstallPrompt(){
+  window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    updateInstallButtonState();
+  });
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    updateInstallButtonState();
+  });
+  setTimeout(updateInstallButtonState, 500);
+  setTimeout(updateInstallButtonState, 2500);
+}
+
 async function clearOldCache(){
   try {
     if('serviceWorker' in navigator){ const regs = await navigator.serviceWorker.getRegistrations(); await Promise.all(regs.map(r=>r.unregister())); }
@@ -1305,7 +1374,12 @@ async function forceUpdatePWA(){
 
 function registerSW(){
   if('serviceWorker' in navigator && location.protocol !== 'file:'){
-    navigator.serviceWorker.register('./sw.js?v=' + encodeURIComponent(APP_VERSION)).catch(err => console.warn('SW register failed:', err));
+    navigator.serviceWorker.register('./sw.js?v=' + encodeURIComponent(APP_VERSION))
+      .then(() => navigator.serviceWorker.ready)
+      .then(() => updateInstallButtonState())
+      .catch(err => { console.warn('SW register failed:', err); setPWAInstallStatus('❌ Service worker không đăng ký được: ' + (err.message || err), 'bad'); });
+  } else {
+    updateInstallButtonState();
   }
 }
 function bindEvents(){
@@ -1344,6 +1418,7 @@ function bindEvents(){
   if(els.btnNewQuizResult) els.btnNewQuizResult.addEventListener('click', startNewQuizSameConfig);
   if(els.btnNewQuizSticky) els.btnNewQuizSticky.addEventListener('click', startNewQuizSameConfig);
   if(els.btnClearOldCache) els.btnClearOldCache.addEventListener('click', clearOldCache);
+  if(els.btnInstallPWA) els.btnInstallPWA.addEventListener('click', installPWA);
   if(els.btnForceUpdatePWA) els.btnForceUpdatePWA.addEventListener('click', forceUpdatePWA);
   if(els.internetQuestionSelect) els.internetQuestionSelect.addEventListener('change', () => { if(els.internetProposedSource) els.internetProposedSource.value=''; updateInternetQuestionView(); });
   if(els.btnInternetRefreshList) els.btnInternetRefreshList.addEventListener('click', renderInternetTools);
@@ -1361,6 +1436,7 @@ function bindEvents(){
 }
 function boot(){
   initElements();
+  setupPWAInstallPrompt();
   loadStudyState();
   try { parseEmbedded(); }
   catch(e){ console.error(e); setStatus('❌ Lỗi nạp dữ liệu nhúng: ' + (e.message || e), 'bad'); }
