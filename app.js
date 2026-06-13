@@ -1,6 +1,6 @@
 'use strict';
 
-const APP_VERSION = 'V15.0-20260613-full-width-study-save-sticky';
+const APP_VERSION = 'V17.0-20260613-legal-reference-from-source-column';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -33,7 +33,7 @@ la là cua của va và hoac hoặc de để den đến duoc được bi bị tr
 VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','internetQuestionSelect','internetSearchTemplate','internetProposedSource','internetStatus','internetApiUrl','btnInternetRefreshList','btnInternetAutoBuildSource','btnInternetEnrichAllByLegalRef','btnInternetOpenSearch','btnInternetOpenOfficial','btnInternetFetchApi','btnInternetSuggestSource','btnInternetApplySource','btnInternetAppendSource','btnInternetSaveDb','btnInternetExportXlsx','btnInternetExportLinks','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
@@ -350,7 +350,7 @@ function normalizeBank(bank){
   }).filter(q => q.question && q.options.length >= 2 && q.correctText);
 }
 
-function renderAll(){ renderStats(); renderPreview(); resetQuiz(); }
+function renderAll(){ renderStats(); renderPreview(); renderInternetTools(); resetQuiz(); }
 function renderStats(){
   if(!els.bankStats) return;
   const src = state.currentSheet || state.fileName || 'Dữ liệu';
@@ -453,6 +453,251 @@ function renderPreview(){
   if(!state.bank.length){ els.bankPreview.innerHTML = '<table><tbody><tr><td class="muted">Chưa có dữ liệu hợp lệ.</td></tr></tbody></table>'; return; }
   const rows = state.bank.slice(0,50).map((q,i)=>`<tr><td class="nowrap">${i+1}</td><td>${escapeHtml(q.question)}</td><td>${escapeHtml(q.correctText)}</td><td>${escapeHtml(q.options.join(' | '))}</td><td>${escapeHtml(q.source||'')}</td></tr>`).join('');
   els.bankPreview.innerHTML = `<table><thead><tr><th>STT</th><th>Câu hỏi</th><th>Đáp án đúng</th><th>Các phương án</th><th>Căn cứ / giải thích</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+
+const LEGAL_DOC_META = {
+  '05/2025/TT-BCT': {
+    code:'05/2025/TT-BCT',
+    title:'Thông tư 05/2025/TT-BCT - Quy định hệ thống truyền tải điện, phân phối điện và đo đếm điện năng',
+    shortTitle:'Quy định hệ thống truyền tải điện, phân phối điện và đo đếm điện năng',
+    issued:'01/02/2025',
+    effective:'01/02/2025',
+    official:'https://chinhphu.vn/?classid=1&docid=212774&orggroupid=4&pageid=27160',
+    fullText:'https://thuvienphapluat.vn/van-ban/Thuong-mai/Thong-tu-05-2025-TT-BCT-he-thong-truyen-tai-dien-phan-phoi-dien-do-dem-dien-nang-642994.aspx',
+    note:'Lưu ý: Thông tư 46/2025/TT-BCT có sửa đổi, bổ sung một số điều liên quan Thông tư 05/2025/TT-BCT từ 22/9/2025; khi dùng chính thức cần đối chiếu văn bản hợp nhất/cập nhật.'
+  },
+  '06/2025/TT-BCT': {
+    code:'06/2025/TT-BCT',
+    title:'Thông tư 06/2025/TT-BCT - Quy định điều độ, vận hành, thao tác, xử lý sự cố, khởi động đen và khôi phục hệ thống điện quốc gia',
+    shortTitle:'Quy định điều độ, vận hành, thao tác, xử lý sự cố, khởi động đen và khôi phục hệ thống điện quốc gia',
+    issued:'01/02/2025',
+    effective:'01/02/2025',
+    official:'https://vanban.chinhphu.vn/?classid=1&docid=212775&orggroupid=4&pageid=27160',
+    fullText:'https://luatvietnam.vn/cong-nghiep/thong-tu-06-2025-tt-bct-van-hanh-thao-tac-xu-ly-su-co-khoi-dong-den-khoi-phuc-he-thong-dien-quoc-gia-388847-d1.html',
+    note:'Lưu ý: Thông tư 46/2025/TT-BCT có sửa đổi, bổ sung một số điều liên quan Thông tư 06/2025/TT-BCT từ 22/9/2025; khi dùng chính thức cần đối chiếu văn bản hợp nhất/cập nhật.'
+  }
+};
+
+function normalizeLegalCode(text){
+  const m = String(text||'').match(/(\d{1,3})\s*\/\s*(\d{4})\s*\/\s*TT\s*-\s*BCT/i);
+  return m ? `${String(m[1]).padStart(2,'0')}/${m[2]}/TT-BCT` : '';
+}
+function parseLegalReference(text){
+  const src = visibleText(text || '');
+  const code = normalizeLegalCode(src);
+  const article = (src.match(/điều\s*(\d+)/i) || [,''])[1];
+  const clause = (src.match(/khoản\s*(\d+)/i) || [,''])[1];
+  const point = (src.match(/điểm\s*([a-zA-Zà-ỹ])/i) || [,''])[1];
+  return {raw:src, code, article, clause, point, meta:LEGAL_DOC_META[code] || null};
+}
+function compactOriginalSource(src){
+  return visibleText(src).replace(/\s*—\s*Nội dung trọng tâm:[\s\S]*$/i,'').replace(/\s*\|\s*Nội dung trọng tâm:[\s\S]*$/i,'').trim();
+}
+function buildLegalSourceFromColumn(q, includeNote=false){
+  const original = compactOriginalSource(q?.sourceOriginal || q?.source || '');
+  const parsed = parseLegalReference(original);
+  const meta = parsed.meta;
+  const base = original || 'Chưa có căn cứ pháp lý';
+  const parts = [base];
+  if(q && q.correctText) parts.push('Nội dung trọng tâm theo đáp án đúng: ' + visibleText(q.correctText));
+  if(meta){
+    parts.push('Văn bản: ' + meta.title);
+    parts.push('Ban hành/hiệu lực: ' + meta.issued + ' / ' + meta.effective);
+    parts.push('Nguồn chính thức: ' + meta.official);
+    parts.push('Toàn văn tra cứu: ' + meta.fullText);
+    if(includeNote) parts.push(meta.note);
+  } else if(parsed.code){
+    parts.push('Văn bản: ' + parsed.code + ' (chưa có metadata nhúng, cần tra cứu bổ sung)');
+  }
+  return parts.join(' — ');
+}
+function legalSearchPhrase(q){
+  const parsed = parseLegalReference(q?.sourceOriginal || q?.source || '');
+  const pieces = [];
+  if(parsed.clause) pieces.push('khoản ' + parsed.clause);
+  if(parsed.article) pieces.push('Điều ' + parsed.article);
+  if(parsed.code) pieces.push('Thông tư ' + parsed.code);
+  const base = pieces.join(' ');
+  return (base || visibleText(q?.source || '') || visibleText(q?.question || '')).trim();
+}
+function autoBuildLegalSourceForSelected(){
+  const q = currentInternetQuestion();
+  if(!q){ setInternetStatus('Chưa chọn câu để tạo căn cứ.', 'bad'); return; }
+  const val = buildLegalSourceFromColumn(q, true);
+  if(els.internetProposedSource) els.internetProposedSource.value = val;
+  setInternetStatus('✅ Đã tạo nội dung căn cứ từ chính cột căn cứ pháp lý của câu đang chọn. Kiểm tra rồi bấm “Cập nhật căn cứ” hoặc “Ghép thêm”.', 'good');
+}
+async function enrichAllSourcesFromLegalColumn(){
+  if(!state.bank.length){ setInternetStatus('Chưa có ngân hàng câu hỏi để cập nhật.', 'bad'); return; }
+  let changed = 0;
+  state.bank = state.bank.map(q => {
+    const original = compactOriginalSource(q.sourceOriginal || q.source || '');
+    const enriched = buildLegalSourceFromColumn(Object.assign({}, q, {source: original, sourceOriginal: original}), false);
+    if(!q.sourceOriginal) q.sourceOriginal = original;
+    if(q.source !== enriched){ q.source = enriched; changed++; }
+    return q;
+  });
+  state.meta = Object.assign({}, state.meta || {}, {updatedSourceAt:new Date().toISOString(), updatedSourceBy:'legal_source_column_v17', legalSourceMode:'from_last_excel_column'});
+  renderStats(); renderPreview(); renderInternetTools();
+  try { await saveBank('ngân hàng đã tự cập nhật căn cứ theo cột pháp lý', true); } catch(e){}
+  setInternetStatus(`✅ Đã tự cập nhật căn cứ cho ${changed} câu dựa trên cột căn cứ pháp lý hiện có, đáp án đúng và metadata văn bản 05/2025/TT-BCT, 06/2025/TT-BCT.`, 'good');
+}
+
+function setInternetStatus(message, type='info'){
+  if(!els.internetStatus) return;
+  els.internetStatus.className = 'status ' + type;
+  els.internetStatus.textContent = message;
+}
+function shortLabel(v, n=90){
+  const t = visibleText(v);
+  return t.length > n ? t.slice(0,n-1) + '…' : t;
+}
+function extractLawRefs(text){
+  const src = visibleText(text);
+  const refs = [];
+  const re = /(?:khoản\s*\d+\s*)?(?:điều\s*\d+\s*)?(?:Thông\s*tư\s*)?\d{1,3}\s*\/\s*\d{4}\s*\/\s*TT\s*-\s*BCT/gi;
+  let m;
+  while((m = re.exec(src))) refs.push(m[0].replace(/\s+/g,' ').trim());
+  const re2 = /(?:khoản\s*\d+\s*)?điều\s*\d+/gi;
+  while((m = re2.exec(src))) refs.push(m[0].replace(/\s+/g,' ').trim());
+  return unique(refs).slice(0,8);
+}
+function buildInternetQuery(q){
+  if(!q) return '';
+  const template = els.internetSearchTemplate?.value || '"{source}"';
+  const lawRefs = extractLawRefs((q.sourceOriginal || q.source) || '').join(' ');
+  const legalPhrase = legalSearchPhrase(q);
+  return template
+    .replaceAll('{question}', q.question || '')
+    .replaceAll('{answer}', q.correctText || '')
+    .replaceAll('{source}', q.sourceOriginal || compactOriginalSource(q.source) || '')
+    .replaceAll('{law}', lawRefs).replaceAll('{legal}', legalPhrase)
+    .replace(/\s+/g,' ').trim();
+}
+function currentInternetQuestion(){
+  const idx = Number(els.internetQuestionSelect?.value || 0);
+  if(!state.bank.length) return null;
+  return state.bank[Math.max(0, Math.min(idx, state.bank.length-1))] || null;
+}
+function renderInternetTools(){
+  if(!els.internetQuestionSelect) return;
+  const previous = els.internetQuestionSelect.value;
+  els.internetQuestionSelect.innerHTML = state.bank.map((q,i)=>`<option value="${i}">${i+1}. ${escapeHtml(shortLabel(q.sourceOriginal || q.source || 'Chưa có căn cứ',76))} — ${escapeHtml(shortLabel(q.question,48))}</option>`).join('') || '<option value="0">Chưa có câu hỏi</option>';
+  if(previous && Number(previous) < state.bank.length) els.internetQuestionSelect.value = previous;
+  updateInternetQuestionView();
+}
+function updateInternetQuestionView(){
+  if(!els.internetStatus) return;
+  const q = currentInternetQuestion();
+  if(!q){ setInternetStatus('Chưa có ngân hàng câu hỏi để tra cứu căn cứ.', 'bad'); return; }
+  const parsed = parseLegalReference(q.sourceOriginal || q.source || '');
+  const lawRefs = extractLawRefs(q.sourceOriginal || q.source || '').join(', ') || 'chưa tách được ký hiệu văn bản';
+  const docName = parsed.meta ? parsed.meta.shortTitle : (parsed.code || 'chưa nhận diện văn bản');
+  setInternetStatus(`Câu đang chọn: ${q.id || ''} — căn cứ gốc: ${shortLabel(q.sourceOriginal || compactOriginalSource(q.source) || 'chưa có',120)} — văn bản: ${docName} — đáp án đúng: ${shortLabel(q.correctText,90)} — mốc tra cứu: ${lawRefs}`, 'info');
+  if(els.internetProposedSource && !els.internetProposedSource.value.trim()){
+    els.internetProposedSource.placeholder = `Căn cứ hiện có: ${q.sourceOriginal || compactOriginalSource(q.source) || 'Theo khoản ... điều ... Thông tư ...'}. Có thể bấm “Tạo căn cứ từ cột cuối” để sinh nội dung đề xuất, hoặc dán đoạn tra cứu được từ văn bản pháp lý.`;
+  }
+}
+function internetSearchUrl(q, official=false){
+  const query = buildInternetQuery(q);
+  const officialFilter = official ? ' site:vanban.chinhphu.vn OR site:chinhphu.vn OR site:vbpl.vn OR site:eav.gov.vn OR site:thuvienphapluat.vn' : '';
+  return 'https://www.google.com/search?q=' + encodeURIComponent(query + officialFilter);
+}
+function openInternetSearch(official=false){
+  const q = currentInternetQuestion();
+  if(!q){ setInternetStatus('Chưa chọn được câu hỏi để tra cứu.', 'bad'); return; }
+  window.open(internetSearchUrl(q, official), '_blank', 'noopener,noreferrer');
+  setInternetStatus(official ? 'Đã mở tra cứu trên các nguồn pháp lý/chính thống. Sau khi tìm được đoạn phù hợp, dán vào ô nội dung đề xuất rồi bấm cập nhật.' : 'Đã mở trang tìm kiếm Internet. Sau khi tìm được đoạn phù hợp, dán vào ô nội dung đề xuất rồi bấm cập nhật.', 'info');
+}
+function stripHtmlToText(s){
+  return visibleText(String(s || '').replace(/<script[\s\S]*?<\/script>/gi,' ').replace(/<style[\s\S]*?<\/style>/gi,' ').replace(/<[^>]+>/g,' '));
+}
+function suggestSourceFromPasted(){
+  const q = currentInternetQuestion();
+  const pasted = visibleText(els.internetProposedSource?.value || '');
+  if(!q){ setInternetStatus('Chưa chọn câu hỏi.', 'bad'); return; }
+  if(!pasted){ setInternetStatus('Hãy dán đoạn văn bản/link tìm được rồi mới rút gọn căn cứ.', 'bad'); return; }
+  const text = stripHtmlToText(pasted);
+  const refs = extractLawRefs(text + ' ' + q.source);
+  const qTerms = unique([...tokens(q.sourceOriginal || q.source), ...tokens(q.correctText)]).filter(t => t.length > 2);
+  const sentences = text.split(/(?<=[.!?。\n])\s+|\n+/).map(visibleText).filter(Boolean);
+  let scored = sentences.map((sen, idx) => {
+    const st = norm(sen);
+    let score = 0;
+    qTerms.forEach(t => { if(st.includes(t)) score += 2; });
+    refs.forEach(r => { if(norm(sen).includes(norm(r))) score += 4; });
+    if(/khoản|điều|thông tư|tt-bct|quy định/i.test(sen)) score += 3;
+    if(sen.length > 40 && sen.length < 800) score += 1;
+    return {sen, score, idx};
+  }).sort((a,b)=>b.score-a.score || a.idx-b.idx);
+  const picked = scored.filter(x => x.score > 0).slice(0,3).map(x => x.sen);
+  const prefix = refs.length ? refs.join('; ') : (q.source || 'Căn cứ tra cứu');
+  const compact = picked.length ? `${prefix}. Nội dung liên quan: ${picked.join(' ')}` : `${prefix}. ${text.slice(0,900)}`;
+  els.internetProposedSource.value = compact.replace(/\s+/g,' ').trim();
+  setInternetStatus('✅ Đã rút gọn nội dung dán thành căn cứ đề xuất. Hãy kiểm tra lại trước khi cập nhật vào bộ đề.', 'good');
+}
+async function fetchInternetApi(){
+  const q = currentInternetQuestion();
+  const raw = visibleText(els.internetApiUrl?.value || '');
+  if(!q){ setInternetStatus('Chưa chọn câu hỏi.', 'bad'); return; }
+  if(!raw){ setInternetStatus('Chưa nhập URL API. Có thể dùng API/proxy nội bộ trả về text hoặc JSON có trường text/snippet/content.', 'bad'); return; }
+  const url = raw.replaceAll('{q}', encodeURIComponent(buildInternetQuery(q))).replaceAll('{question}', encodeURIComponent(q.question || '')).replaceAll('{answer}', encodeURIComponent(q.correctText || '')).replaceAll('{source}', encodeURIComponent(q.sourceOriginal || q.source || '')).replaceAll('{legal}', encodeURIComponent(legalSearchPhrase(q)));
+  try{
+    setInternetStatus('Đang gọi API tra cứu...', 'info');
+    const res = await fetch(url, {cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const ct = res.headers.get('content-type') || '';
+    let text = '';
+    if(ct.includes('application/json')){
+      const data = await res.json();
+      text = data.text || data.snippet || data.content || data.result || data.answer || JSON.stringify(data);
+    } else text = await res.text();
+    if(els.internetProposedSource) els.internetProposedSource.value = stripHtmlToText(text).slice(0,5000);
+    suggestSourceFromPasted();
+  } catch(e){
+    setInternetStatus('❌ Không gọi được API/nguồn Internet. Nguyên nhân thường gặp: không có mạng, CORS, hoặc API cần khóa truy cập. Có thể dùng nút “Mở tra cứu” rồi dán thủ công.', 'bad');
+  }
+}
+async function applyInternetSource(append=false){
+  const q = currentInternetQuestion();
+  const idx = Number(els.internetQuestionSelect?.value || 0);
+  const val = visibleText(els.internetProposedSource?.value || '');
+  if(!q){ setInternetStatus('Chưa chọn câu hỏi để cập nhật.', 'bad'); return; }
+  if(!val){ setInternetStatus('Chưa có nội dung căn cứ đề xuất để cập nhật.', 'bad'); return; }
+  const old = visibleText(q.source || '');
+  if(!q.sourceOriginal) q.sourceOriginal = compactOriginalSource(old);
+  q.source = append && old ? unique([old, val]).join(' | ') : val;
+  state.bank[idx] = q;
+  state.meta = Object.assign({}, state.meta || {}, {updatedSourceAt:new Date().toISOString(), updatedSourceBy:'legal_source_lookup_module_v17'});
+  renderStats(); renderPreview(); updateInternetQuestionView();
+  try { await saveBank('ngân hàng đã cập nhật căn cứ', true); } catch(e){}
+  setInternetStatus(`✅ Đã ${append?'ghép thêm':'cập nhật'} căn cứ cho câu ${idx+1} và lưu vào database offline.`, 'good');
+}
+async function saveInternetUpdatedBank(){
+  await saveBank('ngân hàng đã cập nhật căn cứ từ Internet');
+  setInternetStatus('✅ Đã lưu ngân hàng đã cập nhật căn cứ vào database offline.', 'good');
+}
+function exportUpdatedBankXlsx(){
+  if(!window.XLSX){ setInternetStatus('Không tìm thấy SheetJS để xuất Excel.', 'bad'); return; }
+  if(!state.bank.length){ setInternetStatus('Chưa có ngân hàng câu hỏi để xuất.', 'bad'); return; }
+  const header = ['STT','Câu hỏi','Đáp án đúng','Phương án lựa chọn 1','Phương án lựa chọn 2','Phương án lựa chọn 3','Phương án lựa chọn 4','Căn cứ / giải thích','ID gốc','Sheet','Dòng nguồn'];
+  const rows = state.bank.map((q,i)=>[
+    i+1, q.question || '', q.correctText || '', q.options[0] || '', q.options[1] || '', q.options[2] || '', q.options[3] || '', q.source || '', q.id || '', q.sheetName || '', q.sourceRow || ''
+  ]);
+  const ws = XLSX.utils.aoa_to_sheet([header, ...rows]);
+  ws['!cols'] = [{wch:6},{wch:48},{wch:34},{wch:34},{wch:34},{wch:34},{wch:34},{wch:70},{wch:10},{wch:14},{wch:10}];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Bo de cap nhat can cu');
+  XLSX.writeFile(wb, 'bo_de_cap_nhat_can_cu_' + fileStamp() + '.xlsx');
+  setInternetStatus('✅ Đã xuất Excel bộ đề có cột căn cứ đã cập nhật.', 'good');
+}
+function exportInternetLinksHtml(){
+  if(!state.bank.length){ setInternetStatus('Chưa có ngân hàng câu hỏi để xuất danh sách tra cứu.', 'bad'); return; }
+  const rows = state.bank.map((q,i)=>{ const parsed=parseLegalReference(q.sourceOriginal || q.source || ''); return `<tr><td>${i+1}</td><td>${escapeHtml(q.sourceOriginal || compactOriginalSource(q.source) || '')}</td><td>${escapeHtml(parsed.meta ? parsed.meta.shortTitle : (parsed.code || ''))}</td><td>${escapeHtml(q.question)}</td><td>${escapeHtml(q.correctText||'')}</td><td>${escapeHtml(q.source||'')}</td><td><a href="${internetSearchUrl(q,false)}" target="_blank">Tìm Internet</a></td><td><a href="${internetSearchUrl(q,true)}" target="_blank">Tìm nguồn pháp lý</a></td></tr>`; }).join('');
+  const html = makeStandaloneHtml('Danh sách link tra cứu căn cứ', `<div class="card report-card-full"><h2>Danh sách tra cứu căn cứ</h2><p class="muted">Bấm link để tra cứu, sau đó quay lại PWA và cập nhật cột căn cứ.</p><div class="table-wrap"><table><thead><tr><th>STT</th><th>Căn cứ gốc</th><th>Văn bản</th><th>Câu hỏi</th><th>Đáp án đúng</th><th>Căn cứ cập nhật</th><th>Internet</th><th>Nguồn pháp lý</th></tr></thead><tbody>${rows}</tbody></table></div></div>`);
+  downloadTextFile('danh_sach_tra_cuu_can_cu_' + fileStamp() + '.html', html);
+  setInternetStatus('✅ Đã xuất HTML danh sách link tra cứu căn cứ cho toàn bộ ngân hàng.', 'good');
 }
 
 function openDB(){
@@ -1100,6 +1345,19 @@ function bindEvents(){
   if(els.btnNewQuizSticky) els.btnNewQuizSticky.addEventListener('click', startNewQuizSameConfig);
   if(els.btnClearOldCache) els.btnClearOldCache.addEventListener('click', clearOldCache);
   if(els.btnForceUpdatePWA) els.btnForceUpdatePWA.addEventListener('click', forceUpdatePWA);
+  if(els.internetQuestionSelect) els.internetQuestionSelect.addEventListener('change', () => { if(els.internetProposedSource) els.internetProposedSource.value=''; updateInternetQuestionView(); });
+  if(els.btnInternetRefreshList) els.btnInternetRefreshList.addEventListener('click', renderInternetTools);
+  if(els.btnInternetAutoBuildSource) els.btnInternetAutoBuildSource.addEventListener('click', autoBuildLegalSourceForSelected);
+  if(els.btnInternetEnrichAllByLegalRef) els.btnInternetEnrichAllByLegalRef.addEventListener('click', enrichAllSourcesFromLegalColumn);
+  if(els.btnInternetOpenSearch) els.btnInternetOpenSearch.addEventListener('click', () => openInternetSearch(false));
+  if(els.btnInternetOpenOfficial) els.btnInternetOpenOfficial.addEventListener('click', () => openInternetSearch(true));
+  if(els.btnInternetFetchApi) els.btnInternetFetchApi.addEventListener('click', fetchInternetApi);
+  if(els.btnInternetSuggestSource) els.btnInternetSuggestSource.addEventListener('click', suggestSourceFromPasted);
+  if(els.btnInternetApplySource) els.btnInternetApplySource.addEventListener('click', () => applyInternetSource(false));
+  if(els.btnInternetAppendSource) els.btnInternetAppendSource.addEventListener('click', () => applyInternetSource(true));
+  if(els.btnInternetSaveDb) els.btnInternetSaveDb.addEventListener('click', saveInternetUpdatedBank);
+  if(els.btnInternetExportXlsx) els.btnInternetExportXlsx.addEventListener('click', exportUpdatedBankXlsx);
+  if(els.btnInternetExportLinks) els.btnInternetExportLinks.addEventListener('click', exportInternetLinksHtml);
 }
 function boot(){
   initElements();

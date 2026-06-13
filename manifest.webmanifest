@@ -1,10 +1,16 @@
 {
-  "name": "Trắc nghiệm Excel Offline V15",
-  "short_name": "Quiz Excel V15",
+  "name": "Trắc nghiệm Excel Offline V17 V17",
+  "short_name": "Quiz Excel V16",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#eef7f6",
   "theme_color": "#0f766e",
-  "description": "PWA offline tạo đề trắc nghiệm từ Excel, dữ liệu nhúng sẵn, ôn tập liên tục, sắp xếp câu sai lên trước, xuất HTML và tối ưu toàn màn hình.",
-  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml"}]
+  "description": "PWA offline tạo đề trắc nghiệm từ Excel, dữ liệu nhúng sẵn, ôn tập liên tục, xuất HTML và mô đun tra cứu Internet cập nhật cột căn cứ.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
 }
