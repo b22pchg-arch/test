@@ -1,4 +1,4 @@
-const CACHE_NAME = 'excel-quiz-offline-v25-20260613';
+const CACHE_NAME = 'excel-quiz-offline-v26-20260613';
 const CORE_ASSETS = ['./','./index.html','./xlsx.full.min.js','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 self.addEventListener('install', event => {
   self.skipWaiting();
