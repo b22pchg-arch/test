@@ -1,6 +1,6 @@
 'use strict';
 
-const APP_VERSION = 'V18.0-20260613-pwa-install-fixed';
+const APP_VERSION = 'V21.0-20260613-bank-pagination-clean-quiz';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -25,6 +25,8 @@ const state = {
   lastResult: null,
   lastQuizConfig: null,
   mode: 'exam',
+  bankPage: 1,
+  bankPageSize: 20,
   study: { progress: {}, activeIds: [], config: { batchSize: 10, threshold: 10, shuffleQuestions: true, shuffleOptions: true } }
 };
 
@@ -335,21 +337,26 @@ function parseEmbedded(){
 function normalizeBank(bank){
   return bank.map((q,i) => {
     const options = (q.options || []).map(visibleText).filter(Boolean);
-    let idx = Number.isInteger(q.correctIndex) ? q.correctIndex : inferAnswerIndex(q.answerRaw, options);
-    if(idx < 0 || idx >= options.length) idx = 0;
+    const correctIndexes = normalizeCorrectIndexes(q, options);
+    const correctTexts = correctIndexes.map(idx => options[idx]).filter(Boolean);
     return {
       id: visibleText(q.id) || String(i+1),
       sourceRow: q.sourceRow || '',
       sheetName: q.sheetName || '',
       question: visibleText(q.question),
       options,
-      correctIndex: idx,
-      correctText: options[idx] || visibleText(q.correctText),
+      correctIndexes,
+      correctIndex: correctIndexes[0] ?? -1,
+      correctTexts,
+      correctText: correctTexts.join(' | '),
+      questionType: correctIndexes.length > 1 ? 'multi' : 'single',
       source: visibleText(q.source),
+      sourceOriginal: visibleText(q.sourceOriginal || ''),
       answerRaw: visibleText(q.answerRaw)
     };
-  }).filter(q => q.question && q.options.length >= 2 && q.correctText);
+  }).filter(q => q.question && q.options.length >= 2 && q.correctIndexes.length >= 1);
 }
+
 
 function renderAll(){ renderStats(); renderPreview(); renderInternetTools(); resetQuiz(); }
 function renderStats(){
@@ -451,10 +458,49 @@ function updateStickyLabels(){
 }
 function renderPreview(){
   if(!els.bankPreview) return;
-  if(!state.bank.length){ els.bankPreview.innerHTML = '<table><tbody><tr><td class="muted">Chưa có dữ liệu hợp lệ.</td></tr></tbody></table>'; return; }
-  const rows = state.bank.slice(0,50).map((q,i)=>`<tr><td class="nowrap">${i+1}</td><td>${escapeHtml(q.question)}</td><td>${escapeHtml(q.correctText)}</td><td>${escapeHtml(q.options.join(' | '))}</td><td>${escapeHtml(q.source||'')}</td></tr>`).join('');
-  els.bankPreview.innerHTML = `<table><thead><tr><th>STT</th><th>Câu hỏi</th><th>Đáp án đúng</th><th>Các phương án</th><th>Căn cứ / giải thích</th></tr></thead><tbody>${rows}</tbody></table>`;
+  if(!state.bank.length){
+    els.bankPreview.innerHTML = '<div class="bank-pager"><span class="muted">Chưa có dữ liệu hợp lệ.</span></div>';
+    return;
+  }
+  const total = state.bank.length;
+  const allowedSizes = [10,20,50,100];
+  let pageSize = Number(state.bankPageSize || 20);
+  if(!allowedSizes.includes(pageSize)) pageSize = 20;
+  state.bankPageSize = pageSize;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  let page = Math.max(1, Math.min(Number(state.bankPage || 1), totalPages));
+  state.bankPage = page;
+  const start = (page - 1) * pageSize;
+  const pageItems = state.bank.slice(start, start + pageSize);
+  const rows = pageItems.map((q,i)=>{
+    const correctSet = new Set(getCorrectIndexes(q));
+    const optsHtml = (q.options || []).map((opt, idx)=>`<span class="preview-option-item ${correctSet.has(idx)?'is-correct':''}"><b>${escapeHtml(optionLabel(idx))}.</b> ${escapeHtml(opt)}</span>`).join('');
+    return `<tr><td class="nowrap">${start+i+1}</td><td class="question-cell">${escapeHtml(q.question)}</td><td><span class="pill ${isMultiQuestion(q)?'warnp':'okp'}">${isMultiQuestion(q)?'Nhiều đáp án':'Một đáp án'}</span></td><td class="nowrap">${escapeHtml(answerIndexText(q))}</td><td class="correct-cell">${escapeHtml(q.correctText)}</td><td class="option-list-cell">${optsHtml}</td><td class="source-cell">${escapeHtml(q.source||'')}</td></tr>`;
+  }).join('');
+  const pageSizeOptions = allowedSizes.map(n=>`<option value="${n}" ${n===pageSize?'selected':''}>${n} câu/trang</option>`).join('');
+  const pager = `<div class="bank-pager no-print">
+    <div class="bank-pager-left"><b>Ngân hàng câu hỏi:</b> ${total} câu · Trang <b>${page}/${totalPages}</b> · Đang xem câu <b>${start+1}-${Math.min(start+pageSize,total)}</b></div>
+    <div class="bank-pager-actions">
+      <button type="button" class="light bank-page-btn" data-page="1" ${page===1?'disabled':''}>« Đầu</button>
+      <button type="button" class="light bank-page-btn" data-page="${page-1}" ${page===1?'disabled':''}>‹ Trước</button>
+      <select class="bank-page-size" aria-label="Số câu mỗi trang">${pageSizeOptions}</select>
+      <button type="button" class="light bank-page-btn" data-page="${page+1}" ${page===totalPages?'disabled':''}>Sau ›</button>
+      <button type="button" class="light bank-page-btn" data-page="${totalPages}" ${page===totalPages?'disabled':''}>Cuối »</button>
+    </div>
+  </div>`;
+  els.bankPreview.innerHTML = `${pager}<div class="wide-table-hint">Bảng phân trang để kiểm tra toàn bộ ngân hàng. Nếu có nhiều phương án/căn cứ dài, kéo ngang trong vùng bảng để xem hết.</div><div class="bank-table-scroll"><table><thead><tr><th>STT</th><th>Câu hỏi</th><th>Loại</th><th>Cột đáp án</th><th>Đáp án đúng</th><th>Các phương án</th><th>Căn cứ pháp lý</th></tr></thead><tbody>${rows}</tbody></table></div>${pager}`;
+  els.bankPreview.querySelectorAll('.bank-page-btn').forEach(btn => btn.addEventListener('click', () => {
+    const target = Number(btn.dataset.page || 1);
+    state.bankPage = Math.max(1, Math.min(target, totalPages));
+    renderPreview();
+  }));
+  els.bankPreview.querySelectorAll('.bank-page-size').forEach(sel => sel.addEventListener('change', () => {
+    state.bankPageSize = Number(sel.value || 20);
+    state.bankPage = 1;
+    renderPreview();
+  }));
 }
+
 
 
 const LEGAL_DOC_META = {
@@ -682,17 +728,25 @@ async function saveInternetUpdatedBank(){
 function exportUpdatedBankXlsx(){
   if(!window.XLSX){ setInternetStatus('Không tìm thấy SheetJS để xuất Excel.', 'bad'); return; }
   if(!state.bank.length){ setInternetStatus('Chưa có ngân hàng câu hỏi để xuất.', 'bad'); return; }
-  const header = ['STT','Câu hỏi','Đáp án đúng','Phương án lựa chọn 1','Phương án lựa chọn 2','Phương án lựa chọn 3','Phương án lựa chọn 4','Căn cứ / giải thích','ID gốc','Sheet','Dòng nguồn'];
+  const maxOptions = Math.max(2, ...state.bank.map(q => (q.options || []).length));
+  const optionHeaders = Array.from({length:maxOptions}, (_,i)=>`Phương án lựa chọn ${i+1}`);
+  // Giữ cột cuối cùng là Căn cứ pháp lý theo yêu cầu.
+  const header = ['STT','Câu hỏi','Đáp án', ...optionHeaders, 'Căn cứ pháp lý'];
   const rows = state.bank.map((q,i)=>[
-    i+1, q.question || '', q.correctText || '', q.options[0] || '', q.options[1] || '', q.options[2] || '', q.options[3] || '', q.source || '', q.id || '', q.sheetName || '', q.sourceRow || ''
+    i+1,
+    q.question || '',
+    answerIndexText(q) || q.answerRaw || '',
+    ...Array.from({length:maxOptions}, (_,k)=>q.options[k] || ''),
+    q.source || ''
   ]);
   const ws = XLSX.utils.aoa_to_sheet([header, ...rows]);
-  ws['!cols'] = [{wch:6},{wch:48},{wch:34},{wch:34},{wch:34},{wch:34},{wch:34},{wch:70},{wch:10},{wch:14},{wch:10}];
+  ws['!cols'] = [{wch:6},{wch:55},{wch:14}, ...optionHeaders.map(()=>({wch:38})), {wch:90}];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Bo de cap nhat can cu');
   XLSX.writeFile(wb, 'bo_de_cap_nhat_can_cu_' + fileStamp() + '.xlsx');
-  setInternetStatus('✅ Đã xuất Excel bộ đề có cột căn cứ đã cập nhật.', 'good');
+  setInternetStatus('✅ Đã xuất Excel bộ đề. Cột cuối cùng là Căn cứ pháp lý; cột Đáp án dùng dạng 1 hoặc 1,3,5.', 'good');
 }
+
 function exportInternetLinksHtml(){
   if(!state.bank.length){ setInternetStatus('Chưa có ngân hàng câu hỏi để xuất danh sách tra cứu.', 'bad'); return; }
   const rows = state.bank.map((q,i)=>{ const parsed=parseLegalReference(q.sourceOriginal || q.source || ''); return `<tr><td>${i+1}</td><td>${escapeHtml(q.sourceOriginal || compactOriginalSource(q.source) || '')}</td><td>${escapeHtml(parsed.meta ? parsed.meta.shortTitle : (parsed.code || ''))}</td><td>${escapeHtml(q.question)}</td><td>${escapeHtml(q.correctText||'')}</td><td>${escapeHtml(q.source||'')}</td><td><a href="${internetSearchUrl(q,false)}" target="_blank">Tìm Internet</a></td><td><a href="${internetSearchUrl(q,true)}" target="_blank">Tìm nguồn pháp lý</a></td></tr>`; }).join('');
@@ -825,40 +879,51 @@ function findBestCol(headers, patterns, exclude=[]){
   return score > 0 ? best : -1;
 }
 function detectMapping(rows){
-  const headerIdx = detectHeaderRow(rows), headers = rows[headerIdx] || [], sampleRows = rows.slice(headerIdx+1, Math.min(rows.length, headerIdx+15));
+  const headerIdx = detectHeaderRow(rows), headers = rows[headerIdx] || [], sampleRows = rows.slice(headerIdx+1, Math.min(rows.length, headerIdx+20));
+  const maxCols = Math.max(...rows.slice(0, Math.min(rows.length, 30)).map(r=>r.length), 0);
+  const lastNonEmptyHeaderCol = (() => {
+    for(let c=maxCols-1;c>=0;c--){ if(visibleText(headers[c])) return c; }
+    for(let c=maxCols-1;c>=0;c--){ if(sampleRows.some(r=>visibleText(r[c]))) return c; }
+    return -1;
+  })();
   const questionCol = findBestCol(headers, [/noi dung cau hoi/, /^cau hoi$/, /cau hoi/, /question/, /noi dung/]);
-  let answerCol = findBestCol(headers, [/^dap an$/, /dap an(?!.*phuong)/, /answer/, /correct/, /dap an dung/], questionCol>=0?[questionCol]:[]);
-  const sourceCol = findBestCol(headers, [/can cu/, /phap ly/, /giai thich/, /nguon/, /reference/, /explain/], [questionCol, answerCol]);
+  let answerCol = findBestCol(headers, [/^dap an$/, /^đáp án$/, /dap an(?!.*phuong)/, /answer/, /correct/, /dap an dung/], questionCol>=0?[questionCol]:[]);
+  let sourceCol = findBestCol(headers, [/can cu/, /phap ly/, /giai thich/, /nguon/, /reference/, /explain/], [questionCol, answerCol]);
+  // Theo yêu cầu: cột cuối cùng của bảng là cột căn cứ pháp lý. Nếu nhận diện được cột cuối, ưu tiên lấy cột cuối làm căn cứ.
+  if(lastNonEmptyHeaderCol >= 0 && lastNonEmptyHeaderCol !== questionCol && lastNonEmptyHeaderCol !== answerCol) sourceCol = lastNonEmptyHeaderCol;
   const idCol = findBestCol(headers, [/^stt$/, /^tt$/, /^id$/, /so thu tu/], [questionCol, answerCol, sourceCol]);
   let optionCols = [];
   headers.forEach((h,i)=>{
     if([questionCol,answerCol,sourceCol,idCol].includes(i)) return;
     const n=norm(h);
-    if(/phuong an|lua chon|option|choice/.test(n) || /^[abcd]$/.test(n) || /^pa\s*[1-6a-f]$/.test(n)) optionCols.push(i);
+    if(/phuong an|lua chon|luạ chon|option|choice/.test(n) || /^pa\s*([0-9]+|[a-z]+)$/.test(n) || /^[a-z]{1,2}$/.test(n)) optionCols.push(i);
   });
-  const maxCols = Math.max(...rows.slice(0, Math.min(rows.length, 20)).map(r=>r.length), 0);
+  // Nếu chưa nhận đủ phương án từ tiêu đề, lấy tất cả cột dữ liệu có mật độ nội dung hợp lý, không giới hạn số lượng.
   if(optionCols.length < 2){
     const candidates=[];
     for(let c=0;c<maxCols;c++){
       if([questionCol,answerCol,sourceCol,idCol].includes(c)) continue;
       let filled=0, avgLen=0;
       sampleRows.forEach(r=>{ const t=visibleText(r[c]); if(t){ filled++; avgLen += t.length; }});
-      if(filled >= Math.max(2, Math.floor(sampleRows.length*0.35))) candidates.push({c, filled, avgLen: avgLen/(filled||1)});
+      if(filled >= Math.max(2, Math.floor(sampleRows.length*0.30))) candidates.push({c, filled, avgLen: avgLen/(filled||1)});
     }
-    candidates.sort((a,b)=> b.filled-a.filled || a.c-b.c);
-    optionCols = candidates.map(x=>x.c).slice(0,6);
+    candidates.sort((a,b)=> a.c-b.c);
+    optionCols = candidates.map(x=>x.c);
+  } else {
+    optionCols.sort((a,b)=>a-b);
   }
   if(questionCol < 0){
     let best=-1, len=-1;
     for(let c=0;c<maxCols;c++){
       if(optionCols.includes(c) || [answerCol,sourceCol,idCol].includes(c)) continue;
-      const total = sampleRows.reduce((s,r)=>s+visibleText(r[c]).length,0);
+      const total = sampleRows.reduce((sum,r)=>sum+visibleText(r[c]).length,0);
       if(total>len){ len=total; best=c; }
     }
     return {headerIdx, headers, idCol, questionCol:best, answerCol, sourceCol, optionCols};
   }
   return {headerIdx, headers, idCol, questionCol, answerCol, sourceCol, optionCols};
 }
+
 function parseRows(rows, sheetName, manualMapping){
   const mapping = manualMapping || detectMapping(rows);
   if(mapping.questionCol < 0) throw new Error('Không tìm thấy cột câu hỏi.');
@@ -868,39 +933,118 @@ function parseRows(rows, sheetName, manualMapping){
     const row=rows[r] || [];
     const question = cleanQuestion(row[mapping.questionCol]);
     const rawOptions = mapping.optionCols.map(c => ({col:c, raw: visibleText(row[c])}));
-    let markedCorrect = -1;
-    let options = rawOptions.map((o,idx) => {
+    const markedCorrectIndexes = [];
+    const options = [];
+    rawOptions.forEach((o) => {
       const marked = /^\s*(?:\[x\]|\(x\)|✓|✔|\*)\s*/i.test(o.raw) || /\s*(?:\[dung\]|\[đúng\])\s*$/i.test(o.raw);
-      if(marked && markedCorrect < 0) markedCorrect = idx;
-      return cleanOption(o.raw);
-    }).filter(Boolean);
+      const cleaned = cleanOption(o.raw);
+      if(cleaned){
+        const newIdx = options.length;
+        options.push(cleaned);
+        if(marked) markedCorrectIndexes.push(newIdx);
+      }
+    });
     const id = mapping.idCol >= 0 ? visibleText(row[mapping.idCol]) : String(bank.length + 1);
     const source = mapping.sourceCol >= 0 ? visibleText(row[mapping.sourceCol]) : '';
     const answerRaw = mapping.answerCol >= 0 ? visibleText(row[mapping.answerCol]) : '';
-    let correctIndex = inferAnswerIndex(answerRaw, options);
-    if(correctIndex < 0 && markedCorrect >= 0) correctIndex = markedCorrect;
+    let correctIndexes = parseAnswerIndexes(answerRaw, options);
+    if(!correctIndexes.length && markedCorrectIndexes.length) correctIndexes = normalizeIndexList(markedCorrectIndexes, options);
     if(!question){ if(row.some(x=>visibleText(x))) errors.push({row:r+1, reason:'Thiếu câu hỏi'}); continue; }
     if(options.length < 2){ errors.push({row:r+1, reason:'Thiếu phương án lựa chọn', question:question.slice(0,80)}); continue; }
-    if(correctIndex < 0 || correctIndex >= options.length){ errors.push({row:r+1, reason:'Không xác định được đáp án đúng', answerRaw, question:question.slice(0,80)}); continue; }
-    bank.push({id:id || String(bank.length+1), sourceRow:r+1, sheetName, question, options, correctIndex, correctText:options[correctIndex], source, answerRaw});
+    if(!correctIndexes.length){ errors.push({row:r+1, reason:'Không xác định được đáp án đúng', answerRaw, question:question.slice(0,80)}); continue; }
+    const correctTexts = correctIndexes.map(i => options[i]).filter(Boolean);
+    bank.push({id:id || String(bank.length+1), sourceRow:r+1, sheetName, question, options, correctIndexes, correctIndex:correctIndexes[0], correctTexts, correctText:correctTexts.join(' | '), questionType:correctIndexes.length>1?'multi':'single', source, answerRaw});
   }
   return {bank, errors, mapping};
 }
+
 function cleanQuestion(v){ return visibleText(v).replace(/^\s*(?:câu\s*)?\d+[.)\-:]\s*/i,'').trim(); }
-function cleanOption(v){ return visibleText(v).replace(/^\s*(?:\[x\]|\(x\)|✓|✔|\*)\s*/i,'').replace(/\s*(?:\[dung\]|\[đúng\])\s*$/i,'').replace(/^\s*(?:[A-Fa-f]|[1-6])\s*[.)\-:]\s*/,'').trim(); }
-function inferAnswerIndex(answerRaw, options){
-  const a = visibleText(answerRaw); if(!a) return -1;
-  const an = norm(a);
-  if(/^\d+$/.test(an)){ const i=parseInt(an,10)-1; return i>=0&&i<options.length?i:-1; }
-  if(/^[a-f]$/.test(an)){ const i=an.charCodeAt(0)-97; return i>=0&&i<options.length?i:-1; }
-  let m = an.match(/(?:phuong an|lua chon|option|choice|pa)\s*([1-6a-f])/);
-  if(m){ const x=m[1]; const i=/\d/.test(x)?parseInt(x,10)-1:x.charCodeAt(0)-97; return i>=0&&i<options.length?i:-1; }
-  m = an.match(/(?:dap an|answer)\s*[:\-]?\s*([1-6a-f])/);
-  if(m){ const x=m[1]; const i=/\d/.test(x)?parseInt(x,10)-1:x.charCodeAt(0)-97; return i>=0&&i<options.length?i:-1; }
-  const exact = options.findIndex(o => norm(o) === an); if(exact >= 0) return exact;
-  if(an.length > 8){ const contains = options.findIndex(o => norm(o).includes(an) || an.includes(norm(o))); if(contains >= 0) return contains; }
+function cleanOption(v){ return visibleText(v).replace(/^\s*(?:\[x\]|\(x\)|✓|✔|\*)\s*/i,'').replace(/\s*(?:\[dung\]|\[đúng\])\s*$/i,'').replace(/^\s*(?:[A-Za-z]{1,3}|\d{1,3})\s*[.)\-:]\s*/,'').trim(); }
+function optionLabel(idx){
+  let s='', n=Number(idx)+1;
+  if(!Number.isFinite(n) || n < 1) return '';
+  while(n>0){ const m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); }
+  return s;
+}
+function normalizeIndexList(list, options){
+  const max = options ? options.length : Infinity;
+  const out=[];
+  (list || []).forEach(v => {
+    const n = Number(v);
+    if(Number.isInteger(n) && n >= 0 && n < max && !out.includes(n)) out.push(n);
+  });
+  return out.sort((a,b)=>a-b);
+}
+function tokenToOptionIndex(token, options){
+  let t = norm(token).replace(/^(?:dap an|answer|phuong an|lua chon|option|choice|pa)\s*/,'').trim();
+  t = t.replace(/^[.:\-\s]+|[.:\-\s]+$/g,'');
+  if(/^\d+$/.test(t)){ const i=parseInt(t,10)-1; return i>=0&&i<options.length?i:-1; }
+  if(/^[a-z]{1,3}$/.test(t)){
+    let n=0; for(const ch of t){ n = n*26 + (ch.charCodeAt(0)-96); }
+    const i=n-1; return i>=0&&i<options.length?i:-1;
+  }
+  const exact = options.findIndex(o => norm(o) === t); if(exact >= 0) return exact;
+  if(t.length > 8){ const contains = options.findIndex(o => norm(o).includes(t) || t.includes(norm(o))); if(contains >= 0) return contains; }
   return -1;
 }
+function splitAnswerTokens(answerRaw){
+  const raw = visibleText(answerRaw); if(!raw) return [];
+  let s = raw.replace(/[；;]/g, ',').replace(/[|\/]+/g, ',').replace(/\s*(?:và|va|and|&|\+)\s*/gi, ',');
+  s = s.replace(/(?:đáp án|dap an|answer|phương án|phuong an|lựa chọn|lua chon|option|choice|pa)\s*[:\-]?\s*/gi, '');
+  const parts = s.split(',').map(x=>x.trim()).filter(Boolean);
+  return parts.length ? parts : [raw.trim()];
+}
+function parseAnswerIndexes(answerRaw, options){
+  const raw = visibleText(answerRaw); if(!raw) return [];
+  const tokens = splitAnswerTokens(raw);
+  let idxs = [];
+  tokens.forEach(t => { const i = tokenToOptionIndex(t, options); if(i >= 0) idxs.push(i); });
+  if(!idxs.length){
+    const an = norm(raw);
+    const m = an.match(/(?:dap an|answer|phuong an|lua chon|option|choice|pa)\s*[:\-]?\s*([0-9]+|[a-z]{1,3})(?:\s*,\s*([0-9a-z,\s]+))?/);
+    if(m){ idxs = splitAnswerTokens(m[0]).map(t => tokenToOptionIndex(t, options)).filter(i=>i>=0); }
+  }
+  return normalizeIndexList(idxs, options);
+}
+function normalizeCorrectIndexes(q, options){
+  let idxs = [];
+  if(Array.isArray(q.correctIndexes)) idxs = q.correctIndexes;
+  else if(Array.isArray(q.correctIndices)) idxs = q.correctIndices;
+  else if(Array.isArray(q.correctIndex)) idxs = q.correctIndex;
+  else if(Number.isInteger(q.correctIndex)) idxs = [q.correctIndex];
+  idxs = normalizeIndexList(idxs, options);
+  if(!idxs.length) idxs = parseAnswerIndexes(q.answerRaw, options);
+  if(!idxs.length && q.correctText){
+    const texts = Array.isArray(q.correctTexts) ? q.correctTexts : String(q.correctText).split(/\s*\|\s*/);
+    texts.forEach(t => { const i = tokenToOptionIndex(t, options); if(i>=0) idxs.push(i); });
+    idxs = normalizeIndexList(idxs, options);
+  }
+  return idxs;
+}
+function inferAnswerIndex(answerRaw, options){ const xs=parseAnswerIndexes(answerRaw, options); return xs.length ? xs[0] : -1; }
+function getCorrectIndexes(item){ return normalizeCorrectIndexes(item || {}, (item && item.options) || []); }
+function isMultiQuestion(item){ return getCorrectIndexes(item).length > 1; }
+function answerIndexText(item){ return getCorrectIndexes(item).map(i=>String(i+1)).join(','); }
+function selectedDisplayIndexes(q){ return normalizeIndexList(Array.isArray(q.userChoices) ? q.userChoices : (q.userChoice === null || q.userChoice === undefined ? [] : [q.userChoice]), q.options || []); }
+function hasAnyChoice(q){ return selectedDisplayIndexes(q).length > 0; }
+function getChosenOptions(q){ return selectedDisplayIndexes(q).map(i => q.options[i]).filter(Boolean); }
+function getCorrectOptions(q){ return (q.options || []).filter(o => o.isCorrect); }
+function isQuestionCorrect(q){
+  const selected = selectedDisplayIndexes(q);
+  const correct = (q.options || []).map((o,i)=>o.isCorrect?i:-1).filter(i=>i>=0);
+  if(!selected.length) return false;
+  if(selected.length !== correct.length) return false;
+  const S=new Set(selected), C=new Set(correct);
+  for(const i of S){ if(!C.has(i)) return false; }
+  return true;
+}
+function bestCorrectForWrong(correctOpts, wrongOp){
+  if(!correctOpts || !correctOpts.length) return wrongOp;
+  let best=correctOpts[0], bestScore=-1;
+  for(const c of correctOpts){ const score = jaccard(tokens(c.text || ''), tokens(wrongOp?.text || '')); if(score > bestScore){ bestScore=score; best=c; } }
+  return best;
+}
+
 function colName(idx){ if(idx<0) return ''; let s='', n=idx+1; while(n>0){ const m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); } return s; }
 function renderMapping(rows, mapping){
   if(!rows || !rows.length || !els.manualQuestionCol) return;
@@ -951,18 +1095,21 @@ function startQuiz(){
   let questions = els.shuffleQuestions.checked ? shuffled(state.bank, rand) : state.bank.slice();
   questions = questions.slice(0, count);
   state.quiz = questions.map((q, qi) => {
-    const opts = q.options.map((text, idx) => ({text, originalIndex:idx, isCorrect:idx===q.correctIndex}));
+    const correctSet = new Set(getCorrectIndexes(q));
+    const opts = q.options.map((text, idx) => ({text, originalIndex:idx, isCorrect:correctSet.has(idx)}));
     const finalOpts = els.shuffleOptions.checked ? shuffled(opts, rand) : opts;
-    return {no: qi+1, item: q, options: finalOpts, userChoice: null};
+    return {no: qi+1, item: q, options: finalOpts, userChoice: null, userChoices: []};
   });
   state.submitted = false; state.lastResult = null;
   renderQuiz();
   els.btnSubmitQuiz.disabled = false; els.btnSubmitSticky.disabled = false; if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.disabled = false;
   els.resultSummary.textContent = 'Chưa nộp bài.'; els.resultList.innerHTML = '';
-  setStatus(`✅ Đã tạo đề ${count} câu. Mã đảo đề/seed: ${seedText}`, 'good');
+  const multiCount = state.quiz.filter(q=>isMultiQuestion(q.item)).length;
+  setStatus(`✅ Đã tạo đề ${count} câu. ${multiCount?`Có ${multiCount} câu chọn nhiều đáp án. `:''}Mã đảo đề/seed: ${seedText}`, 'good');
   enterQuizFocus();
   location.hash = '#quizSection';
 }
+
 
 function startStudyRound(){
   if(!state.bank.length){ setStatus('Chưa có ngân hàng câu hỏi để ôn tập.', 'bad'); return; }
@@ -981,19 +1128,22 @@ function startStudyRound(){
   const rand = rng(hashSeed(seedText));
   if(state.study.config.shuffleQuestions) questions = shuffled(questions, rand);
   state.quiz = questions.map((q, qi) => {
-    const opts = q.options.map((text, idx) => ({text, originalIndex:idx, isCorrect:idx===q.correctIndex}));
+    const correctSet = new Set(getCorrectIndexes(q));
+    const opts = q.options.map((text, idx) => ({text, originalIndex:idx, isCorrect:correctSet.has(idx)}));
     const finalOpts = state.study.config.shuffleOptions ? shuffled(opts, rand) : opts;
-    return {no: qi+1, item:q, options:finalOpts, userChoice:null};
+    return {no: qi+1, item:q, options:finalOpts, userChoice:null, userChoices:[]};
   });
   state.submitted = false; state.lastResult = null;
   state.lastQuizConfig = {mode:'study', count:questions.length, shuffleQuestions:state.study.config.shuffleQuestions, shuffleOptions:state.study.config.shuffleOptions, showAutoExplain:!!els.showAutoExplain?.checked};
   renderQuiz();
   els.btnSubmitQuiz.disabled = false; els.btnSubmitSticky.disabled = false; if(els.btnSubmitQuizTop) els.btnSubmitQuizTop.disabled = false;
   els.resultSummary.textContent = 'Chưa nộp bài.'; els.resultList.innerHTML = '';
-  setStatus(`📚 Đã tạo lượt ôn tập ${questions.length} câu. Câu nào đúng đủ ${studyThreshold()} lần hoặc được xác nhận đã học sẽ được thay bằng câu mới ở lượt tiếp.`, 'good');
+  const multiCount = state.quiz.filter(q=>isMultiQuestion(q.item)).length;
+  setStatus(`📚 Đã tạo lượt ôn tập ${questions.length} câu. ${multiCount?`Có ${multiCount} câu chọn nhiều đáp án. `:''}Câu nào đúng đủ ${studyThreshold()} lần hoặc được xác nhận đã học sẽ được thay bằng câu mới ở lượt tiếp.`, 'good');
   enterQuizFocus();
   location.hash = '#quizSection';
 }
+
 function resetStudyProgress(){
   if(!confirm('Xóa toàn bộ tiến độ ôn tập đã lưu?')) return;
   state.study.progress = {}; state.study.activeIds = [];
@@ -1019,7 +1169,7 @@ function applyStudySubmission(){
   state.quiz.forEach(q => {
     const key = getQuestionKey(q.item);
     const p = state.study.progress[key] || {correctCount:0, wrongCount:0, attempts:0, streak:0, learned:false};
-    const ok = q.userChoice !== null && q.options[q.userChoice]?.isCorrect;
+    const ok = isQuestionCorrect(q);
     p.attempts = Number(p.attempts || 0) + 1;
     p.lastAt = new Date().toISOString();
     p.lastCorrect = !!ok;
@@ -1032,6 +1182,7 @@ function applyStudySubmission(){
   saveStudyState();
   renderStudyStats();
 }
+
 function studyQuestionMeta(item){
   const key = getQuestionKey(item);
   const p = state.study.progress[key] || {};
@@ -1062,30 +1213,46 @@ function renderQuiz(){
   if(!state.quiz.length){ if(els.quizInfo) els.quizInfo.textContent=''; els.quizList.innerHTML=''; updateProgress(); return; }
   if(els.quizInfo) els.quizInfo.textContent = '';
   els.quizList.innerHTML = state.quiz.map((q, qi) => {
+    const multi = isMultiQuestion(q.item);
+    const selected = selectedDisplayIndexes(q);
     const opts = q.options.map((op, oi) => {
-      const letter = 'ABCDEF'[oi] || String(oi+1);
+      const label = optionLabel(oi);
       let cls = 'option';
-      if(state.submitted){ if(op.isCorrect) cls += ' right'; if(q.userChoice === oi && !op.isCorrect) cls += ' wrong'; }
-      else if(q.userChoice === oi) cls += ' chosen';
-      return `<label class="${cls}"><input type="radio" name="q${qi}" value="${oi}" ${q.userChoice===oi?'checked':''} ${state.submitted?'disabled':''}><span class="letter">${letter}</span><span>${escapeHtml(op.text)}</span></label>`;
+      if(state.submitted){ if(op.isCorrect) cls += ' right'; if(selected.includes(oi) && !op.isCorrect) cls += ' wrong'; }
+      else if(selected.includes(oi)) cls += ' chosen';
+      const inputType = multi ? 'checkbox' : 'radio';
+      return `<label class="${cls}"><input type="${inputType}" name="q${qi}" value="${oi}" ${selected.includes(oi)?'checked':''} ${state.submitted?'disabled':''}><span class="letter">${label}</span><span>${escapeHtml(op.text)}</span></label>`;
     }).join('');
-    return `<article class="question-card" data-q="${qi}"><div class="question-title">Câu ${q.no}. ${escapeHtml(q.item.question)}</div>${opts}<div class="muted small">Nguồn: ${escapeHtml(q.item.sheetName||'')} dòng ${escapeHtml(q.item.sourceRow||'')}${q.item.source?' | '+escapeHtml(q.item.source):''}</div></article>`;
+    const typeNote = multi ? `<span class="pill warnp">Chọn ${getCorrectIndexes(q.item).length} đáp án đúng</span>` : '<span class="pill okp">Chọn 1 đáp án</span>';
+    return `<article class="question-card" data-q="${qi}"><div class="question-title">Câu ${q.no}. ${escapeHtml(q.item.question)}</div><div class="question-type-note">${typeNote}</div>${opts}</article>`;
   }).join('');
-  els.quizList.querySelectorAll('input[type=radio]').forEach(input => input.addEventListener('change', ev => {
-    const card = ev.target.closest('.question-card'); state.quiz[Number(card.dataset.q)].userChoice = Number(ev.target.value); renderQuiz(); updateProgress();
+  els.quizList.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(input => input.addEventListener('change', ev => {
+    const card = ev.target.closest('.question-card');
+    const q = state.quiz[Number(card.dataset.q)];
+    const value = Number(ev.target.value);
+    if(isMultiQuestion(q.item)){
+      const set = new Set(selectedDisplayIndexes(q));
+      if(ev.target.checked) set.add(value); else set.delete(value);
+      q.userChoices = [...set].sort((a,b)=>a-b);
+      q.userChoice = q.userChoices.length ? q.userChoices[0] : null;
+    } else {
+      q.userChoices = [value];
+      q.userChoice = value;
+    }
+    renderQuiz(); updateProgress();
   }));
   updateProgress();
 }
 function updateProgress(){
-  const total=state.quiz.length, done=state.quiz.filter(q=>q.userChoice !== null).length;
+  const total=state.quiz.length, done=state.quiz.filter(q=>hasAnyChoice(q)).length;
   if(els.progressText) els.progressText.textContent = `${done}/${total}`;
   if(els.progressBar) els.progressBar.style.width = total ? `${done/total*100}%` : '0%';
 }
 function submitQuiz(){
   if(!state.quiz.length) return;
-  const unanswered = state.quiz.filter(q=>q.userChoice === null).length;
+  const unanswered = state.quiz.filter(q=>!hasAnyChoice(q)).length;
   if(unanswered && !confirm(`Còn ${unanswered} câu chưa chọn. Vẫn nộp bài?`)) return;
-  let correct=0; state.quiz.forEach(q => { if(q.userChoice !== null && q.options[q.userChoice]?.isCorrect) correct++; });
+  let correct=0; state.quiz.forEach(q => { if(isQuestionCorrect(q)) correct++; });
   state.submitted=true; state.lastResult={correct,total:state.quiz.length,score10:state.quiz.length?correct/state.quiz.length*10:0,time:new Date().toLocaleString('vi-VN')};
   if(state.mode === 'study') applyStudySubmission();
   renderQuiz(); renderResult();
@@ -1094,10 +1261,10 @@ function submitQuiz(){
   location.hash = '#resultSection';
 }
 
+
 function resultModeFor(q){
-  const chosen = q.userChoice === null ? null : q.options[q.userChoice];
-  if(!chosen) return 'unanswered';
-  return chosen.isCorrect ? 'correct' : 'wrong';
+  if(!hasAnyChoice(q)) return 'unanswered';
+  return isQuestionCorrect(q) ? 'correct' : 'wrong';
 }
 function resultRank(mode){
   if(mode === 'wrong') return 0;
@@ -1114,41 +1281,46 @@ function renderResult(){
   const unansweredCount = state.quiz.filter(q => resultModeFor(q) === 'unanswered').length;
   els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${r.correct}/${r.total}</span><span class="pill ${wrongCount?'warnp':'okp'}">Sai ${wrongCount}</span><span class="pill ${unansweredCount?'warnp':'okp'}">Chưa chọn ${unansweredCount}</span><span class="pill">Điểm ${r.score10.toFixed(2)}/10</span><span class="pill">${escapeHtml(r.time)}</span><span class="pill">Đã xếp câu sai lên trước</span>`;
 
-  function correctReason(q, correctOpt){
-    return `<div class="analysis-row source"><b>Vì sao đây là đáp án đúng:</b><br>Phương án này là nội dung được cột đáp án trong Excel xác định là đúng. Khi so với các phương án sai, đáp án đúng giữ đúng từ khóa, điều kiện, mốc số liệu hoặc phạm vi bắt buộc.${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>`;
+  function correctReason(q, correctOpts, op){
+    const all = correctOpts.map(o=>o.text).join(' | ');
+    const multi = correctOpts.length > 1;
+    return `<div class="analysis-row source"><b>Vì sao đây là đáp án đúng:</b><br>Phương án này nằm trong ${multi?'nhóm các đáp án đúng':'đáp án đúng'} được cột đáp án Excel xác định. ${multi?'Với câu chọn nhiều, phải chọn đủ và chỉ chọn các phương án đúng: '+escapeHtml(all)+'. ':'Khi so với các phương án sai, đáp án đúng giữ đúng từ khóa, điều kiện, mốc số liệu hoặc phạm vi bắt buộc.'}${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>`;
   }
-  function wrongExplainBlock(correctOpt, op, oi, title){
-    const letter = 'ABCDEF'[oi] || String(oi+1);
-    return `<div class="analysis-row"><b>${escapeHtml(title || ('Phương án ' + letter + ' sai ở đâu:'))}</b><br>${els.showAutoExplain.checked ? explainDifference(correctOpt.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
+  function wrongExplainBlock(correctOpts, op, oi, title){
+    const label = optionLabel(oi);
+    const ref = bestCorrectForWrong(correctOpts, op);
+    return `<div class="analysis-row"><b>${escapeHtml(title || ('Phương án ' + label + ' sai ở đâu:'))}</b><br>${els.showAutoExplain.checked ? explainDifference(ref.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`;
   }
-  function optionExplanation(q, correctOpt, op, oi, mode){
-    if(op.isCorrect) return correctReason(q, correctOpt);
-    const letter = 'ABCDEF'[oi] || String(oi+1);
-    if(mode === 'wrong' && oi === q.userChoice){
-      return wrongExplainBlock(correctOpt, op, oi, 'Bạn chọn phương án ' + letter + ' nên sai ở đâu so với đáp án đúng:');
+  function optionExplanation(q, correctOpts, op, oi, mode){
+    if(op.isCorrect) return correctReason(q, correctOpts, op);
+    const label = optionLabel(oi);
+    const selected = selectedDisplayIndexes(q).includes(oi);
+    if(mode === 'wrong' && selected){
+      return wrongExplainBlock(correctOpts, op, oi, 'Bạn chọn phương án ' + label + ' nên sai ở đâu so với đáp án đúng gần nhất:');
     }
-    return wrongExplainBlock(correctOpt, op, oi, 'Phương án ' + letter + ' sai ở đâu so với đáp án đúng:');
+    return wrongExplainBlock(correctOpts, op, oi, 'Phương án ' + label + ' sai ở đâu so với đáp án đúng gần nhất:');
   }
   function optionStatus(q, op, oi){
-    if(op.isCorrect && q.userChoice === oi) return '<span class="mini-status ok">Bạn chọn đúng</span>';
+    const selected = selectedDisplayIndexes(q).includes(oi);
+    if(op.isCorrect && selected) return '<span class="mini-status ok">Bạn chọn đúng</span>';
     if(op.isCorrect) return '<span class="mini-status ok">Đáp án đúng</span>';
-    if(q.userChoice === oi) return '<span class="mini-status bad">Bạn chọn sai</span>';
+    if(selected) return '<span class="mini-status bad">Bạn chọn sai</span>';
     return '<span class="mini-status muted">Phương án sai</span>';
   }
-  function resultOption(q, correctOpt, op, oi, mode){
-    const letter = 'ABCDEF'[oi] || String(oi+1);
-    const isUserWrongChoice = mode === 'wrong' && oi === q.userChoice && !op.isCorrect;
-    const open = isUserWrongChoice ? ' open' : '';
+  function resultOption(q, correctOpts, op, oi, mode){
+    const label = optionLabel(oi);
+    const selected = selectedDisplayIndexes(q).includes(oi);
+    const open = (mode === 'wrong' && selected && !op.isCorrect) ? ' open' : '';
     const cls = ['result-option','option'];
     if(op.isCorrect) cls.push('right','result-correct-option');
-    if(q.userChoice === oi && !op.isCorrect) cls.push('wrong','result-user-wrong');
-    if(q.userChoice === oi && op.isCorrect) cls.push('chosen','result-user-correct');
+    if(selected && !op.isCorrect) cls.push('wrong','result-user-wrong');
+    if(selected && op.isCorrect) cls.push('chosen','result-user-correct');
     const textCls = op.isCorrect ? 'option-text correct-answer-text' : 'option-text';
-    const explanation = optionExplanation(q, correctOpt, op, oi, mode);
+    const explanation = optionExplanation(q, correctOpts, op, oi, mode);
     const arrowTitle = op.isCorrect ? 'Xem vì sao đây là đáp án đúng' : 'Xem vì sao phương án này sai';
     return `<div class="${cls.join(' ')}${open}">
       <div class="result-option-main">
-        <span class="letter">${letter}</span>
+        <span class="letter">${label}</span>
         <span class="${textCls}">${escapeHtml(op.text)} ${optionStatus(q, op, oi)}</span>
         <button type="button" class="option-arrow" title="${arrowTitle}" aria-label="${arrowTitle}" aria-expanded="${open?'true':'false'}" onclick="const p=this.closest('.result-option');p.classList.toggle('open');this.setAttribute('aria-expanded',p.classList.contains('open')?'true':'false');this.textContent=p.classList.contains('open')?'⌃':'⌄';">${open?'⌃':'⌄'}</button>
       </div>
@@ -1160,29 +1332,33 @@ function renderResult(){
   els.resultList.innerHTML = ordered.map((entry) => {
     const q = entry.q;
     const originalNo = entry.idx + 1;
-    const chosen = q.userChoice === null ? null : q.options[q.userChoice];
-    const correctOpt = q.options.find(o => o.isCorrect) || q.options[0];
-    const ok = !!(chosen && chosen.isCorrect);
+    const chosen = getChosenOptions(q);
+    const correctOpts = getCorrectOptions(q);
+    const ok = isQuestionCorrect(q);
     const mode = entry.mode;
     const resultText = mode === 'unanswered' ? 'Chưa chọn' : (ok ? 'Đúng' : 'Sai');
     const resultCls = mode === 'unanswered' ? 'warn' : (ok ? 'ok' : 'bad');
     const resultPill = mode === 'unanswered' ? 'warnp' : (ok ? 'okp' : 'warnp');
     const studyMeta = state.mode === 'study' ? studyQuestionMeta(q.item) : '';
+    const correctText = correctOpts.map(o=>o.text).join(' | ');
+    const chosenText = chosen.map(o=>o.text).join(' | ');
+    const typePill = correctOpts.length > 1 ? `<span class="pill warnp">Câu chọn nhiều: ${correctOpts.length} đáp án</span>` : '<span class="pill okp">Câu chọn 1 đáp án</span>';
     const shortNote = mode === 'wrong'
-      ? '<div class="analysis-row focus-diff compact-result-note"><b>Bạn trả lời sai.</b> Phương án bạn chọn đã được mở sẵn phần giải thích. Các câu sai được xếp lên trước để kiểm tra nhanh.</div>'
+      ? '<div class="analysis-row focus-diff compact-result-note"><b>Bạn trả lời sai.</b> Phương án sai bạn chọn đã được mở sẵn. Nếu thiếu một đáp án đúng trong câu chọn nhiều, đáp án đúng vẫn được tô xanh để bổ sung.</div>'
       : (mode === 'correct'
         ? '<div class="analysis-row source compact-result-note"><b>Bạn trả lời đúng.</b> Các giải thích được ẩn dưới nút mũi tên ở cuối từng phương án.</div>'
         : '<div class="analysis-row compact-unanswered"><b>Bạn chưa chọn câu này.</b> Đáp án đúng đã được tô chữ xanh. Bấm mũi tên cuối từng phương án để xem giải thích.</div>');
-    const optionsHtml = q.options.map((op, oi) => resultOption(q, correctOpt, op, oi, mode)).join('');
-    return `<article class="question-card result-question-card result-order-${mode}"><h3>Câu ${q.no}. <span class="${resultCls}">${resultText}</span> <span class="muted small">(thứ tự gốc trong đề: ${originalNo})</span></h3><div class="question-title result-question-title">${escapeHtml(q.item.question)}</div><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span><span class="pill">Đáp án đúng: ${escapeHtml(correctOpt.text)}</span>${chosen?`<span class="pill">Bạn chọn: ${escapeHtml(chosen.text)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${studyMeta}${shortNote}<div class="result-options-list">${optionsHtml}</div></article>`;
+    const optionsHtml = q.options.map((op, oi) => resultOption(q, correctOpts, op, oi, mode)).join('');
+    return `<article class="question-card result-question-card result-order-${mode}"><h3>Câu ${q.no}. <span class="${resultCls}">${resultText}</span> <span class="muted small">(thứ tự gốc trong đề: ${originalNo})</span></h3><div class="question-title result-question-title">${escapeHtml(q.item.question)}</div><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span>${typePill}<span class="pill">Đáp án đúng: ${escapeHtml(correctText)}</span>${chosen.length?`<span class="pill">Bạn chọn: ${escapeHtml(chosenText)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${studyMeta}${shortNote}<div class="result-options-list">${optionsHtml}</div></article>`;
   }).join('');
   bindResultStudyButtons();
 }
 
+
 function makeStandaloneHtml(title, contentHtml){
   const css = Array.from(document.querySelectorAll('style')).map(s => s.textContent || '').join('\n');
   const stamp = new Date().toLocaleString('vi-VN');
-  return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><style>${css}\nbody{overflow:auto!important}.app{max-width:none!important;width:100%!important;margin:0!important;padding:12px!important}.card{max-width:none!important;width:100%!important;margin-left:0!important;margin-right:0!important}.no-print,.stickybar{display:none!important}.table-wrap table{min-width:1280px}</style></head><body class="standalone-export"><main class="app"><div class="card report-card-full"><h1>${escapeHtml(title)}</h1><p class="muted">Xuất lúc: ${escapeHtml(stamp)}. File này xem offline được, không cần PWA.</p></div>${contentHtml}</main></body></html>`;
+  return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><style>${css}\nbody{overflow:auto!important}.app{max-width:none!important;width:100%!important;margin:0!important;padding:12px!important}.card{max-width:none!important;width:100%!important;margin-left:0!important;margin-right:0!important}.no-print,.stickybar{display:none!important}.table-wrap{width:100%!important;max-width:none!important;overflow-x:auto!important}.table-wrap table{table-layout:auto!important;width:max-content!important;min-width:1700px!important;max-width:none!important}.table-wrap th,.table-wrap td{white-space:normal!important;overflow:visible!important}.question-cell{min-width:520px!important}.correct-cell{min-width:360px!important}.option-list-cell{min-width:620px!important}.source-cell{min-width:700px!important}.preview-option-item{display:block;margin:0 0 6px;padding:5px 7px;border-left:3px solid #bfdbfe;background:#f8fafc;border-radius:7px}.preview-option-item.is-correct{border-left-color:#22c55e;background:#f0fdf4;color:#166534;font-weight:800}</style></head><body class="standalone-export"><main class="app"><div class="card report-card-full"><h1>${escapeHtml(title)}</h1><p class="muted">Xuất lúc: ${escapeHtml(stamp)}. File này xem offline được, không cần PWA.</p></div>${contentHtml}</main></body></html>`;
 }
 function downloadTextFile(filename, content, mime='text/html;charset=utf-8'){
   const blob = new Blob([content], {type:mime});

@@ -1,17 +1,10 @@
-TRẮC NGHIỆM EXCEL OFFLINE PWA V18
+Trắc nghiệm Excel Offline PWA V21
 
-Bản V18 khôi phục điều kiện cài PWA đúng chuẩn:
-- index.html đã có <link rel="manifest">
-- manifest.webmanifest có id, scope, start_url, display=standalone
-- có icon PNG 192x192 và 512x512 phục vụ installability
-- sw.js cache đầy đủ index/app/xlsx/manifest/icon
-- có nút “Cài PWA” và thông báo chẩn đoán tình trạng cài đặt
+- Sửa lỗi xem trước ngân hàng câu hỏi không hiển thị.
+- Thêm phân trang ngân hàng câu hỏi.
+- Sửa tràn khung mô đun tra cứu/cập nhật căn cứ.
+- Bỏ dòng nguồn/căn cứ trong giao diện làm bài, chỉ còn câu hỏi và phương án.
+- Giữ hỗ trợ vô hạn phương án và câu nhiều đáp án đúng.
 
-Cách chạy để hiện “Cài đặt ứng dụng” thay vì chỉ “Tạo lối tắt”:
-1) Giải nén ZIP.
-2) Mở terminal trong thư mục đã giải nén.
-3) Chạy: python -m http.server 8080
-4) Mở Chrome/Edge: http://localhost:8080
-5) Bấm “Ép cập nhật PWA”, sau đó bấm “Cài PWA”.
-
-Lưu ý: nếu mở trực tiếp index.html bằng file://, nhiều trình duyệt chỉ cho “Tạo lối tắt”, không cài PWA đầy đủ vì service worker/manifest không hoạt động như khi chạy qua localhost/HTTPS.
+Chạy PWA bằng localhost/HTTPS để cài đặt đầy đủ:
+python -m http.server 8080
