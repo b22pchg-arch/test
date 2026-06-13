@@ -1,11 +1,11 @@
 {
-  "name": "Trắc nghiệm Excel Offline V9",
-  "short_name": "Quiz Excel V9",
+  "name": "Trắc nghiệm Excel Offline V10",
+  "short_name": "Quiz Excel V10",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#eef7f6",
   "theme_color": "#0f766e",
-  "description": "PWA offline tạo đề trắc nghiệm từ Excel, dữ liệu nhúng sẵn, thanh điều khiển dưới màn hình, đề khác tạo ngay theo cấu hình cũ, giải thích sai theo thứ tự đọc.",
+  "description": "PWA offline tạo đề trắc nghiệm từ Excel, dữ liệu nhúng sẵn, giao diện gọn trên điện thoại, điều khiển dưới màn hình và có nút ép cập nhật PWA.",
   "icons": [
     {
       "src": "icon.svg",

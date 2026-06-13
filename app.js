@@ -1,7 +1,7 @@
 
 'use strict';
 
-const APP_VERSION = 'V9.0-20260613-bottom-bar-sequence-first';
+const APP_VERSION = 'V10.0-20260613-compact-bottom-bar-force-update';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -29,7 +29,7 @@ la là cua của va và hoac hoặc de để den đến duoc được bi bị tr
 VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnClearOldCache','btnForceUpdatePWA'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
@@ -624,7 +624,7 @@ function startQuiz(){
 }
 function resetQuiz(){
   state.quiz=[]; state.submitted=false; state.lastResult=null;
-  if(els.quizInfo) els.quizInfo.textContent='Chưa tạo đề.';
+  if(els.quizInfo) els.quizInfo.textContent='';
   if(els.quizList) els.quizList.innerHTML='';
   if(els.resultSummary) els.resultSummary.textContent='Chưa nộp bài.';
   if(els.resultList) els.resultList.innerHTML='';
@@ -634,8 +634,8 @@ function resetQuiz(){
   updateProgress();
 }
 function renderQuiz(){
-  if(!state.quiz.length){ els.quizInfo.textContent='Chưa tạo đề.'; els.quizList.innerHTML=''; updateProgress(); return; }
-  els.quizInfo.innerHTML = `Đề gồm <b>${state.quiz.length}</b> câu. ${els.shuffleQuestions.checked?'Có đảo câu hỏi.':'Không đảo câu hỏi.'} ${els.shuffleOptions.checked?'Có đảo phương án.':'Không đảo phương án.'}`;
+  if(!state.quiz.length){ if(els.quizInfo) els.quizInfo.textContent=''; els.quizList.innerHTML=''; updateProgress(); return; }
+  if(els.quizInfo) els.quizInfo.textContent = '';
   els.quizList.innerHTML = state.quiz.map((q, qi) => {
     const opts = q.options.map((op, oi) => {
       const letter = 'ABCDEF'[oi] || String(oi+1);
@@ -736,6 +736,30 @@ async function clearOldCache(){
     setStatus('✅ Đã xóa cache/service worker cũ của trình duyệt. Hãy tải lại trang nếu cần.', 'good');
   } catch(e){ setStatus('Không xóa được cache cũ: ' + (e.message || e), 'bad'); }
 }
+
+async function forceUpdatePWA(){
+  try {
+    setStatus('⏳ Đang ép cập nhật PWA: xóa cache cũ, gỡ service worker cũ và tải lại trang...', 'info');
+    if('caches' in window){
+      const names = await caches.keys();
+      await Promise.all(names.map(n => caches.delete(n)));
+    }
+    if('serviceWorker' in navigator){
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(async r => {
+        try { await r.update(); } catch(e) {}
+        try { if(r.waiting) r.waiting.postMessage({type:'SKIP_WAITING'}); } catch(e) {}
+        try { await r.unregister(); } catch(e) {}
+      }));
+    }
+    const url = new URL(location.href);
+    url.searchParams.set('pwa_update', Date.now().toString());
+    location.replace(url.toString());
+  } catch(e){
+    setStatus('❌ Không ép cập nhật được PWA: ' + (e.message || e), 'bad');
+  }
+}
+
 function registerSW(){
   if('serviceWorker' in navigator && location.protocol !== 'file:'){
     navigator.serviceWorker.register('./sw.js?v=' + encodeURIComponent(APP_VERSION)).catch(err => console.warn('SW register failed:', err));
@@ -767,7 +791,8 @@ function bindEvents(){
   if(els.btnBackToSetupSticky) els.btnBackToSetupSticky.addEventListener('click', backToSetup);
   if(els.btnNewQuizResult) els.btnNewQuizResult.addEventListener('click', startNewQuizSameConfig);
   if(els.btnNewQuizSticky) els.btnNewQuizSticky.addEventListener('click', startNewQuizSameConfig);
-  els.btnClearOldCache.addEventListener('click', clearOldCache);
+  if(els.btnClearOldCache) els.btnClearOldCache.addEventListener('click', clearOldCache);
+  if(els.btnForceUpdatePWA) els.btnForceUpdatePWA.addEventListener('click', forceUpdatePWA);
 }
 function boot(){
   initElements();

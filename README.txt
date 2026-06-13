@@ -1,10 +1,10 @@
-Trac nghiem Excel Offline PWA V9
+Trắc nghiệm Excel Offline PWA V10
 
-- Mo len co du lieu nhung san.
-- Khi lam bai, nut Ve dau / Nop / Thoat nam o thanh tien do duoi man hinh.
-- Khi xem ket qua, nut De khac tao ngay de moi theo cau hinh de truoc, khong can quay lai man hinh tao de.
-- Giai thich phuong an sai uu tien cac diem sai theo dung thu tu doc tu dau den cuoi.
-- Cac phan phan tich phu duoc dua vao khung mo rong cham de doc them.
-- Trang thai cau tra loi hien rieng: Dung, Sai, hoac Chua chon.
+- Mở index.html qua localhost/HTTPS để dùng PWA.
+- Dữ liệu 160 câu đã nhúng sẵn.
+- Khi làm bài/kết quả: bỏ thanh tiêu đề, dùng thanh điều khiển dưới màn hình.
+- Nút “Ép cập nhật PWA” sẽ xóa cache, gỡ service worker cũ và tải lại trang để tránh giữ bản cũ.
 
-Chay PWA bang localhost, vi du: python -m http.server 8080
+Chạy thử nhanh:
+python -m http.server 8080
+Sau đó mở http://localhost:8080
