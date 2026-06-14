@@ -8,7 +8,7 @@
   <link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="description" content="PWA trắc nghiệm Excel offline có dữ liệu nhúng sẵn, đọc Excel bằng SheetJS, tạo đề đảo câu/đáp án, chấm điểm và phân tích đúng sai.">
-  <title>Trắc nghiệm Excel Offline PWA V42.2</title>
+  <title>Trắc nghiệm Excel Offline PWA V45.3</title>
   <style>
 :root{--bg:#eef7f6;--panel:#fff;--text:#0f172a;--muted:#475569;--line:#d7e3e2;--primary:#0f766e;--primary2:#115e59;--danger:#b91c1c;--ok:#15803d;--warn:#b45309;--info:#0369a1;--shadow:0 10px 28px rgba(15,23,42,.10);--r:16px}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}body{min-height:100vh}.app{max-width:1280px;margin:0 auto;padding:14px 14px 92px}header{position:sticky;top:0;z-index:30;margin:0;padding:14px;background:linear-gradient(135deg,#0f766e,#0b4f49);color:#fff;box-shadow:var(--shadow)}header .inner{max-width:1280px;margin:0 auto}header h1{margin:0 0 6px;font-size:clamp(20px,4vw,30px);letter-spacing:.2px}header p{margin:0;color:#dffaf7;font-size:14px}.grid{display:grid;grid-template-columns:1fr;gap:12px}@media (min-width:990px){.grid.two{grid-template-columns:430px 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}.card h2,.card h3{margin:0 0 10px}.card h2{font-size:20px}.card h3{font-size:17px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}label{font-weight:800;font-size:13px;color:#1f2937;display:block;margin:8px 0 5px}input,select,textarea,button{font:inherit}input[type=file],input[type=number],input[type=text],select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:10px;background:#fff;color:var(--text)}input[type=checkbox]{transform:scale(1.12);margin-right:6px}select[multiple]{min-height:150px}button{border:0;border-radius:12px;padding:10px 13px;background:var(--primary);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(15,118,110,.22)}button:hover{background:var(--primary2)}button.secondary{background:#334155}button.light{background:#e2e8f0;color:#0f172a;box-shadow:none}button.danger{background:var(--danger)}button.info{background:var(--info)}button:disabled{opacity:.55;cursor:not-allowed}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;background:#ecfeff;color:#155e75;font-weight:900;font-size:12px;border:1px solid #a5f3fc;margin:2px}.pill.okp{background:#f0fdf4;color:#166534;border-color:#86efac}.pill.warnp{background:#fffbeb;color:#92400e;border-color:#fcd34d}.ok{color:var(--ok);font-weight:900}.bad{color:var(--danger);font-weight:900}.warn{color:var(--warn);font-weight:900}.status{border-radius:12px;padding:10px;background:#f8fafc;border:1px dashed #cbd5e1;white-space:pre-wrap}.status.bad{border-color:#fecaca;background:#fff1f2}.status.good{border-color:#bbf7d0;background:#f0fdf4}.status.info{border-color:#bae6fd;background:#f0f9ff}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.table-wrap table{min-width:940px;width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #e2e8f0;padding:9px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#f1f5f9;z-index:1}.nowrap{white-space:nowrap}details{border:1px solid var(--line);border-radius:12px;background:#fbffff;padding:10px;margin:10px 0}summary{font-weight:900;cursor:pointer}.question-card{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:12px;margin:10px 0}.question-title{font-weight:900;margin-bottom:8px}.option{display:flex;gap:8px;align-items:flex-start;border:1px solid #e2e8f0;border-radius:12px;padding:9px;margin:7px 0;background:#f8fafc}.option:hover{background:#eff6ff}.option input{margin-top:4px}.letter{min-width:28px;height:28px;border-radius:999px;background:#dbeafe;display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#1e3a8a}.chosen{border-color:#38bdf8;background:#ecfeff}.right{border-color:#22c55e;background:#f0fdf4}.wrong{border-color:#ef4444;background:#fef2f2}.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:9px 14px;box-shadow:0 -8px 22px rgba(15,23,42,.09)}.stickybar-inner{max-width:1280px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.progress{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden;min-width:170px;flex:1}.progress>span{display:block;height:100%;width:0;background:var(--primary);transition:.2s}.analysis-row{margin:7px 0;padding:9px;border-left:4px solid #0ea5e9;background:#f0f9ff;border-radius:8px}.analysis-row b{color:#0f172a}.analysis-row.source{background:#fefce8;border-left-color:#eab308}.tag{display:inline-block;margin:2px 3px 2px 0;padding:2px 6px;border-radius:999px;background:#e0f2fe;color:#075985;font-size:12px}.mapping-grid{display:grid;grid-template-columns:1fr;gap:8px}@media (min-width:720px){.mapping-grid{grid-template-columns:repeat(2,1fr)}}.banner{padding:11px;border-radius:14px;background:#ecfdf5;border:1px solid #86efac;color:#14532d;margin-bottom:10px}.banner b{font-size:15px}@media (max-width:700px){.app{padding:10px 10px 100px}.card{padding:11px;border-radius:13px}button{width:100%;justify-content:center}.row button{flex:1 1 150px}.stickybar-inner{align-items:stretch}.progress{width:100%;flex-basis:100%}.table-wrap table{min-width:780px}.option{padding:8px}.letter{min-width:26px;height:26px}}
 /* V6: giải thích ngược, lấy phương án sai làm trọng tâm, chỉ rõ đáp án đúng có gì mà sai không có */
@@ -359,7 +359,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 </head>
 <body>
 
-<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V42.2</h1><p>Dữ liệu nhúng sẵn, quản lý/lưu từng bộ câu hỏi riêng biệt, nhập/sửa câu hỏi toàn màn hình, hỗ trợ ảnh/âm thanh.</p></div></header>
+<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V45.3</h1><p>Dữ liệu nhúng sẵn, quản lý/lưu từng bộ câu hỏi riêng biệt, nhập/sửa câu hỏi toàn màn hình, hỗ trợ ảnh/âm thanh.</p></div></header>
 <main class="app">
   <section class="grid two">
     <div>
@@ -646,7 +646,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 <script>
 'use strict';
 
-const APP_VERSION = 'V43.3-20260614-preserve-essay-newlines';
+const APP_VERSION = 'V45.3-20260614-fix-export-script-break';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -2954,7 +2954,190 @@ function makeStandaloneHtml(title, contentHtml){
 @media(max-width:900px){.bank-set-table{min-width:1120px!important}.bank-set-table .set-col-action{width:390px!important}.bank-set-table .set-col-name{width:260px!important}}
 </style>
 
-</head><body class="standalone-export"><main class="app"><div class="card report-card-full"><h1>${escapeHtml(title)}</h1><p class="muted">Xuất lúc: ${escapeHtml(stamp)}. File này xem offline được, không cần PWA.</p></div>${contentHtml}</main></body></html>`;
+</head><body class="standalone-export"><main class="app"><div class="card report-card-full"><h1>${escapeHtml(title)}</h1><p class="muted">Xuất lúc: ${escapeHtml(stamp)}. File này xem offline được, không cần PWA.</p></div>${contentHtml}</main><script>
+/* ===== V45.3 patch: sửa mất HTML do thẻ script trong mẫu xuất HTML + giữ nhận diện mẫu nhiều cột ===== */
+(function(){
+  const V452_LABEL = 'V45.3-20260614-fix-export-script-break';
+  function tText(v){
+    try { return norm(v || '').replace(/-/g,' '); }
+    catch(e){ return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/-/g,' '); }
+  }
+  function textOf(v){
+    try { return visibleText(v || ''); }
+    catch(e){ return String(v || '').replace(/\s+/g,' ').trim(); }
+  }
+  function kwArray(v){
+    if(Array.isArray(v)) return v.map(textOf).filter(Boolean);
+    return textOf(v).split(/[\n;,|]+/).map(textOf).filter(Boolean);
+  }
+  function explicitEssayType(v){
+    const t = tText(v);
+    return /(^|\s)(essay|tu\s*luan|tuluan|tu\s*luận|tra\s*loi\s*ngan|tra\s*loi\s*dai|short\s*answer|written|bai\s*viet)(\s|$)/.test(t);
+  }
+  function explicitChoiceType(v){
+    const t = tText(v);
+    return /(^|\s)(single|multi|multiple|choice|trac\s*nghiem|tracnghiem|chon\s*mot|chon\s*nhieu|mot\s*dap\s*an|nhieu\s*dap\s*an)(\s|$)/.test(t);
+  }
+  function optionTextLocal(op){
+    try { if(typeof getOptionText === 'function') return getOptionText(op); } catch(e){}
+    if(op && typeof op === 'object') return textOf(op.text ?? op.label ?? op.value ?? '');
+    return textOf(op);
+  }
+  function validOptions(opts){
+    return (Array.isArray(opts) ? opts : []).filter(op => optionTextLocal(op) || (op && typeof op === 'object' && (op.image || op.audio || op.src || op.url)));
+  }
+  function correctIndexesLocal(q, opts){
+    let idxs = [];
+    if(Array.isArray(q?.correctIndexes)) idxs = q.correctIndexes.slice();
+    else if(Array.isArray(q?.correctIndices)) idxs = q.correctIndices.slice();
+    else if(Array.isArray(q?.correctIndex)) idxs = q.correctIndex.slice();
+    else if(Number.isInteger(q?.correctIndex) && q.correctIndex >= 0) idxs = [q.correctIndex];
+    try { idxs = normalizeIndexList(idxs, opts); } catch(e){ idxs = idxs.filter(i => Number.isInteger(Number(i)) && Number(i) >= 0 && Number(i) < opts.length).map(Number); }
+    if(!idxs.length && q && q.answerRaw){ try { idxs = parseAnswerIndexes(q.answerRaw, opts); } catch(e){} }
+    if(!idxs.length && q && q.correctText){
+      const texts = Array.isArray(q.correctTexts) ? q.correctTexts : String(q.correctText).split(/\s*\|\s*/);
+      texts.forEach(txt => { try { const i = tokenToOptionIndex(txt, opts); if(i >= 0) idxs.push(i); } catch(e){} });
+      try { idxs = normalizeIndexList(idxs, opts); } catch(e){}
+    }
+    return [...new Set(idxs.filter(i => Number.isInteger(Number(i)) && Number(i) >= 0 && Number(i) < opts.length).map(Number))];
+  }
+  function hasValidChoices(q){
+    const opts = validOptions(q && q.options);
+    if(opts.length < 2) return false;
+    return correctIndexesLocal(q || {}, opts).length > 0;
+  }
+  function hasEssayPayload(q){
+    if(!q) return false;
+    return !!(textOf(q.sampleAnswer || q.modelAnswer || q.essayAnswer || q.answerSample || '') ||
+      textOf(q.sampleAnswerHtml || q.modelAnswerHtml || q.essayAnswerHtml || q.answerSampleHtml || '') ||
+      kwArray(q.requiredKeywords || q.essayRequiredKeywords || q.mustKeywords || q.keywordsRequired || '').length ||
+      kwArray(q.bonusKeywords || q.plusKeywords || q.keywordsBonus || '').length ||
+      kwArray(q.penaltyKeywords || q.minusKeywords || q.keywordsPenalty || '').length);
+  }
+
+  const prevIsEssay = window.isEssayQuestion || (typeof isEssayQuestion === 'function' ? isEssayQuestion : null);
+  window.isEssayQuestion = function(item){
+    if(!item) return false;
+    const t = item.questionType ?? item.type ?? item.loaiCau ?? item.kind ?? item.questionKind ?? '';
+    if(explicitEssayType(t)) return true;
+    if(explicitChoiceType(t)) return false;
+    // Quy tắc quan trọng V45.2: cứ có tối thiểu 2 phương án và xác định được đáp án đúng thì luôn là trắc nghiệm,
+    // kể cả dữ liệu cũ có sampleAnswerHtml hoặc các trường đáp án mẫu do patch trước sinh ra.
+    if(hasValidChoices(item)) return false;
+    const opts = validOptions(item.options);
+    if(opts.length >= 2) return false;
+    return hasEssayPayload(item) || (prevIsEssay ? (!!prevIsEssay(item) && !opts.length) : false);
+  };
+
+  window.parseRows = function(rows, sheetName, manualMapping){
+    const mapping = manualMapping || detectMapping(rows);
+    if(mapping.questionCol < 0) throw new Error('Không tìm thấy cột câu hỏi.');
+    const bank = [], errors = [];
+    for(let r = mapping.headerIdx + 1; r < rows.length; r++){
+      const row = rows[r] || [];
+      const question = cleanQuestion(row[mapping.questionCol]);
+      const questionImage = extractImageSrcFromRow(row, mapping.questionImageCol);
+      const id = mapping.idCol >= 0 ? textOf(row[mapping.idCol]) : String(bank.length + 1);
+      const source = mapping.sourceCol >= 0 ? textOf(row[mapping.sourceCol]) : '';
+      const answerRaw = mapping.answerCol >= 0 ? textOf(row[mapping.answerCol]) : '';
+      const noShuffleOptions = mapping.noShuffleCol >= 0 ? parseNoShuffleFlag(row[mapping.noShuffleCol]) : false;
+      const typeRaw = mapping.typeCol >= 0 ? textOf(row[mapping.typeCol]) : '';
+      const sampleAnswer = mapping.sampleAnswerCol >= 0 ? multilineText(row[mapping.sampleAnswerCol]) : '';
+      const requiredKeywords = mapping.requiredKeywordsCol >= 0 ? kwArray(row[mapping.requiredKeywordsCol]) : [];
+      const bonusKeywords = mapping.bonusKeywordsCol >= 0 ? kwArray(row[mapping.bonusKeywordsCol]) : [];
+      const penaltyKeywords = mapping.penaltyKeywordsCol >= 0 ? kwArray(row[mapping.penaltyKeywordsCol]) : [];
+      const scoreMax = mapping.scoreMaxCol >= 0 ? Math.max(0, Number(row[mapping.scoreMaxCol]) || 10) : 10;
+
+      const rawOptions = (mapping.optionCols || []).map((c, idx) => {
+        const imgCol = mapping.optionImageColByNo ? mapping.optionImageColByNo[idx + 1] : undefined;
+        const audioCol = mapping.optionAudioColByNo ? mapping.optionAudioColByNo[idx + 1] : undefined;
+        return { col:c, raw:textOf(row[c]), image:extractImageSrcFromRow(row, imgCol), audio:(typeof extractAudioSrcFromRow === 'function' ? extractAudioSrcFromRow(row, audioCol) : '') };
+      });
+      const markedCorrectIndexes = [];
+      const options = [];
+      rawOptions.forEach(o => {
+        const marked = /^\s*(?:\[x\]|\(x\)|✓|✔|\*)\s*/i.test(o.raw) || /\s*(?:\[dung\]|\[đúng\])\s*$/i.test(o.raw);
+        const cleaned = cleanOption(o.raw);
+        if(cleaned || o.image || o.audio){
+          const newIdx = options.length;
+          options.push({text:cleaned, image:o.image || '', audio:o.audio || ''});
+          if(marked) markedCorrectIndexes.push(newIdx);
+        }
+      });
+      if(!question && !questionImage){
+        if(row.some(x => textOf(x))) errors.push({row:r+1, reason:'Thiếu câu hỏi'});
+        continue;
+      }
+
+      let correctIndexes = parseAnswerIndexes(answerRaw, options);
+      if(!correctIndexes.length && markedCorrectIndexes.length) correctIndexes = normalizeIndexList(markedCorrectIndexes, options);
+      const explicitEssay = explicitEssayType(typeRaw);
+      const explicitChoice = explicitChoiceType(typeRaw);
+      const essayData = !!(sampleAnswer || requiredKeywords.length || bonusKeywords.length || penaltyKeywords.length);
+      // Chỉ coi là tự luận nếu: loại câu ghi rõ tự luận; hoặc không có phương án hợp lệ và có dữ liệu đáp án mẫu/từ khóa.
+      // Không để cột đáp án mẫu/căn cứ làm câu nhiều cột bị nhầm thành tự luận.
+      const essay = explicitEssay || (!explicitChoice && options.length < 2 && essayData);
+
+      if(essay){
+        bank.push({
+          id:id || String(bank.length+1), sourceRow:r+1, sheetName, question, questionImage, image:questionImage,
+          questionType:'essay', type:'essay', options:[], correctIndexes:[], correctIndex:-1, correctTexts:[], correctText:sampleAnswer,
+          sampleAnswer, requiredKeywords, bonusKeywords, penaltyKeywords, scoreMax,
+          noShuffleOptions:false, source, sourceOriginal:source, answerRaw:sampleAnswer
+        });
+        continue;
+      }
+
+      if(options.length < 2){ errors.push({row:r+1, reason:'Thiếu phương án lựa chọn', question:question.slice(0,80)}); continue; }
+      if(!correctIndexes.length){ errors.push({row:r+1, reason:'Không xác định được đáp án đúng', answerRaw, question:question.slice(0,80)}); continue; }
+      const correctTexts = correctIndexes.map(i => optionTextLocal(options[i])).filter(Boolean);
+      bank.push({
+        id:id || String(bank.length+1), sourceRow:r+1, sheetName, question, questionImage, image:questionImage,
+        options, correctIndexes, correctIndex:correctIndexes[0], correctTexts, correctText:correctTexts.join(' | '),
+        questionType:correctIndexes.length > 1 ? 'multi' : 'single', type:correctIndexes.length > 1 ? 'multi' : 'single',
+        noShuffleOptions, source, sourceOriginal:source, answerRaw
+      });
+    }
+    return {bank: normalizeBank(bank), errors, mapping};
+  };
+
+  const prevNormalize = window.normalizeBank || (typeof normalizeBank === 'function' ? normalizeBank : null);
+  if(prevNormalize){
+    window.normalizeBank = function(bank){
+      const out = prevNormalize(bank);
+      return (out || []).map((q,i) => {
+        if(hasValidChoices(q)){
+          const opts = validOptions(q.options);
+          const correct = correctIndexesLocal(q, opts);
+          q.options = opts;
+          q.correctIndexes = correct;
+          q.correctIndex = correct[0] ?? -1;
+          q.correctTexts = correct.map(idx => optionTextLocal(opts[idx])).filter(Boolean);
+          q.correctText = q.correctTexts.join(' | ');
+          q.questionType = correct.length > 1 ? 'multi' : 'single';
+          q.type = q.questionType;
+          q.answerRaw = textOf(q.answerRaw || correct.map(idx => String(idx+1)).join(','));
+        } else if(window.isEssayQuestion(q)){
+          q.questionType = 'essay'; q.type = 'essay'; q.options = [];
+          q.correctIndexes = []; q.correctIndex = -1; q.correctTexts = [];
+        }
+        return q;
+      }).filter(q => window.isEssayQuestion(q) ? (q.question || q.questionImage || q.questionAudio) : ((q.question || q.questionImage || q.questionAudio) && validOptions(q.options).length >= 2 && correctIndexesLocal(q, validOptions(q.options)).length >= 1));
+    };
+  }
+
+  // Ghi lại nhãn bản vá trong thanh trạng thái sau khi app render.
+  setTimeout(() => {
+    try {
+      if(state && state.meta) state.meta.version = V452_LABEL;
+      if(typeof renderStats === 'function') renderStats();
+      if(typeof renderPreview === 'function') renderPreview();
+    } catch(e){}
+  }, 0);
+})();
+<\/script>
+
+</body></html>`;
 }
 function downloadTextFile(filename, content, mime='text/html;charset=utf-8'){
   const blob = new Blob([content], {type:mime});
@@ -3178,9 +3361,9 @@ function exportStandaloneHtmlWithCurrentBank(){
     if(!bankScript) throw new Error('Không tìm thấy vùng dữ liệu nhúng #embedded-bank.');
     bankScript.textContent = safeJsonForEmbedded(buildCurrentEmbeddedPayload());
     const title = doc.querySelector('title');
-    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V42.2 - HTML nhúng dữ liệu';
+    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V45.3 - HTML nhúng dữ liệu';
     const h1 = doc.querySelector('header h1');
-    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V42.2';
+    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V45.3';
     const subtitle = doc.querySelector('header p');
     if(subtitle) subtitle.textContent = 'HTML đã nhúng sẵn ngân hàng câu hỏi hiện tại, mở offline là dùng ngay.';
     const body = doc.querySelector('body');
@@ -4166,7 +4349,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 
 /* ===== V43 patch: chấm tự luận theo trọng tâm tự động từ câu hỏi + đáp án mẫu ===== */
 (function(){
-  const V42_VERSION_LABEL = 'V43.3-20260614-preserve-essay-newlines';
+  const V42_VERSION_LABEL = 'V43.1-20260614-essay-exact-match-full-score';
   const __v41DetectMapping = detectMapping;
   const __v41RenderResult = renderResult;
 
@@ -4344,7 +4527,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
     const hitPen = s.penaltyHit.length ? `<div><b>Có từ khóa trừ điểm:</b> ${s.penaltyHit.map(x=>`<span class="tag wrongterm">${escapeHtml(x)}</span>`).join(' ')} <span class="muted">(trừ khoảng ${Math.round(s.penaltyRate*100)}%)</span></div>` : '';
     const sample = s.fields.sampleAnswer ? `<details><summary>Đáp án mẫu / gợi ý chấm</summary><div class="essay-sample-answer">${escapeHtml(s.fields.sampleAnswer)}</div></details>` : '<div class="muted">Chưa có đáp án mẫu.</div>';
     const exactNote = (s.exactSampleMatch || s.nearSampleMatch) ? '<div><b>Khớp đáp án mẫu:</b> bài làm trùng hoặc gần như trùng đáp án mẫu, nên điểm gợi ý được tính tối đa.</div>' : '';
-    return `<div class="essay-analysis"><div class="pill warnp">Tự luận - điểm gợi ý ${s.score.toFixed(2)}/${s.scoreMax} (${pct}%)</div><div class="muted small">Thuật toán V43.3: nếu bài làm trùng/gần trùng đáp án mẫu thì tự chấm tối đa; nếu không trùng, hệ thống bóc tách trọng tâm từ câu hỏi + đáp án mẫu, so sánh với bài làm và kết hợp từ khóa cấu hình tay. Điểm này chỉ là gợi ý, người chấm cần xác nhận lại.</div><div class="essay-score-breakdown"><span class="pill">Trọng tâm ${Math.round((s.autoFocusScore||0)*100)}%</span><span class="pill">Tương đồng ${Math.round((s.similarity||0)*100)}%</span>${(s.fields.requiredKeywords.length || s.fields.bonusKeywords.length)?`<span class="pill">Từ khóa tay ${Math.round((s.manualScore||0)*100)}%</span>`:''}</div>${exactNote}${focusList}${hitReq}${miss}${hitBonus}${hitPen}${sample}${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`;
+    return `<div class="essay-analysis"><div class="pill warnp">Tự luận - điểm gợi ý ${s.score.toFixed(2)}/${s.scoreMax} (${pct}%)</div><div class="muted small">Thuật toán V43.1: nếu bài làm trùng/gần trùng đáp án mẫu thì tự chấm tối đa; nếu không trùng, hệ thống bóc tách trọng tâm từ câu hỏi + đáp án mẫu, so sánh với bài làm và kết hợp từ khóa cấu hình tay. Điểm này chỉ là gợi ý, người chấm cần xác nhận lại.</div><div class="essay-score-breakdown"><span class="pill">Trọng tâm ${Math.round((s.autoFocusScore||0)*100)}%</span><span class="pill">Tương đồng ${Math.round((s.similarity||0)*100)}%</span>${(s.fields.requiredKeywords.length || s.fields.bonusKeywords.length)?`<span class="pill">Từ khóa tay ${Math.round((s.manualScore||0)*100)}%</span>`:''}</div>${exactNote}${focusList}${hitReq}${miss}${hitBonus}${hitPen}${sample}${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`;
   }
 
   window.normalizeBank = function(bank){
@@ -4804,5 +4987,490 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 })();
 
 </script>
+
+<script>
+
+/* ===== V45 patch: HTML editor tự luận + chấm diff bằng text bóc tách từ HTML ===== */
+(function(){
+  const V45_LABEL = 'V45.2-20260614-html-editor-essay-diff-text';
+
+  function v45Escape(v){
+    if(typeof escapeHtml === 'function') return escapeHtml(v ?? '');
+    return String(v ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+  function v45Text(v){
+    if(typeof visibleText === 'function') return visibleText(v ?? '');
+    return String(v ?? '').replace(/\r\n/g,'\n').replace(/[\t ]+/g,' ').trim();
+  }
+  function v45TextToHtml(text){
+    const src = String(text ?? '').replace(/\r\n/g,'\n');
+    if(!src.trim()) return '';
+    return src.split(/\n{2,}/).map(p => '<p>' + v45Escape(p).replace(/\n/g,'<br>') + '</p>').join('');
+  }
+  function v45SanitizeHtml(html){
+    const box = document.createElement('div');
+    box.innerHTML = String(html ?? '');
+    box.querySelectorAll('script,style,iframe,object,embed,link,meta').forEach(n => n.remove());
+    const allowed = new Set(['P','DIV','BR','B','STRONG','I','EM','U','S','UL','OL','LI','TABLE','THEAD','TBODY','TR','TH','TD','SPAN','SUB','SUP','IMG','AUDIO','SOURCE','HR','BLOCKQUOTE']);
+    const walk = document.createTreeWalker(box, NodeFilter.SHOW_ELEMENT, null);
+    const toUnwrap = [];
+    while(walk.nextNode()){
+      const el = walk.currentNode;
+      if(!allowed.has(el.tagName)) toUnwrap.push(el);
+      [...el.attributes].forEach(attr => {
+        const name = attr.name.toLowerCase();
+        const val = attr.value || '';
+        if(name.startsWith('on') || name === 'style' || name === 'srcdoc') el.removeAttribute(attr.name);
+        if((name === 'href' || name === 'src') && /^\s*javascript:/i.test(val)) el.removeAttribute(attr.name);
+      });
+      if(el.tagName === 'IMG'){
+        const src = el.getAttribute('src') || '';
+        if(src && !/^data:image\//i.test(src) && !/^https?:\/\//i.test(src) && !/^(?:\.\/|\.\.\/|\/|images\/|assets\/|media\/)/i.test(src)) el.removeAttribute('src');
+        el.setAttribute('alt', el.getAttribute('alt') || 'Ảnh trong bài tự luận');
+        el.setAttribute('loading','lazy');
+      }
+      if(el.tagName === 'AUDIO'){
+        const src = el.getAttribute('src') || '';
+        if(src && !/^data:audio\//i.test(src) && !/^https?:\/\//i.test(src) && !/^(?:\.\/|\.\.\/|\/|audio\/|assets\/|media\/)/i.test(src)) el.removeAttribute('src');
+        el.setAttribute('controls','');
+        el.setAttribute('preload','none');
+      }
+    }
+    toUnwrap.forEach(el => {
+      const parent = el.parentNode;
+      while(el.firstChild) parent.insertBefore(el.firstChild, el);
+      el.remove();
+    });
+    return box.innerHTML.trim();
+  }
+  function v45HtmlToText(html){
+    const box = document.createElement('div');
+    box.innerHTML = v45SanitizeHtml(html);
+    box.querySelectorAll('img').forEach(img => img.replaceWith(document.createTextNode(' [Ảnh] ')));
+    box.querySelectorAll('audio').forEach(au => au.replaceWith(document.createTextNode(' [Âm thanh] ')));
+    return (box.innerText || box.textContent || '').replace(/\u00a0/g,' ').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+  }
+  function v45FileToDataUrl(file){
+    return new Promise((resolve,reject)=>{ const fr=new FileReader(); fr.onload=()=>resolve(fr.result); fr.onerror=()=>reject(fr.error || new Error('Không đọc được file')); fr.readAsDataURL(file); });
+  }
+  function v45InsertHtml(editor, html){
+    editor.focus();
+    try { document.execCommand('insertHTML', false, html); }
+    catch(e){ editor.innerHTML += html; }
+    editor.dispatchEvent(new Event('input', {bubbles:true}));
+  }
+  function v45MakeToolbar(editor, opts={}){
+    const tb = document.createElement('div'); tb.className='v45-editor-toolbar';
+    const buttons = [
+      ['bold','B','In đậm'], ['italic','I','In nghiêng'], ['underline','U','Gạch chân'],
+      ['insertUnorderedList','• DS','Gạch đầu dòng'], ['insertOrderedList','1. DS','Đánh số']
+    ];
+    buttons.forEach(([cmd,txt,title]) => {
+      const b=document.createElement('button'); b.type='button'; b.className='light tiny'; b.textContent=txt; b.title=title;
+      b.addEventListener('click',()=>{ editor.focus(); document.execCommand(cmd,false,null); editor.dispatchEvent(new Event('input',{bubbles:true})); });
+      tb.appendChild(b);
+    });
+    const img=document.createElement('button'); img.type='button'; img.className='light tiny'; img.textContent='Chèn ảnh'; img.title='Chọn ảnh để chèn vào nội dung';
+    img.addEventListener('click',()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.onchange=async()=>{ const f=inp.files&&inp.files[0]; if(!f) return; const data=await v45FileToDataUrl(f); v45InsertHtml(editor, `<p><img src="${String(data).replace(/"/g,'&quot;')}" alt="Ảnh trong bài tự luận"></p>`); }; inp.click(); });
+    tb.appendChild(img);
+    const formula=document.createElement('button'); formula.type='button'; formula.className='light tiny'; formula.textContent='Công thức'; formula.title='Chèn công thức dạng chữ';
+    formula.addEventListener('click',()=>{ const s=prompt('Nhập công thức dạng chữ, ví dụ: ΔU = (P×R + Q×X) / U'); if(s) v45InsertHtml(editor, `<span class="v45-formula">${v45Escape(s)}</span>`); });
+    tb.appendChild(formula);
+    const clear=document.createElement('button'); clear.type='button'; clear.className='light tiny'; clear.textContent='Xóa định dạng'; clear.title='Giữ chữ, bỏ định dạng';
+    clear.addEventListener('click',()=>{ const text=v45HtmlToText(editor.innerHTML); editor.innerHTML=v45TextToHtml(text); editor.dispatchEvent(new Event('input',{bubbles:true})); });
+    tb.appendChild(clear);
+    return tb;
+  }
+  function v45InitRichEditor(editor, onChange){
+    if(!editor || editor.dataset.v45Ready) return;
+    editor.dataset.v45Ready='1';
+    editor.addEventListener('paste', async ev => {
+      const items = ev.clipboardData && [...ev.clipboardData.items || []];
+      const imgItem = items && items.find(it => it.kind === 'file' && /^image\//i.test(it.type));
+      if(imgItem){
+        ev.preventDefault();
+        const file = imgItem.getAsFile();
+        if(file){ const data = await v45FileToDataUrl(file); v45InsertHtml(editor, `<p><img src="${String(data).replace(/"/g,'&quot;')}" alt="Ảnh dán vào bài tự luận"></p>`); }
+      }
+    });
+    editor.addEventListener('input', () => {
+      // Không ép sanitize ngay lúc đang gõ để tránh nhảy con trỏ; sanitize khi lưu/nộp/hiển thị.
+      if(typeof onChange === 'function') onChange(editor.innerHTML, v45HtmlToText(editor.innerHTML));
+    });
+  }
+  function v45CreateEditor(initialHtml, placeholder, onChange, readOnly=false){
+    const wrap=document.createElement('div'); wrap.className='v45-editor-wrap';
+    const ed=document.createElement('div'); ed.className='v45-rich-editor'; ed.contentEditable=readOnly?'false':'true'; ed.setAttribute('role','textbox'); ed.setAttribute('aria-multiline','true'); ed.dataset.placeholder=placeholder || '';
+    ed.innerHTML=v45SanitizeHtml(initialHtml || '');
+    if(!readOnly) wrap.appendChild(v45MakeToolbar(ed));
+    wrap.appendChild(ed);
+    v45InitRichEditor(ed,onChange);
+    return {wrap, editor:ed};
+  }
+  const __v45PrevIsEssayQuestion = window.isEssayQuestion || (typeof isEssayQuestion === 'function' ? isEssayQuestion : null);
+  if(__v45PrevIsEssayQuestion){
+    window.isEssayQuestion = function(item){
+      if(item && (item.sampleAnswerHtml || item.modelAnswerHtml || item.essayAnswerHtml || item.answerSampleHtml)) return true;
+      return __v45PrevIsEssayQuestion(item);
+    };
+  }
+
+  function v45SyncAllEssayEditors(){
+    document.querySelectorAll('.v45-essay-answer-editor').forEach(ed => {
+      const card=ed.closest('.question-card'); if(!card || !state.quiz) return;
+      const q=state.quiz[Number(card.dataset.q)]; if(!q) return;
+      q.userHtml=v45SanitizeHtml(ed.innerHTML);
+      q.userText=v45HtmlToText(q.userHtml);
+    });
+  }
+
+  const __v45PrevNormalizeBank = window.normalizeBank || (typeof normalizeBank === 'function' ? normalizeBank : null);
+  if(__v45PrevNormalizeBank){
+    window.normalizeBank = function(bank){
+      const input = Array.isArray(bank) ? bank : [];
+      const byId = new Map(input.map((q,i)=>[String(q && q.id || i), q]));
+      const out = __v45PrevNormalizeBank(input);
+      out.forEach((q,i)=>{
+        const src = byId.get(String(q.id || i)) || input[i] || {};
+        const essay = (window.isEssayQuestion && isEssayQuestion(q)) || (window.isEssayQuestion && isEssayQuestion(src));
+        if(essay){
+          let html = src.sampleAnswerHtml || src.modelAnswerHtml || src.essayAnswerHtml || src.answerSampleHtml || '';
+          if(!html && q.sampleAnswer) html = v45TextToHtml(q.sampleAnswer);
+          if(!html && src.sampleAnswer) html = v45TextToHtml(src.sampleAnswer);
+          if(html){
+            q.sampleAnswerHtml = v45SanitizeHtml(html);
+            q.sampleAnswer = v45HtmlToText(q.sampleAnswerHtml) || q.sampleAnswer || '';
+            q.correctText = q.sampleAnswer;
+            q.answerRaw = q.sampleAnswer;
+          }
+        }
+      });
+      return out;
+    };
+  }
+
+  const __v45PrevHasAnyChoice = window.hasAnyChoice || (typeof hasAnyChoice === 'function' ? hasAnyChoice : null);
+  window.hasAnyChoice = function(q){
+    if(q && q.item && window.isEssayQuestion && isEssayQuestion(q.item)) return !!v45Text(q.userText || v45HtmlToText(q.userHtml || ''));
+    return __v45PrevHasAnyChoice ? __v45PrevHasAnyChoice(q) : false;
+  };
+
+  const __v45PrevOpenModal = window.openQuestionModal || (typeof openQuestionModal === 'function' ? openQuestionModal : null);
+  if(__v45PrevOpenModal){
+    window.openQuestionModal = function(mode='add', index=-1, seedQuestion=null){
+      const src = seedQuestion || (Number(index) >= 0 && state.bank ? state.bank[Number(index)] : null);
+      __v45PrevOpenModal(mode,index,seedQuestion);
+      if(state.qedit && state.qedit.data){
+        const d=state.qedit.data;
+        const html = src && (src.sampleAnswerHtml || src.modelAnswerHtml || src.essayAnswerHtml || src.answerSampleHtml);
+        d.sampleAnswerHtml = html ? v45SanitizeHtml(html) : (d.sampleAnswer ? v45TextToHtml(d.sampleAnswer) : (d.sampleAnswerHtml || ''));
+        if(d.sampleAnswerHtml) d.sampleAnswer = v45HtmlToText(d.sampleAnswerHtml);
+        if(window.renderQuestionModalBody) renderQuestionModalBody();
+      }
+    };
+  }
+
+  const __v45PrevRenderQeditBody = window.renderQuestionModalBody || (typeof renderQuestionModalBody === 'function' ? renderQuestionModalBody : null);
+  if(__v45PrevRenderQeditBody){
+    window.renderQuestionModalBody = function(){
+      __v45PrevRenderQeditBody();
+      setTimeout(v45EnhanceQeditSampleEditor,0);
+    };
+  }
+  function v45EnhanceQeditSampleEditor(){
+    const ta=document.getElementById('qeditSampleAnswer');
+    if(!ta || ta.dataset.v45Enhanced) return;
+    ta.dataset.v45Enhanced='1';
+    ta.style.display='none';
+    const d=state.qedit && state.qedit.data ? state.qedit.data : {};
+    const init = d.sampleAnswerHtml || v45TextToHtml(ta.value || d.sampleAnswer || '');
+    const {wrap, editor} = v45CreateEditor(init, 'Soạn đáp án mẫu: có thể xuống dòng, in đậm, gạch đầu dòng, dán/chèn ảnh, công thức dạng chữ...', (html,text)=>{
+      const clean=v45SanitizeHtml(html);
+      ta.value=text;
+      if(state.qedit && state.qedit.data){ state.qedit.data.sampleAnswerHtml=clean; state.qedit.data.sampleAnswer=text; }
+    }, false);
+    wrap.classList.add('v45-sample-editor-wrap');
+    ta.insertAdjacentElement('afterend', wrap);
+    // đồng bộ ngay lần đầu
+    const clean=v45SanitizeHtml(editor.innerHTML); ta.value=v45HtmlToText(clean); if(state.qedit && state.qedit.data){ state.qedit.data.sampleAnswerHtml=clean; state.qedit.data.sampleAnswer=ta.value; }
+  }
+
+  const __v45PrevSyncQedit = window.syncQeditFromDom || (typeof syncQeditFromDom === 'function' ? syncQeditFromDom : null);
+  if(__v45PrevSyncQedit){
+    window.syncQeditFromDom = function(){
+      document.querySelectorAll('.v45-sample-editor-wrap .v45-rich-editor').forEach(ed => {
+        const clean=v45SanitizeHtml(ed.innerHTML); const text=v45HtmlToText(clean);
+        const ta=document.getElementById('qeditSampleAnswer'); if(ta) ta.value=text;
+        if(state.qedit && state.qedit.data){ state.qedit.data.sampleAnswerHtml=clean; state.qedit.data.sampleAnswer=text; }
+      });
+      __v45PrevSyncQedit();
+      if(state.qedit && state.qedit.data){
+        const ed=document.querySelector('.v45-sample-editor-wrap .v45-rich-editor');
+        if(ed){ const clean=v45SanitizeHtml(ed.innerHTML); state.qedit.data.sampleAnswerHtml=clean; state.qedit.data.sampleAnswer=v45HtmlToText(clean); }
+      }
+    };
+  }
+
+  const __v45PrevBuildQ = window.buildQuestionFromQedit || (typeof buildQuestionFromQedit === 'function' ? buildQuestionFromQedit : null);
+  if(__v45PrevBuildQ){
+    window.buildQuestionFromQedit = function(){
+      if(window.syncQeditFromDom) syncQeditFromDom();
+      const q=__v45PrevBuildQ();
+      if(q && window.isEssayQuestion && isEssayQuestion(q)){
+        const html = state.qedit && state.qedit.data ? state.qedit.data.sampleAnswerHtml : '';
+        q.sampleAnswerHtml = v45SanitizeHtml(html || v45TextToHtml(q.sampleAnswer || ''));
+        q.sampleAnswer = v45HtmlToText(q.sampleAnswerHtml) || q.sampleAnswer || '';
+        q.correctText = q.sampleAnswer; q.answerRaw = q.sampleAnswer;
+      }
+      return q;
+    };
+  }
+
+  const __v45PrevRenderQuiz = window.renderQuiz || (typeof renderQuiz === 'function' ? renderQuiz : null);
+  if(__v45PrevRenderQuiz){
+    window.renderQuiz = function(){
+      __v45PrevRenderQuiz();
+      v45EnhanceEssayAnswerEditors();
+    };
+  }
+  function v45EnhanceEssayAnswerEditors(){
+    document.querySelectorAll('textarea.essay-answer-input').forEach(txt => {
+      if(txt.dataset.v45Enhanced) return;
+      const card=txt.closest('.question-card'); if(!card || !state.quiz) return;
+      const q=state.quiz[Number(card.dataset.q)]; if(!q) return;
+      txt.dataset.v45Enhanced='1'; txt.style.display='none';
+      const readOnly = !!state.submitted || txt.disabled;
+      const init = q.userHtml || v45TextToHtml(q.userText || txt.value || '');
+      const {wrap, editor}=v45CreateEditor(init, 'Nhập câu trả lời tự luận: có thể dán/chèn ảnh, công thức dạng chữ, gạch đầu dòng...', (html,text)=>{
+        q.userHtml=v45SanitizeHtml(html); q.userText=text; txt.value=text; updateProgress();
+      }, readOnly);
+      wrap.classList.add('v45-essay-answer-wrap'); editor.classList.add('v45-essay-answer-editor');
+      txt.insertAdjacentElement('afterend', wrap);
+      q.userHtml=v45SanitizeHtml(editor.innerHTML); q.userText=v45HtmlToText(q.userHtml); txt.value=q.userText;
+    });
+  }
+
+  const __v45PrevSubmit = window.submitQuiz || (typeof submitQuiz === 'function' ? submitQuiz : null);
+  if(__v45PrevSubmit){
+    window.submitQuiz = function(){ v45SyncAllEssayEditors(); return __v45PrevSubmit(); };
+  }
+
+  const __v45PrevRenderResult = window.renderResult || (typeof renderResult === 'function' ? renderResult : null);
+  if(__v45PrevRenderResult){
+    window.renderResult = function(){
+      __v45PrevRenderResult();
+      v45EnhanceEssayResultHtml();
+    };
+  }
+  function v45EnhanceEssayResultHtml(){
+    if(!state.quiz || !els.resultList) return;
+    const essays = state.quiz.filter(q => q && q.item && window.isEssayQuestion && isEssayQuestion(q.item));
+    const cards = els.resultList.querySelectorAll('.result-order-essay');
+    cards.forEach((card, idx) => {
+      const q = essays[idx]; if(!q) return;
+      const userBox = card.querySelector('.essay-user-answer');
+      if(userBox){
+        const html = q.userHtml ? v45SanitizeHtml(q.userHtml) : v45TextToHtml(q.userText || '');
+        userBox.innerHTML = `<b>Bài làm của bạn:</b><div class="v45-essay-html-display">${html || '<span class="muted">Chưa nhập câu trả lời.</span>'}</div><div class="muted small">Điểm gợi ý bên dưới được tính từ phần chữ bóc tách trong HTML; ảnh/công thức/hình vẽ cần người chấm đối chiếu bổ sung.</div>`;
+      }
+      const sampleHtml = q.item.sampleAnswerHtml ? v45SanitizeHtml(q.item.sampleAnswerHtml) : v45TextToHtml(q.item.sampleAnswer || q.item.correctText || '');
+      card.querySelectorAll('.essay-sample-answer').forEach(box => { box.innerHTML = sampleHtml || '<span class="muted">Chưa có đáp án mẫu.</span>'; box.classList.add('v45-essay-html-display'); });
+    });
+  }
+
+  window.v45EssayHtmlToText = v45HtmlToText;
+  window.v45EssaySanitizeHtml = v45SanitizeHtml;
+
+  const style=document.createElement('style');
+  style.textContent = `
+    .v45-editor-toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:7px;background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:0;border-radius:12px 12px 0 0}.v45-editor-toolbar button.tiny{width:auto!important;padding:6px 9px;border-radius:9px;font-size:12px;box-shadow:none}.v45-rich-editor{min-height:180px;background:#fff;border:1px solid #cbd5e1;border-radius:0 0 12px 12px;padding:12px;line-height:1.65;overflow:auto;white-space:normal}.v45-rich-editor:focus{outline:3px solid rgba(15,118,110,.18);border-color:#0f766e}.v45-rich-editor[contenteditable="false"]{background:#f8fafc}.v45-rich-editor:empty:before{content:attr(data-placeholder);color:#94a3b8}.v45-rich-editor img,.v45-essay-html-display img{max-width:100%;max-height:360px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;object-fit:contain;display:block;margin:8px 0}.v45-rich-editor table,.v45-essay-html-display table{border-collapse:collapse;max-width:100%;margin:8px 0}.v45-rich-editor td,.v45-rich-editor th,.v45-essay-html-display td,.v45-essay-html-display th{border:1px solid #cbd5e1;padding:6px}.v45-formula{display:inline-block;background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:2px 6px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.v45-sample-editor-wrap,.v45-essay-answer-wrap{margin:6px 0 10px}.v45-essay-html-display{white-space:normal;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px;margin:8px 0;overflow-wrap:anywhere}.v45-essay-html-display p{margin:.35em 0}.v45-essay-html-display ul,.v45-essay-html-display ol{margin:.35em 0 .35em 1.4em}.essay-user-answer{white-space:normal!important}`;
+  document.head.appendChild(style);
+  setTimeout(()=>{ try{ document.title=document.title.replace(/V43\.3|V43\.2|V43\.1|V43/g,'V45'); const h1=document.querySelector('header h1'); if(h1) h1.textContent='Trắc nghiệm Excel Offline PWA V45.3'; }catch(e){} },0);
+})();
+
+</script>
+<script>
+/* ===== V45.3 patch: sửa mất HTML do thẻ script trong mẫu xuất HTML + giữ nhận diện mẫu nhiều cột ===== */
+(function(){
+  const V452_LABEL = 'V45.3-20260614-fix-export-script-break';
+  function tText(v){
+    try { return norm(v || '').replace(/-/g,' '); }
+    catch(e){ return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/-/g,' '); }
+  }
+  function textOf(v){
+    try { return visibleText(v || ''); }
+    catch(e){ return String(v || '').replace(/\s+/g,' ').trim(); }
+  }
+  function kwArray(v){
+    if(Array.isArray(v)) return v.map(textOf).filter(Boolean);
+    return textOf(v).split(/[\n;,|]+/).map(textOf).filter(Boolean);
+  }
+  function explicitEssayType(v){
+    const t = tText(v);
+    return /(^|\s)(essay|tu\s*luan|tuluan|tu\s*luận|tra\s*loi\s*ngan|tra\s*loi\s*dai|short\s*answer|written|bai\s*viet)(\s|$)/.test(t);
+  }
+  function explicitChoiceType(v){
+    const t = tText(v);
+    return /(^|\s)(single|multi|multiple|choice|trac\s*nghiem|tracnghiem|chon\s*mot|chon\s*nhieu|mot\s*dap\s*an|nhieu\s*dap\s*an)(\s|$)/.test(t);
+  }
+  function optionTextLocal(op){
+    try { if(typeof getOptionText === 'function') return getOptionText(op); } catch(e){}
+    if(op && typeof op === 'object') return textOf(op.text ?? op.label ?? op.value ?? '');
+    return textOf(op);
+  }
+  function validOptions(opts){
+    return (Array.isArray(opts) ? opts : []).filter(op => optionTextLocal(op) || (op && typeof op === 'object' && (op.image || op.audio || op.src || op.url)));
+  }
+  function correctIndexesLocal(q, opts){
+    let idxs = [];
+    if(Array.isArray(q?.correctIndexes)) idxs = q.correctIndexes.slice();
+    else if(Array.isArray(q?.correctIndices)) idxs = q.correctIndices.slice();
+    else if(Array.isArray(q?.correctIndex)) idxs = q.correctIndex.slice();
+    else if(Number.isInteger(q?.correctIndex) && q.correctIndex >= 0) idxs = [q.correctIndex];
+    try { idxs = normalizeIndexList(idxs, opts); } catch(e){ idxs = idxs.filter(i => Number.isInteger(Number(i)) && Number(i) >= 0 && Number(i) < opts.length).map(Number); }
+    if(!idxs.length && q && q.answerRaw){ try { idxs = parseAnswerIndexes(q.answerRaw, opts); } catch(e){} }
+    if(!idxs.length && q && q.correctText){
+      const texts = Array.isArray(q.correctTexts) ? q.correctTexts : String(q.correctText).split(/\s*\|\s*/);
+      texts.forEach(txt => { try { const i = tokenToOptionIndex(txt, opts); if(i >= 0) idxs.push(i); } catch(e){} });
+      try { idxs = normalizeIndexList(idxs, opts); } catch(e){}
+    }
+    return [...new Set(idxs.filter(i => Number.isInteger(Number(i)) && Number(i) >= 0 && Number(i) < opts.length).map(Number))];
+  }
+  function hasValidChoices(q){
+    const opts = validOptions(q && q.options);
+    if(opts.length < 2) return false;
+    return correctIndexesLocal(q || {}, opts).length > 0;
+  }
+  function hasEssayPayload(q){
+    if(!q) return false;
+    return !!(textOf(q.sampleAnswer || q.modelAnswer || q.essayAnswer || q.answerSample || '') ||
+      textOf(q.sampleAnswerHtml || q.modelAnswerHtml || q.essayAnswerHtml || q.answerSampleHtml || '') ||
+      kwArray(q.requiredKeywords || q.essayRequiredKeywords || q.mustKeywords || q.keywordsRequired || '').length ||
+      kwArray(q.bonusKeywords || q.plusKeywords || q.keywordsBonus || '').length ||
+      kwArray(q.penaltyKeywords || q.minusKeywords || q.keywordsPenalty || '').length);
+  }
+
+  const prevIsEssay = window.isEssayQuestion || (typeof isEssayQuestion === 'function' ? isEssayQuestion : null);
+  window.isEssayQuestion = function(item){
+    if(!item) return false;
+    const t = item.questionType ?? item.type ?? item.loaiCau ?? item.kind ?? item.questionKind ?? '';
+    if(explicitEssayType(t)) return true;
+    if(explicitChoiceType(t)) return false;
+    // Quy tắc quan trọng V45.2: cứ có tối thiểu 2 phương án và xác định được đáp án đúng thì luôn là trắc nghiệm,
+    // kể cả dữ liệu cũ có sampleAnswerHtml hoặc các trường đáp án mẫu do patch trước sinh ra.
+    if(hasValidChoices(item)) return false;
+    const opts = validOptions(item.options);
+    if(opts.length >= 2) return false;
+    return hasEssayPayload(item) || (prevIsEssay ? (!!prevIsEssay(item) && !opts.length) : false);
+  };
+
+  window.parseRows = function(rows, sheetName, manualMapping){
+    const mapping = manualMapping || detectMapping(rows);
+    if(mapping.questionCol < 0) throw new Error('Không tìm thấy cột câu hỏi.');
+    const bank = [], errors = [];
+    for(let r = mapping.headerIdx + 1; r < rows.length; r++){
+      const row = rows[r] || [];
+      const question = cleanQuestion(row[mapping.questionCol]);
+      const questionImage = extractImageSrcFromRow(row, mapping.questionImageCol);
+      const id = mapping.idCol >= 0 ? textOf(row[mapping.idCol]) : String(bank.length + 1);
+      const source = mapping.sourceCol >= 0 ? textOf(row[mapping.sourceCol]) : '';
+      const answerRaw = mapping.answerCol >= 0 ? textOf(row[mapping.answerCol]) : '';
+      const noShuffleOptions = mapping.noShuffleCol >= 0 ? parseNoShuffleFlag(row[mapping.noShuffleCol]) : false;
+      const typeRaw = mapping.typeCol >= 0 ? textOf(row[mapping.typeCol]) : '';
+      const sampleAnswer = mapping.sampleAnswerCol >= 0 ? multilineText(row[mapping.sampleAnswerCol]) : '';
+      const requiredKeywords = mapping.requiredKeywordsCol >= 0 ? kwArray(row[mapping.requiredKeywordsCol]) : [];
+      const bonusKeywords = mapping.bonusKeywordsCol >= 0 ? kwArray(row[mapping.bonusKeywordsCol]) : [];
+      const penaltyKeywords = mapping.penaltyKeywordsCol >= 0 ? kwArray(row[mapping.penaltyKeywordsCol]) : [];
+      const scoreMax = mapping.scoreMaxCol >= 0 ? Math.max(0, Number(row[mapping.scoreMaxCol]) || 10) : 10;
+
+      const rawOptions = (mapping.optionCols || []).map((c, idx) => {
+        const imgCol = mapping.optionImageColByNo ? mapping.optionImageColByNo[idx + 1] : undefined;
+        const audioCol = mapping.optionAudioColByNo ? mapping.optionAudioColByNo[idx + 1] : undefined;
+        return { col:c, raw:textOf(row[c]), image:extractImageSrcFromRow(row, imgCol), audio:(typeof extractAudioSrcFromRow === 'function' ? extractAudioSrcFromRow(row, audioCol) : '') };
+      });
+      const markedCorrectIndexes = [];
+      const options = [];
+      rawOptions.forEach(o => {
+        const marked = /^\s*(?:\[x\]|\(x\)|✓|✔|\*)\s*/i.test(o.raw) || /\s*(?:\[dung\]|\[đúng\])\s*$/i.test(o.raw);
+        const cleaned = cleanOption(o.raw);
+        if(cleaned || o.image || o.audio){
+          const newIdx = options.length;
+          options.push({text:cleaned, image:o.image || '', audio:o.audio || ''});
+          if(marked) markedCorrectIndexes.push(newIdx);
+        }
+      });
+      if(!question && !questionImage){
+        if(row.some(x => textOf(x))) errors.push({row:r+1, reason:'Thiếu câu hỏi'});
+        continue;
+      }
+
+      let correctIndexes = parseAnswerIndexes(answerRaw, options);
+      if(!correctIndexes.length && markedCorrectIndexes.length) correctIndexes = normalizeIndexList(markedCorrectIndexes, options);
+      const explicitEssay = explicitEssayType(typeRaw);
+      const explicitChoice = explicitChoiceType(typeRaw);
+      const essayData = !!(sampleAnswer || requiredKeywords.length || bonusKeywords.length || penaltyKeywords.length);
+      // Chỉ coi là tự luận nếu: loại câu ghi rõ tự luận; hoặc không có phương án hợp lệ và có dữ liệu đáp án mẫu/từ khóa.
+      // Không để cột đáp án mẫu/căn cứ làm câu nhiều cột bị nhầm thành tự luận.
+      const essay = explicitEssay || (!explicitChoice && options.length < 2 && essayData);
+
+      if(essay){
+        bank.push({
+          id:id || String(bank.length+1), sourceRow:r+1, sheetName, question, questionImage, image:questionImage,
+          questionType:'essay', type:'essay', options:[], correctIndexes:[], correctIndex:-1, correctTexts:[], correctText:sampleAnswer,
+          sampleAnswer, requiredKeywords, bonusKeywords, penaltyKeywords, scoreMax,
+          noShuffleOptions:false, source, sourceOriginal:source, answerRaw:sampleAnswer
+        });
+        continue;
+      }
+
+      if(options.length < 2){ errors.push({row:r+1, reason:'Thiếu phương án lựa chọn', question:question.slice(0,80)}); continue; }
+      if(!correctIndexes.length){ errors.push({row:r+1, reason:'Không xác định được đáp án đúng', answerRaw, question:question.slice(0,80)}); continue; }
+      const correctTexts = correctIndexes.map(i => optionTextLocal(options[i])).filter(Boolean);
+      bank.push({
+        id:id || String(bank.length+1), sourceRow:r+1, sheetName, question, questionImage, image:questionImage,
+        options, correctIndexes, correctIndex:correctIndexes[0], correctTexts, correctText:correctTexts.join(' | '),
+        questionType:correctIndexes.length > 1 ? 'multi' : 'single', type:correctIndexes.length > 1 ? 'multi' : 'single',
+        noShuffleOptions, source, sourceOriginal:source, answerRaw
+      });
+    }
+    return {bank: normalizeBank(bank), errors, mapping};
+  };
+
+  const prevNormalize = window.normalizeBank || (typeof normalizeBank === 'function' ? normalizeBank : null);
+  if(prevNormalize){
+    window.normalizeBank = function(bank){
+      const out = prevNormalize(bank);
+      return (out || []).map((q,i) => {
+        if(hasValidChoices(q)){
+          const opts = validOptions(q.options);
+          const correct = correctIndexesLocal(q, opts);
+          q.options = opts;
+          q.correctIndexes = correct;
+          q.correctIndex = correct[0] ?? -1;
+          q.correctTexts = correct.map(idx => optionTextLocal(opts[idx])).filter(Boolean);
+          q.correctText = q.correctTexts.join(' | ');
+          q.questionType = correct.length > 1 ? 'multi' : 'single';
+          q.type = q.questionType;
+          q.answerRaw = textOf(q.answerRaw || correct.map(idx => String(idx+1)).join(','));
+        } else if(window.isEssayQuestion(q)){
+          q.questionType = 'essay'; q.type = 'essay'; q.options = [];
+          q.correctIndexes = []; q.correctIndex = -1; q.correctTexts = [];
+        }
+        return q;
+      }).filter(q => window.isEssayQuestion(q) ? (q.question || q.questionImage || q.questionAudio) : ((q.question || q.questionImage || q.questionAudio) && validOptions(q.options).length >= 2 && correctIndexesLocal(q, validOptions(q.options)).length >= 1));
+    };
+  }
+
+  // Ghi lại nhãn bản vá trong thanh trạng thái sau khi app render.
+  setTimeout(() => {
+    try {
+      if(state && state.meta) state.meta.version = V452_LABEL;
+      if(typeof renderStats === 'function') renderStats();
+      if(typeof renderPreview === 'function') renderPreview();
+    } catch(e){}
+  }, 0);
+})();
+</script>
+
 </body>
 </html>
