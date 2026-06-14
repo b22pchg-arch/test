@@ -1,23 +1,15 @@
 {
-  "name": "Trắc nghiệm Excel Offline V40.0",
-  "short_name": "Quiz V40.0",
-  "description": "PWA trắc nghiệm Excel offline, hỗ trợ default-bank.json có bank và sets, bảng xem ngân hàng gọn, ẩn/hiện đồng loạt chi tiết câu hỏi.",
-  "start_url": "./index.html?v=V40",
+  "name": "Trắc nghiệm Excel Offline V43.2",
+  "short_name": "Quiz V43.2",
+  "description": "PWA trắc nghiệm Excel offline, quản lý từng bộ câu hỏi riêng biệt, hỗ trợ trắc nghiệm và tự luận với chấm diff/trọng tâm.",
+  "start_url": "./index.html?v=V43.2",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef7f6",
   "theme_color": "#0f766e",
   "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    {"src":"./icon-192.png","sizes":"192x192","type":"image/png"},
+    {"src":"./icon-512.png","sizes":"512x512","type":"image/png"}
   ],
-  "id": "trac-nghiem-excel-offline-v40-0"
+  "id": "trac-nghiem-excel-offline-v43-2"
 }
