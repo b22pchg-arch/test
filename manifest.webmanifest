@@ -1,8 +1,8 @@
 {
-  "name": "Trắc nghiệm Excel Offline V29",
-  "short_name": "Trắc nghiệm V29",
+  "name": "Trắc nghiệm Excel Offline V30",
+  "short_name": "Quiz Excel V30",
   "description": "PWA trắc nghiệm Excel offline, quản lý nhiều bộ câu hỏi, nhập/xóa câu hỏi, ảnh base64 và ôn tập theo bộ.",
-  "start_url": "./index.html?v=V29",
+  "start_url": "./index.html?v=V30",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef7f6",
@@ -19,5 +19,5 @@
       "type": "image/png"
     }
   ],
-  "id": "trac-nghiem-excel-offline-v29"
+  "id": "/trac_nghiem_excel_v30"
 }

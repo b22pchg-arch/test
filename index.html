@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0f766e">
-  <link rel="manifest" href="./manifest.webmanifest?v=V29">
+  <link rel="manifest" href="./manifest.webmanifest?v=V30">
   <link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="description" content="PWA trắc nghiệm Excel offline có dữ liệu nhúng sẵn, đọc Excel bằng SheetJS, tạo đề đảo câu/đáp án, chấm điểm và phân tích đúng sai.">
-  <title>Trắc nghiệm Excel Offline PWA V29</title>
+  <title>Trắc nghiệm Excel Offline PWA V30</title>
   <style>
 :root{--bg:#eef7f6;--panel:#fff;--text:#0f172a;--muted:#475569;--line:#d7e3e2;--primary:#0f766e;--primary2:#115e59;--danger:#b91c1c;--ok:#15803d;--warn:#b45309;--info:#0369a1;--shadow:0 10px 28px rgba(15,23,42,.10);--r:16px}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}body{min-height:100vh}.app{max-width:1280px;margin:0 auto;padding:14px 14px 92px}header{position:sticky;top:0;z-index:30;margin:0;padding:14px;background:linear-gradient(135deg,#0f766e,#0b4f49);color:#fff;box-shadow:var(--shadow)}header .inner{max-width:1280px;margin:0 auto}header h1{margin:0 0 6px;font-size:clamp(20px,4vw,30px);letter-spacing:.2px}header p{margin:0;color:#dffaf7;font-size:14px}.grid{display:grid;grid-template-columns:1fr;gap:12px}@media (min-width:990px){.grid.two{grid-template-columns:430px 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}.card h2,.card h3{margin:0 0 10px}.card h2{font-size:20px}.card h3{font-size:17px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}label{font-weight:800;font-size:13px;color:#1f2937;display:block;margin:8px 0 5px}input,select,textarea,button{font:inherit}input[type=file],input[type=number],input[type=text],select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:10px;background:#fff;color:var(--text)}input[type=checkbox]{transform:scale(1.12);margin-right:6px}select[multiple]{min-height:150px}button{border:0;border-radius:12px;padding:10px 13px;background:var(--primary);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(15,118,110,.22)}button:hover{background:var(--primary2)}button.secondary{background:#334155}button.light{background:#e2e8f0;color:#0f172a;box-shadow:none}button.danger{background:var(--danger)}button.info{background:var(--info)}button:disabled{opacity:.55;cursor:not-allowed}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;background:#ecfeff;color:#155e75;font-weight:900;font-size:12px;border:1px solid #a5f3fc;margin:2px}.pill.okp{background:#f0fdf4;color:#166534;border-color:#86efac}.pill.warnp{background:#fffbeb;color:#92400e;border-color:#fcd34d}.ok{color:var(--ok);font-weight:900}.bad{color:var(--danger);font-weight:900}.warn{color:var(--warn);font-weight:900}.status{border-radius:12px;padding:10px;background:#f8fafc;border:1px dashed #cbd5e1;white-space:pre-wrap}.status.bad{border-color:#fecaca;background:#fff1f2}.status.good{border-color:#bbf7d0;background:#f0fdf4}.status.info{border-color:#bae6fd;background:#f0f9ff}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.table-wrap table{min-width:940px;width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #e2e8f0;padding:9px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#f1f5f9;z-index:1}.nowrap{white-space:nowrap}details{border:1px solid var(--line);border-radius:12px;background:#fbffff;padding:10px;margin:10px 0}summary{font-weight:900;cursor:pointer}.question-card{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:12px;margin:10px 0}.question-title{font-weight:900;margin-bottom:8px}.option{display:flex;gap:8px;align-items:flex-start;border:1px solid #e2e8f0;border-radius:12px;padding:9px;margin:7px 0;background:#f8fafc}.option:hover{background:#eff6ff}.option input{margin-top:4px}.letter{min-width:28px;height:28px;border-radius:999px;background:#dbeafe;display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#1e3a8a}.chosen{border-color:#38bdf8;background:#ecfeff}.right{border-color:#22c55e;background:#f0fdf4}.wrong{border-color:#ef4444;background:#fef2f2}.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:9px 14px;box-shadow:0 -8px 22px rgba(15,23,42,.09)}.stickybar-inner{max-width:1280px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.progress{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden;min-width:170px;flex:1}.progress>span{display:block;height:100%;width:0;background:var(--primary);transition:.2s}.analysis-row{margin:7px 0;padding:9px;border-left:4px solid #0ea5e9;background:#f0f9ff;border-radius:8px}.analysis-row b{color:#0f172a}.analysis-row.source{background:#fefce8;border-left-color:#eab308}.tag{display:inline-block;margin:2px 3px 2px 0;padding:2px 6px;border-radius:999px;background:#e0f2fe;color:#075985;font-size:12px}.mapping-grid{display:grid;grid-template-columns:1fr;gap:8px}@media (min-width:720px){.mapping-grid{grid-template-columns:repeat(2,1fr)}}.banner{padding:11px;border-radius:14px;background:#ecfdf5;border:1px solid #86efac;color:#14532d;margin-bottom:10px}.banner b{font-size:15px}@media (max-width:700px){.app{padding:10px 10px 100px}.card{padding:11px;border-radius:13px}button{width:100%;justify-content:center}.row button{flex:1 1 150px}.stickybar-inner{align-items:stretch}.progress{width:100%;flex-basis:100%}.table-wrap table{min-width:780px}.option{padding:8px}.letter{min-width:26px;height:26px}}
 /* V6: giải thích ngược, lấy phương án sai làm trọng tâm, chỉ rõ đáp án đúng có gì mà sai không có */
@@ -220,7 +220,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 .guide-card details{background:#f8fafc;border-color:#dbeafe}.guide-card summary{color:#0f766e}.guide-card ol,.guide-card ul{margin-top:6px;padding-left:20px}.guide-card li{margin:4px 0}.guide-card code{background:#e2e8f0;border-radius:6px;padding:1px 5px}.embedded-export-note{background:#f0fdf4;border:1px dashed #86efac;border-radius:12px;padding:8px;margin-top:8px;color:#14532d}.sticky-study-mark{display:none!important}body.study-mode .sticky-study-mark{display:inline-flex!important}.export-current-html{background:#7c3aed!important}.export-current-html:hover{background:#6d28d9!important}.help-grid{display:grid;grid-template-columns:1fr;gap:8px}.help-mini{border:1px solid #e2e8f0;border-radius:12px;padding:9px;background:#fff}@media (min-width:840px){.help-grid{grid-template-columns:repeat(2,1fr)}}@media (max-width:700px){.guide-card details{padding:8px}.sticky-study-mark{font-size:12px!important;padding:7px 6px!important}.export-current-html{width:100%!important}}
 
 
-/* V29: ảnh trong câu hỏi và phương án */
+/* V30: ảnh trong câu hỏi và phương án */
 .media-box{margin:10px 0;max-width:100%;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:#f8fafc;padding:8px}
 .media-box img{display:block;max-width:100%;height:auto;max-height:70vh;margin:auto;border-radius:8px;object-fit:contain}
 .question-title .media-box,.result-question-title .media-box{margin-top:10px}
@@ -233,25 +233,30 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 .unanswered-list{margin-top:10px;padding:10px;border:1px solid #fed7aa;background:#fff7ed;border-radius:12px;color:#9a3412;font-weight:800;line-height:1.5}
 @media(max-width:700px){.media-box img{max-height:55vh}.option-media img{max-height:220px}.preview-img{max-width:180px;max-height:130px}}
 
-/* V29: hỗ trợ ảnh câu hỏi/ảnh phương án; cảnh báo câu chưa làm khi nộp bài */
+/* V30: hỗ trợ ảnh câu hỏi/ảnh phương án; cảnh báo câu chưa làm khi nộp bài */
 .bank-manager-card .set-toolbar{display:grid;grid-template-columns:1fr;gap:8px}.bank-manager-card .set-actions{display:flex;gap:8px;flex-wrap:wrap}.bank-set-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px}.bank-set-table{min-width:1040px;width:100%;border-collapse:collapse}.bank-set-table input[type=number]{max-width:110px;padding:7px;border-radius:9px}.bank-set-table .set-name{font-weight:900;color:#0f766e}.bank-set-table .set-note{font-size:12px;color:#475569}.bank-set-table .mini-btn{padding:7px 8px;border-radius:9px;font-size:12px;box-shadow:none}.set-hint{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:12px;padding:8px;margin-top:8px}.set-count-zero{background:#fff}.set-count-used{border-color:#0f766e!important;background:#ecfdf5!important}.set-current-row{background:#f0fdfa}.set-json-file{background:#fff}.set-badge{display:inline-block;border:1px solid #bae6fd;background:#ecfeff;color:#155e75;border-radius:999px;padding:2px 7px;font-size:12px;font-weight:900;margin:1px}
 @media(max-width:700px){.bank-manager-card .set-actions button{width:100%!important}.bank-set-table{min-width:920px}.bank-set-table-wrap{margin-left:-2px;margin-right:-2px}.bank-set-table input[type=number]{max-width:95px}}
 
 
-/* V29: nhập câu hỏi trực tiếp, dán/chụp ảnh và lưu base64 vào ngân hàng */
+/* V30: nhập câu hỏi trực tiếp, dán/chụp ảnh và lưu base64 vào ngân hàng */
 .manual-entry-card .entry-note{padding:10px 12px;border-radius:12px;background:#f0f9ff;border:1px solid #bae6fd;color:#075985;margin:8px 0}.manual-editor-grid{display:grid;grid-template-columns:1fr;gap:10px}.manual-image-zone{border:2px dashed #94a3b8;border-radius:14px;background:#f8fafc;min-height:94px;padding:10px;display:flex;gap:10px;align-items:center;justify-content:space-between;cursor:pointer;transition:.15s}.manual-image-zone.active{border-color:#0f766e;background:#ecfdf5;box-shadow:0 0 0 3px rgba(15,118,110,.12)}.manual-image-zone .manual-zone-text{font-size:13px;color:#334155}.manual-preview{max-width:180px;max-height:130px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;object-fit:contain;display:none}.manual-image-zone.has-image .manual-preview{display:block}.manual-option-editor{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:10px;margin:9px 0}.manual-option-top{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:start}.manual-option-top label{margin:0}.manual-option-top textarea{min-height:72px}.manual-option-badge{min-width:36px;height:36px;border-radius:999px;background:#dbeafe;color:#1e3a8a;display:inline-flex;align-items:center;justify-content:center;font-weight:900}.manual-correct-label{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:900;color:#14532d;background:#f0fdf4;border:1px solid #86efac;border-radius:999px;padding:6px 9px;white-space:nowrap}.manual-editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.manual-paste-target{font-size:12px;color:#0f766e;font-weight:900}.manual-status{margin-top:8px}.manual-file-hidden{display:none}.manual-entry-card button.tiny{padding:7px 9px;border-radius:10px;font-size:12px}.manual-entry-card .danger.tiny{background:#b91c1c}.manual-option-image-row{margin-top:8px}.manual-actions-line{align-items:center;justify-content:space-between}.manual-current-target{padding:6px 10px;border-radius:999px;background:#ecfeff;border:1px solid #a5f3fc;color:#155e75;font-size:12px;font-weight:900}.manual-entry-card textarea{resize:vertical}.manual-entry-card .source-edit{min-height:88px}@media (min-width:760px){.manual-editor-grid{grid-template-columns:1fr 1fr}.manual-entry-full{grid-column:1/-1}.manual-image-zone{min-height:110px}.manual-preview{max-width:220px;max-height:150px}}@media (max-width:700px){.manual-option-top{grid-template-columns:auto 1fr}.manual-correct-label{grid-column:1/-1}.manual-image-zone{display:block}.manual-preview{margin-top:8px;max-width:100%;width:100%}.manual-editor-actions button{flex:1 1 150px}}
 
 
-/* V29: quản lý câu hỏi nhập trực tiếp, xóa câu hỏi và thống kê ôn tập theo bộ */
+/* V30: quản lý câu hỏi nhập trực tiếp, xóa câu hỏi và thống kê ôn tập theo bộ */
 .manual-new-set-row{margin-top:7px}.manual-new-set-row input{border-color:#a7f3d0;background:#f0fdf4}.bank-delete-btn{padding:6px 9px!important;border-radius:999px!important;font-size:12px!important;width:auto!important;box-shadow:none!important}.study-selected-summary{margin-top:8px;padding:8px;border:1px dashed #93c5fd;border-radius:12px;background:#eff6ff;color:#1e3a8a}.study-selected-summary b{color:#0f172a}.study-selected-summary .set-line{display:block;margin:2px 0}.quiz-study-remaining{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px;padding:8px;border-radius:12px;background:#eff6ff;border:1px dashed #93c5fd}.quiz-study-remaining .pill{margin:0 2px 2px 0}.manual-target-help{font-size:12px;color:#475569;margin-top:4px}
 @media(max-width:700px){.bank-delete-btn{padding:5px 8px!important;font-size:11.5px!important}.study-selected-summary{font-size:12px}.quiz-study-remaining{font-size:12px}}
+
+
+/* V30: ẩn/hiện nhanh các mục thiết lập 0, 0b, 1, 1a, 1b, 1c */
+.collapsible-section{position:relative}.collapsible-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px}.collapsible-head h2{margin:0!important;flex:1}.section-toggle-btn{width:auto!important;min-width:72px;padding:7px 10px;border-radius:999px;background:#e2e8f0;color:#0f172a;box-shadow:none;font-size:12px}.section-toggle-btn:hover{background:#cbd5e1}.collapsible-section.collapsed{padding-bottom:10px}.collapsible-section.collapsed>:not(.collapsible-head){display:none!important}.study-random-hint{display:block;margin-top:4px;color:#475569;font-size:12px}.set-count-used{border-color:#0f766e!important;background:#ecfdf5!important}.set-count-zero{background:#fff!important}
+@media (max-width:700px){.collapsible-head{gap:6px}.section-toggle-btn{min-width:58px;padding:6px 8px;font-size:12px}}
 
 </style>
   
 </head>
 <body>
 
-<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V29</h1><p>Dữ liệu nhúng sẵn, quản lý nhiều bộ câu hỏi, nhập câu hỏi trực tiếp, hỗ trợ ảnh và câu chọn nhiều đáp án.</p></div></header>
+<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V30</h1><p>Dữ liệu nhúng sẵn, quản lý nhiều bộ câu hỏi, nhập câu hỏi trực tiếp, hỗ trợ ảnh và câu chọn nhiều đáp án.</p></div></header>
 <main class="app">
   <section class="grid two">
     <div>
@@ -262,7 +267,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
           <button id="btnUseEmbedded" class="info">Dùng dữ liệu nhúng</button>
           <button id="btnSaveEmbedded" class="secondary">Lưu dữ liệu nhúng vào database</button>
         </div>
-        <p class="muted">Bản V29 bổ sung nhập câu hỏi vào bộ đang dùng/bộ đã lưu/tạo bộ mới, xóa câu hỏi trong ngân hàng và hiển thị tổng câu còn chưa ôn của các bộ được chọn.</p>
+        <p class="muted">Bản V30 bổ sung ẩn/hiện các mục thiết lập, tự tính tổng số câu theo từng bộ và chế độ ôn tập random theo bộ.</p>
       </div>
       <div class="card guide-card no-print" id="guideCard">
         <h2>0b) Hướng dẫn sử dụng</h2>
@@ -298,8 +303,8 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
           <ul>
             <li>Chọn số câu mỗi lượt ôn và ngưỡng đạt. Mặc định: 10 câu/lượt, đúng 10 lần thì tự xem là đã học.</li>
             <li>Sau khi nộp lượt ôn, bấm <b>Lượt tiếp</b> để tiếp tục với nhóm câu đang học hoặc câu mới thay thế.</li>
-            <li>Bấm <b>Đã học đúng</b> ở thanh dưới sau khi nộp lượt ôn để xác nhận nhanh <b>chỉ các câu đã trả lời đúng</b> trong phiên hiện tại.</li>
-            <li>Tiến độ được tự lưu offline; có thể bấm <b>Lưu</b> ở thanh dưới khi đang ôn để lưu chủ động.</li>
+            <li>Bấm <b>Đã học đúng</b> ở thanh dưới sau khi nộp lượt ôn để xác nhận nhanh <b>chỉ các câu đã trả lời đúng</b> trong phiên hiện tại; câu sai/chưa chọn không bị đánh dấu đã học.</li>
+            <li>Chế độ ôn tập có thể chọn <b>lần lượt</b> hoặc <b>random</b>. Random chỉ dùng để chọn câu bổ sung chưa học, không đánh dấu câu sai là đã học.</li><li>Tiến độ được tự lưu offline; có thể bấm <b>Lưu</b> ở thanh dưới khi đang ôn để lưu chủ động.</li>
           </ul>
         </details>
         <details>
@@ -471,7 +476,8 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
           <div><label>Số câu mỗi lượt ôn</label><input id="studyBatchSize" type="number" min="1" value="10"></div>
           <div><label>Đạt khi trả lời đúng từ</label><input id="studyMasterThreshold" type="number" min="1" value="10"></div>
         </div>
-        <label><input id="studyShuffleQuestions" type="checkbox" checked>Đảo câu trong lượt ôn</label>
+        <label><input id="studyShuffleQuestions" type="checkbox" checked>Đảo thứ tự hiển thị câu trong lượt ôn</label>
+        <label><input id="studyRandomMode" type="checkbox">Chế độ random câu ôn theo từng bộ<span class="study-random-hint">Nếu bật: lần đầu lấy ngẫu nhiên số câu cần học trong mỗi bộ; các lượt sau giữ câu chưa học và bổ sung ngẫu nhiên câu chưa xác nhận đã học. Nếu tắt: ôn lần lượt theo thứ tự trong từng bộ.</span></label>
         <label><input id="studyShuffleOptions" type="checkbox" checked>Đảo phương án trong lượt ôn</label>
         <div id="studyStats" class="status info">Chưa có tiến độ ôn tập.</div>
         <div class="row" style="margin-top:10px">
@@ -540,7 +546,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 <script>
 'use strict';
 
-const APP_VERSION = 'V29.0-20260614-manual-bank-delete-study-remaining';
+const APP_VERSION = 'V30.0-20260614-collapse-random-study-set-counts';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -569,7 +575,7 @@ const state = {
   bankPage: 1,
   bankPageSize: 20,
   questionSets: [],
-  study: { progress: {}, activeIds: [], config: { batchSize: 10, threshold: 10, shuffleQuestions: true, shuffleOptions: true } },
+  study: { progress: {}, activeIds: [], config: { batchSize: 10, threshold: 10, shuffleQuestions: true, randomMode: false, shuffleOptions: true } },
   manualEditor: { questionImage: '', options: [], activeTarget: 'question' }
 };
 
@@ -579,7 +585,7 @@ la là cua của va và hoac hoặc de để den đến duoc được bi bị tr
 VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','pwaInstallStatus','questionSetName','questionSetManager','btnAddCurrentSet','btnExportQuestionSets','btnImportQuestionSets','btnClearQuestionSets','questionSetsImportFile','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','internetQuestionSelect','internetSearchTemplate','internetProposedSource','internetStatus','internetApiUrl','btnInternetRefreshList','btnInternetAutoBuildSource','btnInternetEnrichAllByLegalRef','btnInternetOpenSearch','btnInternetOpenOfficial','btnInternetFetchApi','btnInternetSuggestSource','btnInternetApplySource','btnInternetAppendSource','btnInternetSaveDb','btnInternetExportXlsx','btnInternetExportLinks','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnInstallPWA','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml','manualTargetSet','manualNewSetName','manualQuestionId','manualQuestionText','manualQuestionImagePreview','manualQuestionImageFile','btnManualPickQuestionImage','btnManualClearQuestionImage','manualOptionsList','btnManualAddOption','btnManualCaptureScreen','manualSourceText','btnManualAddQuestion','btnManualSaveDb','btnManualReset','manualEntryStatus','manualPasteTargetText'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','pwaInstallStatus','questionSetName','questionSetManager','btnAddCurrentSet','btnExportQuestionSets','btnImportQuestionSets','btnClearQuestionSets','questionSetsImportFile','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','internetQuestionSelect','internetSearchTemplate','internetProposedSource','internetStatus','internetApiUrl','btnInternetRefreshList','btnInternetAutoBuildSource','btnInternetEnrichAllByLegalRef','btnInternetOpenSearch','btnInternetOpenOfficial','btnInternetFetchApi','btnInternetSuggestSource','btnInternetApplySource','btnInternetAppendSource','btnInternetSaveDb','btnInternetExportXlsx','btnInternetExportLinks','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnInstallPWA','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyRandomMode','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml','manualTargetSet','manualNewSetName','manualQuestionId','manualQuestionText','manualQuestionImagePreview','manualQuestionImageFile','btnManualPickQuestionImage','btnManualClearQuestionImage','manualOptionsList','btnManualAddOption','btnManualCaptureScreen','manualSourceText','btnManualAddQuestion','btnManualSaveDb','btnManualReset','manualEntryStatus','manualPasteTargetText'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
@@ -979,7 +985,7 @@ function loadStudyState(){
   try { state.study.activeIds = JSON.parse(localStorage.getItem(STUDY_ACTIVE_KEY) || '[]') || []; } catch(e){ state.study.activeIds = []; }
   try {
     const cfg = JSON.parse(localStorage.getItem(STUDY_CONFIG_KEY) || '{}') || {};
-    state.study.config = Object.assign({batchSize:10, threshold:10, shuffleQuestions:true, shuffleOptions:true}, cfg);
+    state.study.config = Object.assign({batchSize:10, threshold:10, shuffleQuestions:true, randomMode:false, shuffleOptions:true}, cfg);
   } catch(e){}
 }
 function saveStudyState(){
@@ -1000,6 +1006,7 @@ function syncStudyConfigFromUI(){
     batchSize: studyBatchSize(),
     threshold: studyThreshold(),
     shuffleQuestions: !!els.studyShuffleQuestions?.checked,
+    randomMode: !!els.studyRandomMode?.checked,
     shuffleOptions: !!els.studyShuffleOptions?.checked
   };
   saveStudyState();
@@ -1049,6 +1056,7 @@ function renderStudyStats(){
   if(els.studyBatchSize) els.studyBatchSize.value = String(state.study.config.batchSize || 10);
   if(els.studyMasterThreshold) els.studyMasterThreshold.value = String(state.study.config.threshold || 10);
   if(els.studyShuffleQuestions) els.studyShuffleQuestions.checked = !!state.study.config.shuffleQuestions;
+  if(els.studyRandomMode) els.studyRandomMode.checked = !!state.study.config.randomMode;
   if(els.studyShuffleOptions) els.studyShuffleOptions.checked = !!state.study.config.shuffleOptions;
   const total = state.bank.length;
   let learned = 0, practicing = 0;
@@ -1060,7 +1068,7 @@ function renderStudyStats(){
   const wrongs = rows.reduce((s,r)=>s+r.wrongCount,0);
   const sel = selectedStudyRemainingSummary();
   const selectedHtml = sel.html ? `<div class="study-selected-summary"><b>Các bộ đang chọn để ôn:</b><br>${sel.html}<span class="pill ${sel.totalRemain?'warnp':'okp'}">Tổng còn chưa ôn trong các bộ được chọn: ${sel.totalRemain}</span><span class="pill">Tổng số câu mỗi lượt theo các bộ: ${sel.totalSelected}</span></div>` : '';
-  els.studyStats.innerHTML = `<span class="pill okp">Đã học: ${learned}/${total}</span><span class="pill ${remain?'warnp':'okp'}">Còn lại ngân hàng hiện tại: ${remain}</span><span class="pill">Đang ôn: ${practicing || Math.min(studyBatchSize(), remain)}</span><span class="pill">Đạt khi đúng ≥ ${studyThreshold()} lần</span><span class="pill">Tổng lượt làm: ${attempts}</span><span class="pill ${wrongs?'warnp':'okp'}">Tổng lượt sai: ${wrongs}</span>${selectedHtml}`;
+  els.studyStats.innerHTML = `<span class="pill okp">Đã học: ${learned}/${total}</span><span class="pill ${remain?'warnp':'okp'}">Còn lại ngân hàng hiện tại: ${remain}</span><span class="pill">Đang ôn: ${practicing || Math.min(studyBatchSize(), remain)}</span><span class="pill">Đạt khi đúng ≥ ${studyThreshold()} lần</span><span class="pill ${state.study.config.randomMode?'warnp':'okp'}">Chọn câu ôn: ${state.study.config.randomMode?'Random':'Lần lượt'}</span><span class="pill">Tổng lượt làm: ${attempts}</span><span class="pill ${wrongs?'warnp':'okp'}">Tổng lượt sai: ${wrongs}</span>${selectedHtml}`;
 }
 function refreshStudyActiveIds(){
   const bankKeys = new Set(state.bank.map(getQuestionKey));
@@ -1070,7 +1078,8 @@ function refreshStudyActiveIds(){
     .map(q => ({q, key:getQuestionKey(q), p:state.study.progress[getQuestionKey(q)] || {}}))
     .filter(x => !active.includes(x.key) && !isStudyLearned(x.key))
     .sort((a,b) => (Number(a.p.correctCount||0)-Number(b.p.correctCount||0)) || (Number(a.p.attempts||0)-Number(b.p.attempts||0)));
-  for(const c of candidates){ if(active.length >= batch) break; active.push(c.key); }
+  const fillCandidates = state.study.config.randomMode ? shuffled(candidates, rng(hashSeed('study-fill-' + Date.now()))) : candidates;
+  for(const c of fillCandidates){ if(active.length >= batch) break; active.push(c.key); }
   state.study.activeIds = active.slice(0,batch);
   saveStudyState();
   renderStudyStats();
@@ -1328,18 +1337,30 @@ function syncSelectedSetTotals(mode){
   const studyTotal = selectedSetCountSum('study');
   const hint = document.getElementById('setSelectionTotalHint');
   if(hint){
-    hint.innerHTML = `<b>Tổng đã chọn:</b> Tạo đề <b>${examTotal}</b> câu; Ôn tập <b>${studyTotal}</b> câu. Đây là tổng số lượng câu lấy từ các bộ, không phải số thứ tự câu.`;
+    hint.innerHTML = `<b>Tổng đã chọn:</b> Tạo đề <b>${examTotal}</b> câu; Ôn tập <b>${studyTotal}</b> câu. Đây là tổng số lượng câu lấy từ các bộ, không phải số thứ tự câu. Nếu tổng bằng 0, ô số câu ở mục 2/2b sẽ áp dụng cho ngân hàng hiện hành.`;
   }
   const allSetsTotal = getAllQuestionSetRows().reduce((s,set)=>s + ((set.questions || []).length), 0);
   if(els.quizCount){
-    els.quizCount.max = String(Math.max(1, allSetsTotal || state.bank.length || 1));
-    if(mode === 'exam' && examTotal > 0) els.quizCount.value = String(examTotal);
+    if(examTotal > 0){
+      els.quizCount.max = String(Math.max(1, allSetsTotal || examTotal));
+      if(mode === 'exam') els.quizCount.value = String(examTotal);
+    } else {
+      els.quizCount.max = String(Math.max(1, state.bank.length || 1));
+      if(Number(els.quizCount.value || 0) > (state.bank.length || 1)) els.quizCount.value = String(state.bank.length || 1);
+    }
   }
-  if(els.studyBatchSize && mode === 'study' && studyTotal > 0){
-    els.studyBatchSize.max = String(Math.max(1, allSetsTotal || state.bank.length || 1));
-    els.studyBatchSize.value = String(studyTotal);
-    state.study.config.batchSize = studyTotal;
-    saveStudyState();
+  if(els.studyBatchSize){
+    if(studyTotal > 0){
+      els.studyBatchSize.max = String(Math.max(1, allSetsTotal || studyTotal));
+      if(mode === 'study'){
+        els.studyBatchSize.value = String(studyTotal);
+        state.study.config.batchSize = studyTotal;
+        saveStudyState();
+      }
+    } else {
+      els.studyBatchSize.max = String(Math.max(1, state.bank.length || 1));
+      if(Number(els.studyBatchSize.value || 0) > (state.bank.length || 1)) els.studyBatchSize.value = String(state.bank.length || 1);
+    }
   }
 }
 function collectQuestionsFromSelectedSets(mode, rand, shuffleWithin){
@@ -1363,7 +1384,31 @@ function collectQuestionsFromSelectedSets(mode, rand, shuffleWithin){
     }
 
     if(mode === 'study'){
-      // V26: ôn tập theo từng bộ có tiến độ riêng. Mỗi bộ giữ nhóm câu đang ôn;
+      if(state.study.config.randomMode){
+        // V30 random: giữ lại các câu đang ôn chưa học; nếu thiếu thì bổ sung ngẫu nhiên từ các câu chưa xác nhận đã học trong chính bộ đó.
+        const keyToQuestion = new Map(qs.map(q => [getQuestionKey(q), q]));
+        const setKeys = new Set(keyToQuestion.keys());
+        const activeKeys = [];
+        for(const k of (state.study.activeIds || [])){
+          if(activeKeys.length >= countNeed) break;
+          if(setKeys.has(k) && !isStudyLearned(k) && !activeKeys.includes(k)) activeKeys.push(k);
+        }
+        const pool = qs.filter(q => {
+          const key = getQuestionKey(q);
+          return !activeKeys.includes(key) && !isStudyLearned(key);
+        });
+        for(const q of shuffled(pool, rand)){
+          if(activeKeys.length >= countNeed) break;
+          activeKeys.push(getQuestionKey(q));
+        }
+        const take = activeKeys.slice(0, countNeed).map(k => keyToQuestion.get(k)).filter(Boolean);
+        out = out.concat(take);
+        const learnedCount = qs.filter(q => isStudyLearned(getQuestionKey(q))).length;
+        const remainCount = Math.max(0, qs.length - learnedCount);
+        summary.push(`${set.name}: ôn random ${take.length}/${countNeed}, còn ${remainCount}`);
+        continue;
+      }
+      // V30 mặc định: ôn tập theo từng bộ có tiến độ riêng. Mỗi bộ giữ nhóm câu đang ôn;
       // câu đã học/đạt ngưỡng bị loại khỏi nhóm và thay bằng câu kế tiếp theo đúng thứ tự trong chính bộ đó.
       const keyToQuestion = new Map(qs.map(q => [getQuestionKey(q), q]));
       const setKeys = new Set(keyToQuestion.keys());
@@ -1700,7 +1745,7 @@ async function fileToArrayBuffer(file){
 }
 async function readWorkbook(file){
   if(!window.XLSX){ try{ await loadLocalSheetJSIfNeeded(); }catch(_e){} }
-  if(!window.XLSX) throw new Error('Không tìm thấy thư viện SheetJS XLSX. Bản PWA V29 đã kèm xlsx.full.min.js; hãy giải nén đủ file ZIP và mở index.html trong cùng thư mục.');
+  if(!window.XLSX) throw new Error('Không tìm thấy thư viện SheetJS XLSX. Bản PWA V30 đã kèm xlsx.full.min.js; hãy giải nén đủ file ZIP và mở index.html trong cùng thư mục.');
   const buf = await fileToArrayBuffer(file);
   const bytes = new Uint8Array(buf);
   try { return XLSX.read(bytes, {type:'array', cellDates:false, raw:false}); }
@@ -2326,13 +2371,18 @@ function makeStandaloneHtml(title, contentHtml){
   const css = Array.from(document.querySelectorAll('style')).map(s => s.textContent || '').join('\n');
   const stamp = new Date().toLocaleString('vi-VN');
   return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><style>${css}\nbody{overflow:auto!important}.app{max-width:none!important;width:100%!important;margin:0!important;padding:12px!important}.card{max-width:none!important;width:100%!important;margin-left:0!important;margin-right:0!important}.no-print,.stickybar{display:none!important}.table-wrap{width:100%!important;max-width:none!important;overflow-x:auto!important}.table-wrap table{table-layout:auto!important;width:max-content!important;min-width:1700px!important;max-width:none!important}.table-wrap th,.table-wrap td{white-space:normal!important;overflow:visible!important}.question-cell{min-width:520px!important}.correct-cell{min-width:360px!important}.option-list-cell{min-width:620px!important}.source-cell{min-width:700px!important}.preview-option-item{display:block;margin:0 0 6px;padding:5px 7px;border-left:3px solid #bfdbfe;background:#f8fafc;border-radius:7px}.preview-option-item.is-correct{border-left-color:#22c55e;background:#f0fdf4;color:#166534;font-weight:800}
-/* V29: nhập câu hỏi trực tiếp, dán/chụp ảnh và lưu base64 vào ngân hàng */
+/* V30: nhập câu hỏi trực tiếp, dán/chụp ảnh và lưu base64 vào ngân hàng */
 .manual-entry-card .entry-note{padding:10px 12px;border-radius:12px;background:#f0f9ff;border:1px solid #bae6fd;color:#075985;margin:8px 0}.manual-editor-grid{display:grid;grid-template-columns:1fr;gap:10px}.manual-image-zone{border:2px dashed #94a3b8;border-radius:14px;background:#f8fafc;min-height:94px;padding:10px;display:flex;gap:10px;align-items:center;justify-content:space-between;cursor:pointer;transition:.15s}.manual-image-zone.active{border-color:#0f766e;background:#ecfdf5;box-shadow:0 0 0 3px rgba(15,118,110,.12)}.manual-image-zone .manual-zone-text{font-size:13px;color:#334155}.manual-preview{max-width:180px;max-height:130px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;object-fit:contain;display:none}.manual-image-zone.has-image .manual-preview{display:block}.manual-option-editor{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:10px;margin:9px 0}.manual-option-top{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:start}.manual-option-top label{margin:0}.manual-option-top textarea{min-height:72px}.manual-option-badge{min-width:36px;height:36px;border-radius:999px;background:#dbeafe;color:#1e3a8a;display:inline-flex;align-items:center;justify-content:center;font-weight:900}.manual-correct-label{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:900;color:#14532d;background:#f0fdf4;border:1px solid #86efac;border-radius:999px;padding:6px 9px;white-space:nowrap}.manual-editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.manual-paste-target{font-size:12px;color:#0f766e;font-weight:900}.manual-status{margin-top:8px}.manual-file-hidden{display:none}.manual-entry-card button.tiny{padding:7px 9px;border-radius:10px;font-size:12px}.manual-entry-card .danger.tiny{background:#b91c1c}.manual-option-image-row{margin-top:8px}.manual-actions-line{align-items:center;justify-content:space-between}.manual-current-target{padding:6px 10px;border-radius:999px;background:#ecfeff;border:1px solid #a5f3fc;color:#155e75;font-size:12px;font-weight:900}.manual-entry-card textarea{resize:vertical}.manual-entry-card .source-edit{min-height:88px}@media (min-width:760px){.manual-editor-grid{grid-template-columns:1fr 1fr}.manual-entry-full{grid-column:1/-1}.manual-image-zone{min-height:110px}.manual-preview{max-width:220px;max-height:150px}}@media (max-width:700px){.manual-option-top{grid-template-columns:auto 1fr}.manual-correct-label{grid-column:1/-1}.manual-image-zone{display:block}.manual-preview{margin-top:8px;max-width:100%;width:100%}.manual-editor-actions button{flex:1 1 150px}}
 
 
-/* V29: quản lý câu hỏi nhập trực tiếp, xóa câu hỏi và thống kê ôn tập theo bộ */
+/* V30: quản lý câu hỏi nhập trực tiếp, xóa câu hỏi và thống kê ôn tập theo bộ */
 .manual-new-set-row{margin-top:7px}.manual-new-set-row input{border-color:#a7f3d0;background:#f0fdf4}.bank-delete-btn{padding:6px 9px!important;border-radius:999px!important;font-size:12px!important;width:auto!important;box-shadow:none!important}.study-selected-summary{margin-top:8px;padding:8px;border:1px dashed #93c5fd;border-radius:12px;background:#eff6ff;color:#1e3a8a}.study-selected-summary b{color:#0f172a}.study-selected-summary .set-line{display:block;margin:2px 0}.quiz-study-remaining{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px;padding:8px;border-radius:12px;background:#eff6ff;border:1px dashed #93c5fd}.quiz-study-remaining .pill{margin:0 2px 2px 0}.manual-target-help{font-size:12px;color:#475569;margin-top:4px}
 @media(max-width:700px){.bank-delete-btn{padding:5px 8px!important;font-size:11.5px!important}.study-selected-summary{font-size:12px}.quiz-study-remaining{font-size:12px}}
+
+
+/* V30: ẩn/hiện nhanh các mục thiết lập 0, 0b, 1, 1a, 1b, 1c */
+.collapsible-section{position:relative}.collapsible-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px}.collapsible-head h2{margin:0!important;flex:1}.section-toggle-btn{width:auto!important;min-width:72px;padding:7px 10px;border-radius:999px;background:#e2e8f0;color:#0f172a;box-shadow:none;font-size:12px}.section-toggle-btn:hover{background:#cbd5e1}.collapsible-section.collapsed{padding-bottom:10px}.collapsible-section.collapsed>:not(.collapsible-head){display:none!important}.study-random-hint{display:block;margin-top:4px;color:#475569;font-size:12px}.set-count-used{border-color:#0f766e!important;background:#ecfdf5!important}.set-count-zero{background:#fff!important}
+@media (max-width:700px){.collapsible-head{gap:6px}.section-toggle-btn{min-width:58px;padding:6px 8px;font-size:12px}}
 
 </style></head><body class="standalone-export"><main class="app"><div class="card report-card-full"><h1>${escapeHtml(title)}</h1><p class="muted">Xuất lúc: ${escapeHtml(stamp)}. File này xem offline được, không cần PWA.</p></div>${contentHtml}</main></body></html>`;
 }
@@ -2558,9 +2608,9 @@ function exportStandaloneHtmlWithCurrentBank(){
     if(!bankScript) throw new Error('Không tìm thấy vùng dữ liệu nhúng #embedded-bank.');
     bankScript.textContent = safeJsonForEmbedded(buildCurrentEmbeddedPayload());
     const title = doc.querySelector('title');
-    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V29 - HTML nhúng dữ liệu';
+    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V30 - HTML nhúng dữ liệu';
     const h1 = doc.querySelector('header h1');
-    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V29';
+    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V30';
     const subtitle = doc.querySelector('header p');
     if(subtitle) subtitle.textContent = 'HTML đã nhúng sẵn ngân hàng câu hỏi hiện tại, mở offline là dùng ngay.';
     const body = doc.querySelector('body');
@@ -2878,6 +2928,9 @@ function bindEvents(){
   els.btnLoadBank.addEventListener('click', loadBank);
   els.btnClearBank.addEventListener('click', clearBank);
   els.btnStartQuiz.addEventListener('click', startQuiz);
+  if(els.studyRandomMode) els.studyRandomMode.addEventListener('change', () => { syncStudyConfigFromUI(); renderStudyStats(); });
+  if(els.studyShuffleQuestions) els.studyShuffleQuestions.addEventListener('change', () => { syncStudyConfigFromUI(); renderStudyStats(); });
+  if(els.studyShuffleOptions) els.studyShuffleOptions.addEventListener('change', () => { syncStudyConfigFromUI(); renderStudyStats(); });
   if(els.btnStartStudy) els.btnStartStudy.addEventListener('click', startStudyRound);
   if(els.btnNextStudy) els.btnNextStudy.addEventListener('click', startStudyRound);
   if(els.btnResetStudy) els.btnResetStudy.addEventListener('click', resetStudyProgress);
@@ -2919,8 +2972,47 @@ function bindEvents(){
   bindManualEditorEvents();
 }
 
+function setupCollapsibleSetupSections(){
+  const wanted = [
+    {prefix:'0)', key:'sec0', collapse:false},
+    {prefix:'0b)', key:'sec0b', collapse:true},
+    {prefix:'1)', key:'sec1', collapse:false},
+    {prefix:'1a)', key:'sec1a', collapse:true},
+    {prefix:'1b)', key:'sec1b', collapse:true},
+    {prefix:'1c)', key:'sec1c', collapse:false}
+  ];
+  const cards = [...document.querySelectorAll('main .card')];
+  for(const cfg of wanted){
+    const card = cards.find(c => (c.querySelector('h2')?.textContent || '').trim().startsWith(cfg.prefix));
+    if(!card || card.dataset.collapseReady) continue;
+    card.dataset.collapseReady = '1';
+    card.classList.add('collapsible-section');
+    const h2 = card.querySelector('h2');
+    const head = document.createElement('div');
+    head.className = 'collapsible-head';
+    h2.parentNode.insertBefore(head, h2);
+    head.appendChild(h2);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'section-toggle-btn';
+    head.appendChild(btn);
+    const storeKey = 'excel_quiz_v30_section_' + cfg.key;
+    const saved = localStorage.getItem(storeKey);
+    const collapsed = saved == null ? !!cfg.collapse : saved === '1';
+    function apply(v){
+      card.classList.toggle('collapsed', !!v);
+      btn.textContent = v ? 'Hiện' : 'Ẩn';
+      btn.title = v ? 'Hiện mục này' : 'Ẩn mục này';
+      try{ localStorage.setItem(storeKey, v ? '1' : '0'); }catch(e){}
+    }
+    btn.addEventListener('click', () => apply(!card.classList.contains('collapsed')));
+    apply(collapsed);
+  }
+}
+
 function boot(){
   initElements();
+  setupCollapsibleSetupSections();
   setupPWAInstallPrompt();
   loadStudyState();
   loadQuestionSets();
