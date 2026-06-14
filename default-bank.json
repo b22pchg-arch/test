@@ -19046,6 +19046,176 @@
         }
       ]
     },
+	{
+		"id": "set_mqdj4m3n_z7q6ts",
+    "name": "tu luan",
+    "createdAt": "2026-06-14T08:35:39.107Z",
+    "updatedAt": "2026-06-14T08:51:35.243Z",
+    "sourceFile": "tu luan",
+    "sheetName": "Mau_Tu_Luan_V42",
+    "questions": [
+      {
+        "id": "1",
+        "sourceRow": "Sửa trực tiếp",
+        "sheetName": "Sửa trực tiếp",
+        "question": "Trình bày các bước chính cần thực hiện trước khi cho phép thao tác đóng/cắt một thiết bị điện trong lưới điện thuộc quyền điều khiển.",
+        "questionImage": "",
+        "image": "",
+        "questionAudio": "",
+        "audio": "",
+        "options": [],
+        "correctIndexes": [],
+        "correctIndex": -1,
+        "correctTexts": [],
+        "correctText": "Trước khi cho phép thao tác đóng/cắt một thiết bị điện thuộc quyền điều khiển, cần kiểm tra tình trạng lưới điện, lập và duyệt phiếu thao tác, kiểm tra các khóa liên động, hệ thống điều khiển từ xa. Các bước thực hiện phải tuân thủ nghiêm ngặt theo các quy định hiện hành về vận hành hệ thống điện. Các bước chính cần thực hiện bao gồm: 1. Chuẩn bị và Kiểm tra phương thức vận hànhKiểm tra tình trạng lưới điện: Đánh giá trào lưu công suất, điện áp và chế độ vận hành để đảm bảo hệ thống điện vẫn vận hành an toàn sau khi thiết bị được đóng/cắt.Kiểm tra thiết bị: Xác định thiết bị cần thao tác đáp ứng đủ tiêu chuẩn đóng/cắt (không bị khóa sự cố, đầy đủ áp suất khí/dầu đối với máy cắt...). 2. Lập và Duyệt Phiếu thao tácLập phiếu: Cấp điều độ có quyền điều khiển hoặc Đơn vị quản lý vận hành tiến hành lập Phiếu thao tác ghi rõ thứ tự từng bước đóng/cắt.Duyệt phiếu: Phiếu thao tác phải được kiểm tra, soát xét và phê duyệt bởi người có thẩm quyền trước khi tiến hành thực hiện. 3. Kiểm tra điều kiện tại trạm (Đối với thao tác cắt)Khóa điều khiển & Liên động: Khóa bộ truyền động, ngắt mạch điều khiển và kiểm tra mạch liên động của thiết bị đóng cắt. Đảm bảo tủ điều khiển đặt đúng chế độ (tại chỗ hay từ xa).Treo biển báo & Cảnh giới: Treo biển báo an toàn (ví dụ: \"Cấm đóng điện, có người đang làm việc!\") và bố trí người cảnh giới nếu cần thiết. 4. Phát lệnh thao tácCấp điều độ có quyền điều khiển phát lệnh cho người trực vận hành cơ sở (hoặc thực hiện thao tác xa từ Trung tâm điều khiển), đọc lệnh rõ ràng, ghi âm và chờ nhắc lại lệnh chuẩn xác theo quy định",
+        "questionType": "essay",
+        "type": "essay",
+        "noShuffleOptions": false,
+        "source": "Mẫu kiểm tra tự luận nội bộ - chủ đề thao tác hệ thống điện",
+        "sourceOriginal": "Mẫu kiểm tra tự luận nội bộ - chủ đề thao tác hệ thống điện",
+        "answerRaw": "Trước khi cho phép thao tác đóng/cắt một thiết bị điện thuộc quyền điều khiển, cần kiểm tra tình trạng lưới điện, lập và duyệt phiếu thao tác, kiểm tra các khóa liên động, hệ thống điều khiển từ xa. Các bước thực hiện phải tuân thủ nghiêm ngặt theo các quy định hiện hành về vận hành hệ thống điện. Các bước chính cần thực hiện bao gồm: 1. Chuẩn bị và Kiểm tra phương thức vận hànhKiểm tra tình trạng lưới điện: Đánh giá trào lưu công suất, điện áp và chế độ vận hành để đảm bảo hệ thống điện vẫn vận hành an toàn sau khi thiết bị được đóng/cắt.Kiểm tra thiết bị: Xác định thiết bị cần thao tác đáp ứng đủ tiêu chuẩn đóng/cắt (không bị khóa sự cố, đầy đủ áp suất khí/dầu đối với máy cắt...). 2. Lập và Duyệt Phiếu thao tácLập phiếu: Cấp điều độ có quyền điều khiển hoặc Đơn vị quản lý vận hành tiến hành lập Phiếu thao tác ghi rõ thứ tự từng bước đóng/cắt.Duyệt phiếu: Phiếu thao tác phải được kiểm tra, soát xét và phê duyệt bởi người có thẩm quyền trước khi tiến hành thực hiện. 3. Kiểm tra điều kiện tại trạm (Đối với thao tác cắt)Khóa điều khiển & Liên động: Khóa bộ truyền động, ngắt mạch điều khiển và kiểm tra mạch liên động của thiết bị đóng cắt. Đảm bảo tủ điều khiển đặt đúng chế độ (tại chỗ hay từ xa).Treo biển báo & Cảnh giới: Treo biển báo an toàn (ví dụ: \"Cấm đóng điện, có người đang làm việc!\") và bố trí người cảnh giới nếu cần thiết. 4. Phát lệnh thao tácCấp điều độ có quyền điều khiển phát lệnh cho người trực vận hành cơ sở (hoặc thực hiện thao tác xa từ Trung tâm điều khiển), đọc lệnh rõ ràng, ghi âm và chờ nhắc lại lệnh chuẩn xác theo quy định",
+        "sampleAnswer": "Trước khi cho phép thao tác đóng/cắt một thiết bị điện thuộc quyền điều khiển, cần kiểm tra tình trạng lưới điện, lập và duyệt phiếu thao tác, kiểm tra các khóa liên động, hệ thống điều khiển từ xa. Các bước thực hiện phải tuân thủ nghiêm ngặt theo các quy định hiện hành về vận hành hệ thống điện. Các bước chính cần thực hiện bao gồm: 1. Chuẩn bị và Kiểm tra phương thức vận hànhKiểm tra tình trạng lưới điện: Đánh giá trào lưu công suất, điện áp và chế độ vận hành để đảm bảo hệ thống điện vẫn vận hành an toàn sau khi thiết bị được đóng/cắt.Kiểm tra thiết bị: Xác định thiết bị cần thao tác đáp ứng đủ tiêu chuẩn đóng/cắt (không bị khóa sự cố, đầy đủ áp suất khí/dầu đối với máy cắt...). 2. Lập và Duyệt Phiếu thao tácLập phiếu: Cấp điều độ có quyền điều khiển hoặc Đơn vị quản lý vận hành tiến hành lập Phiếu thao tác ghi rõ thứ tự từng bước đóng/cắt.Duyệt phiếu: Phiếu thao tác phải được kiểm tra, soát xét và phê duyệt bởi người có thẩm quyền trước khi tiến hành thực hiện. 3. Kiểm tra điều kiện tại trạm (Đối với thao tác cắt)Khóa điều khiển & Liên động: Khóa bộ truyền động, ngắt mạch điều khiển và kiểm tra mạch liên động của thiết bị đóng cắt. Đảm bảo tủ điều khiển đặt đúng chế độ (tại chỗ hay từ xa).Treo biển báo & Cảnh giới: Treo biển báo an toàn (ví dụ: \"Cấm đóng điện, có người đang làm việc!\") và bố trí người cảnh giới nếu cần thiết. 4. Phát lệnh thao tácCấp điều độ có quyền điều khiển phát lệnh cho người trực vận hành cơ sở (hoặc thực hiện thao tác xa từ Trung tâm điều khiển), đọc lệnh rõ ràng, ghi âm và chờ nhắc lại lệnh chuẩn xác theo quy định",
+        "requiredKeywords": [
+          "đúng thiết bị lệnh thao tác trạng thái hiện tại an toàn đủ điều kiện"
+        ],
+        "bonusKeywords": [
+          "đơn vị liên quan ghi nhận thời điểm phiếu thao tác quyền điều khiển"
+        ],
+        "penaltyKeywords": [
+          "tự ý thao tác không kiểm tra bỏ qua an toàn"
+        ],
+        "scoreMax": 10
+      },
+      {
+        "id": "2",
+        "sourceRow": "Sửa trực tiếp",
+        "sheetName": "Sửa trực tiếp",
+        "question": "Khi xảy ra sự cố mất điện một đường dây, hãy nêu nguyên tắc xử lý ban đầu của cấp điều độ.",
+        "questionImage": "",
+        "image": "",
+        "questionAudio": "",
+        "audio": "",
+        "options": [],
+        "correctIndexes": [],
+        "correctIndex": -1,
+        "correctTexts": [],
+        "correctText": "Nguyên tắc xử lý ban đầu của cấp điều độ khi xảy ra sự cố mất điện đường dây là nhanh chóng cách ly đoạn bị sự cố, ngăn ngừa lan rộng, điều chỉnh chế độ vận hành và tiến hành đóng lại đường dây (nếu đủ điều kiện). Trình tự được thực hiện theo các bước cốt lõi sau: 1. Ngăn chặn sự cố mở rộng Giảm tải/Sa thải phụ tải: Nếu sự cố gây quá tải cho các đường dây hoặc thiết bị còn lại trong lưới, Điều độ viên có quyền cắt bớt phụ tải (cắt điện luân phiên) để đảm bảo an toàn cho hệ thống. Điều chỉnh điện áp: Điều chỉnh công suất phản kháng để đưa điện áp lưới về mức giới hạn cho phép. 2. Thu thập thông tin và cô lập sự cố Kiểm tra tín hiệu rơle: Xác định chính xác loại sự cố (ngắn mạch pha, chạm đất, v.v.) dựa trên cảnh báo từ hệ thống bảo vệ. Cách ly phần tử hỏng: Cô lập đoạn đường dây bị sự cố khỏi hệ thống bằng cách mở các máy cắt ở hai đầu để tiến hành kiểm tra. 3. Nguyên tắc đóng điện lại (Đóng lặp lại) Tùy thuộc vào cấp điện áp, điều kiện thời tiết và tình trạng thực tế mà cấp điều độ quyết định phương án đóng điện: Với đường dây <=220kV: Cho phép đóng điện lại (đóng lặp lại) không quá 02 lần. Kiểm tra khu vực đông dân: Nếu đường dây đi qua khu dân cư, chỉ cho phép đóng lại lần 2 sau khi đơn vị quản lý vận hành kiểm tra, xác nhận đảm bảo an toàn. Các trường hợp cấm đóng lại: Không được đóng điện nếu xảy ra thiên tai (gió bão lớn cấp 6 trở lên, lũ lụt ngập sâu làm giảm khoảng cách an toàn) hoặc đang trong thời gian sửa chữa nóng.",
+        "questionType": "essay",
+        "type": "essay",
+        "noShuffleOptions": false,
+        "source": "Mẫu kiểm tra tự luận nội bộ - chủ đề xử lý sự cố",
+        "sourceOriginal": "Mẫu kiểm tra tự luận nội bộ - chủ đề xử lý sự cố",
+        "answerRaw": "Nguyên tắc xử lý ban đầu của cấp điều độ khi xảy ra sự cố mất điện đường dây là nhanh chóng cách ly đoạn bị sự cố, ngăn ngừa lan rộng, điều chỉnh chế độ vận hành và tiến hành đóng lại đường dây (nếu đủ điều kiện). Trình tự được thực hiện theo các bước cốt lõi sau: 1. Ngăn chặn sự cố mở rộng Giảm tải/Sa thải phụ tải: Nếu sự cố gây quá tải cho các đường dây hoặc thiết bị còn lại trong lưới, Điều độ viên có quyền cắt bớt phụ tải (cắt điện luân phiên) để đảm bảo an toàn cho hệ thống. Điều chỉnh điện áp: Điều chỉnh công suất phản kháng để đưa điện áp lưới về mức giới hạn cho phép. 2. Thu thập thông tin và cô lập sự cố Kiểm tra tín hiệu rơle: Xác định chính xác loại sự cố (ngắn mạch pha, chạm đất, v.v.) dựa trên cảnh báo từ hệ thống bảo vệ. Cách ly phần tử hỏng: Cô lập đoạn đường dây bị sự cố khỏi hệ thống bằng cách mở các máy cắt ở hai đầu để tiến hành kiểm tra. 3. Nguyên tắc đóng điện lại (Đóng lặp lại) Tùy thuộc vào cấp điện áp, điều kiện thời tiết và tình trạng thực tế mà cấp điều độ quyết định phương án đóng điện: Với đường dây <=220kV: Cho phép đóng điện lại (đóng lặp lại) không quá 02 lần. Kiểm tra khu vực đông dân: Nếu đường dây đi qua khu dân cư, chỉ cho phép đóng lại lần 2 sau khi đơn vị quản lý vận hành kiểm tra, xác nhận đảm bảo an toàn. Các trường hợp cấm đóng lại: Không được đóng điện nếu xảy ra thiên tai (gió bão lớn cấp 6 trở lên, lũ lụt ngập sâu làm giảm khoảng cách an toàn) hoặc đang trong thời gian sửa chữa nóng.",
+        "sampleAnswer": "Nguyên tắc xử lý ban đầu của cấp điều độ khi xảy ra sự cố mất điện đường dây là nhanh chóng cách ly đoạn bị sự cố, ngăn ngừa lan rộng, điều chỉnh chế độ vận hành và tiến hành đóng lại đường dây (nếu đủ điều kiện). Trình tự được thực hiện theo các bước cốt lõi sau: 1. Ngăn chặn sự cố mở rộng Giảm tải/Sa thải phụ tải: Nếu sự cố gây quá tải cho các đường dây hoặc thiết bị còn lại trong lưới, Điều độ viên có quyền cắt bớt phụ tải (cắt điện luân phiên) để đảm bảo an toàn cho hệ thống. Điều chỉnh điện áp: Điều chỉnh công suất phản kháng để đưa điện áp lưới về mức giới hạn cho phép. 2. Thu thập thông tin và cô lập sự cố Kiểm tra tín hiệu rơle: Xác định chính xác loại sự cố (ngắn mạch pha, chạm đất, v.v.) dựa trên cảnh báo từ hệ thống bảo vệ. Cách ly phần tử hỏng: Cô lập đoạn đường dây bị sự cố khỏi hệ thống bằng cách mở các máy cắt ở hai đầu để tiến hành kiểm tra. 3. Nguyên tắc đóng điện lại (Đóng lặp lại) Tùy thuộc vào cấp điện áp, điều kiện thời tiết và tình trạng thực tế mà cấp điều độ quyết định phương án đóng điện: Với đường dây <=220kV: Cho phép đóng điện lại (đóng lặp lại) không quá 02 lần. Kiểm tra khu vực đông dân: Nếu đường dây đi qua khu dân cư, chỉ cho phép đóng lại lần 2 sau khi đơn vị quản lý vận hành kiểm tra, xác nhận đảm bảo an toàn. Các trường hợp cấm đóng lại: Không được đóng điện nếu xảy ra thiên tai (gió bão lớn cấp 6 trở lên, lũ lụt ngập sâu làm giảm khoảng cách an toàn) hoặc đang trong thời gian sửa chữa nóng.",
+        "requiredKeywords": [
+          "xác định khu vực tín hiệu bảo vệ trạng thái máy cắt cô lập an toàn khôi phục cấp điện"
+        ],
+        "bonusKeywords": [
+          "đơn vị quản lý vận hành phối hợp đúng trình tự đủ điều kiện"
+        ],
+        "penaltyKeywords": [
+          "đóng điện lại ngay không xác minh bỏ qua tín hiệu bảo vệ"
+        ],
+        "scoreMax": 10
+      },
+      {
+        "id": "3",
+        "sourceRow": "Sửa trực tiếp",
+        "sheetName": "Sửa trực tiếp",
+        "question": "Giải thích vì sao không được tự ý thay đổi sơ đồ vận hành hoặc trạng thái thiết bị khi chưa có lệnh/cho phép của cấp có quyền điều khiển.",
+        "questionImage": "",
+        "image": "",
+        "questionAudio": "",
+        "audio": "",
+        "options": [],
+        "correctIndexes": [],
+        "correctIndex": -1,
+        "correctTexts": [],
+        "correctText": "Việc không tự ý thay đổi trạng thái thiết bị hoặc sơ đồ vận hành là quy tắc an toàn cốt lõi trong các hệ thống công nghiệp và điện lực. Các nhân viên chỉ được phép thực hiện khi có lệnh từ Cấp điều độ có quyền điều khiển hoặc người có thẩm quyền ra lệnh. Các nguyên nhân chính bao gồm: Đảm bảo an toàn tính mạng: Việc đóng cắt thiết bị sai thời điểm hoặc sai cách có thể gây phóng điện, cháy nổ, đe dọa trực tiếp đến tính mạng của nhân viên vận hành và những người đang làm việc ở các khu vực liên quan. Ngăn ngừa sự cố diện rộng: Hệ thống (đặc biệt là lưới điện) vận hành như một khối liên kết chặt chẽ. Thao tác cục bộ thiếu bao quát có thể gây quá tải, sụt áp, hoặc làm rã lưới (mất điện toàn bộ khu vực), vi phạm Luật điều độ hệ thống điện quốc gia. Bảo vệ an toàn thiết bị: Thay đổi trạng thái không đúng quy trình (ví dụ: cắt/đóng dao cách ly khi đang có tải) có thể làm hư hỏng nặng nề thiết bị có giá trị cao, gây gián đoạn sản xuất kéo dài và tốn kém chi phí khắc phục. Đảm bảo tính chính xác của chỉ huy: Lệnh điều độ được ban hành dựa trên bức tranh toàn cảnh (trào lưu công suất, trạng thái các thiết bị khác) mà người trực tiếp thao tác không thể nắm bắt toàn diện. Việc tự ý thay đổi sẽ làm phá vỡ phương thức vận hành đã được tính toán. Xác định trách nhiệm rõ ràng: Trong vận hành hệ thống, mọi thao tác đều phải tuân thủ nghiêm ngặt Thông tư quy định về quy trình thao tác, giúp quy trách nhiệm minh bạch nếu xảy ra sự cố do lỗi con người.",
+        "questionType": "essay",
+        "type": "essay",
+        "noShuffleOptions": false,
+        "source": "Mẫu kiểm tra tự luận nội bộ - chủ đề an toàn vận hành",
+        "sourceOriginal": "Mẫu kiểm tra tự luận nội bộ - chủ đề an toàn vận hành",
+        "answerRaw": "Việc không tự ý thay đổi trạng thái thiết bị hoặc sơ đồ vận hành là quy tắc an toàn cốt lõi trong các hệ thống công nghiệp và điện lực. Các nhân viên chỉ được phép thực hiện khi có lệnh từ Cấp điều độ có quyền điều khiển hoặc người có thẩm quyền ra lệnh. Các nguyên nhân chính bao gồm: Đảm bảo an toàn tính mạng: Việc đóng cắt thiết bị sai thời điểm hoặc sai cách có thể gây phóng điện, cháy nổ, đe dọa trực tiếp đến tính mạng của nhân viên vận hành và những người đang làm việc ở các khu vực liên quan. Ngăn ngừa sự cố diện rộng: Hệ thống (đặc biệt là lưới điện) vận hành như một khối liên kết chặt chẽ. Thao tác cục bộ thiếu bao quát có thể gây quá tải, sụt áp, hoặc làm rã lưới (mất điện toàn bộ khu vực), vi phạm Luật điều độ hệ thống điện quốc gia. Bảo vệ an toàn thiết bị: Thay đổi trạng thái không đúng quy trình (ví dụ: cắt/đóng dao cách ly khi đang có tải) có thể làm hư hỏng nặng nề thiết bị có giá trị cao, gây gián đoạn sản xuất kéo dài và tốn kém chi phí khắc phục. Đảm bảo tính chính xác của chỉ huy: Lệnh điều độ được ban hành dựa trên bức tranh toàn cảnh (trào lưu công suất, trạng thái các thiết bị khác) mà người trực tiếp thao tác không thể nắm bắt toàn diện. Việc tự ý thay đổi sẽ làm phá vỡ phương thức vận hành đã được tính toán. Xác định trách nhiệm rõ ràng: Trong vận hành hệ thống, mọi thao tác đều phải tuân thủ nghiêm ngặt Thông tư quy định về quy trình thao tác, giúp quy trách nhiệm minh bạch nếu xảy ra sự cố do lỗi con người.",
+        "sampleAnswer": "Việc không tự ý thay đổi trạng thái thiết bị hoặc sơ đồ vận hành là quy tắc an toàn cốt lõi trong các hệ thống công nghiệp và điện lực. Các nhân viên chỉ được phép thực hiện khi có lệnh từ Cấp điều độ có quyền điều khiển hoặc người có thẩm quyền ra lệnh. Các nguyên nhân chính bao gồm: Đảm bảo an toàn tính mạng: Việc đóng cắt thiết bị sai thời điểm hoặc sai cách có thể gây phóng điện, cháy nổ, đe dọa trực tiếp đến tính mạng của nhân viên vận hành và những người đang làm việc ở các khu vực liên quan. Ngăn ngừa sự cố diện rộng: Hệ thống (đặc biệt là lưới điện) vận hành như một khối liên kết chặt chẽ. Thao tác cục bộ thiếu bao quát có thể gây quá tải, sụt áp, hoặc làm rã lưới (mất điện toàn bộ khu vực), vi phạm Luật điều độ hệ thống điện quốc gia. Bảo vệ an toàn thiết bị: Thay đổi trạng thái không đúng quy trình (ví dụ: cắt/đóng dao cách ly khi đang có tải) có thể làm hư hỏng nặng nề thiết bị có giá trị cao, gây gián đoạn sản xuất kéo dài và tốn kém chi phí khắc phục. Đảm bảo tính chính xác của chỉ huy: Lệnh điều độ được ban hành dựa trên bức tranh toàn cảnh (trào lưu công suất, trạng thái các thiết bị khác) mà người trực tiếp thao tác không thể nắm bắt toàn diện. Việc tự ý thay đổi sẽ làm phá vỡ phương thức vận hành đã được tính toán. Xác định trách nhiệm rõ ràng: Trong vận hành hệ thống, mọi thao tác đều phải tuân thủ nghiêm ngặt Thông tư quy định về quy trình thao tác, giúp quy trách nhiệm minh bạch nếu xảy ra sự cố do lỗi con người.",
+        "requiredKeywords": [
+          "không tự ý phương thức vận hành quá tải mất an toàn phối hợp bảo vệ cấp có quyền điều khiển"
+        ],
+        "bonusKeywords": [
+          "mất ổn định theo dõi xử lý sự cố lệnh hoặc cho phép"
+        ],
+        "penaltyKeywords": [
+          "có thể tự quyết không cần báo cáo"
+        ],
+        "scoreMax": 10
+      },
+      {
+        "id": "4",
+        "sourceRow": "Sửa trực tiếp",
+        "sheetName": "Sửa trực tiếp",
+        "question": "Khi thấy tín hiệu SCADA thay đổi bất thường, người vận hành cần kiểm tra và xử lý theo hướng nào?",
+        "questionImage": "",
+        "image": "",
+        "questionAudio": "",
+        "audio": "",
+        "options": [],
+        "correctIndexes": [],
+        "correctIndex": -1,
+        "correctTexts": [],
+        "correctText": "Khi tín hiệu SCADA thay đổi bất thường, người vận hành cần ngay lập tức xác minh tính thực tế tại hiện trường (tránh báo động giả), sau đó cô lập sự cố để ngăn chặn rủi ro, và cuối cùng tiến hành kiểm tra theo luồng logic từ phần cứng (cảm biến, RTU) đến phần mềm (HMI, mạng truyền thông). Quy trình kiểm tra và xử lý cụ thể được thực hiện theo các bước sau: 1. Xác minh tại hiện trường Kiểm tra trực tiếp: Đối chiếu thông tin bất thường trên màn hình HMI với thiết bị thực tế để loại trừ trường hợp lỗi cảm biến, nhiễu tín hiệu. Đánh giá rủi ro: Đảm bảo an toàn cho khu vực xung quanh và con người trước khi can thiệp điều khiển. 2. Phân loại và cô lập sự cố Chuyển chế độ (nếu cần): Nếu hệ thống tự động gặp lỗi, chuyển sang chế độ điều khiển bằng tay (Manual) tại tủ điều khiển cục bộ (Local) để duy trì hoạt động. Ngừng khẩn cấp: Trong các tình huống vượt ngưỡng an toàn nghiêm trọng, kích hoạt nút dừng khẩn cấp (Emergency Stop) để tránh hỏng hóc thiết bị hoặc sự cố môi trường. 3. Quy trình chẩn đoán lỗi (Troubleshooting) Người vận hành hoặc kỹ thuật viên cần kiểm tra hệ thống theo 3 tầng cơ bản: Tầng Thiết bị hiện trường (Field Devices): Kiểm tra cảm biến (Sensor) hoặc thiết bị chấp hành (van, động cơ) xem có bị kẹt, chập cháy hoặc hỏng hóc vật lý không. Kiểm tra nguồn điện cấp cho trạm cục bộ (RTU/PLC). Tầng Truyền thông (Network & Communication): Kiểm tra đường truyền cáp quang, cáp mạng, hoặc sóng vô tuyến. Xác định các lỗi mạng như gói tin bị rớt, cáp đứt, hoặc mất kết nối giữa máy tính trung tâm và thiết bị ngoại vi. Tầng Máy chủ và Phần mềm (Server & HMI): Kiểm tra dung lượng tài nguyên máy tính trung tâm (RAM, CPU, ổ cứng). Khởi động lại (Restart) tiến trình thu thập dữ liệu hoặc máy tính SCADA nếu bị treo. 4. Báo cáo và ghi nhận Ghi nhật ký: Ghi chép lại chính xác thời gian xảy ra, các thông số báo động, và hành động xử lý vào sổ nhật ký vận hành. Báo cáo cấp trên: Liên hệ với bộ phận bảo trì hoặc nhà cung cấp hệ thống để có phương án sửa chữa chuyên sâu",
+        "questionType": "essay",
+        "type": "essay",
+        "noShuffleOptions": false,
+        "source": "Mẫu kiểm tra tự luận nội bộ - chủ đề SCADA",
+        "sourceOriginal": "Mẫu kiểm tra tự luận nội bộ - chủ đề SCADA",
+        "answerRaw": "Khi tín hiệu SCADA thay đổi bất thường, người vận hành cần ngay lập tức xác minh tính thực tế tại hiện trường (tránh báo động giả), sau đó cô lập sự cố để ngăn chặn rủi ro, và cuối cùng tiến hành kiểm tra theo luồng logic từ phần cứng (cảm biến, RTU) đến phần mềm (HMI, mạng truyền thông). Quy trình kiểm tra và xử lý cụ thể được thực hiện theo các bước sau: 1. Xác minh tại hiện trường Kiểm tra trực tiếp: Đối chiếu thông tin bất thường trên màn hình HMI với thiết bị thực tế để loại trừ trường hợp lỗi cảm biến, nhiễu tín hiệu. Đánh giá rủi ro: Đảm bảo an toàn cho khu vực xung quanh và con người trước khi can thiệp điều khiển. 2. Phân loại và cô lập sự cố Chuyển chế độ (nếu cần): Nếu hệ thống tự động gặp lỗi, chuyển sang chế độ điều khiển bằng tay (Manual) tại tủ điều khiển cục bộ (Local) để duy trì hoạt động. Ngừng khẩn cấp: Trong các tình huống vượt ngưỡng an toàn nghiêm trọng, kích hoạt nút dừng khẩn cấp (Emergency Stop) để tránh hỏng hóc thiết bị hoặc sự cố môi trường. 3. Quy trình chẩn đoán lỗi (Troubleshooting) Người vận hành hoặc kỹ thuật viên cần kiểm tra hệ thống theo 3 tầng cơ bản: Tầng Thiết bị hiện trường (Field Devices): Kiểm tra cảm biến (Sensor) hoặc thiết bị chấp hành (van, động cơ) xem có bị kẹt, chập cháy hoặc hỏng hóc vật lý không. Kiểm tra nguồn điện cấp cho trạm cục bộ (RTU/PLC). Tầng Truyền thông (Network & Communication): Kiểm tra đường truyền cáp quang, cáp mạng, hoặc sóng vô tuyến. Xác định các lỗi mạng như gói tin bị rớt, cáp đứt, hoặc mất kết nối giữa máy tính trung tâm và thiết bị ngoại vi. Tầng Máy chủ và Phần mềm (Server & HMI): Kiểm tra dung lượng tài nguyên máy tính trung tâm (RAM, CPU, ổ cứng). Khởi động lại (Restart) tiến trình thu thập dữ liệu hoặc máy tính SCADA nếu bị treo. 4. Báo cáo và ghi nhận Ghi nhật ký: Ghi chép lại chính xác thời gian xảy ra, các thông số báo động, và hành động xử lý vào sổ nhật ký vận hành. Báo cáo cấp trên: Liên hệ với bộ phận bảo trì hoặc nhà cung cấp hệ thống để có phương án sửa chữa chuyên sâu",
+        "sampleAnswer": "Khi tín hiệu SCADA thay đổi bất thường, người vận hành cần ngay lập tức xác minh tính thực tế tại hiện trường (tránh báo động giả), sau đó cô lập sự cố để ngăn chặn rủi ro, và cuối cùng tiến hành kiểm tra theo luồng logic từ phần cứng (cảm biến, RTU) đến phần mềm (HMI, mạng truyền thông). Quy trình kiểm tra và xử lý cụ thể được thực hiện theo các bước sau: 1. Xác minh tại hiện trường Kiểm tra trực tiếp: Đối chiếu thông tin bất thường trên màn hình HMI với thiết bị thực tế để loại trừ trường hợp lỗi cảm biến, nhiễu tín hiệu. Đánh giá rủi ro: Đảm bảo an toàn cho khu vực xung quanh và con người trước khi can thiệp điều khiển. 2. Phân loại và cô lập sự cố Chuyển chế độ (nếu cần): Nếu hệ thống tự động gặp lỗi, chuyển sang chế độ điều khiển bằng tay (Manual) tại tủ điều khiển cục bộ (Local) để duy trì hoạt động. Ngừng khẩn cấp: Trong các tình huống vượt ngưỡng an toàn nghiêm trọng, kích hoạt nút dừng khẩn cấp (Emergency Stop) để tránh hỏng hóc thiết bị hoặc sự cố môi trường. 3. Quy trình chẩn đoán lỗi (Troubleshooting) Người vận hành hoặc kỹ thuật viên cần kiểm tra hệ thống theo 3 tầng cơ bản: Tầng Thiết bị hiện trường (Field Devices): Kiểm tra cảm biến (Sensor) hoặc thiết bị chấp hành (van, động cơ) xem có bị kẹt, chập cháy hoặc hỏng hóc vật lý không. Kiểm tra nguồn điện cấp cho trạm cục bộ (RTU/PLC). Tầng Truyền thông (Network & Communication): Kiểm tra đường truyền cáp quang, cáp mạng, hoặc sóng vô tuyến. Xác định các lỗi mạng như gói tin bị rớt, cáp đứt, hoặc mất kết nối giữa máy tính trung tâm và thiết bị ngoại vi. Tầng Máy chủ và Phần mềm (Server & HMI): Kiểm tra dung lượng tài nguyên máy tính trung tâm (RAM, CPU, ổ cứng). Khởi động lại (Restart) tiến trình thu thập dữ liệu hoặc máy tính SCADA nếu bị treo. 4. Báo cáo và ghi nhận Ghi nhật ký: Ghi chép lại chính xác thời gian xảy ra, các thông số báo động, và hành động xử lý vào sổ nhật ký vận hành. Báo cáo cấp trên: Liên hệ với bộ phận bảo trì hoặc nhà cung cấp hệ thống để có phương án sửa chữa chuyên sâu",
+        "requiredKeywords": [
+          "thời điểm phát sinh trạng thái thiết bị cảnh báo bảo vệ xác minh không kết luận vội báo cáo"
+        ],
+        "bonusKeywords": [
+          "nguồn tín hiệu đơn vị vận hành sự kiện đang diễn ra"
+        ],
+        "penaltyKeywords": [
+          "bỏ qua cảnh báo chỉ dựa vào một tín hiệu"
+        ],
+        "scoreMax": 10
+      },
+      {
+        "id": "5",
+        "sourceRow": "Sửa trực tiếp",
+        "sheetName": "Sửa trực tiếp",
+        "question": "Nêu các nguyên tắc cần lưu ý khi khôi phục cấp điện sau sự cố diện rộng.",
+        "questionImage": "",
+        "image": "",
+        "questionAudio": "",
+        "audio": "",
+        "options": [],
+        "correctIndexes": [],
+        "correctIndex": -1,
+        "correctTexts": [],
+        "correctText": "Quá trình khôi phục cấp điện sau sự cố diện rộng (rã lưới) cần tuân thủ nghiêm ngặt các nguyên tắc kỹ thuật nhằm đảm bảo an toàn thiết bị, ổn định hệ thống và cấp điện lại trong thời gian ngắn nhất. Dưới đây là các nguyên tắc cốt lõi cần lưu ý: 1. Ưu tiên khôi phục nguồn tự dùng và các phụ tải thiết yếu Cấp điện tự dùng: Nhanh chóng cấp điện lại cho hệ thống tự dùng của các nhà máy điện, trạm điện để khởi động lại tổ máy. Phụ tải quan trọng: Ưu tiên khôi phục điện cho các trung tâm hành chính, bệnh viện, cơ sở an ninh quốc phòng, và các trạm bơm chống úng/chống hạn trọng điểm. 2. Kiểm soát chặt chẽ thông số kỹ thuật (Tần số và Điện áp) Giữ giới hạn an toàn: Điều khiển tần số và điện áp trong khoảng giới hạn cho phép trong suốt quá trình khôi phục. Tránh sập nguồn lại: Việc đóng điện ồ ạt có thể gây quá tải hoặc sụt áp, làm rã lưới trở lại. Các thiết bị bảo vệ (như rơ-le tự động đóng lại) cần được giám sát chặt chẽ. 3. Phối hợp nhịp nhàng và tuân thủ mệnh lệnh điều độ Vai trò trung tâm: Tuân thủ tuyệt đối quy trình và mệnh lệnh từ cấp điều độ có thẩm quyền (Điều độ viên) để tránh thao tác sai lệch. Xác minh thông tin: Nhân viên vận hành tại các trạm/nhà máy điện phải kiểm tra kỹ tình trạng thiết bị, máy cắt trước khi thực hiện thao tác đóng điện. 4. Đóng điện theo từng phân đoạn Cấp điện từng phần: Lưới điện được khôi phục dần từ các nguồn phát (nhà máy điện) đến các nút truyền tải, sau đó mới đến mạng lưới phân phối và khách hàng. Tách tải trước khi khôi phục: Cần cắt bớt các phụ tải (mở máy cắt đầu ra) trước khi đóng đường dây hoặc máy biến áp để tránh dòng điện khởi động quá lớn gây sự cố ngược. 5. Kiểm tra kỹ nguyên nhân trước khi đóng lại (nếu xảy ra sự cố lặp lại) Nếu đường dây vừa đóng điện lại bị sự cố ngay, phải cô lập thiết bị để đơn vị quản lý vận hành kiểm tra bằng mắt thường (hoặc thiết bị chuyên dụng), tuyệt đối không đóng điện cưỡng bức nhiều lần",
+        "questionType": "essay",
+        "type": "essay",
+        "noShuffleOptions": false,
+        "source": "Mẫu kiểm tra tự luận nội bộ - chủ đề khôi phục hệ thống",
+        "sourceOriginal": "Mẫu kiểm tra tự luận nội bộ - chủ đề khôi phục hệ thống",
+        "answerRaw": "Quá trình khôi phục cấp điện sau sự cố diện rộng (rã lưới) cần tuân thủ nghiêm ngặt các nguyên tắc kỹ thuật nhằm đảm bảo an toàn thiết bị, ổn định hệ thống và cấp điện lại trong thời gian ngắn nhất. Dưới đây là các nguyên tắc cốt lõi cần lưu ý: 1. Ưu tiên khôi phục nguồn tự dùng và các phụ tải thiết yếu Cấp điện tự dùng: Nhanh chóng cấp điện lại cho hệ thống tự dùng của các nhà máy điện, trạm điện để khởi động lại tổ máy. Phụ tải quan trọng: Ưu tiên khôi phục điện cho các trung tâm hành chính, bệnh viện, cơ sở an ninh quốc phòng, và các trạm bơm chống úng/chống hạn trọng điểm. 2. Kiểm soát chặt chẽ thông số kỹ thuật (Tần số và Điện áp) Giữ giới hạn an toàn: Điều khiển tần số và điện áp trong khoảng giới hạn cho phép trong suốt quá trình khôi phục. Tránh sập nguồn lại: Việc đóng điện ồ ạt có thể gây quá tải hoặc sụt áp, làm rã lưới trở lại. Các thiết bị bảo vệ (như rơ-le tự động đóng lại) cần được giám sát chặt chẽ. 3. Phối hợp nhịp nhàng và tuân thủ mệnh lệnh điều độ Vai trò trung tâm: Tuân thủ tuyệt đối quy trình và mệnh lệnh từ cấp điều độ có thẩm quyền (Điều độ viên) để tránh thao tác sai lệch. Xác minh thông tin: Nhân viên vận hành tại các trạm/nhà máy điện phải kiểm tra kỹ tình trạng thiết bị, máy cắt trước khi thực hiện thao tác đóng điện. 4. Đóng điện theo từng phân đoạn Cấp điện từng phần: Lưới điện được khôi phục dần từ các nguồn phát (nhà máy điện) đến các nút truyền tải, sau đó mới đến mạng lưới phân phối và khách hàng. Tách tải trước khi khôi phục: Cần cắt bớt các phụ tải (mở máy cắt đầu ra) trước khi đóng đường dây hoặc máy biến áp để tránh dòng điện khởi động quá lớn gây sự cố ngược. 5. Kiểm tra kỹ nguyên nhân trước khi đóng lại (nếu xảy ra sự cố lặp lại) Nếu đường dây vừa đóng điện lại bị sự cố ngay, phải cô lập thiết bị để đơn vị quản lý vận hành kiểm tra bằng mắt thường (hoặc thiết bị chuyên dụng), tuyệt đối không đóng điện cưỡng bức nhiều lần",
+        "sampleAnswer": "Quá trình khôi phục cấp điện sau sự cố diện rộng (rã lưới) cần tuân thủ nghiêm ngặt các nguyên tắc kỹ thuật nhằm đảm bảo an toàn thiết bị, ổn định hệ thống và cấp điện lại trong thời gian ngắn nhất. Dưới đây là các nguyên tắc cốt lõi cần lưu ý: 1. Ưu tiên khôi phục nguồn tự dùng và các phụ tải thiết yếu Cấp điện tự dùng: Nhanh chóng cấp điện lại cho hệ thống tự dùng của các nhà máy điện, trạm điện để khởi động lại tổ máy. Phụ tải quan trọng: Ưu tiên khôi phục điện cho các trung tâm hành chính, bệnh viện, cơ sở an ninh quốc phòng, và các trạm bơm chống úng/chống hạn trọng điểm. 2. Kiểm soát chặt chẽ thông số kỹ thuật (Tần số và Điện áp) Giữ giới hạn an toàn: Điều khiển tần số và điện áp trong khoảng giới hạn cho phép trong suốt quá trình khôi phục. Tránh sập nguồn lại: Việc đóng điện ồ ạt có thể gây quá tải hoặc sụt áp, làm rã lưới trở lại. Các thiết bị bảo vệ (như rơ-le tự động đóng lại) cần được giám sát chặt chẽ. 3. Phối hợp nhịp nhàng và tuân thủ mệnh lệnh điều độ Vai trò trung tâm: Tuân thủ tuyệt đối quy trình và mệnh lệnh từ cấp điều độ có thẩm quyền (Điều độ viên) để tránh thao tác sai lệch. Xác minh thông tin: Nhân viên vận hành tại các trạm/nhà máy điện phải kiểm tra kỹ tình trạng thiết bị, máy cắt trước khi thực hiện thao tác đóng điện. 4. Đóng điện theo từng phân đoạn Cấp điện từng phần: Lưới điện được khôi phục dần từ các nguồn phát (nhà máy điện) đến các nút truyền tải, sau đó mới đến mạng lưới phân phối và khách hàng. Tách tải trước khi khôi phục: Cần cắt bớt các phụ tải (mở máy cắt đầu ra) trước khi đóng đường dây hoặc máy biến áp để tránh dòng điện khởi động quá lớn gây sự cố ngược. 5. Kiểm tra kỹ nguyên nhân trước khi đóng lại (nếu xảy ra sự cố lặp lại) Nếu đường dây vừa đóng điện lại bị sự cố ngay, phải cô lập thiết bị để đơn vị quản lý vận hành kiểm tra bằng mắt thường (hoặc thiết bị chuyên dụng), tuyệt đối không đóng điện cưỡng bức nhiều lần",
+        "requiredKeywords": [
+          "an toàn hệ thống nguồn điện khả năng mang tải khôi phục từng phần tránh quá tải điện áp tần số"
+        ],
+        "bonusKeywords": [
+          "phối hợp điều độ phụ tải quan trọng theo trình tự dòng tải"
+        ],
+        "penaltyKeywords": [
+          "đóng điện đồng loạt không theo dõi thông số"
+        ],
+        "scoreMax": 10
+      }
+    ]
+	},
     {
       "id": "bo_2",
       "name": "Bộ câu hỏi Điều độ 2025",
