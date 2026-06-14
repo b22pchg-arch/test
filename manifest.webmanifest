@@ -1,8 +1,8 @@
 {
-  "name": "Trắc nghiệm Excel Offline V35.0",
-  "short_name": "Quiz V35.0",
-  "description": "PWA trắc nghiệm Excel offline, dùng default-bank.json làm ngân hàng mặc định và vẫn hỗ trợ xuất HTML nhúng dữ liệu.",
-  "start_url": "./index.html?v=V35",
+  "name": "Trắc nghiệm Excel Offline V40.0",
+  "short_name": "Quiz V40.0",
+  "description": "PWA trắc nghiệm Excel offline, hỗ trợ default-bank.json có bank và sets, bảng xem ngân hàng gọn, ẩn/hiện đồng loạt chi tiết câu hỏi.",
+  "start_url": "./index.html?v=V40",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef7f6",
@@ -19,5 +19,5 @@
       "type": "image/png"
     }
   ],
-  "id": "trac-nghiem-excel-offline-v35-0"
+  "id": "trac-nghiem-excel-offline-v40-0"
 }
