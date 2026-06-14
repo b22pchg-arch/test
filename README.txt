@@ -1,4 +1,1 @@
-PWA trắc nghiệm Excel Offline V30.
-- Ẩn/hiện các mục 0, 0b, 1, 1a, 1b, 1c.
-- Nếu không chọn số câu theo bộ, mục 2/2b dùng ngân hàng hiện hành.
-- Ôn tập có chế độ random câu chưa học theo từng bộ.
+V35: PWA ưu tiên nạp ngân hàng mặc định từ default-bank.json. Muốn thay bộ đề mặc định, thay file default-bank.json rồi ép cập nhật PWA. Chức năng xuất HTML nhúng dữ liệu vẫn được giữ.

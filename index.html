@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0f766e">
-  <link rel="manifest" href="./manifest.webmanifest?v=V30">
+  <link rel="manifest" href="./manifest.webmanifest?v=V35">
   <link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="description" content="PWA trắc nghiệm Excel offline có dữ liệu nhúng sẵn, đọc Excel bằng SheetJS, tạo đề đảo câu/đáp án, chấm điểm và phân tích đúng sai.">
-  <title>Trắc nghiệm Excel Offline PWA V30</title>
+  <title>Trắc nghiệm Excel Offline PWA V35</title>
   <style>
 :root{--bg:#eef7f6;--panel:#fff;--text:#0f172a;--muted:#475569;--line:#d7e3e2;--primary:#0f766e;--primary2:#115e59;--danger:#b91c1c;--ok:#15803d;--warn:#b45309;--info:#0369a1;--shadow:0 10px 28px rgba(15,23,42,.10);--r:16px}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}body{min-height:100vh}.app{max-width:1280px;margin:0 auto;padding:14px 14px 92px}header{position:sticky;top:0;z-index:30;margin:0;padding:14px;background:linear-gradient(135deg,#0f766e,#0b4f49);color:#fff;box-shadow:var(--shadow)}header .inner{max-width:1280px;margin:0 auto}header h1{margin:0 0 6px;font-size:clamp(20px,4vw,30px);letter-spacing:.2px}header p{margin:0;color:#dffaf7;font-size:14px}.grid{display:grid;grid-template-columns:1fr;gap:12px}@media (min-width:990px){.grid.two{grid-template-columns:430px 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}.card h2,.card h3{margin:0 0 10px}.card h2{font-size:20px}.card h3{font-size:17px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}label{font-weight:800;font-size:13px;color:#1f2937;display:block;margin:8px 0 5px}input,select,textarea,button{font:inherit}input[type=file],input[type=number],input[type=text],select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:10px;background:#fff;color:var(--text)}input[type=checkbox]{transform:scale(1.12);margin-right:6px}select[multiple]{min-height:150px}button{border:0;border-radius:12px;padding:10px 13px;background:var(--primary);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(15,118,110,.22)}button:hover{background:var(--primary2)}button.secondary{background:#334155}button.light{background:#e2e8f0;color:#0f172a;box-shadow:none}button.danger{background:var(--danger)}button.info{background:var(--info)}button:disabled{opacity:.55;cursor:not-allowed}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;background:#ecfeff;color:#155e75;font-weight:900;font-size:12px;border:1px solid #a5f3fc;margin:2px}.pill.okp{background:#f0fdf4;color:#166534;border-color:#86efac}.pill.warnp{background:#fffbeb;color:#92400e;border-color:#fcd34d}.ok{color:var(--ok);font-weight:900}.bad{color:var(--danger);font-weight:900}.warn{color:var(--warn);font-weight:900}.status{border-radius:12px;padding:10px;background:#f8fafc;border:1px dashed #cbd5e1;white-space:pre-wrap}.status.bad{border-color:#fecaca;background:#fff1f2}.status.good{border-color:#bbf7d0;background:#f0fdf4}.status.info{border-color:#bae6fd;background:#f0f9ff}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.table-wrap table{min-width:940px;width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #e2e8f0;padding:9px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#f1f5f9;z-index:1}.nowrap{white-space:nowrap}details{border:1px solid var(--line);border-radius:12px;background:#fbffff;padding:10px;margin:10px 0}summary{font-weight:900;cursor:pointer}.question-card{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:12px;margin:10px 0}.question-title{font-weight:900;margin-bottom:8px}.option{display:flex;gap:8px;align-items:flex-start;border:1px solid #e2e8f0;border-radius:12px;padding:9px;margin:7px 0;background:#f8fafc}.option:hover{background:#eff6ff}.option input{margin-top:4px}.letter{min-width:28px;height:28px;border-radius:999px;background:#dbeafe;display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#1e3a8a}.chosen{border-color:#38bdf8;background:#ecfeff}.right{border-color:#22c55e;background:#f0fdf4}.wrong{border-color:#ef4444;background:#fef2f2}.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:9px 14px;box-shadow:0 -8px 22px rgba(15,23,42,.09)}.stickybar-inner{max-width:1280px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.progress{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden;min-width:170px;flex:1}.progress>span{display:block;height:100%;width:0;background:var(--primary);transition:.2s}.analysis-row{margin:7px 0;padding:9px;border-left:4px solid #0ea5e9;background:#f0f9ff;border-radius:8px}.analysis-row b{color:#0f172a}.analysis-row.source{background:#fefce8;border-left-color:#eab308}.tag{display:inline-block;margin:2px 3px 2px 0;padding:2px 6px;border-radius:999px;background:#e0f2fe;color:#075985;font-size:12px}.mapping-grid{display:grid;grid-template-columns:1fr;gap:8px}@media (min-width:720px){.mapping-grid{grid-template-columns:repeat(2,1fr)}}.banner{padding:11px;border-radius:14px;background:#ecfdf5;border:1px solid #86efac;color:#14532d;margin-bottom:10px}.banner b{font-size:15px}@media (max-width:700px){.app{padding:10px 10px 100px}.card{padding:11px;border-radius:13px}button{width:100%;justify-content:center}.row button{flex:1 1 150px}.stickybar-inner{align-items:stretch}.progress{width:100%;flex-basis:100%}.table-wrap table{min-width:780px}.option{padding:8px}.letter{min-width:26px;height:26px}}
 /* V6: giải thích ngược, lấy phương án sai làm trọng tâm, chỉ rõ đáp án đúng có gì mà sai không có */
@@ -220,7 +220,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 .guide-card details{background:#f8fafc;border-color:#dbeafe}.guide-card summary{color:#0f766e}.guide-card ol,.guide-card ul{margin-top:6px;padding-left:20px}.guide-card li{margin:4px 0}.guide-card code{background:#e2e8f0;border-radius:6px;padding:1px 5px}.embedded-export-note{background:#f0fdf4;border:1px dashed #86efac;border-radius:12px;padding:8px;margin-top:8px;color:#14532d}.sticky-study-mark{display:none!important}body.study-mode .sticky-study-mark{display:inline-flex!important}.export-current-html{background:#7c3aed!important}.export-current-html:hover{background:#6d28d9!important}.help-grid{display:grid;grid-template-columns:1fr;gap:8px}.help-mini{border:1px solid #e2e8f0;border-radius:12px;padding:9px;background:#fff}@media (min-width:840px){.help-grid{grid-template-columns:repeat(2,1fr)}}@media (max-width:700px){.guide-card details{padding:8px}.sticky-study-mark{font-size:12px!important;padding:7px 6px!important}.export-current-html{width:100%!important}}
 
 
-/* V30: ảnh trong câu hỏi và phương án */
+/* V31: ảnh trong câu hỏi và phương án */
 .media-box{margin:10px 0;max-width:100%;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:#f8fafc;padding:8px}
 .media-box img{display:block;max-width:100%;height:auto;max-height:70vh;margin:auto;border-radius:8px;object-fit:contain}
 .question-title .media-box,.result-question-title .media-box{margin-top:10px}
@@ -233,41 +233,54 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 .unanswered-list{margin-top:10px;padding:10px;border:1px solid #fed7aa;background:#fff7ed;border-radius:12px;color:#9a3412;font-weight:800;line-height:1.5}
 @media(max-width:700px){.media-box img{max-height:55vh}.option-media img{max-height:220px}.preview-img{max-width:180px;max-height:130px}}
 
-/* V30: hỗ trợ ảnh câu hỏi/ảnh phương án; cảnh báo câu chưa làm khi nộp bài */
+/* V31: hỗ trợ ảnh câu hỏi/ảnh phương án; cảnh báo câu chưa làm khi nộp bài */
 .bank-manager-card .set-toolbar{display:grid;grid-template-columns:1fr;gap:8px}.bank-manager-card .set-actions{display:flex;gap:8px;flex-wrap:wrap}.bank-set-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px}.bank-set-table{min-width:1040px;width:100%;border-collapse:collapse}.bank-set-table input[type=number]{max-width:110px;padding:7px;border-radius:9px}.bank-set-table .set-name{font-weight:900;color:#0f766e}.bank-set-table .set-note{font-size:12px;color:#475569}.bank-set-table .mini-btn{padding:7px 8px;border-radius:9px;font-size:12px;box-shadow:none}.set-hint{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:12px;padding:8px;margin-top:8px}.set-count-zero{background:#fff}.set-count-used{border-color:#0f766e!important;background:#ecfdf5!important}.set-current-row{background:#f0fdfa}.set-json-file{background:#fff}.set-badge{display:inline-block;border:1px solid #bae6fd;background:#ecfeff;color:#155e75;border-radius:999px;padding:2px 7px;font-size:12px;font-weight:900;margin:1px}
 @media(max-width:700px){.bank-manager-card .set-actions button{width:100%!important}.bank-set-table{min-width:920px}.bank-set-table-wrap{margin-left:-2px;margin-right:-2px}.bank-set-table input[type=number]{max-width:95px}}
 
 
-/* V30: nhập câu hỏi trực tiếp, dán/chụp ảnh và lưu base64 vào ngân hàng */
+/* V31: nhập câu hỏi trực tiếp, dán/chụp ảnh và lưu base64 vào ngân hàng */
 .manual-entry-card .entry-note{padding:10px 12px;border-radius:12px;background:#f0f9ff;border:1px solid #bae6fd;color:#075985;margin:8px 0}.manual-editor-grid{display:grid;grid-template-columns:1fr;gap:10px}.manual-image-zone{border:2px dashed #94a3b8;border-radius:14px;background:#f8fafc;min-height:94px;padding:10px;display:flex;gap:10px;align-items:center;justify-content:space-between;cursor:pointer;transition:.15s}.manual-image-zone.active{border-color:#0f766e;background:#ecfdf5;box-shadow:0 0 0 3px rgba(15,118,110,.12)}.manual-image-zone .manual-zone-text{font-size:13px;color:#334155}.manual-preview{max-width:180px;max-height:130px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;object-fit:contain;display:none}.manual-image-zone.has-image .manual-preview{display:block}.manual-option-editor{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:10px;margin:9px 0}.manual-option-top{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:start}.manual-option-top label{margin:0}.manual-option-top textarea{min-height:72px}.manual-option-badge{min-width:36px;height:36px;border-radius:999px;background:#dbeafe;color:#1e3a8a;display:inline-flex;align-items:center;justify-content:center;font-weight:900}.manual-correct-label{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:900;color:#14532d;background:#f0fdf4;border:1px solid #86efac;border-radius:999px;padding:6px 9px;white-space:nowrap}.manual-editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.manual-paste-target{font-size:12px;color:#0f766e;font-weight:900}.manual-status{margin-top:8px}.manual-file-hidden{display:none}.manual-entry-card button.tiny{padding:7px 9px;border-radius:10px;font-size:12px}.manual-entry-card .danger.tiny{background:#b91c1c}.manual-option-image-row{margin-top:8px}.manual-actions-line{align-items:center;justify-content:space-between}.manual-current-target{padding:6px 10px;border-radius:999px;background:#ecfeff;border:1px solid #a5f3fc;color:#155e75;font-size:12px;font-weight:900}.manual-entry-card textarea{resize:vertical}.manual-entry-card .source-edit{min-height:88px}@media (min-width:760px){.manual-editor-grid{grid-template-columns:1fr 1fr}.manual-entry-full{grid-column:1/-1}.manual-image-zone{min-height:110px}.manual-preview{max-width:220px;max-height:150px}}@media (max-width:700px){.manual-option-top{grid-template-columns:auto 1fr}.manual-correct-label{grid-column:1/-1}.manual-image-zone{display:block}.manual-preview{margin-top:8px;max-width:100%;width:100%}.manual-editor-actions button{flex:1 1 150px}}
 
 
-/* V30: quản lý câu hỏi nhập trực tiếp, xóa câu hỏi và thống kê ôn tập theo bộ */
+
+/* V34: khóa đảo phương án theo từng câu trong ngân hàng */
+.bank-lock-label{display:inline-flex;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;background:#f8fafc;border:1px solid #cbd5e1;font-size:12px;font-weight:800;white-space:nowrap;color:#334155}
+.bank-lock-label input{width:auto!important;margin:0!important;accent-color:#0f766e}
+.bank-row-no-shuffle td{background:#fffbeb!important}
+.bank-row-no-shuffle .bank-lock-label{background:#fef3c7;border-color:#f59e0b;color:#92400e}
+.option-lock-cell{min-width:130px!important;text-align:center}
+@media(max-width:700px){.bank-lock-label{font-size:11px;padding:5px 7px}.option-lock-cell{min-width:110px!important}}
+/* V31: quản lý câu hỏi nhập trực tiếp, xóa câu hỏi và thống kê ôn tập theo bộ */
 .manual-new-set-row{margin-top:7px}.manual-new-set-row input{border-color:#a7f3d0;background:#f0fdf4}.bank-delete-btn{padding:6px 9px!important;border-radius:999px!important;font-size:12px!important;width:auto!important;box-shadow:none!important}.study-selected-summary{margin-top:8px;padding:8px;border:1px dashed #93c5fd;border-radius:12px;background:#eff6ff;color:#1e3a8a}.study-selected-summary b{color:#0f172a}.study-selected-summary .set-line{display:block;margin:2px 0}.quiz-study-remaining{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px;padding:8px;border-radius:12px;background:#eff6ff;border:1px dashed #93c5fd}.quiz-study-remaining .pill{margin:0 2px 2px 0}.manual-target-help{font-size:12px;color:#475569;margin-top:4px}
 @media(max-width:700px){.bank-delete-btn{padding:5px 8px!important;font-size:11.5px!important}.study-selected-summary{font-size:12px}.quiz-study-remaining{font-size:12px}}
 
 
-/* V30: ẩn/hiện nhanh các mục thiết lập 0, 0b, 1, 1a, 1b, 1c */
+/* V31: ẩn/hiện nhanh các mục thiết lập 0, 0b, 1, 1a, 1b, 1c */
 .collapsible-section{position:relative}.collapsible-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px}.collapsible-head h2{margin:0!important;flex:1}.section-toggle-btn{width:auto!important;min-width:72px;padding:7px 10px;border-radius:999px;background:#e2e8f0;color:#0f172a;box-shadow:none;font-size:12px}.section-toggle-btn:hover{background:#cbd5e1}.collapsible-section.collapsed{padding-bottom:10px}.collapsible-section.collapsed>:not(.collapsible-head){display:none!important}.study-random-hint{display:block;margin-top:4px;color:#475569;font-size:12px}.set-count-used{border-color:#0f766e!important;background:#ecfdf5!important}.set-count-zero{background:#fff!important}
 @media (max-width:700px){.collapsible-head{gap:6px}.section-toggle-btn{min-width:58px;padding:6px 8px;font-size:12px}}
+
+
+/* V31: đọc mẫu Excel một cột, đáp án đúng nhận theo màu chữ */
+.onecol-format-box{border:1px dashed #93c5fd;background:#eff6ff;border-radius:12px;padding:10px;margin:10px 0}.onecol-format-box code{background:#dbeafe;border-radius:6px;padding:1px 4px}.onecol-warn{border-left:4px solid #f59e0b;background:#fffbeb;padding:8px;border-radius:8px;margin-top:8px}.onecol-actions button{width:auto}.onecol-status{margin-top:8px}
+@media(max-width:700px){.onecol-actions button{width:100%}}
 
 </style>
   
 </head>
 <body>
 
-<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V30</h1><p>Dữ liệu nhúng sẵn, quản lý nhiều bộ câu hỏi, nhập câu hỏi trực tiếp, hỗ trợ ảnh và câu chọn nhiều đáp án.</p></div></header>
+<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V35</h1><p>Dữ liệu nhúng sẵn, quản lý nhiều bộ câu hỏi, nhập câu hỏi trực tiếp, hỗ trợ ảnh và câu chọn nhiều đáp án.</p></div></header>
 <main class="app">
   <section class="grid two">
     <div>
       <div class="card">
-        <h2>0) Dữ liệu nhúng sẵn</h2>
-        <div class="banner" id="embeddedInfo">Đang nạp dữ liệu nhúng...</div>
+        <h2>0) Dữ liệu mặc định / nhúng sẵn</h2>
+        <div class="banner" id="embeddedInfo">Đang nạp dữ liệu mặc định...</div>
         <div class="row">
-          <button id="btnUseEmbedded" class="info">Dùng dữ liệu nhúng</button>
-          <button id="btnSaveEmbedded" class="secondary">Lưu dữ liệu nhúng vào database</button>
+          <button id="btnUseEmbedded" class="info">Dùng dữ liệu mặc định</button>
+          <button id="btnSaveEmbedded" class="secondary">Lưu dữ liệu hiện tại vào database</button>
         </div>
-        <p class="muted">Bản V30 bổ sung ẩn/hiện các mục thiết lập, tự tính tổng số câu theo từng bộ và chế độ ôn tập random theo bộ.</p>
+        <p class="muted">Bản V35 ưu tiên nạp ngân hàng mặc định từ file <b>default-bank.json</b> trong bản PWA ZIP. Muốn thay ngân hàng mặc định, chỉ cần thay file JSON này. Bản HTML đơn và file HTML xuất ra vẫn dùng dữ liệu nhúng bên trong.</p>
       </div>
       <div class="card guide-card no-print" id="guideCard">
         <h2>0b) Hướng dẫn sử dụng</h2>
@@ -278,6 +291,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
             <li>Muốn dùng bộ đề khác: chọn file Excel, chọn sheet, bấm <b>Đọc sheet đang chọn</b> hoặc <b>Đọc tất cả sheet</b>.</li>
             <li>Sau khi kiểm tra dữ liệu đúng, bấm <b>Lưu ngân hàng hiện tại</b> để lưu database offline.</li>
             <li>Bấm <b>Lưu HTML nhúng dữ liệu hiện tại</b> để tạo một file HTML mới có dữ liệu Excel vừa nạp nằm sẵn bên trong, lần sau mở là dùng ngay.</li>
+            <li>Với bản PWA ZIP, ngân hàng mặc định nằm trong file <b>default-bank.json</b>. Có thể thay file này để đổi bộ đề mặc định mà không cần sửa HTML.</li>
           </ol>
         </details>
         <details>
@@ -315,6 +329,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
             <li>Ở bảng quản lý bộ câu hỏi, nhập số câu cần lấy ở cột <b>Tạo đề</b> hoặc <b>Ôn tập</b>. Bộ nào không dùng thì để trống hoặc nhập <b>0</b>. Tổng số đã nhập sẽ tự điền vào ô <b>Số câu hỏi</b> hoặc <b>Số câu mỗi lượt ôn</b>.</li>
             <li>Bấm <b>Xuất JSON ngân hàng</b> để chuyển sang máy khác; máy nhận dùng <b>Nhập JSON ngân hàng</b>.</li>
             <li>Bấm <b>Lưu HTML nhúng dữ liệu hiện tại</b> để tạo HTML mới có sẵn ngân hàng hiện tại và danh sách các bộ đã quản lý.</li>
+            <li>Để thay ngân hàng mặc định của PWA, xuất/chuẩn bị JSON đúng cấu trúc rồi đổi tên thành <b>default-bank.json</b> đặt cùng thư mục với <b>index.html</b>.</li>
           </ul>
         </details>
         <details>
@@ -341,6 +356,12 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
           <button id="btnExportStandaloneHtml" class="export-current-html" disabled>Lưu HTML nhúng dữ liệu hiện tại</button>
           <button id="btnLoadBank" class="light">Dùng database đã lưu</button>
           <button id="btnClearBank" class="danger">Xóa database</button>
+        </div>
+        <div class="onecol-format-box">
+          <b>Mẫu Excel mới dạng 1 cột:</b> cột A từ hàng 2; dòng bắt đầu bằng <code>Câu ...:</code> là câu hỏi; phương án bắt đầu bằng <code>A. </code>, <code>B. </code> ... <code>AZ. </code>; phương án đúng là phương án có <b>màu chữ khác màu đen mặc định</b>. Các dòng nằm giữa câu hỏi và phương án thuộc nội dung câu hỏi; các dòng nằm giữa hai phương án thuộc phương án phía trên.
+          <label><input id="oneColumnColorMode" type="checkbox" checked> Tự nhận diện mẫu 1 cột theo màu chữ khi đọc sheet</label>
+          <div class="row onecol-actions"><button id="btnReadOneColumnColor" class="info">Đọc mẫu 1 cột theo màu đáp án đúng</button></div>
+          <div id="oneColumnStatus" class="status info onecol-status">Nếu đáp án đúng không nhận được màu, hãy lưu file dạng .xlsx và tô màu chữ toàn bộ dòng phương án đúng, không dùng CSV.</div>
         </div>
         <div class="embedded-export-note">Sau khi đọc Excel hoặc cập nhật căn cứ, dùng nút <b>Lưu HTML nhúng dữ liệu hiện tại</b> để xuất một HTML mới chứa sẵn ngân hàng câu hỏi hiện tại.</div>
         <details id="manualBox">
@@ -546,7 +567,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 <script>
 'use strict';
 
-const APP_VERSION = 'V30.0-20260614-collapse-random-study-set-counts';
+const APP_VERSION = 'V35.0-20260614-default-bank-json-embedded-export';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -554,6 +575,7 @@ const STUDY_PROGRESS_KEY = 'excel_quiz_study_progress_v13';
 const STUDY_ACTIVE_KEY = 'excel_quiz_study_active_ids_v13';
 const STUDY_CONFIG_KEY = 'excel_quiz_study_config_v13';
 const QUESTION_SETS_KEY = 'excel_quiz_question_sets_v23';
+const DEFAULT_BANK_URL = './default-bank.json';
 const $ = (id) => document.getElementById(id);
 
 const els = {};
@@ -585,13 +607,31 @@ la là cua của va và hoac hoặc de để den đến duoc được bi bị tr
 VI_STOPWORDS.delete('phan'); // giữ được cụm kỹ thuật như "phân phối điện"
 
 function initElements(){
-  ['embeddedInfo','status','bankStats','bankPreview','pwaInstallStatus','questionSetName','questionSetManager','btnAddCurrentSet','btnExportQuestionSets','btnImportQuestionSets','btnClearQuestionSets','questionSetsImportFile','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','internetQuestionSelect','internetSearchTemplate','internetProposedSource','internetStatus','internetApiUrl','btnInternetRefreshList','btnInternetAutoBuildSource','btnInternetEnrichAllByLegalRef','btnInternetOpenSearch','btnInternetOpenOfficial','btnInternetFetchApi','btnInternetSuggestSource','btnInternetApplySource','btnInternetAppendSource','btnInternetSaveDb','btnInternetExportXlsx','btnInternetExportLinks','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnInstallPWA','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyRandomMode','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml','manualTargetSet','manualNewSetName','manualQuestionId','manualQuestionText','manualQuestionImagePreview','manualQuestionImageFile','btnManualPickQuestionImage','btnManualClearQuestionImage','manualOptionsList','btnManualAddOption','btnManualCaptureScreen','manualSourceText','btnManualAddQuestion','btnManualSaveDb','btnManualReset','manualEntryStatus','manualPasteTargetText'].forEach(id => els[id] = $(id));
+  ['embeddedInfo','status','bankStats','bankPreview','pwaInstallStatus','oneColumnColorMode','btnReadOneColumnColor','oneColumnStatus','questionSetName','questionSetManager','btnAddCurrentSet','btnExportQuestionSets','btnImportQuestionSets','btnClearQuestionSets','questionSetsImportFile','excelFile','sheetSelect','btnReadSheet','btnReadAll','btnUseEmbedded','btnSaveEmbedded','btnSaveBank','btnLoadBank','btnClearBank','manualBox','manualHeaderRow','manualQuestionCol','manualAnswerCol','manualSourceCol','manualOptionCols','btnRefreshMapping','btnApplyMapping','internetQuestionSelect','internetSearchTemplate','internetProposedSource','internetStatus','internetApiUrl','btnInternetRefreshList','btnInternetAutoBuildSource','btnInternetEnrichAllByLegalRef','btnInternetOpenSearch','btnInternetOpenOfficial','btnInternetFetchApi','btnInternetSuggestSource','btnInternetApplySource','btnInternetAppendSource','btnInternetSaveDb','btnInternetExportXlsx','btnInternetExportLinks','quizCount','shuffleQuestions','shuffleOptions','showAutoExplain','seedInput','btnStartQuiz','quizInfo','quizList','btnSubmitQuiz','btnSubmitSticky','btnExitFocus','btnExitFocus2','btnSubmitQuizTop','btnScrollTopQuiz','btnScrollTopSticky','btnExitSticky','btnBackToSetup','btnBackToSetupSticky','btnNewQuizResult','btnNewQuizSticky','resultSummary','resultList','progressText','progressBar','btnPrint','btnInstallPWA','btnClearOldCache','btnForceUpdatePWA','studyBatchSize','studyMasterThreshold','studyShuffleQuestions','studyRandomMode','studyShuffleOptions','btnStartStudy','btnNextStudy','btnResetStudy','btnMarkStudyAllLearned','btnSaveStudyProgress','btnSaveStudyProgressSticky','btnExportStudyStats','btnExportStudyWrongs','studyStats','btnExportResultHtml','manualTargetSet','manualNewSetName','manualQuestionId','manualQuestionText','manualQuestionImagePreview','manualQuestionImageFile','btnManualPickQuestionImage','btnManualClearQuestionImage','manualOptionsList','btnManualAddOption','btnManualCaptureScreen','manualSourceText','btnManualAddQuestion','btnManualSaveDb','btnManualReset','manualEntryStatus','manualPasteTargetText'].forEach(id => els[id] = $(id));
 }
 
 function setStatus(message, type='info'){
   if(!els.status) return;
   els.status.className = 'status ' + type;
   els.status.textContent = message;
+}
+function formatImportErrorLines(errors, max=40){
+  const arr = Array.isArray(errors) ? errors : [];
+  if(!arr.length) return '';
+  const lines = arr.slice(0, max).map(e => {
+    const sheet = e.sheetName ? ` [${e.sheetName}]` : '';
+    const row = e.row || e.sourceRow || '?';
+    const reason = e.reason || 'Không rõ lỗi';
+    const extra = e.question ? ` — ${visibleText(e.question).slice(0,120)}` : (e.text ? ` — ${visibleText(e.text).slice(0,120)}` : '');
+    const ans = e.answerRaw ? ` — đáp án: ${visibleText(e.answerRaw).slice(0,60)}` : '';
+    return `Hàng ${row}${sheet}: ${reason}${ans}${extra}`;
+  });
+  if(arr.length > max) lines.push(`... còn ${arr.length - max} dòng/câu lỗi khác`);
+  return lines.join('\n');
+}
+function appendErrorLineDetails(message, errors, max=40){
+  const detail = formatImportErrorLines(errors, max);
+  return detail ? `${message}\n⚠️ Dòng/câu cần kiểm tra:\n${detail}` : message;
 }
 function escapeHtml(v){ return String(v ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
 
@@ -907,18 +947,15 @@ function explainDifference(correct, wrong){
 }
 
 function cloneData(obj){ return JSON.parse(JSON.stringify(obj)); }
-function parseEmbedded(){
-  const node = $('embedded-bank');
-  if(!node) throw new Error('Không tìm thấy khối dữ liệu nhúng trong HTML.');
-  const payload = JSON.parse(node.textContent || '{}');
+function applyBankPayload(payload, sourceLabel='dữ liệu'){
   const bank = Array.isArray(payload.bank) ? payload.bank : [];
   state.meta = payload.meta || {};
   state.bank = normalizeBank(bank);
-  state.errors = [];
-  state.fileName = state.meta.sourceFile || 'Dữ liệu nhúng';
-  state.currentSheet = state.meta.sheetName || 'Dữ liệu nhúng';
+  state.errors = Array.isArray(payload.skipped) ? payload.skipped : [];
+  state.fileName = state.meta.sourceFile || sourceLabel || 'Dữ liệu mặc định';
+  state.currentSheet = state.meta.sheetName || sourceLabel || 'Dữ liệu mặc định';
   state.currentRows = [];
-  state.currentMapping = {source:'embedded'};
+  state.currentMapping = {source:sourceLabel};
   if(Array.isArray(payload.sets)){
     state.questionSets = normalizeQuestionSets(payload.sets);
     saveQuestionSets();
@@ -926,9 +963,37 @@ function parseEmbedded(){
     loadQuestionSets();
   }
   if(els.embeddedInfo){
-    els.embeddedInfo.innerHTML = `<b>${state.bank.length}</b> câu hỏi đã nhúng từ <b>${escapeHtml(state.fileName)}</b>. Mở file là dùng ngay, không cần tải Excel.`;
+    const jsonHint = sourceLabel === 'default-bank.json' ? 'từ file <b>default-bank.json</b>' : 'từ dữ liệu nhúng trong HTML';
+    els.embeddedInfo.innerHTML = `<b>${state.bank.length}</b> câu hỏi đã nạp ${jsonHint}. ${sourceLabel === 'default-bank.json' ? 'Muốn thay ngân hàng mặc định, chỉ cần thay file JSON này trong thư mục PWA.' : 'Mở file HTML đơn là dùng ngay, không cần file ngoài.'}`;
   }
   renderAll();
+}
+function parseEmbedded(){
+  const node = $('embedded-bank');
+  if(!node) throw new Error('Không tìm thấy khối dữ liệu nhúng trong HTML.');
+  const payload = JSON.parse(node.textContent || '{}');
+  applyBankPayload(payload, 'HTML nhúng');
+}
+async function loadDefaultBankJson(silent=false){
+  if(location.protocol === 'file:') throw new Error('Đang mở bằng file:// nên không nạp default-bank.json; sẽ dùng dữ liệu nhúng trong HTML.');
+  const url = DEFAULT_BANK_URL + '?v=' + encodeURIComponent(APP_VERSION) + '&t=' + Date.now();
+  const resp = await fetch(url, {cache:'no-store'});
+  if(!resp.ok) throw new Error('Không đọc được default-bank.json: HTTP ' + resp.status);
+  const payload = await resp.json();
+  if(!payload || !Array.isArray(payload.bank)) throw new Error('default-bank.json không đúng cấu trúc: cần có mảng bank.');
+  applyBankPayload(payload, 'default-bank.json');
+  if(!silent) setStatus(`✅ Đã nạp ${state.bank.length} câu hỏi từ default-bank.json.`, 'good');
+  return true;
+}
+async function loadDefaultBankOrEmbedded(){
+  try{
+    await loadDefaultBankJson(true);
+    return 'default-bank.json';
+  }catch(err){
+    console.warn('Không nạp được default-bank.json, dùng dữ liệu nhúng:', err);
+    parseEmbedded();
+    return 'HTML nhúng';
+  }
 }
 function normalizeOptionForStorage(opt){
   if(opt && typeof opt === 'object'){
@@ -943,6 +1008,7 @@ function normalizeBank(bank){
     const qImg = normalizeImageSrc(q.questionImage || q.image || q.questionImg || q.img || '');
     const correctIndexes = normalizeCorrectIndexes(q, options);
     const correctTexts = correctIndexes.map(idx => getOptionText(options[idx])).filter(Boolean);
+    const noShuffleOptions = parseNoShuffleFlag(q.noShuffleOptions ?? q.noShuffle ?? q.fixedOptionOrder ?? q.keepOptionOrder ?? q.lockOptionOrder ?? q.optionOrderLocked ?? q.disableOptionShuffle ?? '');
     return {
       id: visibleText(q.id) || String(i+1),
       sourceRow: q.sourceRow || '',
@@ -956,6 +1022,7 @@ function normalizeBank(bank){
       correctTexts,
       correctText: correctTexts.join(' | '),
       questionType: correctIndexes.length > 1 ? 'multi' : 'single',
+      noShuffleOptions,
       source: visibleText(q.source),
       sourceOriginal: visibleText(q.sourceOriginal || ''),
       answerRaw: visibleText(q.answerRaw || correctIndexes.map(idx => String(idx+1)).join(','))
@@ -963,6 +1030,19 @@ function normalizeBank(bank){
   }).filter(q => (q.question || q.questionImage) && q.options.length >= 2 && q.correctIndexes.length >= 1);
 }
 
+function parseNoShuffleFlag(v){
+  if(v === true) return true;
+  if(v === false || v === null || v === undefined) return false;
+  const t = norm(String(v));
+  if(!t) return false;
+  if(/^(1|true|yes|y|co|có|x|ok)$/i.test(t)) return true;
+  if(/khong\s*dao|không\s*đảo|khong cho dao|không cho đảo|giu\s*thu\s*tu|giữ\s*thứ\s*tự|co dinh|cố định|khoa|khóa|lock|fixed|no shuffle|disable shuffle|keep order/.test(t)) return true;
+  return false;
+}
+
+function shouldShuffleOptionsForQuestion(q, globalShuffle){
+  return !!globalShuffle && !parseNoShuffleFlag(q && (q.noShuffleOptions ?? q.noShuffle ?? q.fixedOptionOrder ?? q.keepOptionOrder ?? q.lockOptionOrder));
+}
 
 function renderAll(){ renderStats(); renderPreview(); renderInternetTools(); renderQuestionSetManager(); renderManualSetSelect(); resetQuiz(); }
 function renderStats(){
@@ -1112,7 +1192,7 @@ function renderPreview(){
     const globalIndex = start + i;
     const correctSet = new Set(getCorrectIndexes(q));
     const optsHtml = (q.options || []).map((opt, idx)=>{ const im=getOptionImage(opt); return `<span class="preview-option-item ${correctSet.has(idx)?'is-correct':''}"><b>${escapeHtml(optionLabel(idx))}.</b> ${escapeHtml(getOptionText(opt))}${im?`<img class="preview-img" src="${escapeHtml(normalizeImageSrc(im))}" alt="Ảnh PA ${escapeHtml(optionLabel(idx))}"><span class="preview-image-note">Có ảnh phương án</span>`:''}</span>`; }).join('');
-    return `<tr><td class="nowrap">${globalIndex+1}</td><td class="question-cell">${escapeHtml(q.question)}${(q.questionImage||q.image)?`<img class="preview-img" src="${escapeHtml(normalizeImageSrc(q.questionImage||q.image))}" alt="Ảnh câu hỏi"><span class="preview-image-note">Có ảnh câu hỏi</span>`:''}</td><td><span class="pill ${isMultiQuestion(q)?'warnp':'okp'}">${isMultiQuestion(q)?'Nhiều đáp án':'Một đáp án'}</span></td><td class="nowrap">${escapeHtml(answerIndexText(q))}</td><td class="correct-cell">${escapeHtml(q.correctText)}</td><td class="option-list-cell">${optsHtml}</td><td class="source-cell">${escapeHtml(q.source||'')}</td><td class="nowrap"><button type="button" class="danger bank-delete-btn" data-bank-index="${globalIndex}" title="Xóa câu này khỏi ngân hàng đang xem">Xóa</button></td></tr>`;
+    return `<tr class="${q.noShuffleOptions?'bank-row-no-shuffle':''}"><td class="nowrap">${globalIndex+1}</td><td class="question-cell">${escapeHtml(q.question)}${(q.questionImage||q.image)?`<img class="preview-img" src="${escapeHtml(normalizeImageSrc(q.questionImage||q.image))}" alt="Ảnh câu hỏi"><span class="preview-image-note">Có ảnh câu hỏi</span>`:''}</td><td><span class="pill ${isMultiQuestion(q)?'warnp':'okp'}">${isMultiQuestion(q)?'Nhiều đáp án':'Một đáp án'}</span></td><td class="nowrap">${escapeHtml(answerIndexText(q))}</td><td class="correct-cell">${escapeHtml(q.correctText)}</td><td class="option-list-cell">${optsHtml}</td><td class="source-cell">${escapeHtml(q.source||'')}</td><td class="nowrap option-lock-cell"><label class="bank-lock-label" title="Bật để giữ nguyên thứ tự phương án của câu này khi tạo đề/ôn tập"><input type="checkbox" class="bank-no-shuffle-input" data-bank-index="${globalIndex}" ${q.noShuffleOptions?'checked':''}> Không đảo</label></td><td class="nowrap"><button type="button" class="danger bank-delete-btn" data-bank-index="${globalIndex}" title="Xóa câu này khỏi ngân hàng đang xem">Xóa</button></td></tr>`;
   }).join('');
   const pageSizeOptions = allowedSizes.map(n=>`<option value="${n}" ${n===pageSize?'selected':''}>${n} câu/trang</option>`).join('');
   const pager = `<div class="bank-pager no-print">
@@ -1125,7 +1205,7 @@ function renderPreview(){
       <button type="button" class="light bank-page-btn" data-page="${totalPages}" ${page===totalPages?'disabled':''}>Cuối »</button>
     </div>
   </div>`;
-  els.bankPreview.innerHTML = `${pager}<div class="wide-table-hint">Bảng phân trang để kiểm tra toàn bộ ngân hàng. Nếu có nhiều phương án/căn cứ dài, kéo ngang trong vùng bảng để xem hết. Dùng nút <b>Xóa</b> để loại câu nhập lỗi hoặc không vừa ý khỏi ngân hàng đang xem.</div><div class="bank-table-scroll"><table><thead><tr><th>STT</th><th>Câu hỏi</th><th>Loại</th><th>Cột đáp án</th><th>Đáp án đúng</th><th>Các phương án</th><th>Căn cứ pháp lý</th><th>Thao tác</th></tr></thead><tbody>${rows}</tbody></table></div>${pager}`;
+  els.bankPreview.innerHTML = `${pager}<div class="wide-table-hint">Bảng phân trang để kiểm tra toàn bộ ngân hàng. Nếu có câu cần giữ nguyên thứ tự phương án, tích <b>Không đảo</b> ngay trên dòng câu đó. Thiết lập này áp dụng cho cả tạo đề và ôn tập, kể cả khi bật đảo phương án chung.</div><div class="bank-table-scroll"><table><thead><tr><th>STT</th><th>Câu hỏi</th><th>Loại</th><th>Cột đáp án</th><th>Đáp án đúng</th><th>Các phương án</th><th>Căn cứ pháp lý</th><th>Không đảo PA</th><th>Thao tác</th></tr></thead><tbody>${rows}</tbody></table></div>${pager}`;
   els.bankPreview.querySelectorAll('.bank-page-btn').forEach(btn => btn.addEventListener('click', () => {
     const target = Number(btn.dataset.page || 1);
     state.bankPage = Math.max(1, Math.min(target, totalPages));
@@ -1136,11 +1216,29 @@ function renderPreview(){
     state.bankPage = 1;
     renderPreview();
   }));
+  els.bankPreview.querySelectorAll('.bank-no-shuffle-input').forEach(inp => inp.addEventListener('change', () => toggleCurrentBankQuestionNoShuffle(Number(inp.dataset.bankIndex), inp.checked)));
   els.bankPreview.querySelectorAll('.bank-delete-btn').forEach(btn => btn.addEventListener('click', () => deleteCurrentBankQuestion(Number(btn.dataset.bankIndex))));
   } catch(err){
     console.error('renderPreview error', err);
     els.bankPreview.innerHTML = '<div class="status bad">❌ Lỗi hiển thị ngân hàng câu hỏi: ' + escapeHtml(err && err.message ? err.message : err) + '</div>';
   }
+}
+
+function toggleCurrentBankQuestionNoShuffle(index, checked){
+  index = Number(index);
+  if(!Number.isInteger(index) || index < 0 || index >= state.bank.length){ setStatus('Không tìm thấy câu cần cập nhật.', 'bad'); return; }
+  state.bank[index].noShuffleOptions = !!checked;
+  state.meta = Object.assign({}, state.meta || {}, {total:state.bank.length, updatedAt:new Date().toISOString(), optionOrderEditedAt:new Date().toISOString()});
+  const currentSetId = state.meta && state.meta.questionSetId;
+  if(currentSetId && currentSetId !== '__current__'){
+    loadQuestionSets();
+    const set = state.questionSets.find(s => s.id === currentSetId);
+    if(set){ set.questions = normalizeBank(cloneData(state.bank)); set.updatedAt = new Date().toISOString(); saveQuestionSets(); }
+  }
+  saveBank('cập nhật thiết lập không đảo phương án', true).catch(()=>{});
+  const msg = checked ? `✅ Câu ${index+1} đã được đặt: KHÔNG đảo thứ tự phương án.` : `✅ Câu ${index+1} đã bỏ khóa, sẽ đảo phương án theo tùy chọn chung.`;
+  setStatus(msg, 'good');
+  renderQuestionSetManager();
 }
 
 function deleteCurrentBankQuestion(index){
@@ -1385,7 +1483,7 @@ function collectQuestionsFromSelectedSets(mode, rand, shuffleWithin){
 
     if(mode === 'study'){
       if(state.study.config.randomMode){
-        // V30 random: giữ lại các câu đang ôn chưa học; nếu thiếu thì bổ sung ngẫu nhiên từ các câu chưa xác nhận đã học trong chính bộ đó.
+        // V31 random: giữ lại các câu đang ôn chưa học; nếu thiếu thì bổ sung ngẫu nhiên từ các câu chưa xác nhận đã học trong chính bộ đó.
         const keyToQuestion = new Map(qs.map(q => [getQuestionKey(q), q]));
         const setKeys = new Set(keyToQuestion.keys());
         const activeKeys = [];
@@ -1408,7 +1506,7 @@ function collectQuestionsFromSelectedSets(mode, rand, shuffleWithin){
         summary.push(`${set.name}: ôn random ${take.length}/${countNeed}, còn ${remainCount}`);
         continue;
       }
-      // V30 mặc định: ôn tập theo từng bộ có tiến độ riêng. Mỗi bộ giữ nhóm câu đang ôn;
+      // V31 mặc định: ôn tập theo từng bộ có tiến độ riêng. Mỗi bộ giữ nhóm câu đang ôn;
       // câu đã học/đạt ngưỡng bị loại khỏi nhóm và thay bằng câu kế tiếp theo đúng thứ tự trong chính bộ đó.
       const keyToQuestion = new Map(qs.map(q => [getQuestionKey(q), q]));
       const setKeys = new Set(keyToQuestion.keys());
@@ -1743,17 +1841,156 @@ async function fileToArrayBuffer(file){
   if(file.arrayBuffer) return await file.arrayBuffer();
   return new Promise((resolve,reject)=>{ const fr=new FileReader(); fr.onload=()=>resolve(fr.result); fr.onerror=()=>reject(fr.error || new Error('FileReader lỗi')); fr.readAsArrayBuffer(file); });
 }
+
+function bytesToUtf8Text(bytes){
+  try { return new TextDecoder('utf-8').decode(bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes)); }
+  catch(e){
+    let out=''; const arr = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+    for(let i=0;i<arr.length;i++) out += String.fromCharCode(arr[i]);
+    try { return decodeURIComponent(escape(out)); } catch(_){ return out; }
+  }
+}
+function xmlAttr(attrs, name){
+  const re = new RegExp("\\b" + name + "=[\"']([^\"']*)[\"']", "i");
+  const m = String(attrs || '').match(re);
+  return m ? m[1] : '';
+}
+function xmlUnescape(s){
+  return String(s || '').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+}
+function getCfbText(cfb, path){
+  if(!window.XLSX || !XLSX.CFB || !cfb) return '';
+  const tries = [path, '/' + path.replace(/^\//,''), 'Root Entry/' + path.replace(/^\//,''), path.split('/').pop()];
+  for(const p of tries){
+    const f = XLSX.CFB.find(cfb, p);
+    if(f && f.content) return bytesToUtf8Text(f.content);
+  }
+  return '';
+}
+function extractXmlBlock(xml, tag){
+  const re = new RegExp('<' + tag + '\\b[^>]*>([\\s\\S]*?)<\\/' + tag + '>', 'i');
+  const m = String(xml || '').match(re);
+  return m ? m[1] : '';
+}
+function styleColorFromFontXml(fontXml){
+  const colorTag = String(fontXml || '').match(/<color\b([^>]*)\/?>(?:<\/color>)?/i);
+  if(!colorTag) return '';
+  const attrs = colorTag[1] || '';
+  const rgb = xmlAttr(attrs, 'rgb');
+  if(rgb) return rgb;
+  const indexed = xmlAttr(attrs, 'indexed');
+  if(indexed) return 'indexed:' + indexed;
+  const theme = xmlAttr(attrs, 'theme');
+  if(theme) return 'theme:' + theme;
+  const auto = xmlAttr(attrs, 'auto');
+  if(auto) return 'auto:' + auto;
+  return '';
+}
+function buildSheetPathMapFromWorkbook(cfb, workbook){
+  const out = {};
+  const wbXml = getCfbText(cfb, 'xl/workbook.xml');
+  const relsXml = getCfbText(cfb, 'xl/_rels/workbook.xml.rels');
+  if(!wbXml || !relsXml || !workbook || !Array.isArray(workbook.SheetNames)){
+    (workbook.SheetNames || []).forEach((name, idx) => out[name] = 'xl/worksheets/sheet' + (idx+1) + '.xml');
+    return out;
+  }
+  const relMap = {};
+  for(const m of relsXml.matchAll(/<Relationship\b([^>]*)\/?>(?:<\/Relationship>)?/ig)){
+    const attrs = m[1] || '';
+    const id = xmlAttr(attrs, 'Id');
+    let target = xmlAttr(attrs, 'Target');
+    if(id && target){
+      target = target.replace(/^\//,'');
+      if(!/^xl\//i.test(target)) target = 'xl/' + target;
+      relMap[id] = target;
+    }
+  }
+  let order = 0;
+  for(const m of wbXml.matchAll(/<sheet\b([^>]*)\/?>(?:<\/sheet>)?/ig)){
+    const attrs = m[1] || '';
+    const nm = xmlUnescape(xmlAttr(attrs, 'name')) || (workbook.SheetNames[order] || ('Sheet' + (order+1)));
+    const rid = xmlAttr(attrs, 'r:id') || xmlAttr(attrs, 'id');
+    out[nm] = relMap[rid] || ('xl/worksheets/sheet' + (order+1) + '.xml');
+    order++;
+  }
+  (workbook.SheetNames || []).forEach((name, idx) => { if(!out[name]) out[name] = 'xl/worksheets/sheet' + (idx+1) + '.xml'; });
+  return out;
+}
+function parseXlsxFontColorMap(bytes, workbook){
+  const result = {sheetCellColors:{}, debug:{fonts:0,xfs:0,cells:0}};
+  if(!window.XLSX || !XLSX.CFB || !workbook) return result;
+  let cfb = null;
+  try { cfb = XLSX.CFB.read(bytes, {type:'array'}); }
+  catch(e){ try { cfb = XLSX.CFB.read(bytes, {type:'buffer'}); } catch(_){ return result; } }
+  const stylesXml = getCfbText(cfb, 'xl/styles.xml');
+  if(!stylesXml) return result;
+  const fontsBlock = extractXmlBlock(stylesXml, 'fonts');
+  const fontColors = [];
+  for(const m of fontsBlock.matchAll(/<font\b[\s\S]*?<\/font>/ig)) fontColors.push(styleColorFromFontXml(m[0]));
+  result.debug.fonts = fontColors.length;
+  const xfsBlock = extractXmlBlock(stylesXml, 'cellXfs');
+  const xfFontColors = [];
+  for(const m of xfsBlock.matchAll(/<xf\b([^>]*)\/?>(?:<\/xf>)?/ig)){
+    const attrs = m[1] || '';
+    const fontId = Number(xmlAttr(attrs,'fontId') || 0);
+    xfFontColors.push(fontColors[fontId] || '');
+  }
+  result.debug.xfs = xfFontColors.length;
+  const sheetPathByName = buildSheetPathMapFromWorkbook(cfb, workbook);
+  for(const sheetName of (workbook.SheetNames || [])){
+    const path = sheetPathByName[sheetName];
+    const sheetXml = getCfbText(cfb, path);
+    if(!sheetXml) continue;
+    const cellColors = {};
+    for(const m of sheetXml.matchAll(/<c\b([^>]*)/ig)){
+      const attrs = m[1] || '';
+      const ref = xmlAttr(attrs, 'r');
+      if(!/^A\d+$/i.test(ref)) continue;
+      const sIdxRaw = xmlAttr(attrs, 's');
+      if(sIdxRaw === '') continue;
+      const color = xfFontColors[Number(sIdxRaw)] || '';
+      if(color && (colorIsNonBlack(color) || /^indexed:/i.test(color) || /^theme:/i.test(color))){
+        cellColors[ref.toUpperCase()] = color;
+        result.debug.cells++;
+      }
+    }
+    if(Object.keys(cellColors).length) result.sheetCellColors[sheetName] = cellColors;
+  }
+  return result;
+}
+function enrichWorkbookWithStyleColors(workbook, bytes){
+  try{
+    const parsed = parseXlsxFontColorMap(bytes, workbook);
+    workbook.__v32StyleColorMap = parsed;
+    for(const sheetName of Object.keys(parsed.sheetCellColors || {})){
+      const sheet = workbook.Sheets[sheetName];
+      if(!sheet) continue;
+      const map = parsed.sheetCellColors[sheetName];
+      for(const ref of Object.keys(map)){
+        if(sheet[ref]){
+          sheet[ref].__fontColor = map[ref];
+          sheet[ref].__fontColoredNonBlack = true;
+        }
+      }
+    }
+    return parsed;
+  }catch(e){ console.warn('Không bóc được màu chữ từ xlsx:', e); return null; }
+}
+
 async function readWorkbook(file){
   if(!window.XLSX){ try{ await loadLocalSheetJSIfNeeded(); }catch(_e){} }
-  if(!window.XLSX) throw new Error('Không tìm thấy thư viện SheetJS XLSX. Bản PWA V30 đã kèm xlsx.full.min.js; hãy giải nén đủ file ZIP và mở index.html trong cùng thư mục.');
+  if(!window.XLSX) throw new Error('Không tìm thấy thư viện SheetJS XLSX. Bản PWA V33 đã kèm xlsx.full.min.js; hãy giải nén đủ file ZIP và mở index.html trong cùng thư mục.');
   const buf = await fileToArrayBuffer(file);
   const bytes = new Uint8Array(buf);
-  try { return XLSX.read(bytes, {type:'array', cellDates:false, raw:false}); }
+  let wb;
+  try { wb = XLSX.read(bytes, {type:'array', cellDates:false, raw:false, cellStyles:true, cellHTML:true}); }
   catch(e1){
     let binary = ''; const chunk = 0x8000;
     for(let i=0;i<bytes.length;i+=chunk) binary += String.fromCharCode.apply(null, bytes.subarray(i,i+chunk));
-    return XLSX.read(binary, {type:'binary', cellDates:false, raw:false});
+    wb = XLSX.read(binary, {type:'binary', cellDates:false, raw:false, cellStyles:true, cellHTML:true});
   }
+  enrichWorkbookWithStyleColors(wb, bytes);
+  return wb;
 }
 async function handleExcelFile(){
   const file = els.excelFile && els.excelFile.files && els.excelFile.files[0];
@@ -1764,6 +2001,10 @@ async function handleExcelFile(){
     state.fileName = file.name;
     if(!state.workbook.SheetNames || !state.workbook.SheetNames.length) throw new Error('Workbook không có sheet nào.');
     els.sheetSelect.innerHTML = state.workbook.SheetNames.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+    const styleInfo = state.workbook.__v32StyleColorMap && state.workbook.__v32StyleColorMap.debug ? state.workbook.__v32StyleColorMap.debug : null;
+    if(styleInfo && styleInfo.cells && els.oneColumnColorMode && els.oneColumnColorMode.checked){
+      setOneColumnStatus(`ℹ️ Đã bóc được ${styleInfo.cells} ô cột A có màu chữ khác mặc định từ file .xlsx.`, 'info');
+    }
     parseSelectedSheet(false);
   } catch(err){
     console.error(err);
@@ -1771,12 +2012,206 @@ async function handleExcelFile(){
   }
 }
 function rowsFromSheet(sheet){ return XLSX.utils.sheet_to_json(sheet, {header:1, raw:false, defval:''}); }
+
+function setOneColumnStatus(message, type='info'){
+  if(!els.oneColumnStatus) return;
+  els.oneColumnStatus.className = 'status ' + type + ' onecol-status';
+  els.oneColumnStatus.textContent = message;
+}
+function getSheetCell(sheet, r, c){
+  try { return sheet && sheet[XLSX.utils.encode_cell({r,c})]; } catch(e){ return null; }
+}
+function getSheetCellText(sheet, r, c){
+  const cell = getSheetCell(sheet,r,c);
+  if(!cell) return '';
+  return visibleText(cell.w != null ? cell.w : cell.v);
+}
+function optionLabelToNumber(label){
+  let s = norm(label).replace(/[^a-z]/g,'');
+  if(!s) return 0;
+  let n = 0;
+  for(const ch of s){ n = n * 26 + (ch.charCodeAt(0) - 96); }
+  return n;
+}
+function isValidOneColumnOptionLabel(label){
+  const n = optionLabelToNumber(label);
+  return n >= 1 && n <= 52; // A..Z, AA..AZ theo yêu cầu
+}
+function oneColumnOptionMatch(text){
+  const m = String(text || '').match(/^\s*([A-Za-z]{1,2})\.\s*(.*)$/);
+  if(!m) return null;
+  if(!isValidOneColumnOptionLabel(m[1])) return null;
+  return {label:m[1].toUpperCase(), body:visibleText(m[2] || '')};
+}
+function oneColumnQuestionStart(text){
+  return /^\s*Câu\s+[^:]{1,60}:\s*/i.test(String(text || ''));
+}
+function cleanOneColumnQuestionLine(text){
+  return visibleText(text).replace(/^\s*Câu\s+[^:]{1,60}:\s*/i,'').trim();
+}
+function normalizeColorToken(v){
+  let s = visibleText(v).replace(/^#/,'').toUpperCase();
+  if(!s || s === 'AUTO' || s === 'NONE' || s === 'DEFAULT') return '';
+  if(s.length === 8 && s.startsWith('FF')) s = s.slice(2);
+  if(s.length === 8 && s.endsWith('000000')) s = '000000';
+  return s;
+}
+function isBlackOrDefaultColor(v){
+  const s = normalizeColorToken(v);
+  if(!s) return true;
+  return ['000000','FF000000','000','BLACK','0'].includes(s);
+}
+function colorIsNonBlack(v){
+  const s = normalizeColorToken(v);
+  return !!s && !isBlackOrDefaultColor(s);
+}
+function cellFontColorTokens(cell){
+  const out = [];
+  if(!cell) return out;
+  function add(x){ if(x !== undefined && x !== null && String(x).trim()) out.push(String(x)); }
+  // V33: SheetJS CE nhiều khi chỉ trả về cell.s={} và không đưa màu chữ ra JS.
+  // Khi đọc .xlsx, chương trình tự bóc styles.xml + sheet XML để gắn __fontColor vào cell.
+  add(cell.__fontColor);
+  if(cell.__fontColoredNonBlack) add('V33_NON_BLACK_STYLE');
+  const s = cell.s || {};
+  if(s.font && s.font.color){ add(s.font.color.rgb); add(s.font.color.indexed); add(s.font.color.theme); add(s.font.color.auto); }
+  if(s.color) add(s.color.rgb || s.color);
+  if(s.fgColor && s.fgColor.rgb) add(s.fgColor.rgb);
+  if(cell.h){
+    const html = String(cell.h);
+    [...html.matchAll(/color\s*:\s*([^;"']+)/ig)].forEach(m => add(m[1]));
+    [...html.matchAll(/<font[^>]+color=["']?([^"' >]+)/ig)].forEach(m => add(m[1]));
+  }
+  if(cell.r){
+    const r = String(cell.r);
+    [...r.matchAll(/<color[^>]+rgb=["']([^"']+)["']/ig)].forEach(m => add(m[1]));
+    [...r.matchAll(/<color[^>]+indexed=["']([^"']+)["']/ig)].forEach(m => add('indexed:' + m[1]));
+    [...r.matchAll(/<color[^>]+theme=["']([^"']+)["']/ig)].forEach(m => add('theme:' + m[1]));
+  }
+  return out;
+}
+function isCellTextNonBlack(sheet, r, c){
+  const cell = getSheetCell(sheet,r,c);
+  const colors = cellFontColorTokens(cell);
+  if(!colors.length) return false;
+  // Nếu có token màu rõ ràng khác đen thì coi là đáp án đúng. Theme/indexed không xác định được chắc chắn nên vẫn coi là khác mặc định để không bỏ sót.
+  return colors.some(raw => {
+    const s = String(raw).trim();
+    if(s === 'V33_NON_BLACK_STYLE') return true;
+    if(/^indexed:/i.test(s)) return !['indexed:0','indexed:1','indexed:8','indexed:64','indexed:81'].includes(s.toLowerCase());
+    if(/^theme:/i.test(s)) return !['theme:0','theme:1'].includes(s.toLowerCase());
+    return colorIsNonBlack(s);
+  });
+}
+function looksLikeOneColumnSheet(sheet){
+  if(!sheet || !sheet['!ref']) return false;
+  const range = XLSX.utils.decode_range(sheet['!ref']);
+  let q=0, opt=0;
+  for(let r=Math.max(1, range.s.r); r<=Math.min(range.e.r, 260); r++){
+    const t = getSheetCellText(sheet,r,0);
+    if(oneColumnQuestionStart(t)) q++;
+    if(oneColumnOptionMatch(t)) opt++;
+  }
+  return q >= 1 && opt >= 2;
+}
+function parseOneColumnColorSheet(sheet, sheetName, force=false){
+  if(!sheet || !sheet['!ref']) return {detected:false, bank:[], errors:[{reason:'Sheet rỗng'}], mapping:{source:'one_column_color'}};
+  const detected = looksLikeOneColumnSheet(sheet);
+  if(!force && !detected) return {detected:false, bank:[], errors:[], mapping:{source:'one_column_color'}};
+  const range = XLSX.utils.decode_range(sheet['!ref']);
+  const startRow = Math.max(1, range.s.r); // hàng 2, chỉ số 0-based
+  const bank = [], errors = [];
+  let current = null, currentOption = null;
+  function finalizeQuestion(){
+    if(!current) return;
+    if(currentOption) currentOption = null;
+    const question = current.questionLines.map(visibleText).filter(Boolean).join('\n').trim();
+    const options = current.options.map(o => ({text:o.lines.map(visibleText).filter(Boolean).join('\n').trim(), image:''})).filter(o => o.text);
+    const correctIndexes = [];
+    current.options.forEach((o,idx) => { if(o.correct && options[idx]) correctIndexes.push(idx); });
+    if(!question){ errors.push({row:current.sourceRow, reason:'Thiếu nội dung câu hỏi'}); return; }
+    if(options.length < 2){ errors.push({row:current.sourceRow, reason:'Thiếu phương án lựa chọn', question:question.slice(0,80)}); return; }
+    if(!correctIndexes.length){ errors.push({row:current.sourceRow, reason:'Không nhận diện được đáp án đúng theo màu chữ', question:question.slice(0,80)}); return; }
+    const correctTexts = correctIndexes.map(i => getOptionText(options[i])).filter(Boolean);
+    bank.push({
+      id:String(bank.length+1), sourceRow:current.sourceRow, sheetName,
+      question, questionImage:'', image:'', options,
+      correctIndexes, correctIndex:correctIndexes[0], correctTexts, correctText:correctTexts.join(' | '),
+      questionType:correctIndexes.length>1?'multi':'single', source:'', sourceOriginal:'', answerRaw:correctIndexes.map(i=>String(i+1)).join(',')
+    });
+  }
+  for(let r=startRow; r<=range.e.r; r++){
+    const text = getSheetCellText(sheet,r,0);
+    if(!text) continue;
+    if(oneColumnQuestionStart(text)){
+      finalizeQuestion();
+      current = {sourceRow:r+1, questionLines:[cleanOneColumnQuestionLine(text)], options:[]};
+      currentOption = null;
+      continue;
+    }
+    if(!current){
+      errors.push({row:r+1, reason:'Dòng trước câu hỏi đầu tiên bị bỏ qua', text:text.slice(0,80)});
+      continue;
+    }
+    const om = oneColumnOptionMatch(text);
+    const colored = isCellTextNonBlack(sheet,r,0);
+    if(om){
+      currentOption = {label:om.label, lines:[om.body], correct:colored, startRow:r+1};
+      current.options.push(currentOption);
+    } else if(currentOption){
+      currentOption.lines.push(text);
+      if(colored) currentOption.correct = true;
+    } else {
+      current.questionLines.push(text);
+    }
+  }
+  finalizeQuestion();
+  return {detected:true, bank, errors, mapping:{source:'one_column_color', headerIdx:0, questionCol:0, answerCol:-1, sourceCol:-1, optionCols:[0], optionImageColByNo:{}}};
+}
+function applyParsedBank(parsed, sheetName, statusPrefix){
+  state.bank = parsed.bank;
+  state.errors = parsed.errors || [];
+  state.currentMapping = parsed.mapping || {source:'unknown'};
+  state.meta = {sourceFile: state.fileName, sheetName, total: parsed.bank.length, version: APP_VERSION};
+  state.currentSheet = sheetName;
+  renderStats(); renderPreview(); resetQuiz(); renderInternetTools(); renderQuestionSetManager(); renderManualSetSelect();
+  setStatus(statusPrefix, 'good');
+}
+function parseOneColumnCurrentSheet(){
+  if(!state.workbook){ handleExcelFile(); return; }
+  const sheetName = els.sheetSelect.value || state.workbook.SheetNames[0];
+  const sheet = state.workbook.Sheets[sheetName];
+  const parsed = parseOneColumnColorSheet(sheet, sheetName, true);
+  if(!parsed.bank.length){
+    const msg = parsed.errors && parsed.errors.length ? parsed.errors.slice(0,12).map(e => `Hàng ${e.row||'?'}: ${e.reason}`).join('\n') : 'Không tìm thấy câu hỏi hợp lệ.';
+    setOneColumnStatus('❌ Chưa đọc được mẫu 1 cột theo màu chữ.\n' + msg + '\n\nLưu ý: file phải là .xlsx/.xlsm còn giữ định dạng màu chữ. CSV không có màu chữ. Nếu màu không được nhận, hãy tô màu chữ toàn bộ dòng phương án đúng rồi lưu lại .xlsx.', 'bad');
+    setStatus('❌ Không nạp được mẫu 1 cột theo màu đáp án đúng. Ngân hàng hiện tại vẫn được giữ nguyên.', 'bad');
+    return;
+  }
+  const msg = appendErrorLineDetails(`✅ Đã nạp ${parsed.bank.length} câu hỏi theo mẫu Excel 1 cột. Đáp án đúng nhận theo màu chữ khác đen mặc định. ${parsed.errors.length?'Có '+parsed.errors.length+' dòng/câu bị bỏ qua.':''}`, parsed.errors, 40);
+  applyParsedBank(parsed, sheetName, msg);
+  setOneColumnStatus(appendErrorLineDetails(`✅ Đã đọc ${parsed.bank.length} câu từ mẫu 1 cột. ${parsed.errors.length?'Có '+parsed.errors.length+' lỗi/bỏ qua.':''}`, parsed.errors, 40), 'good');
+}
+
 function parseSelectedSheet(manual=false){
   if(!state.workbook){ handleExcelFile(); return; }
   const sheetName = els.sheetSelect.value || state.workbook.SheetNames[0];
   const rows = rowsFromSheet(state.workbook.Sheets[sheetName]);
   state.currentRows = rows;
   state.currentSheet = sheetName;
+  const sheet = state.workbook.Sheets[sheetName];
+  if(!manual && els.oneColumnColorMode && els.oneColumnColorMode.checked){
+    const special = parseOneColumnColorSheet(sheet, sheetName, false);
+    if(special.detected && special.bank.length){
+      const msg = appendErrorLineDetails(`✅ Đã tự nhận diện và nạp ${special.bank.length} câu hỏi theo mẫu Excel 1 cột. Đáp án đúng nhận theo màu chữ khác đen mặc định. ${special.errors.length?'Có '+special.errors.length+' dòng/câu bị bỏ qua.':''}`, special.errors, 40);
+      applyParsedBank(special, sheetName, msg);
+      setOneColumnStatus(appendErrorLineDetails(`✅ Đã tự nhận diện mẫu 1 cột và đọc ${special.bank.length} câu. ${special.errors.length?'Có '+special.errors.length+' lỗi/bỏ qua.':''}`, special.errors, 40), 'good');
+      return;
+    }
+    if(special.detected && !special.bank.length){
+      setOneColumnStatus('⚠️ Sheet giống mẫu 1 cột nhưng chưa nhận được đáp án đúng theo màu chữ. Có thể file không giữ style màu chữ hoặc màu không nằm trên toàn bộ dòng phương án đúng. Bấm “Đọc mẫu 1 cột theo màu đáp án đúng” để xem lỗi chi tiết.', 'bad');
+    }
+  }
   let mapping = null;
   if(manual) mapping = manualMappingFromUI(rows);
   try {
@@ -1799,7 +2234,7 @@ function parseAllSheets(){
   if(!state.workbook){ handleExcelFile(); return; }
   let all=[], errs=[], logs=[];
   for(const s of state.workbook.SheetNames){
-    try { const p = parseRows(rowsFromSheet(state.workbook.Sheets[s]), s, null); all = all.concat(p.bank); errs = errs.concat(p.errors.map(e => ({...e, sheetName:s}))); logs.push(`${s}: ${p.bank.length} câu`); }
+    try { const sh = state.workbook.Sheets[s]; const sp = parseOneColumnColorSheet(sh, s, false); const p = (sp.detected && sp.bank.length) ? sp : parseRows(rowsFromSheet(sh), s, null); all = all.concat(p.bank); errs = errs.concat((p.errors||[]).map(e => ({...e, sheetName:s}))); logs.push(`${s}: ${p.bank.length} câu${sp.detected?' (mẫu 1 cột)':''}`); }
     catch(e){ logs.push(`${s}: lỗi (${e.message || e})`); }
   }
   if(!all.length){ setStatus('❌ Không nhận diện được câu hỏi hợp lệ ở bất kỳ sheet nào. Dữ liệu nhúng vẫn được giữ nguyên.\n' + logs.join('\n'), 'bad'); return; }
@@ -1845,6 +2280,7 @@ function detectMapping(rows){
   if(lastNonEmptyHeaderCol >= 0 && lastNonEmptyHeaderCol !== questionCol && lastNonEmptyHeaderCol !== answerCol) sourceCol = lastNonEmptyHeaderCol;
   const idCol = findBestCol(headers, [/^stt$/, /^tt$/, /^id$/, /so thu tu/], [questionCol, answerCol, sourceCol]);
   const questionImageCol = findBestCol(headers, [/anh cau hoi/, /hinh cau hoi/, /image question/, /question image/, /^anh$/, /^hinh anh$/, /^image$/], [questionCol, answerCol, sourceCol, idCol]);
+  const noShuffleCol = findBestCol(headers, [/khong\s*dao/, /không\s*đảo/, /giu\s*thu\s*tu/, /giữ\s*thứ\s*tự/, /co\s*dinh.*phuong\s*an/, /cố\s*định.*phương\s*án/, /lock.*option/, /fixed.*option/, /no\s*shuffle/], [questionCol, answerCol, sourceCol, idCol, questionImageCol]);
   function headerOptionNo(h){
     const n = norm(h);
     let m = n.match(/(?:phuong an|lua chon|option|choice|pa)\s*([0-9]{1,3}|[a-z]{1,3})/);
@@ -1858,7 +2294,7 @@ function detectMapping(rows){
   }
   let optionImageColByNo = {};
   headers.forEach((h,i)=>{
-    if([questionCol,answerCol,sourceCol,idCol,questionImageCol].includes(i)) return;
+    if([questionCol,answerCol,sourceCol,idCol,questionImageCol,noShuffleCol].includes(i)) return;
     const n=norm(h);
     if(/anh|hinh|image|img/.test(n) && /phuong an|lua chon|option|choice|pa/.test(n)){
       const no = headerOptionNo(h);
@@ -1867,7 +2303,7 @@ function detectMapping(rows){
   });
   let optionCols = [];
   headers.forEach((h,i)=>{
-    if([questionCol,answerCol,sourceCol,idCol,questionImageCol].includes(i) || Object.values(optionImageColByNo).includes(i)) return;
+    if([questionCol,answerCol,sourceCol,idCol,questionImageCol,noShuffleCol].includes(i) || Object.values(optionImageColByNo).includes(i)) return;
     const n=norm(h);
     if((/phuong an|lua chon|luạ chon|option|choice/.test(n) || /^pa\s*([0-9]+|[a-z]+)$/.test(n) || /^[a-z]{1,2}$/.test(n)) && !(/anh|hinh|image|img/.test(n))) optionCols.push(i);
   });
@@ -1875,7 +2311,7 @@ function detectMapping(rows){
   if(optionCols.length < 2){
     const candidates=[];
     for(let c=0;c<maxCols;c++){
-      if([questionCol,answerCol,sourceCol,idCol,questionImageCol].includes(c) || Object.values(optionImageColByNo).includes(c)) continue;
+      if([questionCol,answerCol,sourceCol,idCol,questionImageCol,noShuffleCol].includes(c) || Object.values(optionImageColByNo).includes(c)) continue;
       let filled=0, avgLen=0;
       sampleRows.forEach(r=>{ const t=visibleText(r[c]); if(t){ filled++; avgLen += t.length; }});
       if(filled >= Math.max(2, Math.floor(sampleRows.length*0.30))) candidates.push({c, filled, avgLen: avgLen/(filled||1)});
@@ -1892,9 +2328,9 @@ function detectMapping(rows){
       const total = sampleRows.reduce((sum,r)=>sum+visibleText(r[c]).length,0);
       if(total>len){ len=total; best=c; }
     }
-    return {headerIdx, headers, idCol, questionCol:best, questionImageCol, answerCol, sourceCol, optionCols, optionImageColByNo};
+    return {headerIdx, headers, idCol, questionCol:best, questionImageCol, noShuffleCol, answerCol, sourceCol, optionCols, optionImageColByNo};
   }
-  return {headerIdx, headers, idCol, questionCol, questionImageCol, answerCol, sourceCol, optionCols, optionImageColByNo};
+  return {headerIdx, headers, idCol, questionCol, questionImageCol, noShuffleCol, answerCol, sourceCol, optionCols, optionImageColByNo};
 }
 
 function extractImageSrcFromRow(row, col){
@@ -1926,13 +2362,14 @@ function parseRows(rows, sheetName, manualMapping){
     const id = mapping.idCol >= 0 ? visibleText(row[mapping.idCol]) : String(bank.length + 1);
     const source = mapping.sourceCol >= 0 ? visibleText(row[mapping.sourceCol]) : '';
     const answerRaw = mapping.answerCol >= 0 ? visibleText(row[mapping.answerCol]) : '';
+    const noShuffleOptions = mapping.noShuffleCol >= 0 ? parseNoShuffleFlag(row[mapping.noShuffleCol]) : false;
     let correctIndexes = parseAnswerIndexes(answerRaw, options);
     if(!correctIndexes.length && markedCorrectIndexes.length) correctIndexes = normalizeIndexList(markedCorrectIndexes, options);
     if(!question){ if(row.some(x=>visibleText(x))) errors.push({row:r+1, reason:'Thiếu câu hỏi'}); continue; }
     if(options.length < 2){ errors.push({row:r+1, reason:'Thiếu phương án lựa chọn', question:question.slice(0,80)}); continue; }
     if(!correctIndexes.length){ errors.push({row:r+1, reason:'Không xác định được đáp án đúng', answerRaw, question:question.slice(0,80)}); continue; }
     const correctTexts = correctIndexes.map(i => getOptionText(options[i])).filter(Boolean);
-    bank.push({id:id || String(bank.length+1), sourceRow:r+1, sheetName, question, questionImage, image:questionImage, options, correctIndexes, correctIndex:correctIndexes[0], correctTexts, correctText:correctTexts.join(' | '), questionType:correctIndexes.length>1?'multi':'single', source, answerRaw});
+    bank.push({id:id || String(bank.length+1), sourceRow:r+1, sheetName, question, questionImage, image:questionImage, options, correctIndexes, correctIndex:correctIndexes[0], correctTexts, correctText:correctTexts.join(' | '), questionType:correctIndexes.length>1?'multi':'single', noShuffleOptions, source, answerRaw});
   }
   return {bank, errors, mapping};
 }
@@ -2088,7 +2525,7 @@ function startQuiz(){
   state.quiz = questions.map((q, qi) => {
     const correctSet = new Set(getCorrectIndexes(q));
     const opts = q.options.map((opt, idx) => optionToQuizObj(opt, idx, correctSet));
-    const finalOpts = els.shuffleOptions.checked ? shuffled(opts, rand) : opts;
+    const finalOpts = shouldShuffleOptionsForQuestion(q, els.shuffleOptions.checked) ? shuffled(opts, rand) : opts;
     return {no: qi+1, item: q, options: finalOpts, userChoice: null, userChoices: []};
   });
   state.submitted = false; state.lastResult = null;
@@ -2131,7 +2568,7 @@ function startStudyRound(){
   state.quiz = questions.map((q, qi) => {
     const correctSet = new Set(getCorrectIndexes(q));
     const opts = q.options.map((opt, idx) => optionToQuizObj(opt, idx, correctSet));
-    const finalOpts = state.study.config.shuffleOptions ? shuffled(opts, rand) : opts;
+    const finalOpts = shouldShuffleOptionsForQuestion(q, state.study.config.shuffleOptions) ? shuffled(opts, rand) : opts;
     return {no: qi+1, item:q, options:finalOpts, userChoice:null, userChoices:[]};
   });
   state.submitted = false; state.lastResult = null;
@@ -2371,16 +2808,16 @@ function makeStandaloneHtml(title, contentHtml){
   const css = Array.from(document.querySelectorAll('style')).map(s => s.textContent || '').join('\n');
   const stamp = new Date().toLocaleString('vi-VN');
   return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><style>${css}\nbody{overflow:auto!important}.app{max-width:none!important;width:100%!important;margin:0!important;padding:12px!important}.card{max-width:none!important;width:100%!important;margin-left:0!important;margin-right:0!important}.no-print,.stickybar{display:none!important}.table-wrap{width:100%!important;max-width:none!important;overflow-x:auto!important}.table-wrap table{table-layout:auto!important;width:max-content!important;min-width:1700px!important;max-width:none!important}.table-wrap th,.table-wrap td{white-space:normal!important;overflow:visible!important}.question-cell{min-width:520px!important}.correct-cell{min-width:360px!important}.option-list-cell{min-width:620px!important}.source-cell{min-width:700px!important}.preview-option-item{display:block;margin:0 0 6px;padding:5px 7px;border-left:3px solid #bfdbfe;background:#f8fafc;border-radius:7px}.preview-option-item.is-correct{border-left-color:#22c55e;background:#f0fdf4;color:#166534;font-weight:800}
-/* V30: nhập câu hỏi trực tiếp, dán/chụp ảnh và lưu base64 vào ngân hàng */
+/* V31: nhập câu hỏi trực tiếp, dán/chụp ảnh và lưu base64 vào ngân hàng */
 .manual-entry-card .entry-note{padding:10px 12px;border-radius:12px;background:#f0f9ff;border:1px solid #bae6fd;color:#075985;margin:8px 0}.manual-editor-grid{display:grid;grid-template-columns:1fr;gap:10px}.manual-image-zone{border:2px dashed #94a3b8;border-radius:14px;background:#f8fafc;min-height:94px;padding:10px;display:flex;gap:10px;align-items:center;justify-content:space-between;cursor:pointer;transition:.15s}.manual-image-zone.active{border-color:#0f766e;background:#ecfdf5;box-shadow:0 0 0 3px rgba(15,118,110,.12)}.manual-image-zone .manual-zone-text{font-size:13px;color:#334155}.manual-preview{max-width:180px;max-height:130px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;object-fit:contain;display:none}.manual-image-zone.has-image .manual-preview{display:block}.manual-option-editor{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:10px;margin:9px 0}.manual-option-top{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:start}.manual-option-top label{margin:0}.manual-option-top textarea{min-height:72px}.manual-option-badge{min-width:36px;height:36px;border-radius:999px;background:#dbeafe;color:#1e3a8a;display:inline-flex;align-items:center;justify-content:center;font-weight:900}.manual-correct-label{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:900;color:#14532d;background:#f0fdf4;border:1px solid #86efac;border-radius:999px;padding:6px 9px;white-space:nowrap}.manual-editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.manual-paste-target{font-size:12px;color:#0f766e;font-weight:900}.manual-status{margin-top:8px}.manual-file-hidden{display:none}.manual-entry-card button.tiny{padding:7px 9px;border-radius:10px;font-size:12px}.manual-entry-card .danger.tiny{background:#b91c1c}.manual-option-image-row{margin-top:8px}.manual-actions-line{align-items:center;justify-content:space-between}.manual-current-target{padding:6px 10px;border-radius:999px;background:#ecfeff;border:1px solid #a5f3fc;color:#155e75;font-size:12px;font-weight:900}.manual-entry-card textarea{resize:vertical}.manual-entry-card .source-edit{min-height:88px}@media (min-width:760px){.manual-editor-grid{grid-template-columns:1fr 1fr}.manual-entry-full{grid-column:1/-1}.manual-image-zone{min-height:110px}.manual-preview{max-width:220px;max-height:150px}}@media (max-width:700px){.manual-option-top{grid-template-columns:auto 1fr}.manual-correct-label{grid-column:1/-1}.manual-image-zone{display:block}.manual-preview{margin-top:8px;max-width:100%;width:100%}.manual-editor-actions button{flex:1 1 150px}}
 
 
-/* V30: quản lý câu hỏi nhập trực tiếp, xóa câu hỏi và thống kê ôn tập theo bộ */
+/* V31: quản lý câu hỏi nhập trực tiếp, xóa câu hỏi và thống kê ôn tập theo bộ */
 .manual-new-set-row{margin-top:7px}.manual-new-set-row input{border-color:#a7f3d0;background:#f0fdf4}.bank-delete-btn{padding:6px 9px!important;border-radius:999px!important;font-size:12px!important;width:auto!important;box-shadow:none!important}.study-selected-summary{margin-top:8px;padding:8px;border:1px dashed #93c5fd;border-radius:12px;background:#eff6ff;color:#1e3a8a}.study-selected-summary b{color:#0f172a}.study-selected-summary .set-line{display:block;margin:2px 0}.quiz-study-remaining{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px;padding:8px;border-radius:12px;background:#eff6ff;border:1px dashed #93c5fd}.quiz-study-remaining .pill{margin:0 2px 2px 0}.manual-target-help{font-size:12px;color:#475569;margin-top:4px}
 @media(max-width:700px){.bank-delete-btn{padding:5px 8px!important;font-size:11.5px!important}.study-selected-summary{font-size:12px}.quiz-study-remaining{font-size:12px}}
 
 
-/* V30: ẩn/hiện nhanh các mục thiết lập 0, 0b, 1, 1a, 1b, 1c */
+/* V31: ẩn/hiện nhanh các mục thiết lập 0, 0b, 1, 1a, 1b, 1c */
 .collapsible-section{position:relative}.collapsible-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px}.collapsible-head h2{margin:0!important;flex:1}.section-toggle-btn{width:auto!important;min-width:72px;padding:7px 10px;border-radius:999px;background:#e2e8f0;color:#0f172a;box-shadow:none;font-size:12px}.section-toggle-btn:hover{background:#cbd5e1}.collapsible-section.collapsed{padding-bottom:10px}.collapsible-section.collapsed>:not(.collapsible-head){display:none!important}.study-random-hint{display:block;margin-top:4px;color:#475569;font-size:12px}.set-count-used{border-color:#0f766e!important;background:#ecfdf5!important}.set-count-zero{background:#fff!important}
 @media (max-width:700px){.collapsible-head{gap:6px}.section-toggle-btn{min-width:58px;padding:6px 8px;font-size:12px}}
 
@@ -2608,15 +3045,15 @@ function exportStandaloneHtmlWithCurrentBank(){
     if(!bankScript) throw new Error('Không tìm thấy vùng dữ liệu nhúng #embedded-bank.');
     bankScript.textContent = safeJsonForEmbedded(buildCurrentEmbeddedPayload());
     const title = doc.querySelector('title');
-    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V30 - HTML nhúng dữ liệu';
+    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V35 - HTML nhúng dữ liệu';
     const h1 = doc.querySelector('header h1');
-    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V30';
+    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V35';
     const subtitle = doc.querySelector('header p');
     if(subtitle) subtitle.textContent = 'HTML đã nhúng sẵn ngân hàng câu hỏi hiện tại, mở offline là dùng ngay.';
     const body = doc.querySelector('body');
     if(body) body.className = '';
     const preview = doc.querySelector('#bankPreview');
-    if(preview) preview.innerHTML = '<div class="bank-pager"><span class="muted">Đang nạp dữ liệu nhúng...</span></div>';
+    if(preview) preview.innerHTML = '<div class="bank-pager"><span class="muted">Đang nạp dữ liệu mặc định...</span></div>';
     const setManager = doc.querySelector('#questionSetManager');
     if(setManager) setManager.innerHTML = '<div class="set-hint">Đang nạp danh sách bộ câu hỏi...</div>';
     doc.querySelectorAll('input[type=file]').forEach(inp => { try{ inp.value = ''; }catch(e){} });
@@ -2910,10 +3347,11 @@ function bindEvents(){
   els.excelFile.addEventListener('change', handleExcelFile);
   els.btnReadSheet.addEventListener('click', () => state.workbook ? parseSelectedSheet(false) : handleExcelFile());
   els.btnReadAll.addEventListener('click', parseAllSheets);
+  if(els.btnReadOneColumnColor) els.btnReadOneColumnColor.addEventListener('click', parseOneColumnCurrentSheet);
   els.sheetSelect.addEventListener('change', () => parseSelectedSheet(false));
   els.btnRefreshMapping.addEventListener('click', () => state.currentRows.length ? renderMapping(state.currentRows, null) : setStatus('Chưa có sheet để hiển thị cột.', 'bad'));
   els.btnApplyMapping.addEventListener('click', () => parseSelectedSheet(true));
-  els.btnUseEmbedded.addEventListener('click', () => { parseEmbedded(); setStatus(`✅ Đã nạp lại ${state.bank.length} câu hỏi nhúng trong HTML.`, 'good'); });
+  els.btnUseEmbedded.addEventListener('click', async () => { try{ const src = await loadDefaultBankOrEmbedded(); setStatus(`✅ Đã nạp lại ${state.bank.length} câu hỏi từ ${src}.`, 'good'); }catch(e){ setStatus('❌ Không nạp được dữ liệu mặc định: ' + (e.message || e), 'bad'); } });
   els.btnSaveEmbedded.addEventListener('click', () => saveBank('dữ liệu nhúng'));
   els.btnSaveBank.addEventListener('click', () => saveBank('ngân hàng hiện tại'));
   const btnExportStandaloneHtml = document.getElementById('btnExportStandaloneHtml');
@@ -3010,22 +3448,23 @@ function setupCollapsibleSetupSections(){
   }
 }
 
-function boot(){
+async function boot(){
   initElements();
   setupCollapsibleSetupSections();
   setupPWAInstallPrompt();
   loadStudyState();
   loadQuestionSets();
-  try { parseEmbedded(); }
-  catch(e){ console.error(e); setStatus('❌ Lỗi nạp dữ liệu nhúng: ' + (e.message || e), 'bad'); }
+  let src = 'dữ liệu mặc định';
+  try { src = await loadDefaultBankOrEmbedded(); }
+  catch(e){ console.error(e); setStatus('❌ Lỗi nạp dữ liệu mặc định: ' + (e.message || e), 'bad'); }
   bindEvents();
   initManualQuestionEditor();
   registerSW();
-  saveBank('dữ liệu nhúng', true).catch(()=>{});
-  setStatus(`✅ Đã tự nạp ${state.bank.length} câu hỏi nhúng từ Excel mới. SheetJS: ${window.XLSX ? 'đã sẵn sàng' : 'chưa tải'}. Có thể bấm “Tạo đề” ngay, không cần chọn file Excel.`, 'good');
+  saveBank(src, true).catch(()=>{});
+  setStatus(`✅ Đã tự nạp ${state.bank.length} câu hỏi từ ${src}. SheetJS: ${window.XLSX ? 'đã sẵn sàng' : 'chưa tải'}. Có thể bấm “Tạo đề” ngay, không cần chọn file Excel.`, 'good');
   setTimeout(() => { renderStats(); renderPreview(); renderQuestionSetManager(); }, 0);
 }
-window.addEventListener('DOMContentLoaded', boot);
+window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus('❌ Lỗi khởi động: ' + (e.message || e), 'bad')); });
 
 </script>
 </body>
