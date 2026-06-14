@@ -8,7 +8,7 @@
   <link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="description" content="PWA trắc nghiệm Excel offline có dữ liệu nhúng sẵn, đọc Excel bằng SheetJS, tạo đề đảo câu/đáp án, chấm điểm và phân tích đúng sai.">
-  <title>Trắc nghiệm Excel Offline PWA V43.2</title>
+  <title>Trắc nghiệm Excel Offline PWA V42.2</title>
   <style>
 :root{--bg:#eef7f6;--panel:#fff;--text:#0f172a;--muted:#475569;--line:#d7e3e2;--primary:#0f766e;--primary2:#115e59;--danger:#b91c1c;--ok:#15803d;--warn:#b45309;--info:#0369a1;--shadow:0 10px 28px rgba(15,23,42,.10);--r:16px}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}body{min-height:100vh}.app{max-width:1280px;margin:0 auto;padding:14px 14px 92px}header{position:sticky;top:0;z-index:30;margin:0;padding:14px;background:linear-gradient(135deg,#0f766e,#0b4f49);color:#fff;box-shadow:var(--shadow)}header .inner{max-width:1280px;margin:0 auto}header h1{margin:0 0 6px;font-size:clamp(20px,4vw,30px);letter-spacing:.2px}header p{margin:0;color:#dffaf7;font-size:14px}.grid{display:grid;grid-template-columns:1fr;gap:12px}@media (min-width:990px){.grid.two{grid-template-columns:430px 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}.card h2,.card h3{margin:0 0 10px}.card h2{font-size:20px}.card h3{font-size:17px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}label{font-weight:800;font-size:13px;color:#1f2937;display:block;margin:8px 0 5px}input,select,textarea,button{font:inherit}input[type=file],input[type=number],input[type=text],select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:10px;background:#fff;color:var(--text)}input[type=checkbox]{transform:scale(1.12);margin-right:6px}select[multiple]{min-height:150px}button{border:0;border-radius:12px;padding:10px 13px;background:var(--primary);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(15,118,110,.22)}button:hover{background:var(--primary2)}button.secondary{background:#334155}button.light{background:#e2e8f0;color:#0f172a;box-shadow:none}button.danger{background:var(--danger)}button.info{background:var(--info)}button:disabled{opacity:.55;cursor:not-allowed}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;background:#ecfeff;color:#155e75;font-weight:900;font-size:12px;border:1px solid #a5f3fc;margin:2px}.pill.okp{background:#f0fdf4;color:#166534;border-color:#86efac}.pill.warnp{background:#fffbeb;color:#92400e;border-color:#fcd34d}.ok{color:var(--ok);font-weight:900}.bad{color:var(--danger);font-weight:900}.warn{color:var(--warn);font-weight:900}.status{border-radius:12px;padding:10px;background:#f8fafc;border:1px dashed #cbd5e1;white-space:pre-wrap}.status.bad{border-color:#fecaca;background:#fff1f2}.status.good{border-color:#bbf7d0;background:#f0fdf4}.status.info{border-color:#bae6fd;background:#f0f9ff}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.table-wrap table{min-width:940px;width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #e2e8f0;padding:9px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#f1f5f9;z-index:1}.nowrap{white-space:nowrap}details{border:1px solid var(--line);border-radius:12px;background:#fbffff;padding:10px;margin:10px 0}summary{font-weight:900;cursor:pointer}.question-card{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:12px;margin:10px 0}.question-title{font-weight:900;margin-bottom:8px}.option{display:flex;gap:8px;align-items:flex-start;border:1px solid #e2e8f0;border-radius:12px;padding:9px;margin:7px 0;background:#f8fafc}.option:hover{background:#eff6ff}.option input{margin-top:4px}.letter{min-width:28px;height:28px;border-radius:999px;background:#dbeafe;display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#1e3a8a}.chosen{border-color:#38bdf8;background:#ecfeff}.right{border-color:#22c55e;background:#f0fdf4}.wrong{border-color:#ef4444;background:#fef2f2}.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:9px 14px;box-shadow:0 -8px 22px rgba(15,23,42,.09)}.stickybar-inner{max-width:1280px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.progress{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden;min-width:170px;flex:1}.progress>span{display:block;height:100%;width:0;background:var(--primary);transition:.2s}.analysis-row{margin:7px 0;padding:9px;border-left:4px solid #0ea5e9;background:#f0f9ff;border-radius:8px}.analysis-row b{color:#0f172a}.analysis-row.source{background:#fefce8;border-left-color:#eab308}.tag{display:inline-block;margin:2px 3px 2px 0;padding:2px 6px;border-radius:999px;background:#e0f2fe;color:#075985;font-size:12px}.mapping-grid{display:grid;grid-template-columns:1fr;gap:8px}@media (min-width:720px){.mapping-grid{grid-template-columns:repeat(2,1fr)}}.banner{padding:11px;border-radius:14px;background:#ecfdf5;border:1px solid #86efac;color:#14532d;margin-bottom:10px}.banner b{font-size:15px}@media (max-width:700px){.app{padding:10px 10px 100px}.card{padding:11px;border-radius:13px}button{width:100%;justify-content:center}.row button{flex:1 1 150px}.stickybar-inner{align-items:stretch}.progress{width:100%;flex-basis:100%}.table-wrap table{min-width:780px}.option{padding:8px}.letter{min-width:26px;height:26px}}
 /* V6: giải thích ngược, lấy phương án sai làm trọng tâm, chỉ rõ đáp án đúng có gì mà sai không có */
@@ -359,7 +359,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 </head>
 <body>
 
-<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V43.2</h1><p>Dữ liệu nhúng sẵn, quản lý/lưu từng bộ câu hỏi riêng biệt, nhập/sửa câu hỏi toàn màn hình, hỗ trợ ảnh/âm thanh.</p></div></header>
+<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V42.2</h1><p>Dữ liệu nhúng sẵn, quản lý/lưu từng bộ câu hỏi riêng biệt, nhập/sửa câu hỏi toàn màn hình, hỗ trợ ảnh/âm thanh.</p></div></header>
 <main class="app">
   <section class="grid two">
     <div>
@@ -646,7 +646,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 <script>
 'use strict';
 
-const APP_VERSION = 'V43.2-20260614-diff-essay-wrong-options';
+const APP_VERSION = 'V43.3-20260614-preserve-essay-newlines';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -755,6 +755,7 @@ function optionToQuizObj(opt, idx, correctSet){
 }
 
 function visibleText(v){ return String(v ?? '').replace(/\r\n/g,'\n').replace(/\s+/g,' ').trim(); }
+function multilineText(v){ return String(v ?? '').replace(/\r\n/g,'\n').replace(/\r/g,'\n').replace(/\u00a0/g,' ').replace(/[\t ]+$/gm,'').trim(); }
 function norm(v){
   return String(v ?? '')
     .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
@@ -3177,9 +3178,9 @@ function exportStandaloneHtmlWithCurrentBank(){
     if(!bankScript) throw new Error('Không tìm thấy vùng dữ liệu nhúng #embedded-bank.');
     bankScript.textContent = safeJsonForEmbedded(buildCurrentEmbeddedPayload());
     const title = doc.querySelector('title');
-    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V43.2 - HTML nhúng dữ liệu';
+    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V42.2 - HTML nhúng dữ liệu';
     const h1 = doc.querySelector('header h1');
-    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V43.2';
+    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V42.2';
     const subtitle = doc.querySelector('header p');
     if(subtitle) subtitle.textContent = 'HTML đã nhúng sẵn ngân hàng câu hỏi hiện tại, mở offline là dùng ngay.';
     const body = doc.querySelector('body');
@@ -4165,7 +4166,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 
 /* ===== V43 patch: chấm tự luận theo trọng tâm tự động từ câu hỏi + đáp án mẫu ===== */
 (function(){
-  const V42_VERSION_LABEL = 'V43.2-20260614-diff-essay-wrong-options';
+  const V42_VERSION_LABEL = 'V43.3-20260614-preserve-essay-newlines';
   const __v41DetectMapping = detectMapping;
   const __v41RenderResult = renderResult;
 
@@ -4192,7 +4193,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
     const explicitEssay = /(^|\s)(essay|tu\s*luan|tuluan|tra\s*loi\s*ngan|short\s*answer|written)(\s|$)/.test(t);
     return {
       // Không lấy answerRaw làm đáp án mẫu cho câu trắc nghiệm, vì answerRaw thường chỉ là "1" hoặc "1,3".
-      sampleAnswer: visibleText(q.sampleAnswer ?? q.modelAnswer ?? q.essayAnswer ?? q.answerSample ?? (explicitEssay ? q.answerRaw : '') ?? ''),
+      sampleAnswer: multilineText(q.sampleAnswer ?? q.modelAnswer ?? q.essayAnswer ?? q.answerSample ?? (explicitEssay ? q.answerRaw : '') ?? ''),
       requiredKeywords: keywordArray(q.requiredKeywords ?? q.essayRequiredKeywords ?? q.mustKeywords ?? q.keywordsRequired ?? ''),
       bonusKeywords: keywordArray(q.bonusKeywords ?? q.plusKeywords ?? q.keywordsBonus ?? ''),
       penaltyKeywords: keywordArray(q.penaltyKeywords ?? q.minusKeywords ?? q.keywordsPenalty ?? ''),
@@ -4343,7 +4344,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
     const hitPen = s.penaltyHit.length ? `<div><b>Có từ khóa trừ điểm:</b> ${s.penaltyHit.map(x=>`<span class="tag wrongterm">${escapeHtml(x)}</span>`).join(' ')} <span class="muted">(trừ khoảng ${Math.round(s.penaltyRate*100)}%)</span></div>` : '';
     const sample = s.fields.sampleAnswer ? `<details><summary>Đáp án mẫu / gợi ý chấm</summary><div class="essay-sample-answer">${escapeHtml(s.fields.sampleAnswer)}</div></details>` : '<div class="muted">Chưa có đáp án mẫu.</div>';
     const exactNote = (s.exactSampleMatch || s.nearSampleMatch) ? '<div><b>Khớp đáp án mẫu:</b> bài làm trùng hoặc gần như trùng đáp án mẫu, nên điểm gợi ý được tính tối đa.</div>' : '';
-    return `<div class="essay-analysis"><div class="pill warnp">Tự luận - điểm gợi ý ${s.score.toFixed(2)}/${s.scoreMax} (${pct}%)</div><div class="muted small">Thuật toán V43.2: nếu bài làm trùng/gần trùng đáp án mẫu thì tự chấm tối đa; nếu không trùng, hệ thống bóc tách trọng tâm từ câu hỏi + đáp án mẫu, so sánh với bài làm và kết hợp từ khóa cấu hình tay. Điểm này chỉ là gợi ý, người chấm cần xác nhận lại.</div><div class="essay-score-breakdown"><span class="pill">Trọng tâm ${Math.round((s.autoFocusScore||0)*100)}%</span><span class="pill">Tương đồng ${Math.round((s.similarity||0)*100)}%</span>${(s.fields.requiredKeywords.length || s.fields.bonusKeywords.length)?`<span class="pill">Từ khóa tay ${Math.round((s.manualScore||0)*100)}%</span>`:''}</div>${exactNote}${focusList}${hitReq}${miss}${hitBonus}${hitPen}${sample}${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`;
+    return `<div class="essay-analysis"><div class="pill warnp">Tự luận - điểm gợi ý ${s.score.toFixed(2)}/${s.scoreMax} (${pct}%)</div><div class="muted small">Thuật toán V43.3: nếu bài làm trùng/gần trùng đáp án mẫu thì tự chấm tối đa; nếu không trùng, hệ thống bóc tách trọng tâm từ câu hỏi + đáp án mẫu, so sánh với bài làm và kết hợp từ khóa cấu hình tay. Điểm này chỉ là gợi ý, người chấm cần xác nhận lại.</div><div class="essay-score-breakdown"><span class="pill">Trọng tâm ${Math.round((s.autoFocusScore||0)*100)}%</span><span class="pill">Tương đồng ${Math.round((s.similarity||0)*100)}%</span>${(s.fields.requiredKeywords.length || s.fields.bonusKeywords.length)?`<span class="pill">Từ khóa tay ${Math.round((s.manualScore||0)*100)}%</span>`:''}</div>${exactNote}${focusList}${hitReq}${miss}${hitBonus}${hitPen}${sample}${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`;
   }
 
   window.normalizeBank = function(bank){
@@ -4660,7 +4661,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
     return `<div class="essay-analysis"><div class="pill warnp">Tự luận - điểm gợi ý ${(s.score||0).toFixed(2)}/${s.scoreMax||10} (${pct}%)</div><div class="muted small">Điểm này chỉ là gợi ý theo từ khóa/đáp án mẫu, người chấm cần xác nhận lại.</div>${hitReq}${miss}${hitBonus}${hitPen}${sample}${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`;
   }
   function renderEssayCard(q, originalNo){
-    const answer = visibleText(q.userText || '');
+    const answer = multilineText(q.userText || '');
     let suggestion = null;
     try { suggestion = window.essaySuggestion ? window.essaySuggestion(q.item, answer) : null; } catch(e){}
     const scoreMax = suggestion?.scoreMax || Number(q.item?.scoreMax || q.item?.maxScore || 10) || 10;
@@ -4785,261 +4786,21 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   document.head.appendChild(style);
 })();
 
-/* ===== V43.2 patch: diff tự luận + diff phương án sai ===== */
+
+/* ===== V43.3 patch: giữ xuống dòng trong bài làm và đáp án mẫu tự luận ===== */
 (function(){
-  const V432_LABEL = 'V43.2-20260614-diff-essay-and-wrong-options';
-
-  function keywordArrayV432(v){
-    if(Array.isArray(v)) return v.map(visibleText).filter(Boolean);
-    return visibleText(v).split(/[\n;,|]+/).map(visibleText).filter(Boolean);
-  }
-  function essayTypeTextV432(v){ return norm(v || '').replace(/-/g,' '); }
-  function essayFieldsFromV432(q){
-    q = q || {};
-    const t = essayTypeTextV432(q.questionType || q.type || q.loaiCau || q.kind || q.questionKind || '');
-    const explicitEssay = /(^|\s)(essay|tu\s*luan|tuluan|tra\s*loi\s*ngan|short\s*answer|written)(\s|$)/.test(t);
-    return {
-      sampleAnswer: visibleText(q.sampleAnswer ?? q.modelAnswer ?? q.essayAnswer ?? q.answerSample ?? (explicitEssay ? q.answerRaw : '') ?? ''),
-      requiredKeywords: keywordArrayV432(q.requiredKeywords ?? q.essayRequiredKeywords ?? q.mustKeywords ?? q.keywordsRequired ?? ''),
-      bonusKeywords: keywordArrayV432(q.bonusKeywords ?? q.plusKeywords ?? q.keywordsBonus ?? ''),
-      penaltyKeywords: keywordArrayV432(q.penaltyKeywords ?? q.minusKeywords ?? q.keywordsPenalty ?? ''),
-      scoreMax: Math.max(0, Number(q.scoreMax ?? q.maxScore ?? q.thangDiem ?? q.diemToiDa ?? 10) || 10)
-    };
-  }
-  function clamp01V432(x){ return Math.max(0, Math.min(1, Number(x) || 0)); }
-  function diffTokenDataV432(reference, candidate){
-    const refSeq = sequenceTokens(reference || '', true);
-    const candSeq = sequenceTokens(candidate || '', true);
-    if(!refSeq.length && !candSeq.length) return {refSeq, candSeq, ops:[], blocks:[], lcsLen:0, recall:1, precision:1, f1:1, missing:[], extra:[], same:[]};
-    if(!refSeq.length) return {refSeq, candSeq, ops:candSeq.map((w,i)=>({type:'add', w, cIndex:0, wIndex:i})), blocks:[], lcsLen:0, recall:1, precision:0, f1:0, missing:[], extra:candSeq, same:[]};
-    if(!candSeq.length) return {refSeq, candSeq, ops:refSeq.map((c,i)=>({type:'del', c, cIndex:i, wIndex:0})), blocks:[], lcsLen:0, recall:0, precision:1, f1:0, missing:refSeq, extra:[], same:[]};
-    const al = lcsSequence(refSeq, candSeq);
-    const missing = [], extra = [], same = [];
-    (al.ops || []).forEach(op => { if(op.type === 'match') same.push(op.c); else if(op.type === 'del') missing.push(op.c); else if(op.type === 'add') extra.push(op.w); });
-    const recall = al.lcsLen / Math.max(1, refSeq.length);
-    const precision = al.lcsLen / Math.max(1, candSeq.length);
-    const f1 = (recall + precision) ? (2 * recall * precision / (recall + precision)) : 0;
-    return {refSeq, candSeq, ops:al.ops || [], blocks:al.blocks || [], lcsLen:al.lcsLen, recall, precision, f1, missing, extra, same};
-  }
-  function compactDiffTokensV432(items, max=22){
-    const arr = (items || []).map(x => typeof x === 'string' ? x : (x.raw || x.key || '')).filter(Boolean);
-    if(!arr.length) return '';
-    const shown = arr.slice(0, max).map(x=>escapeHtml(x)).join(' ');
-    return arr.length > max ? shown + ' …' : shown;
-  }
-  function diffInlineV432(diff, mode){
-    const parts = [];
-    (diff.ops || []).forEach(op => {
-      if(mode === 'reference'){
-        if(op.type === 'match') parts.push(`<span class="diff-same">${escapeHtml(op.c.raw)}</span>`);
-        if(op.type === 'del') parts.push(`<span class="diff-missing">${escapeHtml(op.c.raw)}</span>`);
-      } else {
-        if(op.type === 'match') parts.push(`<span class="diff-same">${escapeHtml(op.w.raw)}</span>`);
-        if(op.type === 'add') parts.push(`<span class="diff-extra">${escapeHtml(op.w.raw)}</span>`);
-      }
-    });
-    return parts.join(' ');
-  }
-  function diffVisualHtmlV432(reference, candidate, refTitle='Đáp án mẫu', candTitle='Bài làm'){
-    const d = diffTokenDataV432(reference, candidate);
-    const missingShort = compactDiffTokensV432(d.missing, 26);
-    const extraShort = compactDiffTokensV432(d.extra, 26);
-    const stats = `<div class="diff-stats"><span class="pill okp">Giống tổng ${Math.round(d.f1*100)}%</span><span class="pill">Bao phủ ý mẫu ${Math.round(d.recall*100)}%</span><span class="pill">Độ chính xác bài làm ${Math.round(d.precision*100)}%</span><span class="pill ${d.missing.length?'warnp':'okp'}">Thiếu ${d.missing.length}</span><span class="pill ${d.extra.length?'warnp':'okp'}">Thêm/khác ${d.extra.length}</span></div>`;
-    const miss = missingShort ? `<div><b>Phần trong mẫu nhưng bài làm thiếu:</b> <span class="diff-missing small-diff-chip">${missingShort}</span></div>` : '<div><b>Phần trong mẫu nhưng bài làm thiếu:</b> không đáng kể.</div>';
-    const extra = extraShort ? `<div><b>Phần bài làm thêm/khác so với mẫu:</b> <span class="diff-extra small-diff-chip">${extraShort}</span></div>` : '<div><b>Phần bài làm thêm/khác so với mẫu:</b> không đáng kể.</div>';
-    const body = `<div class="diff-legend"><span class="diff-same">giống</span><span class="diff-missing">thiếu so với mẫu</span><span class="diff-extra">thêm/khác</span></div>${stats}<div class="diff-quick">${miss}${extra}</div><div class="diff-two-cols"><div><b>${escapeHtml(refTitle)}</b><div class="diff-textbox">${diffInlineV432(d,'reference') || '<span class="muted">Trống</span>'}</div></div><div><b>${escapeHtml(candTitle)}</b><div class="diff-textbox">${diffInlineV432(d,'candidate') || '<span class="muted">Trống</span>'}</div></div></div>`;
-    return {html:`<details open class="diff-visual"><summary>So sánh dạng diff: giống / thiếu / khác</summary>${body}</details>`, data:d};
-  }
-  function splitEssayUnitsV432(text){
-    const src = visibleText(text || '');
-    if(!src) return [];
-    let parts = src.replace(/\r\n/g,'\n')
-      .replace(/([.!?])\s+(?=[A-ZÀ-ỸĐ0-9])/g, '$1\n')
-      .replace(/\b(\d+)\.\s+/g, '\n$1. ')
-      .split(/\n+|[;；]+|(?:^|\s)[•●▪]\s*/)
-      .map(visibleText).filter(Boolean);
-    const expanded = [];
-    parts.forEach(p => {
-      if(p.length > 210){
-        const subs = p.split(/,\s+(?=(?:cần|phải|đồng thời|sau đó|trước hết|thực hiện|kiểm tra|báo cáo|cô lập|đảm bảo|khôi phục|xử lý|thao tác|ngăn|điều chỉnh|thu thập|xác định|không được|cho phép)\b)/i).map(visibleText).filter(Boolean);
-        if(subs.length > 1) expanded.push(...subs); else expanded.push(p);
-      } else expanded.push(p);
-    });
-    return expanded.filter(x => tokens(x).length >= 3).slice(0, 18);
-  }
-  function phraseHitV432(phrase, answerNorm, answerRaw){
-    const key = norm(phrase || '');
-    if(!key || !answerNorm) return false;
-    if(answerNorm.includes(key)) return true;
-    const words = key.split(/\s+/).filter(w => w.length > 1 && !VI_STOPWORDS.has(w));
-    if(!words.length) return false;
-    const hits = words.filter(w => answerNorm.includes(w)).length;
-    if(words.length <= 2) return hits === words.length;
-    const ansSeq = sequenceTokens(answerRaw || '', true).map(x => x.key);
-    let pos = 0, ordered = 0;
-    for(const w of words){ const found = ansSeq.indexOf(w, pos); if(found >= 0){ ordered++; pos = found + 1; } }
-    return hits >= Math.ceil(words.length * 0.72) || ordered >= Math.ceil(words.length * 0.68);
-  }
-  function termLabelV432(t){ return visibleText(t?.raw || t?.key || t || ''); }
-  window.essaySuggestion = function(item, answer){
-    const f = essayFieldsFromV432(item || {});
-    const rawAnswer = visibleText(answer || '');
-    const sampleRaw = visibleText(f.sampleAnswer || '');
-    const answerNorm = norm(rawAnswer || '');
-    const sampleNorm = norm(sampleRaw || '');
-    const qTokenSet = new Set(tokens(item?.question || ''));
-    const fullDiff = diffTokenDataV432(sampleRaw, rawAnswer);
-    const exactSampleMatch = !!(answerNorm && sampleNorm && answerNorm === sampleNorm);
-    const nearSampleMatch = !!(sampleNorm && fullDiff.recall >= 0.985 && fullDiff.precision >= 0.985 && fullDiff.f1 >= 0.985);
-    function termUseful(term){
-      const words = String(term?.key || norm(term?.raw || term || '')).split(/\s+/).filter(Boolean);
-      return words.some(w => !qTokenSet.has(w) && !VI_STOPWORDS.has(w) && w.length > 2);
+  const style=document.createElement('style');
+  style.textContent=`
+    .essay-user-answer,.essay-sample-answer,.essay-focus-point,.analysis-row.source{
+      white-space:pre-wrap!important;
+      overflow-wrap:anywhere!important;
+      word-break:break-word!important;
+      line-height:1.55!important;
     }
-    const units = splitEssayUnitsV432(sampleRaw);
-    const focusPoints = units.map((unit, idx) => {
-      const d = diffTokenDataV432(unit, rawAnswer);
-      const terms = chooseShort(keyTerms(unit).filter(termUseful), 7);
-      const facts = extractFacts(unit || '').filter((fct, i, arr) => arr.findIndex(x => x.looseKey === fct.looseKey) === i).slice(0,4);
-      const polarity = extractPolarity(unit || '').filter(x => !qTokenSet.has(x)).slice(0,5);
-      const ansFacts = extractFacts(rawAnswer || '');
-      const ansPol = extractPolarity(rawAnswer || '');
-      const termHits = terms.filter(t => phraseHitV432(termLabelV432(t), answerNorm, rawAnswer));
-      const factHits = facts.filter(fct => ansFacts.some(a => a.looseKey === fct.looseKey) || phraseHitV432(fct.raw, answerNorm, rawAnswer));
-      const polHits = polarity.filter(p => ansPol.includes(p) || phraseHitV432(p, answerNorm, rawAnswer));
-      const termScore = terms.length ? termHits.length / terms.length : d.recall;
-      const factScore = facts.length ? factHits.length / facts.length : null;
-      const polScore = polarity.length ? polHits.length / polarity.length : null;
-      let num = d.recall * 0.50 + d.f1 * 0.18 + termScore * 0.22, den = 0.90;
-      if(factScore !== null){ num += factScore * 0.07; den += 0.07; }
-      if(polScore !== null){ num += polScore * 0.03; den += 0.03; }
-      const score = clamp01V432(num / den);
-      const weight = 1 + Math.min(0.35, facts.length * 0.10) + Math.min(0.20, polarity.length * 0.05) + Math.min(0.25, terms.length * 0.025);
-      return {idx, text:unit, diff:d, score, weight, terms, facts, polarity, termHits, factHits, polHits, missingTerms:terms.filter(t => !termHits.includes(t)), missingFacts:facts.filter(fct => !factHits.includes(fct)), missingPolarity:polarity.filter(p => !polHits.includes(p))};
-    });
-    const totalWeight = focusPoints.reduce((s,p)=>s+(p.weight||1),0);
-    const autoFocusScore = totalWeight ? focusPoints.reduce((s,p)=>s + p.score * (p.weight||1),0)/totalWeight : 0;
-    const hitKeyword = arr => arr.filter(k => phraseHitV432(k, answerNorm, rawAnswer));
-    function strictPenaltyHit(keyword){
-      const key = norm(keyword || '');
-      if(!key || !answerNorm) return false;
-      if(sampleNorm.includes(key)) return false;
-      if(answerNorm.includes(key)) return true;
-      const words = key.split(/\s+/).filter(w => w.length > 1 && !VI_STOPWORDS.has(w));
-      if(words.length < 3) return false;
-      const ansSeq = sequenceTokens(rawAnswer || '', true).map(x => x.key);
-      let pos = 0, hits = 0;
-      for(const w of words){ const found = ansSeq.indexOf(w, pos); if(found >= 0){ hits++; pos = found + 1; } }
-      return hits / Math.max(1, words.length) >= 0.90;
-    }
-    const reqHit = hitKeyword(f.requiredKeywords), bonusHit = hitKeyword(f.bonusKeywords);
-    let penHit = f.penaltyKeywords.filter(k => strictPenaltyHit(k));
-    const missingRequired = f.requiredKeywords.filter(k => !reqHit.includes(k));
-    const reqScore = f.requiredKeywords.length ? reqHit.length / f.requiredKeywords.length : 0;
-    const bonusScore = f.bonusKeywords.length ? bonusHit.length / f.bonusKeywords.length : 0;
-    const hasManual = !!(f.requiredKeywords.length || f.bonusKeywords.length);
-    const manualScore = hasManual ? clamp01V432((f.requiredKeywords.length ? reqScore * 0.82 : 0.55) + (f.bonusKeywords.length ? bonusScore * 0.18 : 0)) : 0;
-    let percent = 0;
-    if(!answerNorm) percent = 0;
-    else if(exactSampleMatch || nearSampleMatch){ percent = 1; penHit = []; }
-    else {
-      const autoW = focusPoints.length ? 0.62 : 0;
-      const diffW = sampleRaw ? (focusPoints.length ? 0.30 : 0.82) : 0;
-      const manualW = hasManual ? 0.08 : 0;
-      const den = autoW + diffW + manualW;
-      percent = den ? (autoFocusScore * autoW + fullDiff.f1 * diffW + manualScore * manualW) / den : 0;
-      percent = clamp01V432(percent - Math.min(0.35, penHit.length * 0.08));
-    }
-    return {percent, score:percent*(f.scoreMax||10), scoreMax:f.scoreMax||10, requiredHit:reqHit, bonusHit, penaltyHit:penHit, missingRequired, fields:f, focusPoints, autoFocusScore, manualScore, similarity:fullDiff.f1, sampleRecall:fullDiff.recall, samplePrecision:fullDiff.precision, fullDiff, exactSampleMatch, nearSampleMatch, penaltyRate:penHit.length ? Math.min(0.35, penHit.length*0.08) : 0};
-  };
-
-  function tagHtmlV432(items, cls){ return (items||[]).filter(Boolean).map(x => `<span class="tag ${cls||''}">${escapeHtml(typeof x === 'string' ? x : (x.raw||x.key||''))}</span>`).join(' '); }
-  function essayAnalysisHtmlDetailedV432(item, answer){
-    let s;
-    try { s = window.essaySuggestion(item, answer); } catch(e){ console.error(e); s = null; }
-    if(!s){ return `<div class="essay-analysis"><span class="pill warnp">Tự luận</span><div class="muted small">Chưa tính được điểm gợi ý cho câu này.</div>${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`; }
-    const pct = Math.round((s.percent||0)*100);
-    const diff = s.fields.sampleAnswer ? diffVisualHtmlV432(s.fields.sampleAnswer, answer || '', 'Đáp án mẫu', 'Bài làm').html : '<div class="muted">Chưa có đáp án mẫu để so sánh diff.</div>';
-    const focusRows = (s.focusPoints || []).map((p,idx) => {
-      const status = p.score >= .80 ? 'Đạt' : (p.score >= .50 ? 'Đạt một phần' : 'Thiếu');
-      const cls = p.score >= .80 ? 'okp' : (p.score >= .50 ? 'warnp' : 'bad');
-      const pt = ((p.weight || 1) / Math.max(0.0001, (s.focusPoints||[]).reduce((a,b)=>a+(b.weight||1),0)) * (s.scoreMax || 10) * 0.62 * p.score);
-      const miss = [...(p.missingTerms||[]).slice(0,5), ...(p.missingFacts||[]).slice(0,3)].map(x => x.raw || x.key || x).filter(Boolean);
-      const hit = [...(p.termHits||[]).slice(0,5), ...(p.factHits||[]).slice(0,3)].map(x => x.raw || x.key || x).filter(Boolean);
-      return `<tr><td>${idx+1}</td><td>${escapeHtml(p.text)}</td><td><span class="pill ${cls}">${status}</span><div class="muted small">${Math.round(p.score*100)}%</div></td><td>${pt.toFixed(2)}</td><td>${tagHtmlV432(hit,'need') || '<span class="muted">—</span>'}</td><td>${tagHtmlV432(miss,'wrongterm') || '<span class="muted">—</span>'}</td></tr>`;
-    }).join('');
-    const focusTable = focusRows ? `<details open class="essay-focus-details"><summary>Bảng trọng tâm chấm điểm chi tiết</summary><div class="table-wrap"><table class="essay-score-table"><thead><tr><th>#</th><th>Trọng tâm cần có</th><th>Mức đạt</th><th>Điểm quy đổi</th><th>Đã khớp</th><th>Còn thiếu</th></tr></thead><tbody>${focusRows}</tbody></table></div></details>` : '<div class="muted">Chưa tách được trọng tâm tự động từ đáp án mẫu.</div>';
-    const exactNote = (s.exactSampleMatch || s.nearSampleMatch) ? '<div class="diff-exact-note"><b>Khớp đáp án mẫu:</b> bài làm trùng hoặc gần như trùng đáp án mẫu, nên điểm gợi ý được tính tối đa.</div>' : '';
-    const miss = s.missingRequired?.length ? `<div><b>Còn thiếu từ khóa bắt buộc cấu hình tay:</b> ${tagHtmlV432(s.missingRequired,'wrongterm')}</div>` : '<div><b>Từ khóa bắt buộc cấu hình tay:</b> đã khớp đủ hoặc chưa cấu hình.</div>';
-    const hitReq = s.requiredHit?.length ? `<div><b>Đã khớp bắt buộc cấu hình tay:</b> ${tagHtmlV432(s.requiredHit,'need')}</div>` : '';
-    const hitBonus = s.bonusHit?.length ? `<div><b>Đã khớp cộng điểm cấu hình tay:</b> ${tagHtmlV432(s.bonusHit,'same')}</div>` : '';
-    const hitPen = s.penaltyHit?.length ? `<div><b>Có từ khóa trừ điểm:</b> ${tagHtmlV432(s.penaltyHit,'wrongterm')} <span class="muted">(trừ khoảng ${Math.round((s.penaltyRate||0)*100)}%)</span></div>` : '';
-    const sample = s.fields.sampleAnswer ? `<details><summary>Đáp án mẫu / gợi ý chấm</summary><div class="essay-sample-answer">${escapeHtml(s.fields.sampleAnswer)}</div></details>` : '<div class="muted">Chưa có đáp án mẫu.</div>';
-    return `<div class="essay-analysis essay-analysis-v432"><div class="pill warnp">Tự luận - điểm gợi ý ${(s.score||0).toFixed(2)}/${s.scoreMax||10} (${pct}%)</div><div class="muted small">V43.2: so sánh dạng diff, bóc tách trọng tâm từ đáp án mẫu, chấm từng trọng tâm theo Đạt / Đạt một phần / Thiếu. Điểm này vẫn là gợi ý, người chấm cần xác nhận lại.</div><div class="essay-score-breakdown"><span class="pill">Trọng tâm ${Math.round((s.autoFocusScore||0)*100)}%</span><span class="pill">Diff tổng ${Math.round((s.similarity||0)*100)}%</span><span class="pill">Bao phủ mẫu ${Math.round((s.sampleRecall||0)*100)}%</span>${(s.fields.requiredKeywords.length || s.fields.bonusKeywords.length)?`<span class="pill">Từ khóa tay ${Math.round((s.manualScore||0)*100)}%</span>`:''}</div>${exactNote}${diff}${focusTable}${hitReq}${miss}${hitBonus}${hitPen}${sample}${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`;
-  }
-
-  try {
-    explainDifference = function(correct, wrong){
-      const diffObj = diffVisualHtmlV432(correct || '', wrong || '', 'Đáp án đúng gần nhất', 'Phương án sai');
-      const d = diffObj.data;
-      const firstBlock = (d.blocks || [])[0];
-      let conclusion = '';
-      if(!visibleText(wrong || '')) conclusion = '<b>Kết luận:</b> phương án sai không có nội dung để so với đáp án đúng.';
-      else if(d.f1 >= 0.96) conclusion = '<b>Kết luận:</b> phương án này gần giống đáp án đúng; cần kiểm tra ký hiệu, số liệu, phủ định hoặc cột đáp án trong Excel.';
-      else if(d.missing.length && d.extra.length) conclusion = '<b>Kết luận:</b> phương án sai vừa <b>thiếu ý bắt buộc</b> của đáp án đúng, vừa có phần <b>thêm/khác</b>.';
-      else if(d.missing.length) conclusion = '<b>Kết luận:</b> phương án sai chủ yếu vì <b>thiếu nội dung bắt buộc</b> so với đáp án đúng.';
-      else if(d.extra.length) conclusion = '<b>Kết luận:</b> phương án sai chủ yếu vì <b>thêm hoặc đổi nội dung</b> so với đáp án đúng.';
-      else conclusion = '<b>Kết luận:</b> hai phương án khác nhau ở chi tiết nhỏ; cần đối chiếu căn cứ.';
-      const first = firstBlock ? `<div class="diff-block focus-sequence"><b>Điểm khác đầu tiên:</b><br>Đáp án đúng cần: <span class="tag need">${escapeHtml(seqText(firstBlock.del || [], 12) || '∅')}</span><br>Phương án sai ghi/thêm: <span class="tag wrongterm">${escapeHtml(seqText(firstBlock.add || [], 12) || '∅')}</span></div>` : '';
-      return `<div class="diff-conclusion">${conclusion}</div>${diffObj.html}${first}`;
-    };
-    window.explainDifference = explainDifference;
-  } catch(e){ console.warn('Không ghi đè được explainDifference', e); }
-
-  function qModeV432(q){ if(!q || !q.item) return 'unanswered'; if(window.isEssayQuestion && isEssayQuestion(q.item)) return hasAnyChoice(q) ? 'essay' : 'unanswered'; if(!hasAnyChoice(q)) return 'unanswered'; return isQuestionCorrect(q) ? 'correct' : 'wrong'; }
-  function qRankV432(mode){ if(mode === 'wrong') return 0; if(mode === 'unanswered') return 1; if(mode === 'essay') return 2; return 3; }
-  function objectiveModeV432(q){ if(!hasAnyChoice(q)) return 'unanswered'; return isQuestionCorrect(q) ? 'correct' : 'wrong'; }
-  function objectiveRankV432(mode){ if(mode === 'wrong') return 0; if(mode === 'unanswered') return 1; return 2; }
-  function renderEssayCardV432(q, originalNo){
-    const answer = visibleText(q.userText || '');
-    let suggestion = null; try { suggestion = window.essaySuggestion ? window.essaySuggestion(q.item, answer) : null; } catch(e){}
-    const scoreMax = suggestion?.scoreMax || Number(q.item?.scoreMax || q.item?.maxScore || 10) || 10;
-    const studyMeta = state.mode === 'study' ? studyQuestionMeta(q.item) : '';
-    return `<article class="question-card result-question-card result-order-essay"><h3>Câu ${q.no}. <span class="warn">Tự luận</span> <span class="muted small">(thứ tự gốc trong đề: ${originalNo})</span></h3><div class="question-title result-question-title">${renderQuestionContent(q.item)}</div><div class="result-question-meta"><span class="pill warnp">Câu tự luận</span><span class="pill">Điểm tối đa: ${scoreMax}</span>${answer?'<span class="pill okp">Đã trả lời</span>':'<span class="pill warnp">Chưa trả lời</span>'}</div>${studyMeta}<div class="essay-user-answer"><b>Bài làm của bạn:</b><br>${answer?escapeHtml(answer):'<span class="muted">Chưa nhập câu trả lời.</span>'}</div>${essayAnalysisHtmlDetailedV432(q.item, answer)}</article>`;
-  }
-  function renderObjectiveResultListV432(entries){
-    function correctReason(q, correctOpts, op){ const all = correctOpts.map(o=>o.text).join(' | '); const multi = correctOpts.length > 1; return `<div class="analysis-row source"><b>Vì sao đây là đáp án đúng:</b><br>Phương án này nằm trong ${multi?'nhóm các đáp án đúng':'đáp án đúng'} được cột đáp án Excel xác định. ${multi?'Với câu chọn nhiều, phải chọn đủ và chỉ chọn các phương án đúng: '+escapeHtml(all)+'. ':'Khi so với các phương án sai, đáp án đúng giữ đúng từ khóa, điều kiện, mốc số liệu hoặc phạm vi bắt buộc.'}${q.item.source?'<br><b>Căn cứ:</b> '+escapeHtml(q.item.source):''}</div>`; }
-    function wrongExplainBlock(correctOpts, op, oi, title){ const label = optionLabel(oi); const ref = bestCorrectForWrong(correctOpts, op); const autoExplain = els.showAutoExplain ? !!els.showAutoExplain.checked : true; return `<div class="analysis-row"><b>${escapeHtml(title || ('Phương án ' + label + ' sai ở đâu:'))}</b><br>${autoExplain ? explainDifference(ref.text, op.text) : 'Đã tắt phân tích tự động.'}</div>`; }
-    function optionExplanation(q, correctOpts, op, oi, mode){ if(op.isCorrect) return correctReason(q, correctOpts, op); const label = optionLabel(oi); const selected = selectedDisplayIndexes(q).includes(oi); if(mode === 'wrong' && selected) return wrongExplainBlock(correctOpts, op, oi, 'Bạn chọn phương án ' + label + ' nên sai ở đâu so với đáp án đúng gần nhất:'); return wrongExplainBlock(correctOpts, op, oi, 'Phương án ' + label + ' sai ở đâu so với đáp án đúng gần nhất:'); }
-    function optionStatus(q, op, oi){ const selected = selectedDisplayIndexes(q).includes(oi); if(op.isCorrect && selected) return '<span class="mini-status ok">Bạn chọn đúng</span>'; if(op.isCorrect) return '<span class="mini-status ok">Đáp án đúng</span>'; if(selected) return '<span class="mini-status bad">Bạn chọn sai</span>'; return '<span class="mini-status muted">Phương án sai</span>'; }
-    function resultOption(q, correctOpts, op, oi, mode){ const label = optionLabel(oi); const selected = selectedDisplayIndexes(q).includes(oi); const open = (mode === 'wrong' && selected && !op.isCorrect) ? ' open' : ''; const cls = ['result-option','option']; if(op.isCorrect) cls.push('right','result-correct-option'); if(selected && !op.isCorrect) cls.push('wrong','result-user-wrong'); if(selected && op.isCorrect) cls.push('chosen','result-user-correct'); const textCls = op.isCorrect ? 'option-text correct-answer-text' : 'option-text'; const explanation = optionExplanation(q, correctOpts, op, oi, mode); const arrowTitle = op.isCorrect ? 'Xem vì sao đây là đáp án đúng' : 'Xem vì sao phương án này sai'; return `<div class="${cls.join(' ')}${open}"><div class="result-option-main"><span class="letter">${label}</span><span class="${textCls}">${renderOptionContent(op)} ${optionStatus(q, op, oi)}</span><button type="button" class="option-arrow" title="${arrowTitle}" aria-label="${arrowTitle}" aria-expanded="${open?'true':'false'}" onclick="const p=this.closest('.result-option');p.classList.toggle('open');this.setAttribute('aria-expanded',p.classList.contains('open')?'true':'false');this.textContent=p.classList.contains('open')?'⌃':'⌄';">${open?'⌃':'⌄'}</button></div><div class="option-explain-panel">${explanation}</div></div>`; }
-    return entries.map((entry) => { const q = entry.q; const originalNo = entry.idx + 1; const chosen = getChosenOptions(q); const correctOpts = getCorrectOptions(q); const ok = isQuestionCorrect(q); const mode = entry.mode; const resultText = mode === 'unanswered' ? 'Chưa chọn' : (ok ? 'Đúng' : 'Sai'); const resultCls = mode === 'unanswered' ? 'warn' : (ok ? 'ok' : 'bad'); const resultPill = mode === 'unanswered' ? 'warnp' : (ok ? 'okp' : 'warnp'); const studyMeta = state.mode === 'study' ? studyQuestionMeta(q.item) : ''; const correctText = correctOpts.map(o=>o.text).join(' | '); const chosenText = chosen.map(o=>o.text).join(' | '); const typePill = correctOpts.length > 1 ? `<span class="pill warnp">Câu chọn nhiều: ${correctOpts.length} đáp án</span>` : '<span class="pill okp">Câu chọn 1 đáp án</span>'; const shortNote = mode === 'wrong' ? '<div class="analysis-row focus-diff compact-result-note"><b>Bạn trả lời sai.</b> Phương án sai bạn chọn đã được mở sẵn. Phân tích sai dùng thuật toán diff: giống / thiếu / khác so với đáp án đúng gần nhất.</div>' : (mode === 'correct' ? '<div class="analysis-row source compact-result-note"><b>Bạn trả lời đúng.</b> Các giải thích được ẩn dưới nút mũi tên ở cuối từng phương án.</div>' : '<div class="analysis-row compact-unanswered"><b>Bạn chưa chọn câu này.</b> Đáp án đúng đã được tô chữ xanh. Bấm mũi tên cuối từng phương án để xem giải thích.</div>'); const optionsHtml = (q.options || []).map((op, oi) => resultOption(q, correctOpts, op, oi, mode)).join(''); return `<article class="question-card result-question-card result-order-${mode}"><h3>Câu ${q.no}. <span class="${resultCls}">${resultText}</span> <span class="muted small">(thứ tự gốc trong đề: ${originalNo})</span></h3><div class="question-title result-question-title">${renderQuestionContent(q.item)}</div><div class="result-question-meta"><span class="pill ${resultPill}">Kết quả: ${resultText}</span>${typePill}<span class="pill">Đáp án đúng: ${escapeHtml(correctText)}</span>${chosen.length?`<span class="pill">Bạn chọn: ${escapeHtml(chosenText)}</span>`:'<span class="pill warnp">Bạn chưa chọn</span>'}</div>${studyMeta}${shortNote}<div class="result-options-list">${optionsHtml}</div></article>`; }).join('');
-  }
-  window.renderResult = function(){
-    const r = state.lastResult; if(!r) return;
-    const entriesAll = state.quiz.map((q, idx) => ({q, idx, mode:qModeV432(q)}));
-    const essayEntries = entriesAll.filter(e => window.isEssayQuestion && isEssayQuestion(e.q.item));
-    const objectiveEntries = entriesAll.filter(e => !(window.isEssayQuestion && isEssayQuestion(e.q.item))).map(e => Object.assign({}, e, {mode:objectiveModeV432(e.q)}));
-    const objectiveTotal = objectiveEntries.length;
-    const objectiveCorrect = objectiveEntries.filter(e => isQuestionCorrect(e.q)).length;
-    const objectiveWrong = objectiveEntries.filter(e => e.mode === 'wrong').length;
-    const objectiveUnanswered = objectiveEntries.filter(e => e.mode === 'unanswered').length;
-    const essayAnswered = essayEntries.filter(e => hasAnyChoice(e.q)).length;
-    const essayUnanswered = essayEntries.length - essayAnswered;
-    const objectiveScore10 = objectiveTotal ? objectiveCorrect / objectiveTotal * 10 : 0;
-    const time = r.time || new Date().toLocaleString('vi-VN');
-    if(!essayEntries.length){ els.resultSummary.innerHTML = `<span class="pill okp">Đúng ${objectiveCorrect}/${objectiveTotal}</span><span class="pill ${objectiveWrong?'warnp':'okp'}">Sai ${objectiveWrong}</span><span class="pill ${objectiveUnanswered?'warnp':'okp'}">Chưa chọn ${objectiveUnanswered}</span><span class="pill">Điểm ${objectiveScore10.toFixed(2)}/10</span><span class="pill">${escapeHtml(time)}</span><span class="pill">Đã xếp câu sai lên trước</span>`; const orderedObjective = objectiveEntries.sort((a,b) => objectiveRankV432(a.mode) - objectiveRankV432(b.mode) || a.idx - b.idx); els.resultList.innerHTML = renderObjectiveResultListV432(orderedObjective); if(typeof bindResultStudyButtons === 'function') bindResultStudyButtons(); return; }
-    if(objectiveTotal){ els.resultSummary.innerHTML = `<span class="pill okp">Trắc nghiệm đúng ${objectiveCorrect}/${objectiveTotal}</span><span class="pill ${objectiveWrong?'warnp':'okp'}">Trắc nghiệm sai ${objectiveWrong}</span><span class="pill ${objectiveUnanswered?'warnp':'okp'}">Trắc nghiệm chưa chọn ${objectiveUnanswered}</span><span class="pill">Điểm trắc nghiệm ${objectiveScore10.toFixed(2)}/10</span><span class="pill warnp">Tự luận ${essayEntries.length}</span><span class="pill ${essayUnanswered?'warnp':'okp'}">Tự luận đã trả lời ${essayAnswered}/${essayEntries.length}</span><span class="pill">${escapeHtml(time)}</span>`; } else { els.resultSummary.innerHTML = `<span class="pill warnp">Tự luận ${essayEntries.length}</span><span class="pill ${essayUnanswered?'warnp':'okp'}">Đã trả lời ${essayAnswered}/${essayEntries.length}</span><span class="pill">Không có câu trắc nghiệm</span><span class="pill">${escapeHtml(time)}</span>`; }
-    const orderedObjective = objectiveEntries.sort((a,b) => objectiveRankV432(a.mode) - objectiveRankV432(b.mode) || a.idx - b.idx);
-    const objectiveHtml = objectiveTotal ? `<div class="result-section-title"><b>Phần trắc nghiệm</b><span class="muted"> — giữ thiết kế chấm ban đầu; phần phân tích phương án sai dùng diff giống / thiếu / khác.</span></div>${renderObjectiveResultListV432(orderedObjective)}` : '';
-    const essayHtml = essayEntries.length ? `<div class="result-section-title essay-title"><b>Phần tự luận</b><span class="muted"> — chấm gợi ý theo diff và bảng trọng tâm chi tiết.</span></div>${essayEntries.map(e => renderEssayCardV432(e.q, e.idx + 1)).join('')}` : '';
-    els.resultList.innerHTML = objectiveHtml + essayHtml;
-    if(typeof bindResultStudyButtons === 'function') bindResultStudyButtons();
-  };
-  try { renderResult = window.renderResult; } catch(e){}
-  const style = document.createElement('style');
-  style.textContent = `.diff-visual{margin:10px 0;padding:8px;border:1px solid #dbeafe;background:#eff6ff;border-radius:12px}.diff-legend{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.diff-same{background:#eef2ff;color:#1e293b;border-radius:5px;padding:1px 3px}.diff-missing{background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:5px;padding:1px 3px;text-decoration:line-through;text-decoration-thickness:1px}.diff-extra{background:#dcfce7;color:#14532d;border:1px solid #86efac;border-radius:5px;padding:1px 3px}.diff-stats{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.diff-quick{display:grid;gap:5px;margin:8px 0}.small-diff-chip{display:inline-block;text-decoration:none}.diff-two-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.diff-textbox{background:#fff;border:1px solid #dbeafe;border-radius:10px;padding:10px;max-height:260px;overflow:auto;line-height:1.75}.essay-score-table th,.essay-score-table td{vertical-align:top}.essay-score-table td:nth-child(1),.essay-score-table td:nth-child(3),.essay-score-table td:nth-child(4){white-space:nowrap;text-align:center}.diff-exact-note{border-left:5px solid #22c55e;background:#f0fdf4;padding:8px 10px;border-radius:10px;margin:8px 0}.essay-analysis-v432 .table-wrap{max-height:360px;overflow:auto}@media(max-width:800px){.diff-two-cols{grid-template-columns:1fr}.essay-score-table{min-width:900px}}`;
+    .essay-user-answer b{white-space:normal!important;}
+    .essay-user-answer br{display:block!important;}
+  `;
   document.head.appendChild(style);
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V43.2'; }); } catch(e){}
 })();
 
 </script>
