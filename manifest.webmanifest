@@ -1,16 +1,23 @@
 {
-  "id": "excel-quiz-offline-pwa-v26",
-  "name": "Trắc nghiệm Excel Offline V26",
-  "short_name": "Trắc nghiệm V26",
-  "description": "PWA trắc nghiệm Excel offline; tự cộng tổng số câu theo từng bộ và Đã học chỉ áp dụng câu đúng của phiên ôn tập.",
-  "start_url": "./index.html?source=pwa-v26",
+  "name": "Trắc nghiệm Excel Offline V29",
+  "short_name": "Trắc nghiệm V29",
+  "description": "PWA trắc nghiệm Excel offline, quản lý nhiều bộ câu hỏi, nhập/xóa câu hỏi, ảnh base64 và ôn tập theo bộ.",
+  "start_url": "./index.html?v=V29",
   "scope": "./",
   "display": "standalone",
-  "orientation": "any",
   "background_color": "#eef7f6",
   "theme_color": "#0f766e",
   "icons": [
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
-  ]
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "id": "trac-nghiem-excel-offline-v29"
 }
