@@ -1,1 +1,1 @@
-PWA V43.3 - Giữ dấu xuống dòng trong bài làm và đáp án mẫu tự luận. Giải nén đủ file rồi mở index.html.
+Bản V45.6: khôi phục đúng cách giải thích cũ V43.3 (đọc từ đầu đến cuối + từ khóa/số liệu) và giữ cách mới diff. PWA đã đổi cache để cập nhật bản mới.
