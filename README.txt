@@ -1,1 +1,1 @@
-Bản V45.11: sửa lỗi bảng xem trước ngân hàng bị treo với câu tự luận khi thiếu hàm essayKeywordsHtml, giữ các nút ép đề/hủy ép đề nhanh. PWA đã đổi cache để cập nhật bản mới.
+Bản V45.12: thêm nút “Xuất default-bank.json” để xuất toàn bộ ngân hàng hiện tại cùng các bộ câu hỏi đang quản lý đúng tên file dùng cho PWA. Bản này vẫn giữ các sửa lỗi V45.11 và đã đổi cache để cập nhật bản mới.
