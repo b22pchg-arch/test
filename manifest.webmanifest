@@ -1,8 +1,8 @@
 {
-  "name": "Trắc nghiệm Excel Offline V45.10",
-  "short_name": "Quiz V45.10",
+  "name": "Trắc nghiệm Excel Offline V45.11",
+  "short_name": "Quiz V45.11",
   "description": "PWA trắc nghiệm Excel offline, quản lý từng bộ câu hỏi riêng biệt, hỗ trợ trắc nghiệm và tự luận với chấm diff/trọng tâm.",
-  "start_url": "./index.html?v=V45.10",
+  "start_url": "./index.html?v=V45.11",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef7f6",
@@ -19,5 +19,5 @@
       "type": "image/png"
     }
   ],
-  "id": "trac-nghiem-excel-offline-v45-10"
+  "id": "trac-nghiem-excel-offline-v45-11"
 }
