@@ -1,1 +1,1 @@
-Bản V45.14: sửa lỗi PWA nạp default-bank.json bị nhân đôi bộ câu hỏi khi file có cả sets và questionSets; đồng thời nút “Xuất default-bank.json” chỉ xuất một danh sách sets chuẩn để chép trực tiếp vào PWA. Đã đổi cache để cập nhật bản mới.
+Bản V45.16: khôi phục giao diện ổn định từ V45.13, thêm chế độ toàn màn hình an toàn cho Nhập câu hỏi/Quản lý ngân hàng và thêm bộ đếm thời gian thi/ôn tập. Nhập số phút để đếm lùi và tự nộp khi hết giờ; để trống hoặc 0 thì chỉ đếm thời gian làm bài. PWA đã đổi cache để cập nhật bản mới.
