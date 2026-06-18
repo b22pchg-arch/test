@@ -1,1 +1,1 @@
-Bản V45.13: sửa lỗi PWA nạp default-bank.json bị nhân đôi bộ câu hỏi khi file có cả sets và questionSets; đồng thời nút “Xuất default-bank.json” chỉ xuất một danh sách sets chuẩn để chép trực tiếp vào PWA. Đã đổi cache để cập nhật bản mới.
+Bản V45.14: sửa lỗi PWA nạp default-bank.json bị nhân đôi bộ câu hỏi khi file có cả sets và questionSets; đồng thời nút “Xuất default-bank.json” chỉ xuất một danh sách sets chuẩn để chép trực tiếp vào PWA. Đã đổi cache để cập nhật bản mới.
