@@ -1,12 +1,12 @@
-Bản V45.26: sửa treo khi dùng nhanh bộ câu hỏi và giữ các cập nhật cấu hình liên thiết bị.
+Bản V45.28: sửa treo khi dùng nhanh bộ câu hỏi và giữ các cập nhật cấu hình liên thiết bị.
 
 Thay đổi chính:
 - Bỏ chữ "Tiến độ:" và "Thời gian:" khỏi thanh dưới khi làm bài/ôn tập để tránh đè thông tin trên màn hình nhỏ.
 - Mục hướng dẫn trong HTML đã bổ sung phần "Lưu cấu hình và chuyển sang thiết bị khác".
 - Cấu hình liên thiết bị lưu bộ đang dùng, số câu theo từng bộ, thời gian thi/ôn, kiểu giải thích, tự gộp theo tỷ lệ và tiến độ ôn tập.
 - Gói chuyển máy chứa ngân hàng câu hỏi, danh sách bộ câu hỏi, cấu hình, bộ đang dùng và tiến độ ôn tập để khôi phục đầy đủ trên máy khác.
-- PWA đã đổi cache sang V45.26.
+- PWA đã đổi cache sang V45.28.
 
-- V45.26 sửa 3 nút Dùng tất cả bộ / Dùng bộ có nhập số câu / Bỏ chọn bộ đang dùng: không render lặp và không lưu cấu hình lặp gây treo.
+- V45.28 sửa 3 nút Dùng tất cả bộ / Dùng bộ có nhập số câu / Bỏ chọn bộ đang dùng: không render lặp và không lưu cấu hình lặp gây treo.
 
-- V45.26 sửa riêng checkbox tự gộp theo tỷ lệ: bật/tắt độc lập, không phát sinh vòng lặp lưu cấu hình/render gây treo.
+- V45.28 sửa riêng checkbox tự gộp theo tỷ lệ: bật/tắt độc lập, không phát sinh vòng lặp lưu cấu hình/render gây treo.
