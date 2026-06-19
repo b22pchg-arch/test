@@ -1,1 +1,8 @@
-Bản V45.17: khôi phục giao diện ổn định từ V45.13, thêm chế độ toàn màn hình an toàn cho Nhập câu hỏi/Quản lý ngân hàng và thêm bộ đếm thời gian thi/ôn tập. Nhập số phút để đếm lùi và tự nộp khi hết giờ; để trống hoặc 0 thì chỉ đếm thời gian làm bài. PWA đã đổi cache để cập nhật bản mới.
+Bản V45.20: rút gọn thanh dưới trong bài thi/ôn tập và cập nhật hướng dẫn cấu hình liên thiết bị.
+
+Thay đổi chính:
+- Bỏ chữ "Tiến độ:" và "Thời gian:" khỏi thanh dưới khi làm bài/ôn tập để tránh đè thông tin trên màn hình nhỏ.
+- Mục hướng dẫn trong HTML đã bổ sung phần "Lưu cấu hình và chuyển sang thiết bị khác".
+- Cấu hình liên thiết bị lưu bộ đang dùng, số câu theo từng bộ, thời gian thi/ôn, kiểu giải thích, tự gộp theo tỷ lệ và tiến độ ôn tập.
+- Gói chuyển máy chứa ngân hàng câu hỏi, danh sách bộ câu hỏi, cấu hình, bộ đang dùng và tiến độ ôn tập để khôi phục đầy đủ trên máy khác.
+- PWA đã đổi cache sang V45.20.
