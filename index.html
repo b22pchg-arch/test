@@ -8,7 +8,7 @@
   <link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="description" content="PWA trắc nghiệm Excel offline có dữ liệu nhúng sẵn, đọc Excel bằng SheetJS, tạo đề đảo câu/đáp án, chấm điểm và phân tích đúng sai.">
-  <title>Trắc nghiệm Excel Offline PWA V45.33</title>
+  <title>Trắc nghiệm Excel Offline PWA V45.34</title>
   <style>
 :root{--bg:#eef7f6;--panel:#fff;--text:#0f172a;--muted:#475569;--line:#d7e3e2;--primary:#0f766e;--primary2:#115e59;--danger:#b91c1c;--ok:#15803d;--warn:#b45309;--info:#0369a1;--shadow:0 10px 28px rgba(15,23,42,.10);--r:16px}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}body{min-height:100vh}.app{max-width:1280px;margin:0 auto;padding:14px 14px 92px}header{position:sticky;top:0;z-index:30;margin:0;padding:14px;background:linear-gradient(135deg,#0f766e,#0b4f49);color:#fff;box-shadow:var(--shadow)}header .inner{max-width:1280px;margin:0 auto}header h1{margin:0 0 6px;font-size:clamp(20px,4vw,30px);letter-spacing:.2px}header p{margin:0;color:#dffaf7;font-size:14px}.grid{display:grid;grid-template-columns:1fr;gap:12px}@media (min-width:990px){.grid.two{grid-template-columns:430px 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}.card h2,.card h3{margin:0 0 10px}.card h2{font-size:20px}.card h3{font-size:17px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}label{font-weight:800;font-size:13px;color:#1f2937;display:block;margin:8px 0 5px}input,select,textarea,button{font:inherit}input[type=file],input[type=number],input[type=text],select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:10px;background:#fff;color:var(--text)}input[type=checkbox]{transform:scale(1.12);margin-right:6px}select[multiple]{min-height:150px}button{border:0;border-radius:12px;padding:10px 13px;background:var(--primary);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(15,118,110,.22)}button:hover{background:var(--primary2)}button.secondary{background:#334155}button.light{background:#e2e8f0;color:#0f172a;box-shadow:none}button.danger{background:var(--danger)}button.info{background:var(--info)}button:disabled{opacity:.55;cursor:not-allowed}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;background:#ecfeff;color:#155e75;font-weight:900;font-size:12px;border:1px solid #a5f3fc;margin:2px}.pill.okp{background:#f0fdf4;color:#166534;border-color:#86efac}.pill.warnp{background:#fffbeb;color:#92400e;border-color:#fcd34d}.ok{color:var(--ok);font-weight:900}.bad{color:var(--danger);font-weight:900}.warn{color:var(--warn);font-weight:900}.status{border-radius:12px;padding:10px;background:#f8fafc;border:1px dashed #cbd5e1;white-space:pre-wrap}.status.bad{border-color:#fecaca;background:#fff1f2}.status.good{border-color:#bbf7d0;background:#f0fdf4}.status.info{border-color:#bae6fd;background:#f0f9ff}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.table-wrap table{min-width:940px;width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #e2e8f0;padding:9px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#f1f5f9;z-index:1}.nowrap{white-space:nowrap}details{border:1px solid var(--line);border-radius:12px;background:#fbffff;padding:10px;margin:10px 0}summary{font-weight:900;cursor:pointer}.question-card{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:12px;margin:10px 0}.question-title{font-weight:900;margin-bottom:8px}.option{display:flex;gap:8px;align-items:flex-start;border:1px solid #e2e8f0;border-radius:12px;padding:9px;margin:7px 0;background:#f8fafc}.option:hover{background:#eff6ff}.option input{margin-top:4px}.letter{min-width:28px;height:28px;border-radius:999px;background:#dbeafe;display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#1e3a8a}.chosen{border-color:#38bdf8;background:#ecfeff}.right{border-color:#22c55e;background:#f0fdf4}.wrong{border-color:#ef4444;background:#fef2f2}.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:9px 14px;box-shadow:0 -8px 22px rgba(15,23,42,.09)}.stickybar-inner{max-width:1280px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.progress{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden;min-width:170px;flex:1}.progress>span{display:block;height:100%;width:0;background:var(--primary);transition:.2s}.analysis-row{margin:7px 0;padding:9px;border-left:4px solid #0ea5e9;background:#f0f9ff;border-radius:8px}.analysis-row b{color:#0f172a}.analysis-row.source{background:#fefce8;border-left-color:#eab308}.tag{display:inline-block;margin:2px 3px 2px 0;padding:2px 6px;border-radius:999px;background:#e0f2fe;color:#075985;font-size:12px}.mapping-grid{display:grid;grid-template-columns:1fr;gap:8px}@media (min-width:720px){.mapping-grid{grid-template-columns:repeat(2,1fr)}}.banner{padding:11px;border-radius:14px;background:#ecfdf5;border:1px solid #86efac;color:#14532d;margin-bottom:10px}.banner b{font-size:15px}@media (max-width:700px){.app{padding:10px 10px 100px}.card{padding:11px;border-radius:13px}button{width:100%;justify-content:center}.row button{flex:1 1 150px}.stickybar-inner{align-items:stretch}.progress{width:100%;flex-basis:100%}.table-wrap table{min-width:780px}.option{padding:8px}.letter{min-width:26px;height:26px}}
 /* V6: giải thích ngược, lấy phương án sai làm trọng tâm, chỉ rõ đáp án đúng có gì mà sai không có */
@@ -364,7 +364,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 </head>
 <body>
 
-<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V45.33</h1><p>Dữ liệu nhúng sẵn, quản lý/lưu từng bộ câu hỏi riêng biệt, nhập/sửa câu hỏi toàn màn hình, hỗ trợ ảnh/âm thanh.</p></div></header>
+<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V45.34</h1><p>Dữ liệu nhúng sẵn, quản lý/lưu từng bộ câu hỏi riêng biệt, nhập/sửa câu hỏi toàn màn hình, hỗ trợ ảnh/âm thanh.</p></div></header>
 <main class="app">
   <section class="grid two">
     <div>
@@ -664,7 +664,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 <script>
 'use strict';
 
-const APP_VERSION = 'V45.33-20260618-fullscreen-timer-safe-ui';
+const APP_VERSION = 'V45.34-20260618-fullscreen-timer-safe-ui';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -3016,9 +3016,9 @@ function makeStandaloneHtml(title, contentHtml){
 </style>
 
 </head><body class="standalone-export"><main class="app"><div class="card report-card-full"><h1>${escapeHtml(title)}</h1><p class="muted">Xuất lúc: ${escapeHtml(stamp)}. File này xem offline được, không cần PWA.</p></div>${contentHtml}</main><script>
-/* ===== V45.4 patch: sửa mất HTML do thẻ script trong mẫu xuất HTML + giữ nhận diện mẫu nhiều cột ===== */
+/* ===== V45.34 patch: sửa mất HTML do thẻ script trong mẫu xuất HTML + giữ nhận diện mẫu nhiều cột ===== */
 (function(){
-  const V452_LABEL = 'V45.4-20260614-sync-diff-explain-pwa';
+  const V452_LABEL = 'V45.34-20260614-sync-diff-explain-pwa';
   function tText(v){
     try { return norm(v || '').replace(/-/g,' '); }
     catch(e){ return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/-/g,' '); }
@@ -3082,7 +3082,7 @@ function makeStandaloneHtml(title, contentHtml){
     const t = item.questionType ?? item.type ?? item.loaiCau ?? item.kind ?? item.questionKind ?? '';
     if(explicitEssayType(t)) return true;
     if(explicitChoiceType(t)) return false;
-    // Quy tắc quan trọng V45.2: cứ có tối thiểu 2 phương án và xác định được đáp án đúng thì luôn là trắc nghiệm,
+    // Quy tắc quan trọng V45.34: cứ có tối thiểu 2 phương án và xác định được đáp án đúng thì luôn là trắc nghiệm,
     // kể cả dữ liệu cũ có sampleAnswerHtml hoặc các trường đáp án mẫu do patch trước sinh ra.
     if(hasValidChoices(item)) return false;
     const opts = validOptions(item.options);
@@ -3424,9 +3424,9 @@ function exportStandaloneHtmlWithCurrentBank(){
     if(!bankScript) throw new Error('Không tìm thấy vùng dữ liệu nhúng #embedded-bank.');
     bankScript.textContent = safeJsonForEmbedded(buildCurrentEmbeddedPayload());
     const title = doc.querySelector('title');
-    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V45.33 - HTML nhúng dữ liệu';
+    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V45.34 - HTML nhúng dữ liệu';
     const h1 = doc.querySelector('header h1');
-    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V45.33';
+    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V45.34';
     const subtitle = doc.querySelector('header p');
     if(subtitle) subtitle.textContent = 'HTML đã nhúng sẵn ngân hàng câu hỏi hiện tại, mở offline là dùng ngay.';
     const body = doc.querySelector('body');
@@ -4412,7 +4412,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 
 /* ===== V43 patch: chấm tự luận theo trọng tâm tự động từ câu hỏi + đáp án mẫu ===== */
 (function(){
-  const V42_VERSION_LABEL = 'V45.4-20260614-sync-diff-explain-pwa';
+  const V42_VERSION_LABEL = 'V45.34-20260614-sync-diff-explain-pwa';
   const __v41DetectMapping = detectMapping;
   const __v41RenderResult = renderResult;
 
@@ -5221,7 +5221,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
     const hitBonus = s.bonusHit?.length ? `<div><b>Đã khớp cộng điểm cấu hình tay:</b> ${tagHtmlV432(s.bonusHit,'same')}</div>` : '';
     const hitPen = s.penaltyHit?.length ? `<div><b>Có từ khóa trừ điểm:</b> ${tagHtmlV432(s.penaltyHit,'wrongterm')} <span class="muted">(trừ khoảng ${Math.round((s.penaltyRate||0)*100)}%)</span></div>` : '';
     const sample = s.fields.sampleAnswer ? `<details><summary>Đáp án mẫu / gợi ý chấm</summary><div class="essay-sample-answer">${escapeHtml(s.fields.sampleAnswer)}</div></details>` : '<div class="muted">Chưa có đáp án mẫu.</div>';
-    return `<div class="essay-analysis essay-analysis-v432"><div class="pill warnp">Tự luận - điểm gợi ý ${(s.score||0).toFixed(2)}/${s.scoreMax||10} (${pct}%)</div><div class="muted small">V45.4: so sánh dạng diff, bóc tách trọng tâm từ đáp án mẫu, chấm từng trọng tâm theo Đạt / Đạt một phần / Thiếu. Điểm này vẫn là gợi ý, người chấm cần xác nhận lại.</div><div class="essay-score-breakdown"><span class="pill">Trọng tâm ${Math.round((s.autoFocusScore||0)*100)}%</span><span class="pill">Diff tổng ${Math.round((s.similarity||0)*100)}%</span><span class="pill">Bao phủ mẫu ${Math.round((s.sampleRecall||0)*100)}%</span>${(s.fields.requiredKeywords.length || s.fields.bonusKeywords.length)?`<span class="pill">Từ khóa tay ${Math.round((s.manualScore||0)*100)}%</span>`:''}</div>${exactNote}${diff}${focusTable}${hitReq}${miss}${hitBonus}${hitPen}${sample}${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`;
+    return `<div class="essay-analysis essay-analysis-v432"><div class="pill warnp">Tự luận - điểm gợi ý ${(s.score||0).toFixed(2)}/${s.scoreMax||10} (${pct}%)</div><div class="muted small">V45.34: so sánh dạng diff, bóc tách trọng tâm từ đáp án mẫu, chấm từng trọng tâm theo Đạt / Đạt một phần / Thiếu. Điểm này vẫn là gợi ý, người chấm cần xác nhận lại.</div><div class="essay-score-breakdown"><span class="pill">Trọng tâm ${Math.round((s.autoFocusScore||0)*100)}%</span><span class="pill">Diff tổng ${Math.round((s.similarity||0)*100)}%</span><span class="pill">Bao phủ mẫu ${Math.round((s.sampleRecall||0)*100)}%</span>${(s.fields.requiredKeywords.length || s.fields.bonusKeywords.length)?`<span class="pill">Từ khóa tay ${Math.round((s.manualScore||0)*100)}%</span>`:''}</div>${exactNote}${diff}${focusTable}${hitReq}${miss}${hitBonus}${hitPen}${sample}${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`;
   }
 
   try {
@@ -5286,7 +5286,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   const style = document.createElement('style');
   style.textContent = `.diff-visual{margin:10px 0;padding:8px;border:1px solid #dbeafe;background:#eff6ff;border-radius:12px}.diff-legend{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.diff-same{background:#eef2ff;color:#1e293b;border-radius:5px;padding:1px 3px}.diff-missing{background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:5px;padding:1px 3px;text-decoration:line-through;text-decoration-thickness:1px}.diff-extra{background:#dcfce7;color:#14532d;border:1px solid #86efac;border-radius:5px;padding:1px 3px}.diff-stats{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.diff-quick{display:grid;gap:5px;margin:8px 0}.small-diff-chip{display:inline-block;text-decoration:none}.diff-two-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.diff-textbox{background:#fff;border:1px solid #dbeafe;border-radius:10px;padding:10px;max-height:260px;overflow:auto;line-height:1.75}.essay-score-table th,.essay-score-table td{vertical-align:top}.essay-score-table td:nth-child(1),.essay-score-table td:nth-child(3),.essay-score-table td:nth-child(4){white-space:nowrap;text-align:center}.diff-exact-note{border-left:5px solid #22c55e;background:#f0fdf4;padding:8px 10px;border-radius:10px;margin:8px 0}.essay-analysis-v432 .table-wrap{max-height:360px;overflow:auto}@media(max-width:800px){.diff-two-cols{grid-template-columns:1fr}.essay-score-table{min-width:900px}}`;
   document.head.appendChild(style);
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V45.33'; }); } catch(e){}
+  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V45.34'; }); } catch(e){}
 })();
 
 
@@ -5312,7 +5312,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 
 /* ===== V45 patch: HTML editor tự luận + chấm diff bằng text bóc tách từ HTML ===== */
 (function(){
-  const V45_LABEL = 'V45.2-20260614-html-editor-essay-diff-text';
+  const V45_LABEL = 'V45.34-20260614-html-editor-essay-diff-text';
 
   function v45Escape(v){
     if(typeof escapeHtml === 'function') return escapeHtml(v ?? '');
@@ -5605,14 +5605,14 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   style.textContent = `
     .v45-editor-toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:7px;background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:0;border-radius:12px 12px 0 0}.v45-editor-toolbar button.tiny{width:auto!important;padding:6px 9px;border-radius:9px;font-size:12px;box-shadow:none}.v45-rich-editor{min-height:180px;background:#fff;border:1px solid #cbd5e1;border-radius:0 0 12px 12px;padding:12px;line-height:1.65;overflow:auto;white-space:normal}.v45-rich-editor:focus{outline:3px solid rgba(15,118,110,.18);border-color:#0f766e}.v45-rich-editor[contenteditable="false"]{background:#f8fafc}.v45-rich-editor:empty:before{content:attr(data-placeholder);color:#94a3b8}.v45-rich-editor img,.v45-essay-html-display img{max-width:100%;max-height:360px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;object-fit:contain;display:block;margin:8px 0}.v45-rich-editor table,.v45-essay-html-display table{border-collapse:collapse;max-width:100%;margin:8px 0}.v45-rich-editor td,.v45-rich-editor th,.v45-essay-html-display td,.v45-essay-html-display th{border:1px solid #cbd5e1;padding:6px}.v45-formula{display:inline-block;background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:2px 6px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.v45-sample-editor-wrap,.v45-essay-answer-wrap{margin:6px 0 10px}.v45-essay-html-display{white-space:normal;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px;margin:8px 0;overflow-wrap:anywhere}.v45-essay-html-display p{margin:.35em 0}.v45-essay-html-display ul,.v45-essay-html-display ol{margin:.35em 0 .35em 1.4em}.essay-user-answer{white-space:normal!important}`;
   document.head.appendChild(style);
-  setTimeout(()=>{ try{ document.title=document.title.replace(/V43\.3|V43\.2|V43\.1|V43/g,'V45'); const h1=document.querySelector('header h1'); if(h1) h1.textContent='Trắc nghiệm Excel Offline PWA V45.33'; }catch(e){} },0);
+  setTimeout(()=>{ try{ document.title=document.title.replace(/V43\.3|V43\.2|V43\.1|V43/g,'V45'); const h1=document.querySelector('header h1'); if(h1) h1.textContent='Trắc nghiệm Excel Offline PWA V45.34'; }catch(e){} },0);
 })();
 
 </script>
 <script>
-/* ===== V45.4 patch: sửa mất HTML do thẻ script trong mẫu xuất HTML + giữ nhận diện mẫu nhiều cột ===== */
+/* ===== V45.34 patch: sửa mất HTML do thẻ script trong mẫu xuất HTML + giữ nhận diện mẫu nhiều cột ===== */
 (function(){
-  const V452_LABEL = 'V45.4-20260614-sync-diff-explain-pwa';
+  const V452_LABEL = 'V45.34-20260614-sync-diff-explain-pwa';
   function tText(v){
     try { return norm(v || '').replace(/-/g,' '); }
     catch(e){ return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/-/g,' '); }
@@ -5676,7 +5676,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
     const t = item.questionType ?? item.type ?? item.loaiCau ?? item.kind ?? item.questionKind ?? '';
     if(explicitEssayType(t)) return true;
     if(explicitChoiceType(t)) return false;
-    // Quy tắc quan trọng V45.2: cứ có tối thiểu 2 phương án và xác định được đáp án đúng thì luôn là trắc nghiệm,
+    // Quy tắc quan trọng V45.34: cứ có tối thiểu 2 phương án và xác định được đáp án đúng thì luôn là trắc nghiệm,
     // kể cả dữ liệu cũ có sampleAnswerHtml hoặc các trường đáp án mẫu do patch trước sinh ra.
     if(hasValidChoices(item)) return false;
     const opts = validOptions(item.options);
@@ -5795,9 +5795,9 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 
 <script>
 
-/* ===== V45.5 patch: sửa nộp bài + giải thích cũ/mới an toàn ===== */
+/* ===== V45.34 patch: sửa nộp bài + giải thích cũ/mới an toàn ===== */
 (function(){
-  const V455_LABEL = 'V45.5-20260614-fix-submit-and-safe-explain-style';
+  const V455_LABEL = 'V45.34-20260614-fix-submit-and-safe-explain-style';
 
   function v455Esc(v){
     try { return escapeHtml(v); } catch(e){ return String(v ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
@@ -5873,7 +5873,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   try { optionWrongAnalysisHtml = window.optionWrongAnalysisHtml; } catch(e){}
 
   function v455SyncEssayEditors(){
-    try { if(typeof v45SyncAllEssayEditors === 'function') v45SyncAllEssayEditors(); } catch(e){ console.warn('V45.5 sync editor error', e); }
+    try { if(typeof v45SyncAllEssayEditors === 'function') v45SyncAllEssayEditors(); } catch(e){ console.warn('V45.34 sync editor error', e); }
   }
   function v455SubmitQuiz(){
     try{
@@ -5896,7 +5896,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
       try { enterResultFocus(); } catch(e){}
       location.hash = '#resultSection';
     }catch(err){
-      console.error('V45.5 submit error', err);
+      console.error('V45.34 submit error', err);
       try { setStatus('❌ Lỗi khi nộp bài: ' + (err && err.message ? err.message : err), 'bad'); } catch(e){ alert('Lỗi khi nộp bài: ' + (err && err.message ? err.message : err)); }
     }
   }
@@ -5919,7 +5919,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   setTimeout(installSubmitCapture, 0);
   setTimeout(installSubmitCapture, 800);
 
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V45.33'; }); } catch(e){}
+  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V45.34'; }); } catch(e){}
   try { if(typeof setStatus === 'function' && state && state.bank && state.bank.length){ renderStats(); } } catch(e){}
 })();
 
@@ -5927,9 +5927,9 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 
 
 <script>
-/* ===== V45.6 patch: khôi phục đúng cách giải thích cũ V43.3, tách hẳn khỏi cách mới diff ===== */
+/* ===== V45.34 patch: khôi phục đúng cách giải thích cũ V43.3, tách hẳn khỏi cách mới diff ===== */
 (function(){
-  const V456_LABEL = 'V45.6-20260614-restore-old-explain-v43-3';
+  const V456_LABEL = 'V45.34-20260614-restore-old-explain-v43-3';
 
   function v456Esc(v){
     try { return escapeHtml(v); }
@@ -5987,7 +5987,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
       const details = `<details class="more-analysis"><summary>Chạm để đọc thêm phân tích số liệu, từ khóa và phần giống nhau</summary>${extra.join('')}</details>`;
       return [visible, details].filter(Boolean).join('');
     }catch(err){
-      console.warn('V45.6 old explain error', err);
+      console.warn('V45.34 old explain error', err);
       const c = v456Esc(correct || '');
       const w = v456Esc(wrong || '');
       return `<div class="analysis-row focus-diff"><b>Cách cũ V43.3:</b> không dựng được phân tích chi tiết, vui lòng đối chiếu đáp án đúng với phương án sai.</div><div class="diff-block"><b>Đáp án đúng:</b> ${c}</div><div class="diff-block"><b>Phương án sai:</b> ${w}</div>`;
@@ -6024,14 +6024,14 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   };
   try { optionWrongAnalysisHtml = window.optionWrongAnalysisHtml; } catch(e){}
 
-  try { document.title = document.title.replace(/V45\.5(?:\.3)?|V45\.11|V45\.12/g, 'V45.33'); } catch(e){}
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V45.33'; }); } catch(e){}
+  try { document.title = document.title.replace(/V45\.5(?:\.3)?|V45\.11|V45\.12/g, 'V45.34'); } catch(e){}
+  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V45.34'; }); } catch(e){}
   try { if(window.state && state.submitted && typeof renderResult === 'function') renderResult(); } catch(e){}
 })();
 </script>
 
 <script>
-/* ===== V45.8 patch: sửa nhãn chọn nhiều và debounce tìm kiếm ngân hàng ===== */
+/* ===== V45.34 patch: sửa nhãn chọn nhiều và debounce tìm kiếm ngân hàng ===== */
 (function(){
   function v457Esc(v){
     try { return escapeHtml(v); }
@@ -6193,7 +6193,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
       els.bankPreview.querySelectorAll('.bank-edit-btn').forEach(btn => btn.addEventListener('click', () => editCurrentBankQuestion(Number(btn.dataset.bankIndex))));
       els.bankPreview.querySelectorAll('.bank-clone-btn').forEach(btn => btn.addEventListener('click', () => duplicateCurrentBankQuestion(Number(btn.dataset.bankIndex))));
     }catch(err){
-      console.error('renderPreview V45.8 error', err);
+      console.error('renderPreview V45.34 error', err);
       els.bankPreview.innerHTML = '<div class="status bad">❌ Lỗi hiển thị ngân hàng câu hỏi: ' + v457Esc(err && err.message ? err.message : err) + '</div>';
     }
   };
@@ -6210,13 +6210,13 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
     @media(max-width:800px){.bank-filter-bar{grid-template-columns:1fr}.bank-filter-bar button{width:100%!important}.bank-filter-bar .bank-multi-filter{justify-content:flex-start}}
   `;
   document.head.appendChild(style);
-  try { document.title = document.title.replace(/V45\.6|V45\.7|V45\.8|V45\.9|V45\.10|V45\.11|V45\.12/g, 'V45.33'); } catch(e){}
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V45.33'; }); } catch(e){}
+  try { document.title = document.title.replace(/V45\.6|V45\.7|V45\.8|V45\.9|V45\.10|V45\.11|V45\.12/g, 'V45.34'); } catch(e){}
+  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V45.34'; }); } catch(e){}
 })();
 </script>
 
 <script>
-/* ===== V45.9 patch: Ép đề - câu được gán forceInclude chắc chắn vào đề thi/ôn tập ===== */
+/* ===== V45.34 patch: Ép đề - câu được gán forceInclude chắc chắn vào đề thi/ôn tập ===== */
 (function(){
   function v459Esc(v){ try { return escapeHtml(v); } catch(e){ return String(v ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); } }
   function v459Text(v){ try { return visibleText(v || ''); } catch(e){ return String(v || '').replace(/\s+/g,' ').trim(); } }
@@ -6377,7 +6377,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
       els.bankPreview.querySelectorAll('.bank-delete-btn').forEach(btn => btn.addEventListener('click', () => deleteCurrentBankQuestion(Number(btn.dataset.bankIndex))));
       els.bankPreview.querySelectorAll('.bank-edit-btn').forEach(btn => btn.addEventListener('click', () => editCurrentBankQuestion(Number(btn.dataset.bankIndex))));
       els.bankPreview.querySelectorAll('.bank-clone-btn').forEach(btn => btn.addEventListener('click', () => duplicateCurrentBankQuestion(Number(btn.dataset.bankIndex))));
-    }catch(err){ console.error('renderPreview V45.9 error', err); els.bankPreview.innerHTML='<div class="status bad">❌ Lỗi hiển thị ngân hàng câu hỏi: '+v459Esc(err&&err.message?err.message:err)+'</div>'; }
+    }catch(err){ console.error('renderPreview V45.34 error', err); els.bankPreview.innerHTML='<div class="status bad">❌ Lỗi hiển thị ngân hàng câu hỏi: '+v459Esc(err&&err.message?err.message:err)+'</div>'; }
   };
   try { renderPreview = window.renderPreview; } catch(e){}
 
@@ -6385,13 +6385,13 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   style.textContent=`#bankPreview .bank-preview-table .col-force{width:64px!important}#bankPreview .force-include-cell{text-align:center!important;white-space:nowrap!important}.bank-force-label{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:2px!important;padding:4px 5px!important;font-size:11px!important;border-radius:999px!important;border:1px solid #fcd34d!important;background:#fffbeb!important;color:#92400e!important;font-weight:900!important;white-space:nowrap!important}.bank-force-label input{margin:0!important;width:14px!important;height:14px!important;accent-color:#f59e0b!important}.bank-row-force-include td{background:#fffbeb!important}.bank-filter-bar{grid-template-columns:minmax(220px,1fr) auto auto auto auto!important}.bank-force-visible-btn{background:#fef3c7!important;color:#92400e!important;border:1px solid #f59e0b!important}.bank-unforce-visible-btn{background:#f8fafc!important;color:#334155!important;border:1px solid #cbd5e1!important}.force-pill{background:#fef3c7!important;color:#92400e!important;border-color:#f59e0b!important;margin-left:0!important}`;
   document.head.appendChild(style);
   try { if(state && Array.isArray(state.bank)) state.bank = normalizeBank(state.bank); } catch(e){}
-  try { document.title = document.title.replace(/V45\.6|V45\.7|V45\.8|V45\.9|V45\.10|V45\.11|V45\.12/g, 'V45.33'); } catch(e){}
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V45.33'; }); } catch(e){}
+  try { document.title = document.title.replace(/V45\.6|V45\.7|V45\.8|V45\.9|V45\.10|V45\.11|V45\.12/g, 'V45.34'); } catch(e){}
+  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V45.34'; }); } catch(e){}
 })();
 </script>
 
 <script>
-/* ===== V45.33 patch: nạp default-bank.json không nhân đôi sets + xuất JSON gọn ===== */
+/* ===== V45.34 patch: nạp default-bank.json không nhân đôi sets + xuất JSON gọn ===== */
 function v4513SetSignature(set){
   try{
     const name = (typeof visibleText === 'function' ? visibleText(set && set.name) : String(set && set.name || '')).trim().toLowerCase();
@@ -6481,11 +6481,11 @@ function v39CollectQuestionSetsFromPayload(payload){
       const sets = v4512ManagedSets();
       const meta = Object.assign({}, state.meta || {}, {
         total: bank.length,
-        version: typeof APP_VERSION !== 'undefined' ? APP_VERSION : 'V45.33',
+        version: typeof APP_VERSION !== 'undefined' ? APP_VERSION : 'V45.34',
         exportedAs: 'default-bank.json'
       });
       const payload = {
-        version: typeof APP_VERSION !== 'undefined' ? APP_VERSION : 'V45.33',
+        version: typeof APP_VERSION !== 'undefined' ? APP_VERSION : 'V45.34',
         exportedAt: new Date().toISOString(),
         fileName: state.fileName || '',
         sheetName: state.currentSheet || '',
@@ -6530,9 +6530,9 @@ function v39CollectQuestionSetsFromPayload(payload){
 
 
 <script>
-/* ===== V45.33: toàn màn hình an toàn + bộ đếm thời gian thi/ôn ===== */
+/* ===== V45.34: toàn màn hình an toàn + bộ đếm thời gian thi/ôn ===== */
 (function(){
-  const V = 'V45.33';
+  const V = 'V45.34';
   try { window.APP_VERSION = V; } catch(e){}
   function byId(id){ return document.getElementById(id); }
   function q(sel, root){ return (root || document).querySelector(sel); }
@@ -6649,7 +6649,7 @@ function v39CollectQuestionSetsFromPayload(payload){
       timer.elapsed = timer.limit || timer.elapsed;
       annotateResult();
       try { if(typeof setStatus === 'function') setStatus('⏱ Hết thời gian. Hệ thống đã tự động nộp bài/lượt ôn.', 'bad'); } catch(e){}
-    } catch(err){ console.error('V45.33 auto submit error', err); }
+    } catch(err){ console.error('V45.34 auto submit error', err); }
   }
   function setupTimerUi(){
     const quizBtn=byId('btnStartQuiz');
@@ -6697,7 +6697,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 <script id="v4533-stable-config-multidevice">
 (function(){
   'use strict';
-  const VERSION = 'V45.33';
+  const VERSION = 'V45.34';
   const ACTIVE_KEY = 'tracNghiemActiveSetIdsV4533';
   const ACTIVE_RECORDS_KEY = 'tracNghiemActiveSetRecordsV4533';
   const CONFIG_KEY = 'tracNghiemOfflineConfigV4533';
@@ -7015,8 +7015,8 @@ function v39CollectQuestionSetsFromPayload(payload){
     const ref = $('questionSetCard') || $('guideCard') || document.querySelector('main .card'); if(ref) ref.insertAdjacentElement('afterend', card); else document.querySelector('main')?.prepend(card);
     const auto = $('v4533AutoSaveConfig'); const stored = getStoredConfig(); if(stored && stored.values && stored.values.v4533AutoSaveConfig !== undefined) auto.checked = !!stored.values.v4533AutoSaveConfig;
     $('btnV4533SaveConfig')?.addEventListener('click', saveConfigNow);
-    $('btnV4533ExportConfig')?.addEventListener('click', () => { downloadJson('trac-nghiem-cau-hinh-v45_33.json', collectConfig()); notify('✅ Đã xuất cấu hình. File này không chứa ngân hàng câu hỏi.', 'good'); });
-    $('btnV4533ExportBundle')?.addEventListener('click', () => { downloadJson('trac-nghiem-goi-chuyen-may-v45_33.json', collectBundle()); notify('✅ Đã xuất gói chuyển máy gồm ngân hàng, bộ câu hỏi, cấu hình và tiến độ.', 'good'); });
+    $('btnV4533ExportConfig')?.addEventListener('click', () => { downloadJson('trac-nghiem-cau-hinh-v45_34.json', collectConfig()); notify('✅ Đã xuất cấu hình. File này không chứa ngân hàng câu hỏi.', 'good'); });
+    $('btnV4533ExportBundle')?.addEventListener('click', () => { downloadJson('trac-nghiem-goi-chuyen-may-v45_34.json', collectBundle()); notify('✅ Đã xuất gói chuyển máy gồm ngân hàng, bộ câu hỏi, cấu hình và tiến độ.', 'good'); });
     $('btnV4533ImportConfig')?.addEventListener('click', () => { $('v4533ImportFile').dataset.mode='config'; $('v4533ImportFile').click(); });
     $('btnV4533ImportBundle')?.addEventListener('click', () => { $('v4533ImportFile').dataset.mode='bundle'; $('v4533ImportFile').click(); });
     $('v4533ImportFile')?.addEventListener('change', e => importFile(e.target.files && e.target.files[0]));
@@ -7063,20 +7063,25 @@ function v39CollectQuestionSetsFromPayload(payload){
   setTimeout(boot, 400); setTimeout(boot, 1200); setTimeout(cleanupSmallLabels, 2000);
 })();
 </script>
-<script id="v4533-study-active-load-fix">
+<script id="v4534-stable-set-manager-load-fix">
 (function(){
   'use strict';
-  const VERSION = 'V45.33';
+  const VERSION = 'V45.34';
+  const ACTIVE_KEY = 'tracNghiemActiveSetIdsV4533';
+  const ACTIVE_RECORDS_KEY = 'tracNghiemActiveSetRecordsV4533';
+  const CONFIG_KEY = 'tracNghiemOfflineConfigV4533';
   const $ = id => document.getElementById(id);
   const qa = (sel, root=document) => Array.from(root.querySelectorAll(sel));
   const txt = v => String(v == null ? '' : v).trim();
   const norm = v => txt(v).toLowerCase();
-  function notifyMsg(msg, type){ try{ if(typeof notify === 'function') notify(msg,type||'info'); else if(typeof setStatus === 'function') setStatus(msg,type||'info'); }catch(e){} }
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function readJson(k, fallback){ try{ const raw = localStorage.getItem(k); if(!raw) return fallback; const v=JSON.parse(raw); return v == null ? fallback : v; }catch(e){ return fallback; } }
   function writeJson(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+  function notifyMsg(msg, type){ try{ if(typeof notify === 'function') notify(msg,type||'info'); else if(typeof setStatus === 'function') setStatus(msg,type||'info'); }catch(e){} }
   function rowKey(row){ return String((row && row.id) || '').trim() || ('name:' + norm(row && row.name)); }
+  function loadSetsSafe(){ try{ if(typeof loadQuestionSets === 'function') loadQuestionSets(); }catch(e){} }
   function allSetRows(){
-    try{ if(typeof loadQuestionSets === 'function') loadQuestionSets(); }catch(e){}
+    loadSetsSafe();
     let rows = [];
     try{ if(typeof getAllQuestionSetRows === 'function') rows = getAllQuestionSetRows() || []; }catch(e){ rows = []; }
     if((!rows || !rows.length) && typeof state !== 'undefined'){
@@ -7099,15 +7104,19 @@ function v39CollectQuestionSetsFromPayload(payload){
     qa('.v4533-active-set,.v4532-active-set').forEach(cb => { if(cb.checked && cb.dataset.key) keys.push(String(cb.dataset.key)); });
     return Array.from(new Set(keys.filter(Boolean)));
   }
-  function activeRows(){
-    const keys = activeKeys(); if(!keys.length) return [];
-    const recs = [].concat(readJson('tracNghiemActiveSetRecordsV4533', []), readJson('tracNghiemActiveSetRecordsV4532', []));
-    const rows = allSetRows();
-    return rows.filter(r => {
-      const k = rowKey(r), id = String(r.id || ''), name = norm(r.name);
-      if(keys.includes(k) || (id && keys.includes(id))) return true;
-      return recs.some(x => (x && x.id && String(x.id) === id) || (x && x.key && String(x.key) === k) || (name && norm(x && x.name) === name));
-    });
+  function activeRecords(){ return [].concat(readJson('tracNghiemActiveSetRecordsV4533', []), readJson('tracNghiemActiveSetRecordsV4532', [])); }
+  function isActiveRow(row, keys=activeKeys(), recs=activeRecords()){
+    const k = rowKey(row), id = String(row.id || ''), name = norm(row.name);
+    if(keys.includes(k) || (id && keys.includes(id))) return true;
+    return recs.some(x => (x && x.id && String(x.id) === id) || (x && x.key && String(x.key) === k) || (name && norm(x && x.name) === name));
+  }
+  function activeRows(){ const keys=activeKeys(), recs=activeRecords(); if(!keys.length && !recs.length) return []; return allSetRows().filter(r => isActiveRow(r, keys, recs)); }
+  function saveActiveKeys(keys){
+    keys = Array.from(new Set((keys || []).map(String).filter(Boolean)));
+    const keySet = new Set(keys);
+    const recs = allSetRows().filter(r => keySet.has(rowKey(r)) || keySet.has(String(r.id||''))).map(r => ({id:r.id || '', key:rowKey(r), name:r.name || '', total:(r.questions||[]).length, isCurrent:!!r.isCurrent}));
+    writeJson(ACTIVE_KEY, keys); writeJson(ACTIVE_RECORDS_KEY, recs);
+    updateTargetsAndHint(); scheduleLightConfigSave();
   }
   function countRows(mode){
     const rows = allSetRows();
@@ -7115,26 +7124,14 @@ function v39CollectQuestionSetsFromPayload(payload){
     if(!ids.length) return [];
     return rows.filter(r => ids.includes(String(r.id || '')));
   }
-  function chosenRows(mode){
-    const a = activeRows(); if(a.length) return a;
-    const c = countRows(mode); if(c.length) return c;
-    return allSetRows();
-  }
-  function setQuestions(set, mode){
-    try{ if(typeof setQuestionsWithSetInfo === 'function') return setQuestionsWithSetInfo(set, mode) || []; }catch(e){}
-    return Array.isArray(set && set.questions) ? set.questions : [];
-  }
+  function chosenRows(mode){ const a = activeRows(); if(a.length) return a; const c = countRows(mode); if(c.length) return c; return allSetRows(); }
+  function setQuestions(set, mode){ try{ if(typeof setQuestionsWithSetInfo === 'function') return setQuestionsWithSetInfo(set, mode) || []; }catch(e){} return Array.isArray(set && set.questions) ? set.questions : []; }
   function qKey(q, i){ try{ if(typeof getQuestionKey === 'function') return getQuestionKey(q); }catch(e){} return String((q && (q.id || q._originKey || q.question)) || i); }
   function isForced(q){ try{ if(typeof v459IsForced === 'function') return v459IsForced(q); }catch(e){} return !!(q && (q.forceInclude || q.forceInExam || q.forceExam || q.force || q.epDe)); }
-  function learned(q, i){ try{ if(typeof isStudyLearned === 'function') return isStudyLearned(qKey(q,i)); }catch(e){} return false; }
+  function learned(q, i){ try{ return typeof isStudyLearned === 'function' && isStudyLearned(qKey(q,i)); }catch(e){ return false; } }
   function uniq(list){ const seen = new Set(), out=[]; (list||[]).forEach((q,i)=>{ if(!q) return; const k = qKey(q,i) + '|' + txt(q.question).slice(0,80); if(!seen.has(k)){ seen.add(k); out.push(q); } }); return out; }
   function shuffle(list, rand){ const a=(list||[]).slice(); const r=typeof rand==='function'?rand:Math.random; for(let i=a.length-1;i>0;i--){ const j=Math.floor(r()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
-  function target(mode){
-    const el = mode === 'study' ? $('studyBatchSize') : $('quizCount');
-    const n = Math.floor(Number(el && el.value || 0));
-    if(n > 0) return n;
-    return Math.max(1, chosenRows(mode).reduce((s,r)=>s+setQuestions(r,mode).length,0));
-  }
+  function target(mode){ const el = mode === 'study' ? $('studyBatchSize') : $('quizCount'); const n = Math.floor(Number(el && el.value || 0)); if(n > 0) return n; return Math.max(1, chosenRows(mode).reduce((s,r)=>s+setQuestions(r,mode).length,0)); }
   function allocate(total, rows, mode){
     const parts = (rows||[]).map((r, idx)=>{ const qs=setQuestions(r,mode); return {set:r, idx, qs, cap:qs.length, weight:qs.length, count:0, raw:0, rem:0}; }).filter(x=>x.cap>0);
     const cap = parts.reduce((s,x)=>s+x.cap,0); if(!parts.length || !cap) return {parts:[], target:0};
@@ -7142,10 +7139,7 @@ function v39CollectQuestionSetsFromPayload(payload){
     let assigned = 0;
     parts.forEach(p => { p.raw = t * p.weight / cap; p.count = Math.min(p.cap, Math.floor(p.raw)); p.rem = p.raw - Math.floor(p.raw); assigned += p.count; });
     let guard = 100000;
-    while(assigned < t && guard-- > 0){
-      const c = parts.filter(p=>p.count<p.cap).sort((a,b)=>(b.rem-a.rem)||(b.weight-a.weight)||(a.idx-b.idx))[0];
-      if(!c) break; c.count++; c.rem = 0; assigned++;
-    }
+    while(assigned < t && guard-- > 0){ const c = parts.filter(p=>p.count<p.cap).sort((a,b)=>(b.rem-a.rem)||(b.weight-a.weight)||(a.idx-b.idx))[0]; if(!c) break; c.count++; c.rem = 0; assigned++; }
     return {parts, target:t};
   }
   function autoOn(mode){ return !!$(mode === 'study' ? 'autoMergeSetsStudy' : 'autoMergeSetsExam')?.checked; }
@@ -7173,6 +7167,7 @@ function v39CollectQuestionSetsFromPayload(payload){
     out = uniq(out); if(mode === 'exam' && shuffleWithin) out = shuffle(out, rand);
     return out.length ? {questions:out, summary:'Tự gộp theo tỷ lệ: '+summary.join('; ')} : null;
   }
+
   const prevCollect = window.collectQuestionsFromSelectedSets || (typeof collectQuestionsFromSelectedSets === 'function' ? collectQuestionsFromSelectedSets : null);
   window.collectQuestionsFromSelectedSets = function(mode, rand, shuffleWithin){
     const auto = autoCollect(mode, rand, shuffleWithin);
@@ -7186,13 +7181,7 @@ function v39CollectQuestionSetsFromPayload(payload){
     const rows = (activeRows().length || autoOn('study')) ? chosenRows('study') : [];
     if(rows.length){
       let totalRemain = 0, totalAll = 0, lines = [];
-      rows.forEach(r => {
-        const qs = setQuestions(r,'study');
-        const learnedCount = qs.filter((q,i)=>learned(q,i)).length;
-        const remain = Math.max(0, qs.length - learnedCount);
-        totalAll += qs.length; totalRemain += remain;
-        lines.push(`<span class="set-line"><b>${(typeof escapeHtml === 'function') ? escapeHtml(r.name || 'Bộ câu hỏi') : txt(r.name || 'Bộ câu hỏi')}:</b> còn chưa ôn <b>${remain}</b>/${qs.length} câu.</span>`);
-      });
+      rows.forEach(r => { const qs = setQuestions(r,'study'); const learnedCount = qs.filter((q,i)=>learned(q,i)).length; const remain = Math.max(0, qs.length - learnedCount); totalAll += qs.length; totalRemain += remain; lines.push(`<span class="set-line"><b>${esc(r.name || 'Bộ câu hỏi')}:</b> còn chưa ôn <b>${remain}</b>/${qs.length} câu.</span>`); });
       const perRound = Math.min(target('study'), Math.max(1,totalAll));
       return {totalRemain, totalSelected: perRound, html: lines.join('')};
     }
@@ -7204,60 +7193,102 @@ function v39CollectQuestionSetsFromPayload(payload){
     const rowsStudy = chosenRows('study');
     const studyTotal = rowsStudy.reduce((s,r)=>s+setQuestions(r,'study').length,0);
     const sb = $('studyBatchSize');
-    if(sb && (activeRows().length || autoOn('study')) && studyTotal > 0){
-      sb.max = String(studyTotal);
-      if(Number(sb.value || 0) > studyTotal) sb.value = String(studyTotal);
-    }
+    if(sb && (activeRows().length || autoOn('study')) && studyTotal > 0){ sb.max = String(studyTotal); if(Number(sb.value || 0) > studyTotal) sb.value = String(studyTotal); }
     const rowsExam = chosenRows('exam');
     const examTotal = rowsExam.reduce((s,r)=>s+setQuestions(r,'exam').length,0);
     const qc = $('quizCount');
-    if(qc && (activeRows().length || autoOn('exam')) && examTotal > 0){
-      qc.max = String(examTotal);
-      if(Number(qc.value || 0) > examTotal) qc.value = String(examTotal);
-    }
-    const hint = $('v4533ActiveSetHint') || $('v4532ActiveSetHint') || $('setSelectionTotalHint');
-    if(hint){
-      const active = activeRows();
-      const rows = active.length ? active : rowsStudy;
-      const total = rows.reduce((s,r)=>s+setQuestions(r,'study').length,0);
-      if(active.length) hint.innerHTML = `<b>Bộ đang Dùng:</b> ${active.length} bộ, tổng <b>${total}</b> câu. Ôn tập/tự gộp sẽ ưu tiên đúng các bộ này.`;
-    }
+    if(qc && (activeRows().length || autoOn('exam')) && examTotal > 0){ qc.max = String(examTotal); if(Number(qc.value || 0) > examTotal) qc.value = String(examTotal); }
+    const hint = $('v4533ActiveSetHint') || $('setSelectionTotalHint');
+    if(hint){ const a = activeRows(); const rows = a.length ? a : rowsStudy; const total = rows.reduce((s,r)=>s+setQuestions(r,'study').length,0); if(a.length) hint.innerHTML = `<b>Bộ đang Dùng:</b> ${a.length} bộ, tổng <b>${total}</b> câu. Ôn tập/tự gộp sẽ ưu tiên đúng các bộ này.`; }
   }
   const prevSync = window.syncSelectedSetTotals || (typeof syncSelectedSetTotals === 'function' ? syncSelectedSetTotals : null);
   window.syncSelectedSetTotals = function(mode){ const r = prevSync ? prevSync.apply(this, arguments) : undefined; setTimeout(updateTargetsAndHint,0); return r; };
   try{ syncSelectedSetTotals = window.syncSelectedSetTotals; }catch(e){}
 
-  function ensureLoadButtons(){
-    const root = $('questionSetManager'); const table = root && root.querySelector('table.bank-set-table'); if(!table) return;
-    qa('tbody tr', table).forEach(tr => {
-      if(tr.classList.contains('set-current-row')) return;
-      if(tr.querySelector('.set-load-btn')) return;
-      const nameInp = tr.querySelector('.set-name-input'); const id = nameInp && nameInp.dataset.id; if(!id) return;
-      let cell = tr.querySelector('.set-load-col') || tr.children[1];
-      if(!cell){ cell = document.createElement('td'); tr.insertBefore(cell, tr.children[1] || null); }
-      cell.classList.add('set-load-col','nowrap');
-      cell.innerHTML = `<button type="button" class="light mini-btn set-load-btn" data-id="${id}" title="Nạp bộ này lên ngân hàng hiện tại">Nạp</button>`;
-    });
+  function captureCounts(){
+    const map = new Map();
+    qa('.set-count-input[data-mode]').forEach(inp => { const tr = inp.closest('tr'); const nameInp = tr && tr.querySelector('.set-name-input'); const id=String(inp.dataset.id||''), name=txt(nameInp && nameInp.value); const key=id || name; if(!key) return; const rec = map.get(key) || {id, name, exam:'', study:''}; rec[inp.dataset.mode === 'study' ? 'study' : 'exam'] = inp.value || ''; map.set(key, rec); });
+    const cfg = readJson(CONFIG_KEY, null);
+    if(cfg && Array.isArray(cfg.setCounts)) cfg.setCounts.forEach(x => { const key=String(x.id||'') || txt(x.name); if(key && !map.has(key)) map.set(key, {id:String(x.id||''), name:txt(x.name), exam:x.exam||'', study:x.study||''}); });
+    return map;
   }
-  document.addEventListener('click', function(ev){
-    const btn = ev.target && ev.target.closest && ev.target.closest('.set-load-btn');
-    if(!btn) return;
-    const id = btn.dataset.id;
-    if(!id || typeof loadQuestionSetToCurrent !== 'function') return;
-    ev.preventDefault(); ev.stopPropagation(); if(ev.stopImmediatePropagation) ev.stopImmediatePropagation();
-    try{ loadQuestionSetToCurrent(id); setTimeout(()=>{ try{ if(typeof renderQuestionSetManager === 'function') renderQuestionSetManager(); }catch(e){} updateTargetsAndHint(); },120); }catch(e){ notifyMsg('❌ Không nạp được bộ câu hỏi: ' + (e.message || e), 'bad'); }
-  }, true);
+  function countValueFor(row, mode, countMap){ const rec = countMap.get(String(row.id || '')) || countMap.get(txt(row.name)); return rec ? (rec[mode] || '') : ''; }
+  function learnedCountFor(set){ try{ return (set.questions || []).filter((q, idx) => typeof isStudyLearned === 'function' && isStudyLearned(`${set.id}::${q.id || idx+1}`)).length; }catch(e){ return 0; } }
+  function activeChecked(row){ return isActiveRow(row); }
+  function updateCountInputStyle(inp){ try{ inp.classList.toggle('set-count-used', Number(inp.value || 0) > 0); inp.classList.toggle('set-count-zero', !(Number(inp.value || 0) > 0)); }catch(e){} }
+  function collectCountsForConfig(){
+    const map = new Map();
+    qa('.set-count-input[data-mode]').forEach(inp => { const tr = inp.closest('tr'), nameInp = tr && tr.querySelector('.set-name-input'); const id=String(inp.dataset.id||''), name=txt(nameInp && nameInp.value); const key=id || name; if(!key) return; const rec=map.get(key)||{id,name,exam:'',study:''}; rec[inp.dataset.mode === 'study' ? 'study' : 'exam'] = inp.value || ''; map.set(key,rec); });
+    return Array.from(map.values());
+  }
+  let cfgTimer=null;
+  function scheduleLightConfigSave(){
+    clearTimeout(cfgTimer);
+    cfgTimer=setTimeout(()=>{
+      const cfg = readJson(CONFIG_KEY, {}) || {};
+      cfg.appVersion = VERSION; cfg.updatedAt = new Date().toISOString();
+      cfg.setCounts = collectCountsForConfig(); cfg.activeSetIds = activeKeys(); cfg.activeSets = readJson(ACTIVE_RECORDS_KEY, []);
+      cfg.values = Object.assign({}, cfg.values || {}, {autoMergeSetsExam: !!$('autoMergeSetsExam')?.checked, autoMergeSetsStudy: !!$('autoMergeSetsStudy')?.checked});
+      writeJson(CONFIG_KEY, cfg);
+    }, 350);
+  }
+  function renderStableSetManager(){
+    const root = $('questionSetManager'); if(!root) return;
+    loadSetsSafe();
+    const rows = allSetRows();
+    if(!rows.length){ root.innerHTML = '<div class="set-hint">Chưa có ngân hàng câu hỏi. Hãy nạp Excel hoặc dùng dữ liệu nhúng trước.</div>'; return; }
+    const countMap = captureCounts();
+    const body = rows.map((s, i) => {
+      const total = (s.questions || []).length;
+      const learned = learnedCountFor(s);
+      const meta = [s.sourceFile, s.sheetName].filter(Boolean).join(' · ');
+      const name = esc(s.name || ('Bộ câu hỏi ' + (i+1)));
+      const id = esc(s.id || '');
+      const active = activeChecked(s);
+      const loadCell = s.isCurrent ? '<span class="set-badge">Hiện tại</span>' : `<button type="button" class="light mini-btn set-load-btn" data-id="${id}" title="Nạp bộ này lên ngân hàng hiện tại">Nạp</button>`;
+      const actionHtml = s.isCurrent
+        ? `<button type="button" class="info mini-btn set-save-current-btn" title="Lưu ngân hàng hiện tại thành một bộ riêng">Lưu bộ</button><button type="button" class="light mini-btn set-export-btn" data-id="__current__" title="Xuất riêng ngân hàng hiện tại thành JSON">Xuất</button>`
+        : `<button type="button" class="info mini-btn set-update-btn" data-id="${id}" title="Cập nhật bộ này bằng ngân hàng hiện tại">Cập nhật</button><button type="button" class="light mini-btn set-replace-btn" data-id="${id}" title="Nhập JSON để thay nội dung bộ này">Thay</button><button type="button" class="light mini-btn set-export-btn" data-id="${id}" title="Xuất riêng bộ này thành JSON">Xuất</button><button type="button" class="secondary mini-btn set-copy-btn" data-id="${id}" title="Nhân bản bộ câu hỏi này">Copy</button><button type="button" class="danger mini-btn set-del-btn" data-id="${id}" title="Xóa bộ này khỏi danh sách">Xóa</button>`;
+      const key = esc(rowKey(s));
+      return `<tr class="${s.isCurrent?'set-current-row':''}">
+        <td class="nowrap set-index-col">${i+1}</td>
+        <td class="nowrap set-load-col">${loadCell}</td>
+        <td class="v4533-active-cell"><label class="v4533-active-label"><input class="v4533-active-set" type="checkbox" data-key="${key}" data-id="${id}" data-name="${name}" ${active?'checked':''}> Dùng</label></td>
+        <td class="set-name-col"><input class="set-name-input" data-id="${id}" type="text" value="${name}" title="Sửa tên bộ câu hỏi rồi bấm Enter hoặc rời ô để lưu"><div class="set-note">${esc(meta || (s.isCurrent?'đang dùng trên màn hình':'bộ đã lưu'))}</div>${s.isCurrent?'<span class="set-badge">Hiện tại</span>':'<span class="set-badge">Đã lưu riêng</span>'}</td>
+        <td class="nowrap set-count-col"><b>${total}</b> câu</td>
+        <td class="set-number-col"><input class="set-count-input ${Number(countValueFor(s,'exam',countMap)||0)>0?'set-count-used':'set-count-zero'}" data-mode="exam" data-id="${id}" type="number" min="0" max="${total}" placeholder="0" value="${esc(countValueFor(s,'exam',countMap))}"></td>
+        <td class="set-number-col"><input class="set-count-input ${Number(countValueFor(s,'study',countMap)||0)>0?'set-count-used':'set-count-zero'}" data-mode="study" data-id="${id}" type="number" min="0" max="${total}" placeholder="0" value="${esc(countValueFor(s,'study',countMap))}"></td>
+        <td class="nowrap set-progress-col"><span class="pill">Đã học ${learned}/${total}</span></td>
+        <td class="set-action-col"><div class="v41-set-actions">${actionHtml}</div></td>
+      </tr>`;
+    }).join('');
+    root.innerHTML = `<div id="v4533ActiveSetTools" class="v4533-tools no-print"><button type="button" class="info" id="btnV4533UseAllSets">Dùng tất cả bộ</button><button type="button" class="light" id="btnV4533UseCountSets">Dùng bộ có nhập số câu</button><button type="button" class="secondary" id="btnV4533ClearActiveSets">Bỏ chọn bộ đang dùng</button></div><table class="bank-set-table v4534-stable-set-table"><colgroup><col class="set-col-stt"><col class="set-col-load"><col class="v4533-col-active"><col class="set-col-name"><col class="set-col-count"><col class="set-col-exam"><col class="set-col-study"><col class="set-col-progress"><col class="set-col-action"></colgroup><thead><tr><th>STT</th><th>Nạp</th><th>Dùng</th><th>Tên bộ câu hỏi</th><th>Số câu</th><th>Tạo đề lấy</th><th>Ôn tập lấy</th><th>Tiến độ</th><th>Thao tác từng bộ</th></tr></thead><tbody>${body}</tbody></table><div id="v4533ActiveSetHint" class="set-hint small"></div><div class="v41-set-toolbar-note small">Gợi ý: cột <b>Nạp</b> dùng để đưa bộ đã lưu lên ngân hàng hiện tại. Cột <b>Dùng</b> dùng cho tự gộp tỷ lệ và chuyển cấu hình giữa thiết bị.</div>`;
+    root.querySelectorAll('.set-count-input').forEach(inp => inp.addEventListener('input', () => { updateCountInputStyle(inp); try{ if(typeof syncSelectedSetTotals === 'function') syncSelectedSetTotals(inp.dataset.mode); }catch(e){} updateTargetsAndHint(); scheduleLightConfigSave(); }));
+    root.querySelectorAll('.set-name-input').forEach(inp => { inp.addEventListener('change', () => { try{ if(typeof renameQuestionSet === 'function') renameQuestionSet(inp.dataset.id, inp.value); }catch(e){} scheduleLightConfigSave(); }); inp.addEventListener('keydown', ev => { if(ev.key === 'Enter'){ ev.preventDefault(); inp.blur(); } }); });
+    root.querySelectorAll('.set-load-btn').forEach(btn => btn.addEventListener('click', () => { try{ if(typeof loadQuestionSetToCurrent === 'function') loadQuestionSetToCurrent(btn.dataset.id); setTimeout(renderStableSetManager, 120); }catch(e){ notifyMsg('❌ Không nạp được bộ câu hỏi: ' + (e.message || e), 'bad'); } }));
+    root.querySelectorAll('.set-update-btn').forEach(btn => btn.addEventListener('click', () => { try{ if(typeof updateQuestionSetFromCurrent === 'function') updateQuestionSetFromCurrent(btn.dataset.id); setTimeout(renderStableSetManager,120); }catch(e){} }));
+    root.querySelectorAll('.set-replace-btn').forEach(btn => btn.addEventListener('click', () => { try{ if(typeof v41PickJsonFile === 'function') v41PickJsonFile(file => { if(typeof replaceQuestionSetFromJson === 'function') replaceQuestionSetFromJson(btn.dataset.id, file); setTimeout(renderStableSetManager,150); }); }catch(e){} }));
+    root.querySelectorAll('.set-export-btn').forEach(btn => btn.addEventListener('click', () => { try{ if(typeof exportSingleQuestionSet === 'function') exportSingleQuestionSet(btn.dataset.id); }catch(e){} }));
+    root.querySelectorAll('.set-copy-btn').forEach(btn => btn.addEventListener('click', () => { try{ if(typeof duplicateQuestionSet === 'function') duplicateQuestionSet(btn.dataset.id); setTimeout(renderStableSetManager,150); }catch(e){} }));
+    root.querySelectorAll('.set-del-btn').forEach(btn => btn.addEventListener('click', () => { try{ if(typeof deleteQuestionSet === 'function') deleteQuestionSet(btn.dataset.id); setTimeout(renderStableSetManager,150); }catch(e){} }));
+    root.querySelectorAll('.set-save-current-btn').forEach(btn => btn.addEventListener('click', () => { try{ if(typeof addCurrentBankAsQuestionSet === 'function') addCurrentBankAsQuestionSet(); setTimeout(renderStableSetManager,150); }catch(e){} }));
+    root.querySelectorAll('.v4533-active-set').forEach(cb => cb.addEventListener('change', () => { const set = new Set(activeKeys()); if(cb.checked) set.add(cb.dataset.key); else set.delete(cb.dataset.key); saveActiveKeys(Array.from(set)); }));
+    $('btnV4533UseAllSets')?.addEventListener('click', () => { const keys=[]; root.querySelectorAll('.v4533-active-set').forEach(cb=>{ cb.checked=true; keys.push(cb.dataset.key); }); saveActiveKeys(keys); notifyMsg('✅ Đã chọn toàn bộ bộ đang dùng.', 'good'); });
+    $('btnV4533UseCountSets')?.addEventListener('click', () => { const keys=[]; root.querySelectorAll('.v4533-active-set').forEach(cb=>{ const tr=cb.closest('tr'); const has=!!(tr && qa('.set-count-input[data-mode]', tr).some(inp=>Number(inp.value||0)>0)); cb.checked=has; if(has) keys.push(cb.dataset.key); }); saveActiveKeys(keys); notifyMsg('✅ Đã chọn các bộ có nhập số câu.', 'good'); });
+    $('btnV4533ClearActiveSets')?.addEventListener('click', () => { root.querySelectorAll('.v4533-active-set').forEach(cb=>cb.checked=false); saveActiveKeys([]); notifyMsg('✅ Đã bỏ chọn toàn bộ bộ đang dùng.', 'good'); });
+    try{ if(typeof updateSetSelectionTotal === 'function') updateSetSelectionTotal(); }catch(e){}
+    updateTargetsAndHint(); scheduleLightConfigSave();
+  }
+  window.renderQuestionSetManager = renderStableSetManager;
+  try{ renderQuestionSetManager = renderStableSetManager; }catch(e){}
 
-  const prevRenderMgr = window.renderQuestionSetManager || (typeof renderQuestionSetManager === 'function' ? renderQuestionSetManager : null);
-  if(prevRenderMgr && !prevRenderMgr.__v4533LoadStudyFix){
-    const wrapped = function(){ const r = prevRenderMgr.apply(this, arguments); setTimeout(()=>{ ensureLoadButtons(); updateTargetsAndHint(); },0); return r; };
-    wrapped.__v4533LoadStudyFix = true; window.renderQuestionSetManager = wrapped; try{ renderQuestionSetManager = wrapped; }catch(e){}
+  function boot(){
+    try{ renderStableSetManager(); }catch(e){ console.error('V45.34 render set manager error', e); }
+    try{ updateTargetsAndHint(); }catch(e){}
+    try{ document.title = document.title.replace(/V45\.\d+/g, VERSION); qa('h1').forEach(h=>{ if(/Trắc nghiệm Excel Offline/i.test(h.textContent)) h.textContent='Trắc nghiệm Excel Offline PWA '+VERSION; }); }catch(e){}
   }
-  document.addEventListener('input', ev => { if(ev.target && ev.target.matches && ev.target.matches('#studyBatchSize,#quizCount,.set-count-input')) setTimeout(updateTargetsAndHint,0); }, true);
-  document.addEventListener('change', ev => { if(ev.target && ev.target.matches && ev.target.matches('#autoMergeSetsStudy,#autoMergeSetsExam,.v4533-active-set,.v4532-active-set,.set-count-input')) setTimeout(updateTargetsAndHint,0); }, true);
-  function boot(){ try{ ensureLoadButtons(); updateTargetsAndHint(); }catch(e){} try{ document.title = document.title.replace(/V45\.\d+/g, VERSION); qa('h1').forEach(h=>{ if(/Trắc nghiệm Excel Offline/i.test(h.textContent)) h.textContent='Trắc nghiệm Excel Offline PWA '+VERSION; }); }catch(e){} }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
-  setTimeout(boot, 500); setTimeout(boot, 1500);
+  setTimeout(boot, 700);
 })();
 </script>
 
