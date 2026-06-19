@@ -1,8 +1,8 @@
 {
-  "name": "Trắc nghiệm Excel Offline V45.34",
-  "short_name": "Quiz V45.34",
+  "name": "Trắc nghiệm Excel Offline V45.36",
+  "short_name": "Quiz V45.36",
   "description": "PWA trắc nghiệm Excel offline, quản lý từng bộ câu hỏi riêng biệt, hỗ trợ trắc nghiệm và tự luận với chấm diff/trọng tâm.",
-  "start_url": "./index.html?v=V45.34",
+  "start_url": "./index.html?v=V45.36",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef7f6",
