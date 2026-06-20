@@ -1,18 +1,21 @@
-Trắc nghiệm Excel Offline PWA V46.6
+Trắc nghiệm Excel Offline PWA V46.10 Stable
 
-Bản sửa nhanh sau V46.4: ổn định chức năng Học nhanh thông minh và sửa lỗi nút “Hiện phương án” bị lặp khi bật Che phương án.
+Bản V46.10 nâng tiếp từ V46.9, tập trung chốt ổn định sau chuỗi nâng cấp V46.
 
-Điểm mới V46.6:
-- Mỗi câu chỉ còn 1 nút “Hiện phương án”.
-- Dọn các nút lặp phát sinh từ lớp Chu trình học nhanh V45.45 và Học nhanh thông minh V46.4.
-- Nút “Hiện phương án” mới mở đồng thời cả các lớp che cũ và mới, tránh bấm xong phương án vẫn ẩn.
-- Giữ nguyên Học nhanh thông minh V46.4, chỉ mục dữ liệu V46.3, ổn định lõi V46.2 và tiến trình nạp V46.1.
-- Service worker/cache đã đổi sang V46.6 để PWA nhận bản mới.
+Điểm mới V46.10 Stable:
+- Thêm mục 1o) V46.10 Stable - Ổn định tổng thể.
+- Kiểm tra nhanh lõi: state, renderQuiz, startQuiz, renderPreview, quản lý bộ câu hỏi.
+- Kiểm tra dữ liệu: trùng ID câu hỏi, câu trống, đáp án lỗi, câu thiếu phương án, dung lượng dữ liệu offline.
+- Dọn giao diện: khử nút Hiện phương án lặp và các nút Ẩn/Hiện sinh trùng.
+- Sửa nhanh an toàn: tự backup trước, chuẩn hóa ID trùng/thiếu, dọn xung đột nhẹ.
+- Dọn dữ liệu mồ côi: flash card, khẩu quyết, tiến độ không còn câu hỏi tương ứng.
+- Xuất backup và báo cáo ổn định dạng file để kiểm tra/chuyển máy.
+- Có chế độ ổn định cho thiết bị yếu hoặc dữ liệu lớn.
+- Giữ nguyên V46.9 Phân tích điểm yếu, V46.8 Bảng học hôm nay, V46.6 Flash card nâng cao, V46.4 Học nhanh thông minh và V46.3 Chỉ mục dữ liệu.
+- Service worker/cache đã đổi sang V46.10 để PWA nhận bản mới.
 
 Gợi ý sử dụng:
-1. Sau khi cài PWA bản mới, dùng nút ép cập nhật hoặc xóa cache cũ nếu trình duyệt vẫn mở bản trước.
-2. Khi bật Che phương án, mỗi câu sẽ chỉ có một nút Hiện phương án.
-3. Nếu vừa nạp ngân hàng lớn, tiếp tục dùng mục Tăng tốc dữ liệu / chỉ mục câu hỏi để tạo lại chỉ mục.
-
-
-V46.6: bổ sung Flash card nâng cao: đảo chiều, khẩu quyết, lịch ôn lại, xuất/nhập JSON và xuất HTML thẻ.
+1. Sau khi cập nhật PWA, bấm nút ép cập nhật hoặc xóa cache cũ nếu trình duyệt vẫn mở bản cũ.
+2. Vào mục V46.10 Stable và bấm Kiểm tra ổn định.
+3. Nếu có cảnh báo nút lặp/dữ liệu mồ côi, bấm Sửa nhanh an toàn hoặc Dọn dữ liệu mồ côi.
+4. Xuất backup định kỳ trước khi nhập nhiều bộ câu hỏi lớn.

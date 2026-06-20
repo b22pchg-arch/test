@@ -8,7 +8,7 @@
   <link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="description" content="PWA trắc nghiệm Excel offline có dữ liệu nhúng sẵn, đọc Excel bằng SheetJS, tạo đề đảo câu/đáp án, chấm điểm và phân tích đúng sai.">
-  <title>Trắc nghiệm Excel Offline PWA V46.6</title>
+  <title>Trắc nghiệm Excel Offline PWA V46.10</title>
   <style>
 :root{--bg:#eef7f6;--panel:#fff;--text:#0f172a;--muted:#475569;--line:#d7e3e2;--primary:#0f766e;--primary2:#115e59;--danger:#b91c1c;--ok:#15803d;--warn:#b45309;--info:#0369a1;--shadow:0 10px 28px rgba(15,23,42,.10);--r:16px}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}body{min-height:100vh}.app{max-width:1280px;margin:0 auto;padding:14px 14px 92px}header{position:sticky;top:0;z-index:30;margin:0;padding:14px;background:linear-gradient(135deg,#0f766e,#0b4f49);color:#fff;box-shadow:var(--shadow)}header .inner{max-width:1280px;margin:0 auto}header h1{margin:0 0 6px;font-size:clamp(20px,4vw,30px);letter-spacing:.2px}header p{margin:0;color:#dffaf7;font-size:14px}.grid{display:grid;grid-template-columns:1fr;gap:12px}@media (min-width:990px){.grid.two{grid-template-columns:430px 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}.card h2,.card h3{margin:0 0 10px}.card h2{font-size:20px}.card h3{font-size:17px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}label{font-weight:800;font-size:13px;color:#1f2937;display:block;margin:8px 0 5px}input,select,textarea,button{font:inherit}input[type=file],input[type=number],input[type=text],select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:10px;background:#fff;color:var(--text)}input[type=checkbox]{transform:scale(1.12);margin-right:6px}select[multiple]{min-height:150px}button{border:0;border-radius:12px;padding:10px 13px;background:var(--primary);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(15,118,110,.22)}button:hover{background:var(--primary2)}button.secondary{background:#334155}button.light{background:#e2e8f0;color:#0f172a;box-shadow:none}button.danger{background:var(--danger)}button.info{background:var(--info)}button:disabled{opacity:.55;cursor:not-allowed}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;background:#ecfeff;color:#155e75;font-weight:900;font-size:12px;border:1px solid #a5f3fc;margin:2px}.pill.okp{background:#f0fdf4;color:#166534;border-color:#86efac}.pill.warnp{background:#fffbeb;color:#92400e;border-color:#fcd34d}.ok{color:var(--ok);font-weight:900}.bad{color:var(--danger);font-weight:900}.warn{color:var(--warn);font-weight:900}.status{border-radius:12px;padding:10px;background:#f8fafc;border:1px dashed #cbd5e1;white-space:pre-wrap}.status.bad{border-color:#fecaca;background:#fff1f2}.status.good{border-color:#bbf7d0;background:#f0fdf4}.status.info{border-color:#bae6fd;background:#f0f9ff}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.table-wrap table{min-width:940px;width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #e2e8f0;padding:9px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#f1f5f9;z-index:1}.nowrap{white-space:nowrap}details{border:1px solid var(--line);border-radius:12px;background:#fbffff;padding:10px;margin:10px 0}summary{font-weight:900;cursor:pointer}.question-card{border:1px solid #d7e3e2;border-radius:14px;background:#fff;padding:12px;margin:10px 0}.question-title{font-weight:900;margin-bottom:8px}.option{display:flex;gap:8px;align-items:flex-start;border:1px solid #e2e8f0;border-radius:12px;padding:9px;margin:7px 0;background:#f8fafc}.option:hover{background:#eff6ff}.option input{margin-top:4px}.letter{min-width:28px;height:28px;border-radius:999px;background:#dbeafe;display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#1e3a8a}.chosen{border-color:#38bdf8;background:#ecfeff}.right{border-color:#22c55e;background:#f0fdf4}.wrong{border-color:#ef4444;background:#fef2f2}.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:9px 14px;box-shadow:0 -8px 22px rgba(15,23,42,.09)}.stickybar-inner{max-width:1280px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.progress{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden;min-width:170px;flex:1}.progress>span{display:block;height:100%;width:0;background:var(--primary);transition:.2s}.analysis-row{margin:7px 0;padding:9px;border-left:4px solid #0ea5e9;background:#f0f9ff;border-radius:8px}.analysis-row b{color:#0f172a}.analysis-row.source{background:#fefce8;border-left-color:#eab308}.tag{display:inline-block;margin:2px 3px 2px 0;padding:2px 6px;border-radius:999px;background:#e0f2fe;color:#075985;font-size:12px}.mapping-grid{display:grid;grid-template-columns:1fr;gap:8px}@media (min-width:720px){.mapping-grid{grid-template-columns:repeat(2,1fr)}}.banner{padding:11px;border-radius:14px;background:#ecfdf5;border:1px solid #86efac;color:#14532d;margin-bottom:10px}.banner b{font-size:15px}@media (max-width:700px){.app{padding:10px 10px 100px}.card{padding:11px;border-radius:13px}button{width:100%;justify-content:center}.row button{flex:1 1 150px}.stickybar-inner{align-items:stretch}.progress{width:100%;flex-basis:100%}.table-wrap table{min-width:780px}.option{padding:8px}.letter{min-width:26px;height:26px}}
 /* V6: giải thích ngược, lấy phương án sai làm trọng tâm, chỉ rõ đáp án đúng có gì mà sai không có */
@@ -364,7 +364,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 </head>
 <body>
 
-<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V46.6</h1><p>Dữ liệu nhúng sẵn, quản lý/lưu từng bộ câu hỏi riêng biệt, nhập/sửa câu hỏi toàn màn hình, hỗ trợ ảnh/âm thanh.</p></div></header>
+<header><div class="inner"><h1>Trắc nghiệm Excel Offline PWA V46.10</h1><p>Dữ liệu nhúng sẵn, quản lý/lưu từng bộ câu hỏi riêng biệt, nhập/sửa câu hỏi toàn màn hình, hỗ trợ ảnh/âm thanh.</p></div></header>
 <main class="app">
   <section class="grid two">
     <div>
@@ -664,7 +664,7 @@ body.quiz-fullscreen .question-card .muted.small{display:none!important}
 <script>
 'use strict';
 
-const APP_VERSION = 'V46.6-20260620-data-speed-index';
+const APP_VERSION = 'V46.10-20260620-core-cleanup-repair';
 const DB_NAME = 'excel_quiz_offline_v3_fixed';
 const STORE_NAME = 'kv';
 const BANK_KEY = 'active_question_bank';
@@ -1185,7 +1185,7 @@ function shouldShuffleOptionsForQuestion(q, globalShuffle){
 }
 
 
-/* ===== V46.6 performance core: lazy render + batched storage ===== */
+/* ===== V46.10 performance core: lazy render + batched storage ===== */
 const V46_PERF = {previewTimer:null,setTimer:null,storageTimer:null,pendingStorage:new Map(),marks:{}};
 function v46HighPerf(){ try{return localStorage.getItem('v46HighPerfMode') !== '0';}catch(e){return true;} }
 function v46Now(){ return (performance && performance.now) ? performance.now() : Date.now(); }
@@ -3059,9 +3059,9 @@ function makeStandaloneHtml(title, contentHtml){
 </style>
 
 </head><body class="standalone-export"><main class="app"><div class="card report-card-full"><h1>${escapeHtml(title)}</h1><p class="muted">Xuất lúc: ${escapeHtml(stamp)}. File này xem offline được, không cần PWA.</p></div>${contentHtml}</main><script>
-/* ===== V46.6 patch: sửa mất HTML do thẻ script trong mẫu xuất HTML + giữ nhận diện mẫu nhiều cột ===== */
+/* ===== V46.10 patch: sửa mất HTML do thẻ script trong mẫu xuất HTML + giữ nhận diện mẫu nhiều cột ===== */
 (function(){
-  const V452_LABEL = 'V46.6-20260614-sync-diff-explain-pwa';
+  const V452_LABEL = 'V46.10-20260614-sync-diff-explain-pwa';
   function tText(v){
     try { return norm(v || '').replace(/-/g,' '); }
     catch(e){ return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/-/g,' '); }
@@ -3125,7 +3125,7 @@ function makeStandaloneHtml(title, contentHtml){
     const t = item.questionType ?? item.type ?? item.loaiCau ?? item.kind ?? item.questionKind ?? '';
     if(explicitEssayType(t)) return true;
     if(explicitChoiceType(t)) return false;
-    // Quy tắc quan trọng V46.6: cứ có tối thiểu 2 phương án và xác định được đáp án đúng thì luôn là trắc nghiệm,
+    // Quy tắc quan trọng V46.10: cứ có tối thiểu 2 phương án và xác định được đáp án đúng thì luôn là trắc nghiệm,
     // kể cả dữ liệu cũ có sampleAnswerHtml hoặc các trường đáp án mẫu do patch trước sinh ra.
     if(hasValidChoices(item)) return false;
     const opts = validOptions(item.options);
@@ -3469,9 +3469,9 @@ function exportStandaloneHtmlWithCurrentBank(){
     if(!bankScript) throw new Error('Không tìm thấy vùng dữ liệu nhúng #embedded-bank.');
     bankScript.textContent = safeJsonForEmbedded(buildCurrentEmbeddedPayload());
     const title = doc.querySelector('title');
-    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V46.6 - HTML nhúng dữ liệu';
+    if(title) title.textContent = 'Trắc nghiệm Excel Offline PWA V46.10 - HTML nhúng dữ liệu';
     const h1 = doc.querySelector('header h1');
-    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V46.6';
+    if(h1) h1.textContent = 'Trắc nghiệm Excel Offline PWA V46.10';
     const subtitle = doc.querySelector('header p');
     if(subtitle) subtitle.textContent = 'HTML đã nhúng sẵn ngân hàng câu hỏi hiện tại, mở offline là dùng ngay.';
     const body = doc.querySelector('body');
@@ -4457,7 +4457,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 
 /* ===== V43 patch: chấm tự luận theo trọng tâm tự động từ câu hỏi + đáp án mẫu ===== */
 (function(){
-  const V42_VERSION_LABEL = 'V46.6-20260614-sync-diff-explain-pwa';
+  const V42_VERSION_LABEL = 'V46.10-20260614-sync-diff-explain-pwa';
   const __v41DetectMapping = detectMapping;
   const __v41RenderResult = renderResult;
 
@@ -5266,7 +5266,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
     const hitBonus = s.bonusHit?.length ? `<div><b>Đã khớp cộng điểm cấu hình tay:</b> ${tagHtmlV432(s.bonusHit,'same')}</div>` : '';
     const hitPen = s.penaltyHit?.length ? `<div><b>Có từ khóa trừ điểm:</b> ${tagHtmlV432(s.penaltyHit,'wrongterm')} <span class="muted">(trừ khoảng ${Math.round((s.penaltyRate||0)*100)}%)</span></div>` : '';
     const sample = s.fields.sampleAnswer ? `<details><summary>Đáp án mẫu / gợi ý chấm</summary><div class="essay-sample-answer">${escapeHtml(s.fields.sampleAnswer)}</div></details>` : '<div class="muted">Chưa có đáp án mẫu.</div>';
-    return `<div class="essay-analysis essay-analysis-v432"><div class="pill warnp">Tự luận - điểm gợi ý ${(s.score||0).toFixed(2)}/${s.scoreMax||10} (${pct}%)</div><div class="muted small">V46.6: so sánh dạng diff, bóc tách trọng tâm từ đáp án mẫu, chấm từng trọng tâm theo Đạt / Đạt một phần / Thiếu. Điểm này vẫn là gợi ý, người chấm cần xác nhận lại.</div><div class="essay-score-breakdown"><span class="pill">Trọng tâm ${Math.round((s.autoFocusScore||0)*100)}%</span><span class="pill">Diff tổng ${Math.round((s.similarity||0)*100)}%</span><span class="pill">Bao phủ mẫu ${Math.round((s.sampleRecall||0)*100)}%</span>${(s.fields.requiredKeywords.length || s.fields.bonusKeywords.length)?`<span class="pill">Từ khóa tay ${Math.round((s.manualScore||0)*100)}%</span>`:''}</div>${exactNote}${diff}${focusTable}${hitReq}${miss}${hitBonus}${hitPen}${sample}${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`;
+    return `<div class="essay-analysis essay-analysis-v432"><div class="pill warnp">Tự luận - điểm gợi ý ${(s.score||0).toFixed(2)}/${s.scoreMax||10} (${pct}%)</div><div class="muted small">V46.10: so sánh dạng diff, bóc tách trọng tâm từ đáp án mẫu, chấm từng trọng tâm theo Đạt / Đạt một phần / Thiếu. Điểm này vẫn là gợi ý, người chấm cần xác nhận lại.</div><div class="essay-score-breakdown"><span class="pill">Trọng tâm ${Math.round((s.autoFocusScore||0)*100)}%</span><span class="pill">Diff tổng ${Math.round((s.similarity||0)*100)}%</span><span class="pill">Bao phủ mẫu ${Math.round((s.sampleRecall||0)*100)}%</span>${(s.fields.requiredKeywords.length || s.fields.bonusKeywords.length)?`<span class="pill">Từ khóa tay ${Math.round((s.manualScore||0)*100)}%</span>`:''}</div>${exactNote}${diff}${focusTable}${hitReq}${miss}${hitBonus}${hitPen}${sample}${item?.source?`<div class="analysis-row source"><b>Căn cứ:</b> ${escapeHtml(item.source)}</div>`:''}</div>`;
   }
 
   try {
@@ -5331,7 +5331,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   const style = document.createElement('style');
   style.textContent = `.diff-visual{margin:10px 0;padding:8px;border:1px solid #dbeafe;background:#eff6ff;border-radius:12px}.diff-legend{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.diff-same{background:#eef2ff;color:#1e293b;border-radius:5px;padding:1px 3px}.diff-missing{background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:5px;padding:1px 3px;text-decoration:line-through;text-decoration-thickness:1px}.diff-extra{background:#dcfce7;color:#14532d;border:1px solid #86efac;border-radius:5px;padding:1px 3px}.diff-stats{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.diff-quick{display:grid;gap:5px;margin:8px 0}.small-diff-chip{display:inline-block;text-decoration:none}.diff-two-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.diff-textbox{background:#fff;border:1px solid #dbeafe;border-radius:10px;padding:10px;max-height:260px;overflow:auto;line-height:1.75}.essay-score-table th,.essay-score-table td{vertical-align:top}.essay-score-table td:nth-child(1),.essay-score-table td:nth-child(3),.essay-score-table td:nth-child(4){white-space:nowrap;text-align:center}.diff-exact-note{border-left:5px solid #22c55e;background:#f0fdf4;padding:8px 10px;border-radius:10px;margin:8px 0}.essay-analysis-v432 .table-wrap{max-height:360px;overflow:auto}@media(max-width:800px){.diff-two-cols{grid-template-columns:1fr}.essay-score-table{min-width:900px}}`;
   document.head.appendChild(style);
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V46.6'; }); } catch(e){}
+  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V46.10'; }); } catch(e){}
 })();
 
 
@@ -5357,7 +5357,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 
 /* ===== V45 patch: HTML editor tự luận + chấm diff bằng text bóc tách từ HTML ===== */
 (function(){
-  const V45_LABEL = 'V46.6-20260614-html-editor-essay-diff-text';
+  const V45_LABEL = 'V46.10-20260614-html-editor-essay-diff-text';
 
   function v45Escape(v){
     if(typeof escapeHtml === 'function') return escapeHtml(v ?? '');
@@ -5650,14 +5650,14 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   style.textContent = `
     .v45-editor-toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:7px;background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:0;border-radius:12px 12px 0 0}.v45-editor-toolbar button.tiny{width:auto!important;padding:6px 9px;border-radius:9px;font-size:12px;box-shadow:none}.v45-rich-editor{min-height:180px;background:#fff;border:1px solid #cbd5e1;border-radius:0 0 12px 12px;padding:12px;line-height:1.65;overflow:auto;white-space:normal}.v45-rich-editor:focus{outline:3px solid rgba(15,118,110,.18);border-color:#0f766e}.v45-rich-editor[contenteditable="false"]{background:#f8fafc}.v45-rich-editor:empty:before{content:attr(data-placeholder);color:#94a3b8}.v45-rich-editor img,.v45-essay-html-display img{max-width:100%;max-height:360px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;object-fit:contain;display:block;margin:8px 0}.v45-rich-editor table,.v45-essay-html-display table{border-collapse:collapse;max-width:100%;margin:8px 0}.v45-rich-editor td,.v45-rich-editor th,.v45-essay-html-display td,.v45-essay-html-display th{border:1px solid #cbd5e1;padding:6px}.v45-formula{display:inline-block;background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:2px 6px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.v45-sample-editor-wrap,.v45-essay-answer-wrap{margin:6px 0 10px}.v45-essay-html-display{white-space:normal;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px;margin:8px 0;overflow-wrap:anywhere}.v45-essay-html-display p{margin:.35em 0}.v45-essay-html-display ul,.v45-essay-html-display ol{margin:.35em 0 .35em 1.4em}.essay-user-answer{white-space:normal!important}`;
   document.head.appendChild(style);
-  setTimeout(()=>{ try{ document.title=document.title.replace(/V43\.3|V43\.2|V43\.1|V43/g,'V45'); const h1=document.querySelector('header h1'); if(h1) h1.textContent='Trắc nghiệm Excel Offline PWA V46.6'; }catch(e){} },0);
+  setTimeout(()=>{ try{ document.title=document.title.replace(/V43\.3|V43\.2|V43\.1|V43/g,'V45'); const h1=document.querySelector('header h1'); if(h1) h1.textContent='Trắc nghiệm Excel Offline PWA V46.10'; }catch(e){} },0);
 })();
 
 </script>
 <script>
-/* ===== V46.6 patch: sửa mất HTML do thẻ script trong mẫu xuất HTML + giữ nhận diện mẫu nhiều cột ===== */
+/* ===== V46.10 patch: sửa mất HTML do thẻ script trong mẫu xuất HTML + giữ nhận diện mẫu nhiều cột ===== */
 (function(){
-  const V452_LABEL = 'V46.6-20260614-sync-diff-explain-pwa';
+  const V452_LABEL = 'V46.10-20260614-sync-diff-explain-pwa';
   function tText(v){
     try { return norm(v || '').replace(/-/g,' '); }
     catch(e){ return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/-/g,' '); }
@@ -5721,7 +5721,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
     const t = item.questionType ?? item.type ?? item.loaiCau ?? item.kind ?? item.questionKind ?? '';
     if(explicitEssayType(t)) return true;
     if(explicitChoiceType(t)) return false;
-    // Quy tắc quan trọng V46.6: cứ có tối thiểu 2 phương án và xác định được đáp án đúng thì luôn là trắc nghiệm,
+    // Quy tắc quan trọng V46.10: cứ có tối thiểu 2 phương án và xác định được đáp án đúng thì luôn là trắc nghiệm,
     // kể cả dữ liệu cũ có sampleAnswerHtml hoặc các trường đáp án mẫu do patch trước sinh ra.
     if(hasValidChoices(item)) return false;
     const opts = validOptions(item.options);
@@ -5840,9 +5840,9 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 
 <script>
 
-/* ===== V46.6 patch: sửa nộp bài + giải thích cũ/mới an toàn ===== */
+/* ===== V46.10 patch: sửa nộp bài + giải thích cũ/mới an toàn ===== */
 (function(){
-  const V455_LABEL = 'V46.6-20260614-fix-submit-and-safe-explain-style';
+  const V455_LABEL = 'V46.10-20260614-fix-submit-and-safe-explain-style';
 
   function v455Esc(v){
     try { return escapeHtml(v); } catch(e){ return String(v ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
@@ -5918,7 +5918,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   try { optionWrongAnalysisHtml = window.optionWrongAnalysisHtml; } catch(e){}
 
   function v455SyncEssayEditors(){
-    try { if(typeof v45SyncAllEssayEditors === 'function') v45SyncAllEssayEditors(); } catch(e){ console.warn('V46.6 sync editor error', e); }
+    try { if(typeof v45SyncAllEssayEditors === 'function') v45SyncAllEssayEditors(); } catch(e){ console.warn('V46.10 sync editor error', e); }
   }
   function v455SubmitQuiz(){
     try{
@@ -5941,7 +5941,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
       try { enterResultFocus(); } catch(e){}
       location.hash = '#resultSection';
     }catch(err){
-      console.error('V46.6 submit error', err);
+      console.error('V46.10 submit error', err);
       try { setStatus('❌ Lỗi khi nộp bài: ' + (err && err.message ? err.message : err), 'bad'); } catch(e){ alert('Lỗi khi nộp bài: ' + (err && err.message ? err.message : err)); }
     }
   }
@@ -5964,7 +5964,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   setTimeout(installSubmitCapture, 0);
   setTimeout(installSubmitCapture, 800);
 
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V46.6'; }); } catch(e){}
+  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V46.10'; }); } catch(e){}
   try { if(typeof setStatus === 'function' && state && state.bank && state.bank.length){ renderStats(); } } catch(e){}
 })();
 
@@ -5972,9 +5972,9 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
 
 
 <script>
-/* ===== V46.6 patch: khôi phục đúng cách giải thích cũ V43.3, tách hẳn khỏi cách mới diff ===== */
+/* ===== V46.10 patch: khôi phục đúng cách giải thích cũ V43.3, tách hẳn khỏi cách mới diff ===== */
 (function(){
-  const V456_LABEL = 'V46.6-20260614-restore-old-explain-v43-3';
+  const V456_LABEL = 'V46.10-20260614-restore-old-explain-v43-3';
 
   function v456Esc(v){
     try { return escapeHtml(v); }
@@ -6032,7 +6032,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
       const details = `<details class="more-analysis"><summary>Chạm để đọc thêm phân tích số liệu, từ khóa và phần giống nhau</summary>${extra.join('')}</details>`;
       return [visible, details].filter(Boolean).join('');
     }catch(err){
-      console.warn('V46.6 old explain error', err);
+      console.warn('V46.10 old explain error', err);
       const c = v456Esc(correct || '');
       const w = v456Esc(wrong || '');
       return `<div class="analysis-row focus-diff"><b>Cách cũ V43.3:</b> không dựng được phân tích chi tiết, vui lòng đối chiếu đáp án đúng với phương án sai.</div><div class="diff-block"><b>Đáp án đúng:</b> ${c}</div><div class="diff-block"><b>Phương án sai:</b> ${w}</div>`;
@@ -6069,14 +6069,14 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   };
   try { optionWrongAnalysisHtml = window.optionWrongAnalysisHtml; } catch(e){}
 
-  try { document.title = document.title.replace(/V45\.5(?:\.3)?|V45\.11|V45\.12/g, 'V46.6'); } catch(e){}
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V46.6'; }); } catch(e){}
+  try { document.title = document.title.replace(/V45\.5(?:\.3)?|V45\.11|V45\.12/g, 'V46.10'); } catch(e){}
+  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V46.10'; }); } catch(e){}
   try { if(window.state && state.submitted && typeof renderResult === 'function') renderResult(); } catch(e){}
 })();
 </script>
 
 <script>
-/* ===== V46.6 patch: sửa nhãn chọn nhiều và debounce tìm kiếm ngân hàng ===== */
+/* ===== V46.10 patch: sửa nhãn chọn nhiều và debounce tìm kiếm ngân hàng ===== */
 (function(){
   function v457Esc(v){
     try { return escapeHtml(v); }
@@ -6238,7 +6238,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
       els.bankPreview.querySelectorAll('.bank-edit-btn').forEach(btn => btn.addEventListener('click', () => editCurrentBankQuestion(Number(btn.dataset.bankIndex))));
       els.bankPreview.querySelectorAll('.bank-clone-btn').forEach(btn => btn.addEventListener('click', () => duplicateCurrentBankQuestion(Number(btn.dataset.bankIndex))));
     }catch(err){
-      console.error('renderPreview V46.6 error', err);
+      console.error('renderPreview V46.10 error', err);
       els.bankPreview.innerHTML = '<div class="status bad">❌ Lỗi hiển thị ngân hàng câu hỏi: ' + v457Esc(err && err.message ? err.message : err) + '</div>';
     }
   };
@@ -6255,13 +6255,13 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
     @media(max-width:800px){.bank-filter-bar{grid-template-columns:1fr}.bank-filter-bar button{width:100%!important}.bank-filter-bar .bank-multi-filter{justify-content:flex-start}}
   `;
   document.head.appendChild(style);
-  try { document.title = document.title.replace(/V45\.6|V45\.7|V45\.8|V45\.9|V45\.10|V45\.11|V45\.12/g, 'V46.6'); } catch(e){}
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V46.6'; }); } catch(e){}
+  try { document.title = document.title.replace(/V45\.6|V45\.7|V45\.8|V45\.9|V45\.10|V45\.11|V45\.12/g, 'V46.10'); } catch(e){}
+  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V46.10'; }); } catch(e){}
 })();
 </script>
 
 <script>
-/* ===== V46.6 patch: Ép đề - câu được gán forceInclude chắc chắn vào đề thi/ôn tập ===== */
+/* ===== V46.10 patch: Ép đề - câu được gán forceInclude chắc chắn vào đề thi/ôn tập ===== */
 (function(){
   function v459Esc(v){ try { return escapeHtml(v); } catch(e){ return String(v ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); } }
   function v459Text(v){ try { return visibleText(v || ''); } catch(e){ return String(v || '').replace(/\s+/g,' ').trim(); } }
@@ -6422,7 +6422,7 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
       els.bankPreview.querySelectorAll('.bank-delete-btn').forEach(btn => btn.addEventListener('click', () => deleteCurrentBankQuestion(Number(btn.dataset.bankIndex))));
       els.bankPreview.querySelectorAll('.bank-edit-btn').forEach(btn => btn.addEventListener('click', () => editCurrentBankQuestion(Number(btn.dataset.bankIndex))));
       els.bankPreview.querySelectorAll('.bank-clone-btn').forEach(btn => btn.addEventListener('click', () => duplicateCurrentBankQuestion(Number(btn.dataset.bankIndex))));
-    }catch(err){ console.error('renderPreview V46.6 error', err); els.bankPreview.innerHTML='<div class="status bad">❌ Lỗi hiển thị ngân hàng câu hỏi: '+v459Esc(err&&err.message?err.message:err)+'</div>'; }
+    }catch(err){ console.error('renderPreview V46.10 error', err); els.bankPreview.innerHTML='<div class="status bad">❌ Lỗi hiển thị ngân hàng câu hỏi: '+v459Esc(err&&err.message?err.message:err)+'</div>'; }
   };
   try { renderPreview = window.renderPreview; } catch(e){}
 
@@ -6430,13 +6430,13 @@ window.addEventListener('DOMContentLoaded', () => { boot().catch(e => setStatus(
   style.textContent=`#bankPreview .bank-preview-table .col-force{width:64px!important}#bankPreview .force-include-cell{text-align:center!important;white-space:nowrap!important}.bank-force-label{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:2px!important;padding:4px 5px!important;font-size:11px!important;border-radius:999px!important;border:1px solid #fcd34d!important;background:#fffbeb!important;color:#92400e!important;font-weight:900!important;white-space:nowrap!important}.bank-force-label input{margin:0!important;width:14px!important;height:14px!important;accent-color:#f59e0b!important}.bank-row-force-include td{background:#fffbeb!important}.bank-filter-bar{grid-template-columns:minmax(220px,1fr) auto auto auto auto!important}.bank-force-visible-btn{background:#fef3c7!important;color:#92400e!important;border:1px solid #f59e0b!important}.bank-unforce-visible-btn{background:#f8fafc!important;color:#334155!important;border:1px solid #cbd5e1!important}.force-pill{background:#fef3c7!important;color:#92400e!important;border-color:#f59e0b!important;margin-left:0!important}`;
   document.head.appendChild(style);
   try { if(state && Array.isArray(state.bank)) state.bank = normalizeBank(state.bank); } catch(e){}
-  try { document.title = document.title.replace(/V45\.6|V45\.7|V45\.8|V45\.9|V45\.10|V45\.11|V45\.12/g, 'V46.6'); } catch(e){}
-  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V46.6'; }); } catch(e){}
+  try { document.title = document.title.replace(/V45\.6|V45\.7|V45\.8|V45\.9|V45\.10|V45\.11|V45\.12/g, 'V46.10'); } catch(e){}
+  try { document.querySelectorAll('h1').forEach(h => { if(/PWA V\d+/i.test(h.textContent)) h.textContent = 'Trắc nghiệm Excel Offline PWA V46.10'; }); } catch(e){}
 })();
 </script>
 
 <script>
-/* ===== V46.6 patch: nạp default-bank.json không nhân đôi sets + xuất JSON gọn ===== */
+/* ===== V46.10 patch: nạp default-bank.json không nhân đôi sets + xuất JSON gọn ===== */
 function v4513SetSignature(set){
   try{
     const name = (typeof visibleText === 'function' ? visibleText(set && set.name) : String(set && set.name || '')).trim().toLowerCase();
@@ -6526,11 +6526,11 @@ function v39CollectQuestionSetsFromPayload(payload){
       const sets = v4512ManagedSets();
       const meta = Object.assign({}, state.meta || {}, {
         total: bank.length,
-        version: typeof APP_VERSION !== 'undefined' ? APP_VERSION : 'V46.6',
+        version: typeof APP_VERSION !== 'undefined' ? APP_VERSION : 'V46.10',
         exportedAs: 'default-bank.json'
       });
       const payload = {
-        version: typeof APP_VERSION !== 'undefined' ? APP_VERSION : 'V46.6',
+        version: typeof APP_VERSION !== 'undefined' ? APP_VERSION : 'V46.10',
         exportedAt: new Date().toISOString(),
         fileName: state.fileName || '',
         sheetName: state.currentSheet || '',
@@ -6575,9 +6575,9 @@ function v39CollectQuestionSetsFromPayload(payload){
 
 
 <script>
-/* ===== V46.6: toàn màn hình an toàn + bộ đếm thời gian thi/ôn ===== */
+/* ===== V46.10: toàn màn hình an toàn + bộ đếm thời gian thi/ôn ===== */
 (function(){
-  const V = 'V46.6';
+  const V = 'V46.10';
   try { window.APP_VERSION = V; } catch(e){}
   function byId(id){ return document.getElementById(id); }
   function q(sel, root){ return (root || document).querySelector(sel); }
@@ -6694,7 +6694,7 @@ function v39CollectQuestionSetsFromPayload(payload){
       timer.elapsed = timer.limit || timer.elapsed;
       annotateResult();
       try { if(typeof setStatus === 'function') setStatus('⏱ Hết thời gian. Hệ thống đã tự động nộp bài/lượt ôn.', 'bad'); } catch(e){}
-    } catch(err){ console.error('V46.6 auto submit error', err); }
+    } catch(err){ console.error('V46.10 auto submit error', err); }
   }
   function setupTimerUi(){
     const quizBtn=byId('btnStartQuiz');
@@ -6742,7 +6742,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 <script id="v4533-stable-config-multidevice">
 (function(){
   'use strict';
-  const VERSION = 'V46.6';
+  const VERSION = 'V46.10';
   const ACTIVE_KEY = 'tracNghiemActiveSetIdsV4533';
   const ACTIVE_RECORDS_KEY = 'tracNghiemActiveSetRecordsV4533';
   const CONFIG_KEY = 'tracNghiemOfflineConfigV4533';
@@ -7111,7 +7111,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 <script id="v4534-stable-set-manager-load-fix">
 (function(){
   'use strict';
-  const VERSION = 'V46.6';
+  const VERSION = 'V46.10';
   const ACTIVE_KEY = 'tracNghiemActiveSetIdsV4533';
   const ACTIVE_RECORDS_KEY = 'tracNghiemActiveSetRecordsV4533';
   const CONFIG_KEY = 'tracNghiemOfflineConfigV4533';
@@ -7328,7 +7328,7 @@ function v39CollectQuestionSetsFromPayload(payload){
   try{ renderQuestionSetManager = renderStableSetManager; }catch(e){}
 
   function boot(){
-    try{ renderStableSetManager(); }catch(e){ console.error('V46.6 render set manager error', e); }
+    try{ renderStableSetManager(); }catch(e){ console.error('V46.10 render set manager error', e); }
     try{ updateTargetsAndHint(); }catch(e){}
     try{ document.title = document.title.replace(/V45\.\d+/g, VERSION); qa('h1').forEach(h=>{ if(/Trắc nghiệm Excel Offline/i.test(h.textContent)) h.textContent='Trắc nghiệm Excel Offline PWA '+VERSION; }); }catch(e){}
   }
@@ -7339,7 +7339,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 
 
 <style id="v4535-set-manager-column-fix">
-/* V46.6: cố định lại độ rộng cột Dùng để không đè lên cột Tên bộ câu hỏi */
+/* V46.10: cố định lại độ rộng cột Dùng để không đè lên cột Tên bộ câu hỏi */
 #questionSetManager .bank-set-table.v4534-stable-set-table{
   table-layout:fixed!important;
   width:100%!important;
@@ -7420,14 +7420,14 @@ function v39CollectQuestionSetsFromPayload(payload){
 </style>
 <script id="v4535-version-title-fix">
 (function(){
-  try{ document.title = document.title.replace(/V45\.\d+/g, 'V46.6'); }catch(e){}
-  try{ document.querySelectorAll('h1').forEach(h=>{ if(/Trắc nghiệm Excel Offline/i.test(h.textContent)) h.textContent='Trắc nghiệm Excel Offline PWA V46.6'; }); }catch(e){}
+  try{ document.title = document.title.replace(/V45\.\d+/g, 'V46.10'); }catch(e){}
+  try{ document.querySelectorAll('h1').forEach(h=>{ if(/Trắc nghiệm Excel Offline/i.test(h.textContent)) h.textContent='Trắc nghiệm Excel Offline PWA V46.10'; }); }catch(e){}
 })();
 </script>
 
 
 <style id="v4536-set-manager-single-active-column-fix">
-/* V46.6: chỉ còn một cột Dùng, header/body căn thẳng hàng */
+/* V46.10: chỉ còn một cột Dùng, header/body căn thẳng hàng */
 #questionSetManager .bank-set-table.v4534-stable-set-table thead tr > th.v4533-active-head:not(:first-of-type){
   width:92px!important;min-width:92px!important;max-width:92px!important;
 }
@@ -7461,7 +7461,7 @@ function v39CollectQuestionSetsFromPayload(payload){
           activeCells.slice(1).forEach(function(td){ td.remove(); });
         });
       });
-    }catch(e){ console.warn('V46.6 normalize set manager header error', e); }
+    }catch(e){ console.warn('V46.10 normalize set manager header error', e); }
   }
   var oldRender = window.renderQuestionSetManager;
   if(typeof oldRender === 'function' && oldRender.__v4536HeaderGuard !== true){
@@ -7481,7 +7481,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 <script id="v4537-fast-learn-flashcards">
 (function(){
   'use strict';
-  const VERSION = 'V46.6';
+  const VERSION = 'V46.10';
   const FAST_KEY = 'tracNghiemFastLearnMetaV4537';
   const FLASH_KEY = 'tracNghiemFlashStateV4537';
   const ACTIVE_KEYS = ['tracNghiemActiveSetIdsV4533','tracNghiemActiveSetIdsV4532','tracNghiemActiveSetIdsV4519','tracNghiemActiveSetIdsV4518','tracNghiemActiveSetIdsV4517'];
@@ -7741,7 +7741,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 <script id="v4540-card-ui">
 (function(){
   'use strict';
-  const VERSION='V46.6';
+  const VERSION='V46.10';
   const STORE='quiz_v4540_card_visibility';
   function $(s,r){return (r||document).querySelector(s)}
   function $all(s,r){return Array.from((r||document).querySelectorAll(s))}
@@ -7887,7 +7887,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 <script id="v4541-clean-card-ui">
 (function(){
   'use strict';
-  const VERSION='V46.6';
+  const VERSION='V46.10';
   const STORE='quiz_v4541_card_visibility';
   const OLD_STORES=['quiz_v4540_card_visibility','quiz_v4539_card_visibility','quiz_v4538_card_visibility'];
   function $(s,r){return (r||document).querySelector(s)}
@@ -7994,7 +7994,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 <script id="v4544-dom-progress-fix">
 (function(){
   'use strict';
-  const VERSION = 'V46.6';
+  const VERSION = 'V46.10';
   const $ = id => document.getElementById(id);
   const qa = (sel, root=document) => Array.from((root||document).querySelectorAll(sel));
   function compactTimeText(txt){ return String(txt || '').replace(/(?:Thời gian|Còn lại):\s*/gi,'').trim(); }
@@ -8097,11 +8097,11 @@ function v39CollectQuestionSetsFromPayload(payload){
 
 
 
-<!-- V46.6 learning cycle patch moved outside export-template to prevent JS code leaking into UI -->
+<!-- V46.10 learning cycle patch moved outside export-template to prevent JS code leaking into UI -->
 <script id="v4545-learning-cycles">
 (function(){
   'use strict';
-  const V='V46.6';
+  const V='V46.10';
   const PLAN_KEY='tracNghiemLearningCycleV4545';
   const PREF_KEY='tracNghiemLearningPrefsV4545';
   const REASON_KEY='tracNghiemWrongReasonsV4545';
@@ -8161,10 +8161,10 @@ function v39CollectQuestionSetsFromPayload(payload){
 </script>
 
 <script>
-/* ===== V46.6 final performance layer: safe batched localStorage + performance panel ===== */
+/* ===== V46.10 final performance layer: safe batched localStorage + performance panel ===== */
 (function(){
   if(window.__v46FinalPerfInstalled) return; window.__v46FinalPerfInstalled = true;
-  const VERSION = 'V46.6';
+  const VERSION = 'V46.10';
   try{ document.title = document.title.replace(/V45\.\d+|V46\.0/g, VERSION); document.querySelectorAll('h1').forEach(h=>{ if(/Trắc nghiệm Excel Offline/i.test(h.textContent)) h.textContent='Trắc nghiệm Excel Offline PWA '+VERSION; }); }catch(e){}
   try{
     if(!window.__v46StorageRawSet){
@@ -8212,10 +8212,10 @@ function v39CollectQuestionSetsFromPayload(payload){
 
 
 <script>
-/* ===== V46.6 core loading speed + visible progress layer ===== */
+/* ===== V46.10 core loading speed + visible progress layer ===== */
 (function(){
   if(window.__v461LoadingPerfInstalled) return; window.__v461LoadingPerfInstalled = true;
-  const VERSION='V46.6';
+  const VERSION='V46.10';
   const now=()=> (performance && performance.now) ? performance.now() : Date.now();
   const sleep=(ms=0)=>new Promise(r=>setTimeout(r,ms));
   const raf=()=>new Promise(r=>requestAnimationFrame(()=>r()));
@@ -8327,7 +8327,7 @@ function v39CollectQuestionSetsFromPayload(payload){
   function enhancePerfCard(){
     const card=$('v46PerfCard'); if(!card || $('v461PerfNote')) return;
     const row=document.createElement('div'); row.id='v461PerfNote'; row.className='status info'; row.style.marginTop='8px';
-    row.innerHTML='<b>V46.6:</b> đã thêm thông báo tiến trình khi nạp Excel/bộ câu hỏi/database, nạp bộ câu hỏi theo đường nhanh và render bảng lớn ở nền. <span class="v461-chip">Không bấm lặp khi đang nạp</span><span class="v461-chip">Bảng xem trước render sau</span>';
+    row.innerHTML='<b>V46.10:</b> đã thêm thông báo tiến trình khi nạp Excel/bộ câu hỏi/database, nạp bộ câu hỏi theo đường nhanh và render bảng lớn ở nền. <span class="v461-chip">Không bấm lặp khi đang nạp</span><span class="v461-chip">Bảng xem trước render sau</span>';
     card.appendChild(row);
   }
   function updateVersion(){
@@ -8346,10 +8346,10 @@ function v39CollectQuestionSetsFromPayload(payload){
 })();
 </script>
 <script>
-/* ===== V46.6 core stability guard: self-test + data health + error log + quick start ===== */
+/* ===== V46.10 core stability guard: self-test + data health + error log + quick start ===== */
 (function(){
   'use strict';
-  const VERSION='V46.6';
+  const VERSION='V46.10';
   const LOG_KEY='v462_error_log';
   const QUICK_KEY='v462_quick_start';
   const MAX_LOG=80;
@@ -8467,7 +8467,7 @@ function v39CollectQuestionSetsFromPayload(payload){
     if($('v462CoreCard')){ updateHealth(); updateLogPanel(); return; }
     addStyle();
     const card=document.createElement('div'); card.className='card no-print'; card.id='v462CoreCard';
-    card.innerHTML='<h2>1h) Ổn định lõi / tự kiểm tra hệ thống</h2><p class="muted">Bản V46.6 bổ sung lớp kiểm tra không phá dữ liệu: kiểm tra hàm lõi, dữ liệu offline, nút trùng, bộ trùng và nhật ký lỗi runtime.</p><div class="v462-actions"><button id="btnV462SelfTest" type="button" class="info">Tự kiểm tra hệ thống</button><button id="btnV462Health" type="button" class="secondary">Cập nhật sức khỏe dữ liệu</button><button id="btnV462ExportLogs" type="button" class="light">Xuất nhật ký lỗi</button><button id="btnV462ClearLogs" type="button" class="danger">Xóa nhật ký lỗi</button><label class="v462-switch"><input id="v462QuickStart" type="checkbox"> Khởi động nhanh</label></div><div id="v462CoreStatus" class="status info">Sẵn sàng kiểm tra. Tự kiểm tra không thay đổi ngân hàng câu hỏi hiện tại.</div><div class="v462-grid"><div class="v462-panel"><b>Bảng sức khỏe dữ liệu</b><div id="v462HealthBox"></div></div><div class="v462-panel"><b>Nhật ký lỗi gần đây</b><div id="v462LogBox" class="v462-log"></div></div></div><div id="v462TestBox" style="margin-top:8px"></div>';
+    card.innerHTML='<h2>1h) Ổn định lõi / tự kiểm tra hệ thống</h2><p class="muted">Bản V46.10 bổ sung lớp kiểm tra không phá dữ liệu: kiểm tra hàm lõi, dữ liệu offline, nút trùng, bộ trùng và nhật ký lỗi runtime.</p><div class="v462-actions"><button id="btnV462SelfTest" type="button" class="info">Tự kiểm tra hệ thống</button><button id="btnV462Health" type="button" class="secondary">Cập nhật sức khỏe dữ liệu</button><button id="btnV462ExportLogs" type="button" class="light">Xuất nhật ký lỗi</button><button id="btnV462ClearLogs" type="button" class="danger">Xóa nhật ký lỗi</button><label class="v462-switch"><input id="v462QuickStart" type="checkbox"> Khởi động nhanh</label></div><div id="v462CoreStatus" class="status info">Sẵn sàng kiểm tra. Tự kiểm tra không thay đổi ngân hàng câu hỏi hiện tại.</div><div class="v462-grid"><div class="v462-panel"><b>Bảng sức khỏe dữ liệu</b><div id="v462HealthBox"></div></div><div class="v462-panel"><b>Nhật ký lỗi gần đây</b><div id="v462LogBox" class="v462-log"></div></div></div><div id="v462TestBox" style="margin-top:8px"></div>';
     const perf=$('v46PerfCard') || document.querySelector('.card[id*="Perf"]');
     if(perf && perf.parentNode) perf.insertAdjacentElement('afterend', card); else { const host=document.querySelector('main.app .grid.two > div:last-child') || document.querySelector('main.app') || document.body; host.appendChild(card); }
     $('btnV462SelfTest')?.addEventListener('click', runSelfTest);
@@ -8486,11 +8486,11 @@ function v39CollectQuestionSetsFromPayload(payload){
 
 
 <script>
-/* ===== V46.6 data speed core: indexed set selection + lazy data rebuild ===== */
+/* ===== V46.10 data speed core: indexed set selection + lazy data rebuild ===== */
 (function(){
   'use strict';
   if(window.__v463DataSpeedInstalled) return; window.__v463DataSpeedInstalled = true;
-  const VERSION = 'V46.6';
+  const VERSION = 'V46.10';
   const INDEX_KEY = 'v463_index_enabled';
   const AUTO_KEY = 'v463_auto_rebuild';
   const $ = id => document.getElementById(id);
@@ -8567,7 +8567,7 @@ function v39CollectQuestionSetsFromPayload(payload){
   window.v463BuildDataIndex = buildIndex;
   window.v463InvalidateDataIndex = function(reason){ try{ if(window.V463_INDEX) window.V463_INDEX.signature=''; if(autoRebuild()) scheduleIndex(reason||'changed'); }catch(e){} };
   let indexTimer=null;
-  function scheduleIndex(reason){ clearTimeout(indexTimer); indexTimer=setTimeout(()=>{ const run=()=>{ try{ buildIndex(true); }catch(e){ console.warn('V46.6 index error', e); } }; if(highPerf() && 'requestIdleCallback' in window) requestIdleCallback(run,{timeout:900}); else setTimeout(run, highPerf()?180:0); }, highPerf()?120:20); }
+  function scheduleIndex(reason){ clearTimeout(indexTimer); indexTimer=setTimeout(()=>{ const run=()=>{ try{ buildIndex(true); }catch(e){ console.warn('V46.10 index error', e); } }; if(highPerf() && 'requestIdleCallback' in window) requestIdleCallback(run,{timeout:900}); else setTimeout(run, highPerf()?180:0); }, highPerf()?120:20); }
   function shuffleTake(qs, count, rand, shuffleAll){
     const n=qs.length, need=Math.max(0, Math.min(Number(count||0), n)); if(!need) return [];
     if(shuffleAll || need > n*0.55){ try{ return shuffled(qs, rand).slice(0,need); }catch(e){ const a=qs.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor((rand?rand():Math.random())*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a.slice(0,need); } }
@@ -8604,7 +8604,7 @@ function v39CollectQuestionSetsFromPayload(payload){
     return out.length ? {questions:out, summary:summary.join('; ')} : null;
   }
   function wrapFunctions(){
-    if(typeof collectQuestionsFromSelectedSets === 'function' && !window.__v463OriginalCollect){ window.__v463OriginalCollect = collectQuestionsFromSelectedSets; try{ collectQuestionsFromSelectedSets = fastCollect; }catch(e){ console.warn('V46.6 không thay được collectQuestionsFromSelectedSets', e); } }
+    if(typeof collectQuestionsFromSelectedSets === 'function' && !window.__v463OriginalCollect){ window.__v463OriginalCollect = collectQuestionsFromSelectedSets; try{ collectQuestionsFromSelectedSets = fastCollect; }catch(e){ console.warn('V46.10 không thay được collectQuestionsFromSelectedSets', e); } }
     const wrap = (name, after) => { try{ const fn=eval(name); if(typeof fn !== 'function' || fn.__v463Wrapped) return; const w=function(){ const t=nowMs(); const r=fn.apply(this, arguments); const dt=Math.round(nowMs()-t); try{ after(name, dt, arguments, r); }catch(e){} return r; }; w.__v463Wrapped=true; eval(name + ' = w'); }catch(e){} };
     wrap('startQuiz', (name,dt)=>{ if(window.V46_PERF){ V46_PERF.marks.createExamMs=dt; } updateCard(`✅ Tạo đề xong trong ${dt}ms.`); });
     wrap('startStudyRound', (name,dt)=>{ if(window.V46_PERF){ V46_PERF.marks.createStudyMs=dt; } updateCard(`✅ Tạo lượt ôn xong trong ${dt}ms.`); });
@@ -8654,7 +8654,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 <script id="v464-smart-learning">
 (function(){
   'use strict';
-  const VERSION='V46.6';
+  const VERSION='V46.10';
   const SMART_KEY='tracNghiemSmartLearningV464';
   const PREF_KEY='tracNghiemLearningPrefsV4545';
   const PERF_KEY='tracNghiemPerfV46';
@@ -8808,7 +8808,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 <script id="v465-fix-reveal-duplicate">
 (function(){
   'use strict';
-  const VERSION='V46.6';
+  const VERSION='V46.10';
   function $(id){return document.getElementById(id);} 
   function qa(sel,root){return Array.from((root||document).querySelectorAll(sel));}
   function status(msg,type){try{ if(typeof setStatus==='function') setStatus(msg,type||'good'); }catch(e){} }
@@ -8911,7 +8911,7 @@ function v39CollectQuestionSetsFromPayload(payload){
 <script id="v466-advanced-flashcards">
 (function(){
   'use strict';
-  const VERSION='V46.6';
+  const VERSION='V46.10';
   const FLASH_KEY='tracNghiemFlashStateV4537';
   const NOTE_KEY='tracNghiemFlashNotesV466';
   const PREF_KEY='tracNghiemFlashPrefsV466';
@@ -9004,5 +9004,489 @@ function v39CollectQuestionSetsFromPayload(payload){
   window.v466FlashAdvanced={start,select,renderSummary,exportJson,exportHtml};
 })();
 </script>
+
+
+<script id="v468-core-cleanup-repair">
+(function(){
+  'use strict';
+  const VERSION='V46.10';
+  const REPORT_KEY='tracNghiemCoreCleanupReportV467';
+  const BACKUP_KEY='tracNghiemBackupBeforeRepairV467';
+  const SAFE_MODE_KEY='tracNghiemSafeModeV467';
+  const $=id=>document.getElementById(id);
+  const qa=(sel,root)=>Array.from((root||document).querySelectorAll(sel));
+  const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const txt=s=>String(s==null?'':s).replace(/\s+/g,' ').trim();
+  const now=()=>Date.now();
+  function read(k,d){try{const raw=localStorage.getItem(k);return raw?JSON.parse(raw):d;}catch(e){return d;}}
+  function write(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
+  function status(msg,type){try{if(typeof setStatus==='function') setStatus(msg,type||'good');}catch(e){} const b=$('v468Status'); if(b) b.innerHTML='<div class="status '+(type||'good')+'">'+esc(msg)+'</div>';}
+  function stateRef(){try{if(typeof state!=='undefined') return state;}catch(e){} return null;}
+  function bank(){const s=stateRef();return s&&Array.isArray(s.bank)?s.bank:[];}
+  function sets(){const s=stateRef();return s&&Array.isArray(s.questionSets)?s.questionSets:[];}
+  function qKey(q,i){return txt(q&&q.id)||('q_'+(i+1));}
+  function optText(o){if(o&&typeof o==='object') return txt(o.text||o.label||o.value||'');return txt(o);}
+  function qText(q){return txt((q&&q.question)||'');}
+  function isEssay(q){return /essay|tự luận|tu luan/i.test(txt(q&& (q.questionType||q.type))) || (!!(q&&q.sampleAnswer) && !(Array.isArray(q.options)&&q.options.length));}
+  function correctIdx(q,optLen){let arr=[]; if(Array.isArray(q&&q.correctIndexes)) arr=q.correctIndexes; else if(Array.isArray(q&&q.correctIndex)) arr=q.correctIndex; else if(Number.isFinite(Number(q&&q.correctIndex))) arr=[Number(q.correctIndex)]; else if(txt(q&&q.answerRaw)){ arr=txt(q.answerRaw).split(/[,;|]/).map(x=>Number(x.trim())-1); }
+    return Array.from(new Set(arr.map(x=>Number(x)).filter(x=>Number.isInteger(x)&&x>=0&&x<Math.max(0,optLen))));
+  }
+  function normalizeQuestion(q,i,prefix){
+    q=q&&typeof q==='object'?q:{};
+    const qq=Object.assign({},q);
+    const opts=Array.isArray(q.options)?q.options.map(o=>{const text=optText(o); if(o&&typeof o==='object') return Object.assign({},o,{text}); return {text};}).filter(o=>o.text||o.image||o.audio):[];
+    qq.question=qText(q);
+    qq.options=opts;
+    if(!txt(qq.id)) qq.id=(prefix||'q')+'_'+(i+1)+'_'+Math.random().toString(36).slice(2,7);
+    if(isEssay(qq)){
+      qq.questionType='essay'; qq.type='essay'; qq.correctIndexes=[]; qq.correctIndex=-1;
+      qq.correctText=txt(q.correctText||q.sampleAnswer||q.answerRaw||''); qq.sampleAnswer=txt(q.sampleAnswer||q.correctText||q.answerRaw||'');
+    }else{
+      const idx=correctIdx(q,opts.length);
+      qq.correctIndexes=idx; qq.correctIndex=idx.length?idx[0]:-1; qq.correctTexts=idx.map(j=>optText(opts[j])).filter(Boolean); qq.correctText=qq.correctTexts.join(' | ');
+      qq.questionType=idx.length>1?'multi':'single';
+    }
+    qq.source=txt(q.source||q.sourceOriginal||'');
+    return qq;
+  }
+  function dedupeQuestions(list,prefix){
+    const seenId=new Set(), seenSig=new Set(); let fixed=0, removed=0;
+    const out=[];
+    (Array.isArray(list)?list:[]).forEach((q,i)=>{
+      let qq=normalizeQuestion(q,i,prefix); const sig=(qText(qq)+'||'+(qq.options||[]).map(optText).join('|')).toLowerCase();
+      if(sig&&seenSig.has(sig)){removed++; return;}
+      if(!sig && !qText(qq)){removed++; return;}
+      let id=qKey(qq,i); if(seenId.has(id)){id=id+'_'+(i+1)+'_'+Math.random().toString(36).slice(2,5); qq.id=id; fixed++;}
+      seenId.add(id); seenSig.add(sig); out.push(qq);
+    });
+    return {list:out,fixed,removed};
+  }
+  function dedupeSets(list){
+    const out=[], seenId=new Set(), seenSig=new Set(); let fixed=0, removed=0, repairedQuestions=0, removedQuestions=0;
+    (Array.isArray(list)?list:[]).forEach((s,i)=>{
+      if(!s||typeof s!=='object') {removed++; return;}
+      const cleanQ=dedupeQuestions(Array.isArray(s.questions)?s.questions:(Array.isArray(s.bank)?s.bank:[]),'set'+(i+1));
+      if(!cleanQ.list.length){removed++; return;}
+      let id=txt(s.id)||('set_'+(i+1)+'_'+Math.random().toString(36).slice(2,7)); const name=txt(s.name)||('Bộ câu hỏi '+(i+1));
+      const sig=(name+'|'+cleanQ.list.length+'|'+cleanQ.list.slice(0,5).map(qText).join('|')).toLowerCase();
+      if(seenSig.has(sig)){removed++; return;}
+      if(seenId.has(id)){id=id+'_'+(i+1)+'_'+Math.random().toString(36).slice(2,5); fixed++;}
+      seenId.add(id); seenSig.add(sig);
+      out.push(Object.assign({},s,{id,name,questions:cleanQ.list,updatedAt:new Date().toISOString()}));
+      repairedQuestions += cleanQ.fixed; removedQuestions += cleanQ.removed;
+    });
+    return {list:out,fixed,removed,repairedQuestions,removedQuestions};
+  }
+  function storageBytes(){let n=0; try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i)||''; const v=localStorage.getItem(k)||''; n+=k.length+v.length;}}catch(e){} return n*2;}
+  function formatBytes(n){if(n>1048576) return (n/1048576).toFixed(1)+' MB'; if(n>1024) return (n/1024).toFixed(1)+' KB'; return n+' B';}
+  function currentIds(){const ids=new Set(); bank().forEach((q,i)=>ids.add(qKey(q,i))); sets().forEach(s=>(s.questions||[]).forEach((q,i)=>ids.add(qKey(q,i)))); return ids;}
+  function pruneObjectByIds(obj,ids){let removed=0; const out={}; Object.keys(obj||{}).forEach(k=>{if(ids.has(k)){out[k]=obj[k];}else removed++;}); return {out,removed};}
+  function cleanupRevealButtons(root){
+    const area=root&&root.querySelector?root:document; let removed=0, fixed=0;
+    qa('.question-card',area).forEach(card=>{
+      const opts=qa('.option',card); if(!opts.length) return;
+      const hidden=opts.some(o=>o.classList.contains('v4545-hidden-option')||o.classList.contains('v464-hidden-option')||o.classList.contains('v465-hidden-option')||o.classList.contains('v468-hidden-option')||getComputedStyle(o).display==='none');
+      const btns=qa('button',card).filter(b=>/Hiện\s+phương\s+án/i.test(b.textContent||''));
+      if(!hidden){btns.forEach(b=>{b.remove(); removed++;}); return;}
+      btns.slice(1).forEach(b=>{b.remove(); removed++;});
+      if(!btns.length){const b=document.createElement('button'); b.type='button'; b.className='v468-reveal v465-reveal'; b.textContent='Hiện phương án'; b.addEventListener('click',()=>{opts.forEach(o=>{o.classList.remove('v4545-hidden-option','v464-hidden-option','v465-hidden-option','v468-hidden-option'); o.style.removeProperty('display');}); qa('button',card).filter(x=>/Hiện\s+phương\s+án/i.test(x.textContent||'')).forEach(x=>x.remove());}); const anchor=card.querySelector('.question-type-note')||card.querySelector('.question-title')||card.firstElementChild; if(anchor) anchor.insertAdjacentElement('afterend',b); else card.prepend(b); fixed++;}
+    });
+    return {removed,fixed};
+  }
+  function cleanupDuplicateToggles(){
+    let removed=0;
+    qa('.card').forEach(card=>{
+      const groups={};
+      qa('button',card).forEach(b=>{const t=txt(b.textContent); if(/^(Ẩn|Hiện|Ẩn\/Hiện|Thu gọn|Mở rộng)$/i.test(t)){const k=t.toLowerCase(); groups[k]=groups[k]||[]; groups[k].push(b);}});
+      Object.values(groups).forEach(arr=>arr.slice(1).forEach(b=>{b.remove(); removed++;}));
+    });
+    return removed;
+  }
+  function makeBackup(){
+    const s=stateRef(); const payload={version:VERSION, at:new Date().toISOString(), bank:bank(), questionSets:sets(), progress:s&&s.study?s.study.progress:{}, activeIds:s&&s.study?s.study.activeIds:[], localStorage:{}};
+    try{['tracNghiemFlashStateV4537','tracNghiemFlashNotesV466','tracNghiemLearningPrefsV4545','tracNghiemLearningCycleV4545','v462_error_log','tracNghiemOfflineConfigV4533'].forEach(k=>payload.localStorage[k]=localStorage.getItem(k)||'');}catch(e){}
+    write(BACKUP_KEY,payload); return payload;
+  }
+  function downloadBackup(){const payload=makeBackup(); const name='backup_truoc_sua_du_lieu_v46_8_'+Date.now()+'.json'; const data=JSON.stringify(payload,null,2); try{ if(typeof downloadTextFile==='function') downloadTextFile(name,data,'application/json;charset=utf-8'); else {const blob=new Blob([data],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);} status('✅ Đã tạo bản sao dự phòng trước khi sửa.','good'); }catch(e){status('Không xuất được backup: '+e.message,'bad');}}
+  function repairData(){
+    const s=stateRef(); if(!s){status('Không tìm thấy state của ứng dụng.','bad'); return;}
+    const t0=now(); makeBackup();
+    const b=dedupeQuestions(s.bank||[],'bank'); s.bank=b.list;
+    const ss=dedupeSets(s.questionSets||[]); s.questionSets=ss.list;
+    let orphan=0; const ids=currentIds();
+    try{ if(s.study&&s.study.progress){const pr=pruneObjectByIds(s.study.progress,ids); s.study.progress=pr.out; orphan+=pr.removed;} }catch(e){}
+    try{ const fk='tracNghiemFlashStateV4537'; const ff=pruneObjectByIds(read(fk,{}),ids); write(fk,ff.out); orphan+=ff.removed; }catch(e){}
+    try{ const nk='tracNghiemFlashNotesV466'; const nn=pruneObjectByIds(read(nk,{}),ids); write(nk,nn.out); orphan+=nn.removed; }catch(e){}
+    try{ if(typeof saveQuestionSets==='function') saveQuestionSets(); }catch(e){}
+    try{ if(typeof saveStudyState==='function') saveStudyState(); }catch(e){}
+    try{ if(typeof saveBank==='function') saveBank('sửa nhanh dữ liệu lỗi V46.10', true); }catch(e){}
+    try{ if(typeof renderStats==='function') renderStats(); if(typeof v46SchedulePreview==='function') v46SchedulePreview(); if(typeof v46ScheduleSetManager==='function') v46ScheduleSetManager(); if(typeof renderQuestionSetManager==='function') setTimeout(renderQuestionSetManager,300); if(typeof v463BuildIndex==='function') v463BuildIndex(true); }catch(e){}
+    const report={at:new Date().toISOString(),bankFixed:b.fixed,bankRemoved:b.removed,setFixed:ss.fixed,setRemoved:ss.removed,setQuestionFixed:ss.repairedQuestions,setQuestionRemoved:ss.removedQuestions,orphanRemoved:orphan,ms:Math.round(now()-t0),bytes:storageBytes()};
+    write(REPORT_KEY,report); renderReport(report); status('✅ Đã sửa nhanh dữ liệu lỗi trong '+report.ms+'ms. Đã sao lưu trước khi sửa.','good');
+  }
+  function scanCore(){
+    const t0=now(); const s=stateRef(); const ids=new Set(); let dupIds=0, blank=0, badAnswers=0, dupButtons=0, hiddenWithoutButton=0;
+    bank().forEach((q,i)=>{const id=qKey(q,i); if(ids.has(id)) dupIds++; ids.add(id); if(!qText(q)) blank++; const len=Array.isArray(q.options)?q.options.length:0; if(!isEssay(q) && (!correctIdx(q,len).length || !len)) badAnswers++;});
+    qa('.question-card').forEach(card=>{const btns=qa('button',card).filter(b=>/Hiện\s+phương\s+án/i.test(b.textContent||'')); if(btns.length>1) dupButtons += btns.length-1; const opts=qa('.option',card); const hidden=opts.some(o=>getComputedStyle(o).display==='none'||/hidden-option/.test(o.className)); if(hidden&&!btns.length) hiddenWithoutButton++;});
+    const report={at:new Date().toISOString(),bank:bank().length,sets:sets().length,dupIds,blank,badAnswers,dupButtons,hiddenWithoutButton,storage:storageBytes(),safeMode:isSafeMode(),ms:Math.round(now()-t0)};
+    write(REPORT_KEY,report); renderReport(report); status((dupIds||blank||badAnswers||dupButtons||hiddenWithoutButton)?'⚠️ Đã quét xong, có cảnh báo cần xem.':'✅ Đã quét xong, chưa thấy xung đột lớn.','good');
+  }
+  function pruneOrphans(){const ids=currentIds(); let orphan=0; ['tracNghiemFlashStateV4537','tracNghiemFlashNotesV466'].forEach(k=>{const r=pruneObjectByIds(read(k,{}),ids); write(k,r.out); orphan+=r.removed;}); const s=stateRef(); if(s&&s.study&&s.study.progress){const r=pruneObjectByIds(s.study.progress,ids); s.study.progress=r.out; orphan+=r.removed; try{if(typeof saveStudyState==='function') saveStudyState();}catch(e){}} const report=Object.assign(read(REPORT_KEY,{}),{at:new Date().toISOString(),orphanRemoved:orphan,storage:storageBytes()}); write(REPORT_KEY,report); renderReport(report); status('✅ Đã dọn '+orphan+' bản ghi mồ côi.','good');}
+  function isSafeMode(){try{return localStorage.getItem(SAFE_MODE_KEY)==='1';}catch(e){return false;}}
+  function setSafeMode(on){try{localStorage.setItem(SAFE_MODE_KEY,on?'1':'0'); localStorage.setItem('v46HighPerfMode',on?'1':(localStorage.getItem('v46HighPerfMode')||'1'));}catch(e){} const cb=$('v468SafeMode'); if(cb) cb.checked=!!on; status(on?'✅ Đã bật chế độ an toàn: ưu tiên ít render và ít lưu tự động.':'✅ Đã tắt chế độ an toàn.','good');}
+  function renderReport(r){
+    r=r||read(REPORT_KEY,{}); const box=$('v468Report'); if(!box) return; const bytes=storageBytes(); const warn=bytes>4*1024*1024;
+    box.innerHTML=`<div class="row"><span class="pill">Ngân hàng ${bank().length}</span><span class="pill">Bộ ${sets().length}</span><span class="pill ${warn?'warnp':''}">Offline ${formatBytes(bytes)}</span><span class="pill ${isSafeMode()?'okp':''}">An toàn ${isSafeMode()?'bật':'tắt'}</span></div>`+
+    `<div class="status ${warn?'warn':'info'}">${warn?'⚠️ Dữ liệu offline khá lớn, nên xuất gói chuyển máy rồi dọn mồ côi/ảnh không dùng nếu thấy chậm.':'Dữ liệu offline trong mức chấp nhận được.'}</div>`+
+    `<div class="small muted">Lần kiểm tra: ${esc(r.at||'chưa có')} | Trùng ID: ${r.dupIds||0} | Câu trống: ${r.blank||0} | Đáp án lỗi: ${r.badAnswers||0} | Nút lặp: ${r.dupButtons||0} | Ẩn thiếu nút: ${r.hiddenWithoutButton||0} | Đã sửa/xóa: bank ${r.bankFixed||0}/${r.bankRemoved||0}, bộ ${r.setFixed||0}/${r.setRemoved||0}, câu trong bộ ${r.setQuestionFixed||0}/${r.setQuestionRemoved||0}, mồ côi ${r.orphanRemoved||0}.</div>`;
+  }
+  function addCard(){
+    if($('v468CoreCard')){renderReport();return;}
+    const anchor=$('v466FlashCard')||$('v464SmartLearnCard')||$('v463IndexCard')||document.querySelector('main .card:last-of-type'); if(!anchor||!anchor.parentNode) return;
+    const card=document.createElement('div'); card.className='card no-print'; card.id='v468CoreCard';
+    card.innerHTML=`<h2>1l) V46.10 - Dọn lõi / chống xung đột / sửa dữ liệu lỗi</h2><p class="muted">Dùng mục này sau khi nạp nhiều bộ, nhập/xuất dữ liệu nhiều lần hoặc thấy app có nút lặp, câu trùng, flash card mồ côi.</p><div id="v468Report" class="status info">Đang đọc tình trạng dữ liệu...</div><div id="v468Status"></div><div class="row" style="margin-top:8px"><button type="button" class="info" id="v468Scan">Kiểm tra xung đột lõi</button><button type="button" class="secondary" id="v468Repair">Sửa nhanh dữ liệu lỗi</button><button type="button" class="light" id="v468Prune">Dọn dữ liệu mồ côi</button><button type="button" class="light" id="v468Backup">Xuất backup trước khi sửa</button><button type="button" class="light" id="v468CleanupButtons">Dọn nút lặp trên màn hình</button></div><label style="display:block;margin-top:8px"><input id="v468SafeMode" type="checkbox"> Bật chế độ an toàn khi máy yếu / dữ liệu lớn</label><p class="small muted">Sửa nhanh sẽ tự tạo backup trong bộ nhớ trước, chuẩn hóa ID câu hỏi, xóa câu/bộ trùng, dọn tiến độ hoặc flash card không còn câu tương ứng.</p>`;
+    anchor.parentNode.insertBefore(card,anchor.nextSibling);
+    $('v468Scan')?.addEventListener('click',scanCore);
+    $('v468Repair')?.addEventListener('click',()=>{ if(confirm('Ứng dụng sẽ tạo backup rồi sửa nhanh dữ liệu lỗi. Tiếp tục?')) repairData(); });
+    $('v468Prune')?.addEventListener('click',pruneOrphans);
+    $('v468Backup')?.addEventListener('click',downloadBackup);
+    $('v468CleanupButtons')?.addEventListener('click',()=>{const r=cleanupRevealButtons(document); const d=cleanupDuplicateToggles(); status('✅ Đã dọn nút lặp: hiện phương án '+r.removed+', nút ẩn/hiện '+d+'.','good'); scanCore();});
+    $('v468SafeMode')?.addEventListener('change',e=>setSafeMode(!!e.target.checked));
+    const cb=$('v468SafeMode'); if(cb) cb.checked=isSafeMode(); renderReport();
+  }
+  function wrapRender(){try{ if(typeof renderQuiz==='function' && !renderQuiz.__v468CleanupWrapped){const old=renderQuiz; const w=function(){const r=old.apply(this,arguments); setTimeout(()=>cleanupRevealButtons(document),160); return r;}; w.__v468CleanupWrapped=true; try{renderQuiz=w;}catch(e){} try{window.renderQuiz=w;}catch(e){} }}catch(e){} }
+  function addStyle(){if($('v468Style')) return; const st=document.createElement('style'); st.id='v468Style'; st.textContent='#v468CoreCard button{width:auto}.v468-reveal{margin:8px 0;background:#0369a1!important;color:#fff!important;border-radius:10px!important;padding:9px 14px!important;font-weight:900!important}@media(max-width:700px){#v468CoreCard button{width:100%!important}}'; document.head.appendChild(st);}
+  function boot(){addStyle(); addCard(); wrapRender(); if(isSafeMode()){try{localStorage.setItem('v46HighPerfMode','1');}catch(e){}} setTimeout(()=>{cleanupRevealButtons(document); renderReport();},500);}
+  document.addEventListener('click',e=>{if(e.target&&/Hiện\s+phương\s+án/i.test(e.target.textContent||'')) setTimeout(()=>cleanupRevealButtons(document),120);},true);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot(); setTimeout(boot,700);
+  window.v468CoreCleanup={scanCore,repairData,pruneOrphans,cleanupRevealButtons,makeBackup,setSafeMode,renderReport};
+})();
+</script>
+
+
+<script id="v468-today-learning-dashboard">
+(function(){
+  'use strict';
+  const VERSION='V46.10';
+  const PLAN_KEY='tracNghiemTodayLearningPlanV468';
+  const CHECK_KEY='tracNghiemTodayLearningDoneV468';
+  const $=id=>document.getElementById(id);
+  const qa=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
+  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const today=()=>new Date().toISOString().slice(0,10);
+  const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||'')||d}catch(e){return d}};
+  const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+  const status=(m,t)=>{try{ if(typeof setStatus==='function') setStatus(m,t||'info'); }catch(e){}};
+  function getBank(){
+    try{ if(window.v464SmartLearning && typeof window.v464SmartLearning.ranked==='function'){
+      const ranked=window.v464SmartLearning.ranked(999999); if(Array.isArray(ranked)&&ranked.length) return ranked.map(x=>x.q||x).filter(Boolean);
+    }}catch(e){}
+    try{ if(typeof window.v463BuildDataIndex==='function'){const idx=window.v463BuildDataIndex(false); const out=[]; if(idx&&idx.bySet&&typeof idx.bySet.forEach==='function') idx.bySet.forEach(qs=>out.push(...(qs||[]))); if(out.length) return uniq(out); }}catch(e){}
+    try{ if(Array.isArray(state.bank)&&state.bank.length) return state.bank.slice(); }catch(e){}
+    try{ if(Array.isArray(state.questionSets)){const out=[]; state.questionSets.forEach(s=>{(s.questions||s.bank||s.items||[]).forEach(q=>out.push(q));}); if(out.length) return uniq(out); }}catch(e){}
+    return [];
+  }
+  function key(q){try{ if(typeof getQuestionKey==='function') return getQuestionKey(q); }catch(e){} return String(q?.id||q?._id||q?.uid||text(q).slice(0,160));}
+  function uniq(arr){const seen=new Set(); return (arr||[]).filter(q=>{const k=key(q); if(!q||!k||seen.has(k)) return false; seen.add(k); return true;});}
+  function text(q){try{ if(window.qText&&typeof window.qText==='function') return window.qText(q); }catch(e){} return String(q?.question||q?.text||q?.title||q?.prompt||'').trim();}
+  function opts(q){return Array.isArray(q?.options)?q.options:[];}
+  function optText(o){return typeof o==='string'?o:String(o?.text||o?.html||o?.label||'');}
+  function correct(q){try{ if(typeof getCorrectIndexes==='function') return getCorrectIndexes(q)||[]; }catch(e){} return [].concat(q?.answerIndexes||q?.correctIndexes||q?.answers||[]).map(Number).filter(Number.isFinite);}
+  function tags(q){
+    try{ const r=window.v464SmartLearning && window.v464SmartLearning.ranked ? null : null; }catch(e){}
+    const arr=[].concat(q?.fastTags||[],q?.autoTags||[],q?.userTags||[],q?.tags||[]);
+    const tx=(text(q)+' '+opts(q).map(optText).join(' ')+' '+(q?.source||q?.explain||'')).toLowerCase();
+    if(correct(q).length>1 || /chọn\s*nhiều|nhiều\s*đáp\s*án/.test(tx)) arr.push('Chọn nhiều');
+    if(q?.forceInclude) arr.push('Ép đề');
+    if(/\d+|%|kv|mw|mvar|phút|giờ|ngày|tháng|năm|lần|tỷ lệ|tỉ lệ/.test(tx)) arr.push('Số liệu');
+    if(/trước|sau|trình\s*tự|thứ\s*tự|bước|tiếp\s*theo|đầu\s*tiên|cuối\s*cùng/.test(tx)) arr.push('Trình tự');
+    if(/ai|người|đơn\s*vị|trưởng|phó|điều\s*độ|nhân\s*viên|quyền|duyệt|viết\s*phiếu|cho\s*phép/.test(tx)) arr.push('Thẩm quyền');
+    if(/không|chưa|trừ|cấm|không\s*được|chỉ\s*khi|ngoại\s*trừ/.test(tx)) arr.push('Phủ định');
+    if(q?.type==='essay'||q?.isEssay||(!opts(q).length&&(q?.sampleAnswer||q?.answerHtml))) arr.push('Tự luận');
+    return Array.from(new Set(arr.filter(Boolean)));
+  }
+  function progress(q){const k=key(q); let p={}; try{p=Object.assign(p,(state&&state.study&&state.study.progress&&state.study.progress[k])||{});}catch(e){} ['tracNghiemStudyProgress','tracNghiemProgress','quizProgress','tracNghiemLearningProgress'].forEach(st=>{try{const d=read(st,{}); if(d&&d[k]) p=Object.assign(p,d[k]);}catch(e){}}); return p;}
+  function score(q){
+    try{ if(window.v464SmartLearning&&typeof window.v464SmartLearning.ranked==='function'){ const found=window.v464SmartLearning.ranked(999999).find(x=>key(x.q||x)===key(q)); if(found&&Number.isFinite(found.score)) return found.score; }}catch(e){}
+    const t=tags(q), p=progress(q); let s=0; if(t.includes('Câu yếu'))s+=70; if(t.includes('Ép đề'))s+=62; if(t.includes('Chọn nhiều'))s+=46; if(t.includes('Số liệu'))s+=30; if(t.includes('Trình tự'))s+=30; if(t.includes('Thẩm quyền'))s+=24; if(t.includes('Phủ định'))s+=22; if(t.includes('Tự luận'))s+=10; s+=Number(p.wrong||p.wrongCount||p.mistakes||0)*40; if(!Number(p.correct||p.correctCount||0))s+=8; return s;
+  }
+  function flashState(){return Object.assign({}, read('tracNghiemFlashStateV4537',{}), read('tracNghiemFlashAdvancedV466',{}));}
+  function dueFlashCount(){const f=flashState(), now=Date.now(); return Object.values(f).filter(x=>!x||!x.dueAt||Date.parse(x.dueAt)<=now).length;}
+  function seenTodayCount(){const f=flashState(), td=today(); let c=0; Object.values(f).forEach(x=>{ if(String(x?.lastSeenAt||x?.updatedAt||'').slice(0,10)===td) c++; }); const d=read(CHECK_KEY,{}); return Math.max(c, Number(d.flashSeen||0));}
+  function done(){const d=read(CHECK_KEY,{}); if(d.date!==today()) return {date:today(),items:{}}; d.items=d.items||{}; return d;}
+  function mark(id){const d=done(); d.items[id]=!d.items[id]; write(CHECK_KEY,d); render();}
+  function analyze(){
+    let qs=getBank(); const ranked=qs.map(q=>({q,score:score(q),tags:tags(q)})).sort((a,b)=>b.score-a.score);
+    const s={total:qs.length, due:dueFlashCount(), weak:0, dangerous:0, forced:0, multi:0, number:0, sequence:0, authority:0, todayFlash:seenTodayCount(), todayDone:Object.values(done().items||{}).filter(Boolean).length};
+    ranked.forEach(x=>{if(x.tags.includes('Câu yếu'))s.weak++; if(x.tags.includes('Ép đề'))s.forced++; if(x.tags.includes('Chọn nhiều'))s.multi++; if(x.tags.includes('Số liệu'))s.number++; if(x.tags.includes('Trình tự'))s.sequence++; if(x.tags.includes('Thẩm quyền'))s.authority++; if(x.score>=35)s.dangerous++;});
+    const size=s.total<=100?'small':(s.total<=500?'medium':'large'); const flashN=Math.min(20,Math.max(5,s.due||10)); const weakN=size==='small'?10:(size==='medium'?15:25); const examN=size==='small'?20:(size==='medium'?40:60);
+    const tasks=[
+      {id:'flash',name:`Ôn ${flashN} flash card đến hạn`,why:s.due?`${s.due} thẻ đang đến hạn`:'Duy trì trí nhớ bằng thẻ khó/đảo chiều',action:'flash',priority:s.due?1:3},
+      {id:'weak',name:`Ôn cấp tốc ${weakN} câu nguy hiểm`,why:`Ưu tiên ${s.dangerous} câu nguy hiểm, ${s.weak} câu yếu`,action:'weak',priority:2},
+      {id:'exam',name:`Làm đề nhanh ${examN} câu`,why:'Kiểm tra tổng hợp sau khi ôn câu yếu',action:'exam',priority:4},
+      {id:'review',name:'Xem lại 5 câu nên ưu tiên',why:'Chốt lỗi dễ nhầm trước khi kết thúc phiên học',action:'top5',priority:5}
+    ].sort((a,b)=>a.priority-b.priority);
+    return {date:today(),createdAt:new Date().toISOString(),stats:s,tasks,top:ranked.slice(0,5),flashN,weakN,examN};
+  }
+  function savePlan(){const p=analyze(); write(PLAN_KEY,p); return p;}
+  function plan(){const p=read(PLAN_KEY,null); if(!p||p.date!==today()) return savePlan(); return p;}
+  function addStyles(){if($('v468TodayStyle'))return; const st=document.createElement('style'); st.id='v468TodayStyle'; st.textContent=`#v468TodayCard .v468-grid{display:grid;grid-template-columns:1fr;gap:10px}@media(min-width:980px){#v468TodayCard .v468-grid{grid-template-columns:.9fr 1.1fr}}#v468TodayCard .v468-panel{border:1px solid #d7e3e2;background:#fbffff;border-radius:14px;padding:10px}.v468-scorebar{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden}.v468-scorebar span{display:block;height:100%;background:#0f766e}.v468-kpi{display:inline-flex;margin:2px;padding:5px 9px;border-radius:999px;background:#ecfeff;border:1px solid #a5f3fc;color:#155e75;font-size:12px;font-weight:900}.v468-kpi.warn{background:#fffbeb;border-color:#fcd34d;color:#92400e}.v468-kpi.ok{background:#f0fdf4;border-color:#86efac;color:#166534}.v468-task{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:start;border:1px solid #e2e8f0;background:#fff;border-radius:12px;padding:9px;margin:7px 0}.v468-task.done{background:#f0fdf4;border-color:#86efac}.v468-task b{color:#0f4f49}.v468-task small{display:block;color:#475569}.v468-top{border-top:1px solid #e2e8f0;padding-top:6px;margin-top:6px;font-size:13px}.v468-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.v468-actions button,.v468-task button{width:auto!important}@media(max-width:700px){#v468TodayCard button{width:100%!important}.v468-task{grid-template-columns:auto 1fr}.v468-task button{grid-column:1/-1}}`; document.head.appendChild(st);}
+  function insert(){
+    if($('v468TodayCard')){render(); return;} addStyles(); const card=document.createElement('div'); card.className='card no-print'; card.id='v468TodayCard'; card.innerHTML=`<h2>1m) V46.10 - Bảng học hôm nay</h2><p class="muted">App tự đề xuất việc nên học trong ngày dựa trên flash card đến hạn, câu yếu, câu nguy hiểm và kích thước ngân hàng.</p><div id="v468TodaySummary" class="row"></div><div class="v468-grid"><div class="v468-panel"><b>Việc nên làm hôm nay</b><div id="v468TaskBox"></div></div><div class="v468-panel"><b>5 câu nên ưu tiên</b><div id="v468TopBox"></div></div></div><div class="v468-actions"><button type="button" class="info" id="v468Refresh">Cập nhật bảng hôm nay</button><button type="button" class="secondary" id="v468StartBest">Bắt đầu việc ưu tiên</button><button type="button" class="light" id="v468Flash">Ôn flash card</button><button type="button" class="light" id="v468Weak">Ôn câu yếu 15 phút</button><button type="button" class="light" id="v468Exam">Tạo đề nhanh</button><button type="button" class="light" id="v468Export">Xuất kế hoạch hôm nay</button></div><div id="v468Status" class="status info" style="margin-top:8px">Sẵn sàng.</div>`;
+    const anchor=$('v468CoreCard')||$('v466FlashCard')||$('v464SmartCard')||$('v463DataCard')||document.querySelector('main.app .card:last-of-type'); if(anchor&&anchor.parentNode) anchor.insertAdjacentElement('afterend',card); else document.querySelector('main.app')?.appendChild(card);
+    $('v468Refresh')?.addEventListener('click',()=>{savePlan(); render('Đã cập nhật bảng học hôm nay.');}); $('v468StartBest')?.addEventListener('click',startBest); $('v468Flash')?.addEventListener('click',startFlash); $('v468Weak')?.addEventListener('click',startWeak); $('v468Exam')?.addEventListener('click',startExam); $('v468Export')?.addEventListener('click',exportPlan); render();
+  }
+  function render(msg){const p=plan(), d=done(); const s=p.stats||{}; const totalTasks=(p.tasks||[]).length||1, doneTasks=Object.values(d.items||{}).filter(Boolean).length, pct=Math.round(doneTasks/totalTasks*100); const sm=$('v468TodaySummary'), tb=$('v468TaskBox'), top=$('v468TopBox'), st=$('v468Status'); if(!sm||!tb||!top)return; sm.innerHTML=`<span class="v468-kpi ok">${esc(p.date)}</span><span class="v468-kpi">${s.total||0} câu</span><span class="v468-kpi warn">Flash đến hạn ${s.due||0}</span><span class="v468-kpi warn">Câu nguy hiểm ${s.dangerous||0}</span><span class="v468-kpi">Câu yếu ${s.weak||0}</span><span class="v468-kpi ok">Hoàn thành ${pct}%</span><div class="v468-scorebar" style="min-width:160px;flex:1"><span style="width:${Math.max(2,pct)}%"></span></div>`; tb.innerHTML=(p.tasks||[]).map((t,i)=>`<div class="v468-task ${d.items&&d.items[t.id]?'done':''}"><input type="checkbox" data-v468-done="${esc(t.id)}" ${d.items&&d.items[t.id]?'checked':''}><div><b>${i+1}. ${esc(t.name)}</b><small>${esc(t.why)}</small></div><button type="button" class="light" data-v468-action="${esc(t.action)}">Làm</button></div>`).join(''); qa('[data-v468-done]',tb).forEach(x=>x.addEventListener('change',()=>mark(x.dataset.v468Done))); qa('[data-v468-action]',tb).forEach(b=>b.addEventListener('click',()=>runAction(b.dataset.v468Action))); top.innerHTML=(p.top||[]).map((x,i)=>`<div class="v468-top"><b>${i+1}. <span style="color:#b45309">${Math.round(x.score||0)} điểm</span></b> – ${esc(text(x.q).slice(0,150))}${text(x.q).length>150?'…':''}<br><small>${(x.tags||[]).slice(0,8).map(esc).join(', ')||'Chưa gắn nhãn'}</small></div>`).join('')||'<div class="muted">Chưa có dữ liệu câu hỏi.</div>'; if(st&&msg) st.textContent=msg;}
+  function runAction(a){if(a==='flash')startFlash(); else if(a==='weak')startWeak(); else if(a==='exam')startExam(); else scrollTop5();}
+  function startBest(){const p=plan(); const task=(p.tasks||[]).find(t=>!(done().items||{})[t.id])||(p.tasks||[])[0]; if(task) runAction(task.action);}
+  function startFlash(){try{ const p=plan(); const count=Math.min(20,Math.max(5,p.flashN||10)); const c=$('v466Count'); if(c)c.value=count; const m=$('v466Mode'); if(m)m.value='due'; const btn=$('v466Due10')||$('v466Start'); if(btn){btn.click(); $('v466FlashCard')?.scrollIntoView({behavior:'smooth',block:'start'}); status('✅ Đã mở flash card đến hạn.','good'); return;} }catch(e){} status('Chưa thấy mô-đun Flash card nâng cao. Hãy mở mục Flash card nâng cao trước.','bad');}
+  function startWeak(){try{ if(window.v464SmartLearning&&typeof window.v464SmartLearning.startSmart15==='function'){window.v464SmartLearning.startSmart15(); status('⚡ Đã khởi động ôn câu yếu/nguy hiểm 15 phút.','good'); return;} const b=$('v464Start15'); if(b){b.click(); return;} }catch(e){} status('Chưa thấy mô-đun Học nhanh thông minh.','bad');}
+  function startExam(){try{ const p=plan(); const q=$('quizCount'); if(q) q.value=String(p.examN||40); const m=$('v4516ExamMinutes'); if(m)m.value=String(Math.max(0,Math.round((p.examN||40)*0.6))); const b=$('v464ApplyExam'); if(b){b.click(); return;} $('btnStartQuiz')?.scrollIntoView({behavior:'smooth',block:'center'}); status('✅ Đã cấu hình đề nhanh. Bấm Tạo đề để bắt đầu.','good'); }catch(e){status('Không cấu hình được đề nhanh.','bad');}}
+  function scrollTop5(){const el=$('v468TopBox'); if(el) el.scrollIntoView({behavior:'smooth',block:'center'});}
+  function exportPlan(){const p=plan(), d=done(); const lines=[]; lines.push('KẾ HOẠCH HỌC HÔM NAY - '+p.date); lines.push('Xuất từ '+VERSION+' lúc '+new Date().toLocaleString('vi-VN')); lines.push(''); lines.push('Tổng câu: '+(p.stats?.total||0)); lines.push('Flash đến hạn: '+(p.stats?.due||0)); lines.push('Câu nguy hiểm: '+(p.stats?.dangerous||0)); lines.push('Câu yếu: '+(p.stats?.weak||0)); lines.push(''); lines.push('Việc nên làm:'); (p.tasks||[]).forEach((t,i)=>lines.push((d.items&&d.items[t.id]?'[x] ':'[ ] ')+(i+1)+'. '+t.name+' - '+t.why)); lines.push(''); lines.push('5 câu ưu tiên:'); (p.top||[]).forEach((x,i)=>lines.push((i+1)+'. '+Math.round(x.score||0)+' điểm - '+text(x.q).replace(/\s+/g,' ').slice(0,220))); download('ke_hoach_hoc_hom_nay_'+p.date+'.txt',lines.join('\n'),'text/plain;charset=utf-8');}
+  function download(name,content,mime){try{ if(typeof downloadTextFile==='function') return downloadTextFile(name,content,mime); const blob=new Blob([content],{type:mime||'text/plain;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);}catch(e){}}
+  function updateTitle(){try{document.title=document.title.replace(/V46\.7|V46\.6|V46\.5/g,VERSION); qa('h1').forEach(h=>{if(/Trắc nghiệm Excel Offline/i.test(h.textContent)) h.textContent=h.textContent.replace(/V46\.7|V46\.6|V46\.5/g,VERSION);});}catch(e){}}
+  function boot(){insert(); updateTitle();}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot(); setTimeout(boot,700); setTimeout(()=>{try{savePlan();render();}catch(e){}},1800);
+  window.v468TodayDashboard={analyze,savePlan,render,startBest,startFlash,startWeak,startExam};
+})();
+</script>
+
+
+
+<!-- V46.10 weakness analysis + fullscreen today dashboard -->
+<script id="v469-weakness-analysis-dashboard">
+(function(){
+  'use strict';
+  if(window.__v469WeaknessInstalled) return; window.__v469WeaknessInstalled=true;
+  const VERSION='V46.10';
+  const REPORT_KEY='tracNghiemWeaknessReportV469';
+  const $=id=>document.getElementById(id);
+  const qa=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
+  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||'')||d}catch(e){return d}};
+  const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+  const notify=(m,t)=>{try{ if(typeof setStatus==='function') setStatus(m,t||'info'); }catch(e){} const s=$('v469WeakStatus'); if(s){s.className='status '+(t||'info'); s.textContent=m;}};
+  function addStyles(){
+    if($('v469Style')) return;
+    const st=document.createElement('style'); st.id='v469Style';
+    st.textContent=`
+      #v469WeakCard .v469-grid{display:grid;grid-template-columns:1fr;gap:10px}@media(min-width:980px){#v469WeakCard .v469-grid{grid-template-columns:1.05fr .95fr}}
+      #v469WeakCard .v469-panel{border:1px solid #d7e3e2;background:#fbffff;border-radius:14px;padding:10px}
+      .v469-kpi{display:inline-flex;margin:2px;padding:5px 9px;border-radius:999px;background:#ecfeff;border:1px solid #a5f3fc;color:#155e75;font-size:12px;font-weight:900}.v469-kpi.warn{background:#fffbeb;border-color:#fcd34d;color:#92400e}.v469-kpi.bad{background:#fef2f2;border-color:#fecaca;color:#991b1b}.v469-kpi.ok{background:#f0fdf4;border-color:#86efac;color:#166534}
+      .v469-group{border:1px solid #e2e8f0;background:#fff;border-radius:12px;padding:9px;margin:7px 0}.v469-group h3{margin:0 0 4px;color:#0f4f49;font-size:15px}.v469-bar{height:9px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin:5px 0}.v469-bar span{display:block;height:100%;background:#b45309}.v469-mini{font-size:12px;color:#475569}.v469-example{border-top:1px dashed #dbe4e4;margin-top:6px;padding-top:6px;font-size:13px}.v469-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.v469-actions button,#v469WeakCard button{width:auto!important}
+      .v469-fullscreen-card{position:fixed!important;inset:0!important;z-index:99999!important;margin:0!important;width:100vw!important;height:100vh!important;max-width:none!important;overflow:auto!important;border-radius:0!important;background:#fff!important;padding:14px!important;box-sizing:border-box!important}.v469-fullscreen-card h2{position:sticky;top:0;background:#fff;z-index:2;padding:8px 0;border-bottom:1px solid #e2e8f0}body.v469-fullscreen-open{overflow:hidden!important}
+      @media(max-width:700px){#v469WeakCard button{width:100%!important}.v469-actions button{width:100%!important}}
+    `;
+    document.head.appendChild(st);
+  }
+  function text(q){try{ if(typeof qText==='function') return qText(q)||''; }catch(e){} return String(q?.question||q?.text||q?.title||q?.prompt||'').trim();}
+  function optText(o){return typeof o==='string'?o:String(o?.text||o?.html||o?.label||'');}
+  function options(q){return Array.isArray(q?.options)?q.options:[];}
+  function correct(q){try{ if(typeof getCorrectIndexes==='function') return (getCorrectIndexes(q)||[]).map(Number).filter(Number.isFinite); }catch(e){} return [].concat(q?.answerIndexes||q?.correctIndexes||q?.answers||q?.correct||[]).map(Number).filter(Number.isFinite);}
+  function qKey(q){try{ if(typeof getQuestionKey==='function') return getQuestionKey(q); }catch(e){} return String(q?.id||q?._id||q?.uid||text(q).slice(0,180));}
+  function uniq(arr){const seen=new Set(); const out=[]; (arr||[]).forEach(q=>{const k=qKey(q); if(q&&k&&!seen.has(k)){seen.add(k);out.push(q);}}); return out;}
+  function getBank(){
+    try{ if(typeof window.v463BuildDataIndex==='function'){const idx=window.v463BuildDataIndex(false); const out=[]; if(idx&&idx.bySet&&typeof idx.bySet.forEach==='function') idx.bySet.forEach(qs=>out.push(...(qs||[]))); if(out.length) return uniq(out); }}catch(e){}
+    try{ if(window.v464SmartLearning && typeof window.v464SmartLearning.ranked==='function'){const r=window.v464SmartLearning.ranked(999999); if(Array.isArray(r)&&r.length) return uniq(r.map(x=>x.q||x)); }}catch(e){}
+    try{ if(typeof getAllQuestionSetRows==='function' && typeof setQuestions==='function'){let out=[]; (getAllQuestionSetRows()||[]).forEach(r=>{out=out.concat(setQuestions(r,'study')||setQuestions(r,'exam')||[]);}); if(out.length) return uniq(out); }}catch(e){}
+    try{ if(Array.isArray(state?.bank)&&state.bank.length) return uniq(state.bank.slice()); }catch(e){}
+    try{ if(Array.isArray(state?.questionSets)){let out=[]; state.questionSets.forEach(s=>(s.questions||s.bank||s.items||[]).forEach(q=>out.push(q))); if(out.length) return uniq(out); }}catch(e){}
+    return [];
+  }
+  function progress(q){const k=qKey(q); let p={}; try{p=Object.assign(p,(state&&state.study&&state.study.progress&&state.study.progress[k])||{});}catch(e){} ['tracNghiemStudyProgress','tracNghiemProgress','quizProgress','tracNghiemLearningProgress'].forEach(st=>{try{const d=read(st,{}); if(d&&d[k]) p=Object.assign(p,d[k]);}catch(e){}}); return p;}
+  function flash(q){const k=qKey(q); return Object.assign({}, read('tracNghiemFlashStateV4537',{})[k]||{}, read('tracNghiemFlashAdvancedV466',{})[k]||{});}
+  function reasonFor(q){const rs=read('tracNghiemWrongReasonsV4545',{}); const tx=text(q).replace(/\s+/g,' ').slice(0,90); for(const [k,v] of Object.entries(rs||{})){const kk=String(k||'').replace(/\s+/g,' '); if(kk.includes(tx.slice(0,45)) || tx.includes(kk.slice(0,45))) return v&&v.reason?String(v.reason):'';} return '';}
+  function tokenSet(s){return new Set(String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').split(/\s+/).filter(w=>w.length>2));}
+  function jaccard(a,b){const A=tokenSet(a),B=tokenSet(b); if(!A.size||!B.size) return 0; let inter=0; A.forEach(x=>{if(B.has(x)) inter++;}); return inter/(A.size+B.size-inter);}
+  function easyConfuse(q){const os=options(q).map(optText).filter(Boolean); const ci=correct(q); if(os.length<2) return false; const correctText=ci.map(i=>os[i]||'').join(' '); let best=0; if(correctText){os.forEach((o,i)=>{if(!ci.includes(i)) best=Math.max(best,jaccard(correctText,o));});} else {for(let i=0;i<os.length;i++) for(let j=i+1;j<os.length;j++) best=Math.max(best,jaccard(os[i],os[j]));} return best>=0.55;}
+  function tags(q){
+    const out=[]; const tx=(text(q)+' '+options(q).map(optText).join(' ')+' '+(q?.source||q?.explain||'')).toLowerCase(); const c=correct(q), p=progress(q), f=flash(q), r=reasonFor(q);
+    if(c.length>1 || /chọn\s*nhiều|nhiều\s*đáp\s*án/.test(tx)) out.push('Chọn nhiều');
+    if(q?.forceInclude) out.push('Ép đề');
+    if(/\d+|%|kv|mw|mvar|amp|a\b|phút|giờ|ngày|tháng|năm|lần|tỷ lệ|tỉ lệ|chu kỳ|giây/.test(tx)) out.push('Số liệu/thời gian');
+    if(/trước|sau|trình\s*tự|thứ\s*tự|bước|tiếp\s*theo|đầu\s*tiên|cuối\s*cùng|kế\s*tiếp/.test(tx)) out.push('Trình tự');
+    if(/ai|người|đơn\s*vị|trưởng|phó|điều\s*độ|nhân\s*viên|quyền|duyệt|viết\s*phiếu|cho\s*phép|vận\s*hành|trạm/.test(tx)) out.push('Thẩm quyền/chủ thể');
+    if(/không|chưa|trừ|cấm|không\s*được|chỉ\s*khi|ngoại\s*trừ|không\s*phải/.test(tx)) out.push('Phủ định/ngoại trừ');
+    if(q?.type==='essay'||q?.isEssay||(!options(q).length&&(q?.sampleAnswer||q?.answerHtml))) out.push('Tự luận');
+    if(easyConfuse(q)) out.push('Dễ nhầm phương án');
+    if(Number(p.wrong||p.wrongCount||p.mistakes||0)>0 || ['again','hard'].includes(String(f.lastRate||''))) out.push('Sai nhiều/chưa chắc');
+    if(f && (!f.dueAt || Date.parse(f.dueAt)<=Date.now())) out.push('Flash card đến hạn');
+    if(/số liệu/i.test(r)) out.push('Nhầm số liệu');
+    if(/trình tự/i.test(r)) out.push('Nhầm trình tự');
+    if(/chủ thể/i.test(r)) out.push('Nhầm chủ thể');
+    if(/đọc vội/i.test(r)) out.push('Đọc vội');
+    if(/thiếu|thừa/i.test(r)) out.push('Chọn thiếu/thừa');
+    if(!out.length) out.push('Chưa phân loại');
+    return Array.from(new Set(out));
+  }
+  const WEIGHTS={'Sai nhiều/chưa chắc':80,'Flash card đến hạn':70,'Chọn thiếu/thừa':68,'Nhầm số liệu':64,'Nhầm trình tự':62,'Nhầm chủ thể':60,'Đọc vội':50,'Dễ nhầm phương án':48,'Chọn nhiều':46,'Ép đề':44,'Số liệu/thời gian':35,'Trình tự':34,'Thẩm quyền/chủ thể':32,'Phủ định/ngoại trừ':30,'Tự luận':18,'Chưa phân loại':5};
+  function danger(q){const t=tags(q), p=progress(q), f=flash(q); let s=0; t.forEach(x=>s+=WEIGHTS[x]||10); s+=Number(p.wrong||p.wrongCount||p.mistakes||0)*35; s-=Number(p.correct||p.correctCount||0)*3; if(String(f.lastRate||'')==='again')s+=35; if(String(f.lastRate||'')==='hard')s+=22; return Math.max(0,s);}
+  function analyze(){
+    const qs=getBank(); const groups={}; const records=qs.map(q=>({q,key:qKey(q),text:text(q),tags:tags(q),score:danger(q),progress:progress(q)}));
+    records.forEach(r=>r.tags.forEach(t=>{const g=groups[t]||(groups[t]={name:t,total:0,score:0,wrong:0,examples:[]}); g.total++; g.score+=r.score; g.wrong+=Number(r.progress.wrong||r.progress.wrongCount||r.progress.mistakes||0); if(g.examples.length<5) g.examples.push(r);}));
+    const list=Object.values(groups).map(g=>Object.assign(g,{avg:g.total?g.score/g.total:0,priority:(g.score||0)+(g.wrong||0)*20+g.total*2})).sort((a,b)=>b.priority-a.priority);
+    const top=records.sort((a,b)=>b.score-a.score).slice(0,12);
+    const out={version:VERSION,createdAt:new Date().toISOString(),total:qs.length,groups:list,top}; write(REPORT_KEY,out); return out;
+  }
+  function ensureTodayFullscreenButton(){
+    const card=$('v468TodayCard'); if(!card) return false; addStyles();
+    let actions=card.querySelector('.v468-actions')||card; if($('v469TodayFullBtn')) return true;
+    const btn=document.createElement('button'); btn.type='button'; btn.className='light'; btn.id='v469TodayFullBtn'; btn.textContent='Toàn màn hình';
+    btn.addEventListener('click',()=>toggleFull(card,btn,'Bảng học hôm nay'));
+    actions.insertBefore(btn, actions.firstChild); return true;
+  }
+  function toggleFull(card,btn,label){const on=!card.classList.contains('v469-fullscreen-card'); card.classList.toggle('v469-fullscreen-card',on); document.body.classList.toggle('v469-fullscreen-open',on); if(btn) btn.textContent=on?'Thoát toàn màn hình':'Toàn màn hình'; if(on) setTimeout(()=>card.scrollTo({top:0,behavior:'smooth'}),30);}
+  function render(report){report=report||read(REPORT_KEY,null)||analyze(); const card=$('v469WeakCard'); if(!card) return; const sum=$('v469WeakSummary'), box=$('v469GroupBox'), top=$('v469TopWeakBox'), st=$('v469WeakStatus'); const gs=report.groups||[], total=report.total||0; const first=gs[0]||{}; const hard=(report.top||[]).filter(x=>x.score>=80).length;
+    sum.innerHTML=`<span class="v469-kpi ok">${esc(VERSION)}</span><span class="v469-kpi">${total} câu</span><span class="v469-kpi warn">${gs.length} nhóm lỗi</span><span class="v469-kpi bad">${hard} câu rất yếu</span><span class="v469-kpi warn">Yếu nhất: ${esc(first.name||'Chưa có')}</span>`;
+    const max=Math.max(1,...gs.map(g=>g.priority||0));
+    box.innerHTML=gs.slice(0,10).map((g,i)=>`<div class="v469-group"><h3>${i+1}. ${esc(g.name)}</h3><div class="v469-mini">${g.total} câu · điểm TB ${Math.round(g.avg||0)} · sai ghi nhận ${g.wrong||0}</div><div class="v469-bar"><span style="width:${Math.max(4,Math.round((g.priority||0)/max*100))}%"></span></div><div class="v469-actions"><button type="button" class="secondary" data-v469-study="${esc(g.name)}">Ôn nhóm này</button><button type="button" class="light" data-v469-view="${esc(g.name)}">Xem ví dụ</button></div></div>`).join('')||'<div class="muted">Chưa có dữ liệu để phân tích.</div>';
+    qa('[data-v469-study]',box).forEach(b=>b.addEventListener('click',()=>startStudyGroup(b.dataset.v469Study)));
+    qa('[data-v469-view]',box).forEach(b=>b.addEventListener('click',()=>showExamples(b.dataset.v469View)));
+    top.innerHTML=(report.top||[]).slice(0,8).map((r,i)=>`<div class="v469-example"><b>${i+1}. <span style="color:#b45309">${Math.round(r.score||0)} điểm</span></b> – ${esc(String(r.text||'').slice(0,180))}${String(r.text||'').length>180?'…':''}<br><small>${(r.tags||[]).map(esc).join(', ')}</small></div>`).join('')||'<div class="muted">Chưa có câu yếu.</div>';
+    if(st) st.textContent='Phân tích gần nhất: '+new Date(report.createdAt||Date.now()).toLocaleString('vi-VN');
+  }
+  function insert(){
+    addStyles(); ensureTodayFullscreenButton(); if($('v469WeakCard')){render(); return;}
+    const card=document.createElement('div'); card.className='card no-print'; card.id='v469WeakCard';
+    card.innerHTML=`<h2>1n) V46.10 - Phân tích điểm yếu</h2><p class="muted">Tự gom các dạng câu dễ sai để biết nên học gì tiếp: chọn nhiều, số liệu, trình tự, thẩm quyền, phủ định, phương án dễ nhầm, flash card đến hạn và lý do sai đã ghi.</p><div id="v469WeakSummary" class="row"></div><div class="v469-grid"><div class="v469-panel"><b>Nhóm điểm yếu</b><div id="v469GroupBox"></div></div><div class="v469-panel"><b>Câu yếu nhất nên xử lý</b><div id="v469TopWeakBox"></div></div></div><div class="v469-actions"><button type="button" class="info" id="v469Analyze">Phân tích lại điểm yếu</button><button type="button" class="secondary" id="v469StartWorst">Ôn nhóm yếu nhất</button><button type="button" class="light" id="v469StudyMulti">Ôn câu chọn nhiều</button><button type="button" class="light" id="v469StudyNumber">Ôn số liệu/thời gian</button><button type="button" class="light" id="v469StudySeq">Ôn trình tự</button><button type="button" class="light" id="v469StudyAuth">Ôn thẩm quyền</button><button type="button" class="light" id="v469Full">Toàn màn hình</button><button type="button" class="light" id="v469Export">Xuất báo cáo</button></div><div id="v469WeakStatus" class="status info" style="margin-top:8px">Sẵn sàng.</div>`;
+    const anchor=$('v468TodayCard')||$('v468CoreCard')||document.querySelector('main.app .card:last-of-type'); if(anchor&&anchor.parentNode) anchor.insertAdjacentElement('afterend',card); else document.querySelector('main.app')?.appendChild(card);
+    $('v469Analyze')?.addEventListener('click',()=>{const r=analyze(); render(r); notify('✅ Đã phân tích lại điểm yếu.','good');});
+    $('v469StartWorst')?.addEventListener('click',()=>{const r=read(REPORT_KEY,null)||analyze(); const g=(r.groups||[])[0]; if(g) startStudyGroup(g.name); else notify('Chưa có nhóm điểm yếu.','bad');});
+    $('v469StudyMulti')?.addEventListener('click',()=>startStudyGroup('Chọn nhiều'));
+    $('v469StudyNumber')?.addEventListener('click',()=>startStudyGroup('Số liệu/thời gian'));
+    $('v469StudySeq')?.addEventListener('click',()=>startStudyGroup('Trình tự'));
+    $('v469StudyAuth')?.addEventListener('click',()=>startStudyGroup('Thẩm quyền/chủ thể'));
+    $('v469Full')?.addEventListener('click',()=>toggleFull(card,$('v469Full'),'Phân tích điểm yếu'));
+    $('v469Export')?.addEventListener('click',exportReport);
+    render(analyze());
+  }
+  function showExamples(group){const r=read(REPORT_KEY,null)||analyze(); const g=(r.groups||[]).find(x=>x.name===group); if(!g){notify('Không tìm thấy nhóm '+group,'bad');return;} const lines=(g.examples||[]).map((x,i)=>(i+1)+'. '+String(x.text||'').replace(/\s+/g,' ').slice(0,220)).join('\n'); alert('Ví dụ nhóm: '+group+'\n\n'+(lines||'Chưa có ví dụ.'));}
+  function startStudyGroup(group){const qs=getBank().map(q=>({q,score:danger(q),tags:tags(q)})).filter(x=>x.tags.includes(group)).sort((a,b)=>b.score-a.score).map(x=>x.q).slice(0,30); if(!qs.length){notify('Chưa có câu trong nhóm: '+group,'bad');return;} startStudyList(qs,'Đã tạo lượt ôn nhóm '+group+' ('+qs.length+' câu).');}
+  function startStudyList(list,msg){try{state.mode='study'; state.quiz=list.map((q,qi)=>{const ci=new Set(correct(q)); const os=options(q).map((op,idx)=>{try{return typeof optionToQuizObj==='function'?optionToQuizObj(op,idx,ci):{text:optText(op),html:op?.html,originalIndex:idx,isCorrect:ci.has(idx)}}catch(e){return {text:optText(op),originalIndex:idx,isCorrect:ci.has(idx)}}}); return {no:qi+1,item:q,options:os,userChoice:null,userChoices:[],userText:''};}); state.submitted=false; state.lastResult=null; if(typeof updateStickyLabels==='function') updateStickyLabels(); if(typeof renderQuiz==='function') renderQuiz(); $('resultSummary') && ($('resultSummary').textContent='Chưa nộp bài.'); $('resultList') && ($('resultList').innerHTML=''); if(typeof enterQuizFocus==='function') enterQuizFocus(); location.hash='#quizSection'; notify('✅ '+msg,'good');}catch(e){console.error(e); notify('Không tạo được lượt ôn: '+(e.message||e),'bad');}}
+  function exportReport(){const r=read(REPORT_KEY,null)||analyze(); const lines=[]; lines.push('BÁO CÁO PHÂN TÍCH ĐIỂM YẾU - '+VERSION); lines.push('Xuất lúc: '+new Date().toLocaleString('vi-VN')); lines.push('Tổng câu: '+(r.total||0)); lines.push(''); lines.push('NHÓM ĐIỂM YẾU:'); (r.groups||[]).forEach((g,i)=>lines.push((i+1)+'. '+g.name+' - '+g.total+' câu - điểm TB '+Math.round(g.avg||0)+' - sai ghi nhận '+(g.wrong||0))); lines.push(''); lines.push('CÂU YẾU NHẤT:'); (r.top||[]).slice(0,20).forEach((x,i)=>lines.push((i+1)+'. '+Math.round(x.score||0)+' điểm - '+String(x.text||'').replace(/\s+/g,' ').slice(0,240)+' ['+(x.tags||[]).join(', ')+']')); download('phan_tich_diem_yeu_v46_10_'+Date.now()+'.txt',lines.join('\n'),'text/plain;charset=utf-8');}
+  function download(name,content,mime){try{ if(typeof downloadTextFile==='function') return downloadTextFile(name,content,mime); const blob=new Blob([content],{type:mime||'text/plain;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);}catch(e){}}
+  function updateVersion(){try{document.title=document.title.replace(/V46\.8|V46\.7|V46\.6/g,VERSION); qa('h1').forEach(h=>{if(/Trắc nghiệm Excel Offline/i.test(h.textContent)) h.textContent='Trắc nghiệm Excel Offline PWA '+VERSION;});}catch(e){}}
+  function boot(){addStyles(); ensureTodayFullscreenButton(); insert(); updateVersion();}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+  setTimeout(boot,700); setTimeout(()=>{try{ensureTodayFullscreenButton(); render();}catch(e){}},1800);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){qa('.v469-fullscreen-card').forEach(c=>c.classList.remove('v469-fullscreen-card')); document.body.classList.remove('v469-fullscreen-open'); const a=$('v469TodayFullBtn'); if(a)a.textContent='Toàn màn hình'; const b=$('v469Full'); if(b)b.textContent='Toàn màn hình';}},true);
+  window.v469Weakness={analyze,render,startStudyGroup,ensureTodayFullscreenButton};
+})();
+</script>
+
+<script id="v4610-stable-core">
+(function(){
+  'use strict';
+  const VERSION='V46.10 Stable';
+  const CARD_ID='v4610StableCard';
+  const STABLE_KEY='tracNghiemV4610StablePrefs';
+  const REPORT_KEY='tracNghiemV4610StableLastReport';
+  const BACKUP_KEY='tracNghiemV4610StableBackup';
+  const $=id=>document.getElementById(id);
+  const qa=(sel,root=document)=>Array.from((root||document).querySelectorAll(sel));
+  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const nowIso=()=>new Date().toISOString();
+  const read=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}};
+  const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}};
+  const prefs=()=>Object.assign({stableMode:true,autoCleanUi:true,lightBoot:true,warnLargeData:true},read(STABLE_KEY,{}));
+  const setPrefs=p=>write(STABLE_KEY,Object.assign(prefs(),p||{}));
+  function bank(){try{return (typeof state!=='undefined'&&Array.isArray(state.bank))?state.bank:[]}catch(e){return []}}
+  function sets(){try{return (typeof state!=='undefined'&&Array.isArray(state.questionSets))?state.questionSets:[]}catch(e){return []}}
+  function qText(q){try{if(typeof visibleText==='function')return visibleText(q?.questionHtml||q?.question||q?.text||'');}catch(e){} return String(q?.question||q?.text||q?.questionText||q?.html||q?.questionHtml||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();}
+  function options(q){return Array.isArray(q?.options)?q.options:[]}
+  function optText(o){return String(o?.text||o?.label||o?.html||o||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();}
+  function correct(q){try{if(Array.isArray(q?.correctIndexes))return q.correctIndexes.map(Number).filter(Number.isFinite); if(Array.isArray(q?.answerIndexes))return q.answerIndexes.map(Number).filter(Number.isFinite); if(Array.isArray(q?.answers))return q.answers.map(Number).filter(Number.isFinite); if(q?.answer!=null){return String(q.answer).split(/[,;|\s]+/).map(x=>parseInt(x,10)-1).filter(x=>Number.isFinite(x)&&x>=0);}}catch(e){} return [];}
+  function stableId(q,i){try{if(typeof getQuestionKey==='function'){const k=getQuestionKey(q); if(k!=null&&String(k).trim()) return String(k).trim();}}catch(e){} const raw=String(q?.id||q?._originKey||q?._v463Key||q?.qid||q?.key||'').trim(); if(raw) return raw; const t=qText(q).slice(0,180); let h=0; for(let j=0;j<t.length;j++) h=((h<<5)-h+t.charCodeAt(j))|0; return 'auto_'+Math.abs(h)+'_'+(i||0);}
+  function dataSize(){let total=0,keys=0,largest=[]; try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); const v=localStorage.getItem(k)||''; const n=k.length+v.length; total+=n; keys++; largest.push([k,n]);}}catch(e){} largest.sort((a,b)=>b[1]-a[1]); return {chars:total, kb:Math.round(total/102.4)/10, keys, largest:largest.slice(0,5)};}
+  function notify(msg,type){try{if(typeof setStatus==='function') setStatus(msg,type||'info');}catch(e){} const el=$('v4610Status'); if(el){el.className='status '+(type||'info'); el.textContent=msg;}}
+  function download(name,content,mime){try{if(typeof downloadTextFile==='function') return downloadTextFile(name,content,mime||'text/plain;charset=utf-8'); const blob=new Blob([content],{type:mime||'text/plain;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);}catch(e){alert('Không xuất được file: '+(e.message||e));}}
+  function duplicateButtonsByText(text){return qa('button').filter(b=>String(b.textContent||'').trim()===text);}
+  function cleanupShowButtons(){
+    const cards=qa('.question-card, .quiz-question, .question, [data-question-index], .q-card');
+    let removed=0;
+    cards.forEach(card=>{
+      const btns=qa('button',card).filter(b=>/^Hiện phương án$/i.test(String(b.textContent||'').trim()) || b.classList.contains('v465-show-options') || b.classList.contains('v464-show-options'));
+      if(btns.length>1){btns.slice(1).forEach(b=>{b.remove(); removed++;});}
+    });
+    const global=duplicateButtonsByText('Hiện phương án');
+    if(!cards.length && global.length>1){global.slice(1).forEach(b=>{b.remove(); removed++;});}
+    return removed;
+  }
+  function cleanupToggleButtons(){
+    let removed=0;
+    qa('.card').forEach(card=>{
+      const btns=qa('button',card).filter(b=>/^(Ẩn\/Hiện|Ẩn chi tiết|Hiện chi tiết|Ẩn|Hiện)$/i.test(String(b.textContent||'').trim()) && /hide|toggle|v45|v46/i.test((b.id||'')+' '+(b.className||'')));
+      const seen=new Set(); btns.forEach(b=>{const k=String(b.textContent||'').trim(); if(seen.has(k)){b.remove(); removed++;} else seen.add(k);});
+    });
+    return removed;
+  }
+  function cleanupUi(){const a=cleanupShowButtons(), b=cleanupToggleButtons(); return {showButtons:a,toggleButtons:b,total:a+b};}
+  function scan(silent){
+    const b=bank(), st=sets(), size=dataSize();
+    const ids=new Map(), duplicateIds=[], empty=[], badAns=[], noOptions=[];
+    b.forEach((q,i)=>{
+      const id=stableId(q,i); if(ids.has(id)) duplicateIds.push({id,index:i,first:ids.get(id)}); else ids.set(id,i);
+      if(!qText(q)) empty.push(i+1);
+      const opts=options(q); if(opts.length && correct(q).some(x=>x<0||x>=opts.length)) badAns.push(i+1);
+      if(!opts.length && String(q?.type||'').toLowerCase()!=='essay' && !q?.sampleAnswer && !q?.answerText) noOptions.push(i+1);
+    });
+    const showDup=Math.max(0,duplicateButtonsByText('Hiện phương án').length - new Set(qa('button').filter(x=>String(x.textContent||'').trim()==='Hiện phương án').map(x=>x.closest('.question-card,.quiz-question,.question,[data-question-index],.q-card')||x)).size);
+    const report={version:VERSION,createdAt:nowIso(),bank:b.length,sets:st.length,size,duplicateIds:duplicateIds.length,empty:empty.length,badAnswers:badAns.length,noOptions:noOptions.length,showButtonCount:duplicateButtonsByText('Hiện phương án').length,showButtonLikelyDup:showDup,hasCore:{state:typeof state!=='undefined',renderQuiz:typeof renderQuiz==='function',startQuiz:typeof startQuiz==='function',renderPreview:typeof renderPreview==='function',questionSetManager:typeof renderQuestionSetManager==='function'}, samples:{empty:empty.slice(0,10),badAnswers:badAns.slice(0,10),noOptions:noOptions.slice(0,10),duplicateIds:duplicateIds.slice(0,10)}};
+    write(REPORT_KEY,report); renderReport(report);
+    if(!silent) notify((report.empty||report.badAnswers||report.duplicateIds||report.showButtonLikelyDup)?'⚠️ Đã kiểm tra, có cảnh báo cần xem.':'✅ Kiểm tra ổn định: chưa thấy lỗi nghiêm trọng.','info');
+    return report;
+  }
+  function renderReport(r){
+    const box=$('v4610Report'); if(!box) return;
+    const ok=!(r.empty||r.badAnswers||r.duplicateIds||r.showButtonLikelyDup);
+    const core=Object.entries(r.hasCore||{}).map(([k,v])=>`<span class="pill ${v?'':'bad'}">${esc(k)}: ${v?'OK':'thiếu'}</span>`).join(' ');
+    box.className='status '+(ok?'good':'warn');
+    box.innerHTML=`<b>${ok?'Ổn định':'Có cảnh báo'}</b> · ${r.bank} câu · ${r.sets} bộ · offline ${r.size.kb} KB · nút Hiện phương án ${r.showButtonCount||0}<br>${core}<br><span class="small">Trùng ID: ${r.duplicateIds}; Câu trống: ${r.empty}; Đáp án lỗi: ${r.badAnswers}; Thiếu phương án: ${r.noOptions}; Nút lặp nghi ngờ: ${r.showButtonLikelyDup}</span>`;
+  }
+  function backup(){
+    const payload={version:VERSION,createdAt:nowIso(),bank:bank(),questionSets:sets(),study:(typeof state!=='undefined'?state.study:null),localStorage:{}};
+    try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(/^trac|^excel_quiz|^quiz_|^v46/i.test(k)) payload.localStorage[k]=localStorage.getItem(k);}}catch(e){}
+    write(BACKUP_KEY,payload); return payload;
+  }
+  function exportBackup(){const p=backup(); download('backup_on_dinh_v46_10_'+Date.now()+'.json',JSON.stringify(p,null,2),'application/json;charset=utf-8'); notify('✅ Đã xuất backup ổn định.','good');}
+  function repair(){
+    backup(); const b=bank(); let changed=0; const used=new Set();
+    b.forEach((q,i)=>{let id=String(q?.id||'').trim(); if(!id || used.has(id)){id='q_'+Date.now().toString(36)+'_'+i+'_'+Math.random().toString(36).slice(2,7); q.id=id; changed++;} used.add(id); if(!Array.isArray(q.options) && q.options!=null){try{q.options=Array.from(q.options); changed++;}catch(e){}} });
+    if(typeof state!=='undefined'){
+      if(Array.isArray(state.questionSets)){const seen=new Set(); state.questionSets=state.questionSets.filter((s,i)=>{const k=String(s?.id||s?.name||'')+'_'+(Array.isArray(s?.bank)?s.bank.length:(Array.isArray(s?.questions)?s.questions.length:0)); if(seen.has(k)) {changed++; return false;} seen.add(k); return true;});}
+    }
+    const ui=cleanupUi(); changed+=ui.total;
+    try{ if(typeof saveQuestionSets==='function') saveQuestionSets(); if(typeof saveBank==='function') saveBank(); }catch(e){}
+    try{ if(typeof renderQuestionSetManager==='function') setTimeout(renderQuestionSetManager,80); if(typeof renderPreview==='function') setTimeout(renderPreview,160); }catch(e){}
+    const r=scan(true); notify('✅ Đã dọn an toàn: '+changed+' mục/hiển thị được chỉnh.','good'); return r;
+  }
+  function pruneOrphans(){
+    backup(); const ids=new Set(bank().map(stableId)); let removed=0; const keys=['tracNghiemFlashStateV4537','tracNghiemFlashAdvancedV466','tracNghiemFlashMemoV466','tracNghiemWrongReasonsV4545','excel_quiz_study_progress_v13'];
+    keys.forEach(k=>{const d=read(k,null); if(d&&typeof d==='object'&&!Array.isArray(d)){let ch=false; Object.keys(d).forEach(id=>{ if(id && !ids.has(id) && !String(id).startsWith('auto_')){delete d[id]; ch=true; removed++;}}); if(ch) write(k,d); }});
+    scan(true); notify('✅ Đã dọn dữ liệu mồ côi: '+removed+' mục.','good'); return removed;
+  }
+  function stableMode(on){setPrefs({stableMode:!!on,autoCleanUi:!!on,lightBoot:!!on}); const cb=$('v4610StableMode'); if(cb) cb.checked=!!on; try{document.body.classList.toggle('v4610-stable-mode',!!on);}catch(e){} notify(on?'✅ Đã bật chế độ ổn định.':'Đã tắt chế độ ổn định.','info');}
+  function exportReport(){const r=read(REPORT_KEY,null)||scan(true); const lines=[]; lines.push('BÁO CÁO ỔN ĐỊNH '+VERSION); lines.push('Xuất lúc: '+new Date().toLocaleString('vi-VN')); lines.push('Tổng câu: '+r.bank); lines.push('Tổng bộ: '+r.sets); lines.push('Dung lượng offline: '+r.size.kb+' KB'); lines.push('Trùng ID: '+r.duplicateIds); lines.push('Câu trống: '+r.empty); lines.push('Đáp án lỗi: '+r.badAnswers); lines.push('Thiếu phương án: '+r.noOptions); lines.push('Nút Hiện phương án: '+r.showButtonCount); lines.push('Core: '+JSON.stringify(r.hasCore)); lines.push('LocalStorage lớn nhất: '+(r.size.largest||[]).map(x=>x[0]+': '+Math.round(x[1]/102.4)/10+' KB').join('; ')); download('bao_cao_on_dinh_v46_10_'+Date.now()+'.txt',lines.join('\n'),'text/plain;charset=utf-8');}
+  function addStyles(){if($('v4610Styles')) return; const st=document.createElement('style'); st.id='v4610Styles'; st.textContent=`#v4610StableCard .v4610-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}#v4610StableCard .v4610-panel{border:1px solid var(--line,#d7e3e2);border-radius:14px;background:#fff;padding:10px}#v4610StableCard .pill.bad{background:#fee2e2;color:#991b1b}.v4610-stable-mode .v468-panel,.v4610-stable-mode .v469-panel{contain:content}@media(max-width:700px){#v4610StableCard .v4610-grid{grid-template-columns:1fr}#v4610StableCard button{width:100%!important}}`; document.head.appendChild(st);}
+  function insert(){
+    if($(CARD_ID)) {renderReport(read(REPORT_KEY,null)||scan(true)); return;}
+    addStyles(); const p=prefs(); const card=document.createElement('div'); card.className='card no-print'; card.id=CARD_ID;
+    card.innerHTML=`<h2>1o) V46.10 Stable - Ổn định tổng thể</h2><p class="muted">Bản chốt ổn định sau các nâng cấp V46: kiểm tra lõi, dọn xung đột giao diện, backup nhanh và cảnh báo dữ liệu lớn.</p><div class="v4610-grid"><div class="v4610-panel"><b>Tình trạng ổn định</b><div id="v4610Report" class="status info" style="margin-top:8px">Đang kiểm tra...</div></div><div class="v4610-panel"><b>Chế độ ổn định</b><label style="display:block;margin-top:8px"><input type="checkbox" id="v4610StableMode" ${p.stableMode?'checked':''}> Bật ổn định cho thiết bị yếu/dữ liệu lớn</label><p class="small muted">Khi bật: tự dọn nút lặp nhẹ, giảm xung đột giao diện và ưu tiên thao tác học chính.</p></div></div><div class="row" style="margin-top:8px"><button type="button" class="info" id="v4610Scan">Kiểm tra ổn định</button><button type="button" class="secondary" id="v4610Repair">Sửa nhanh an toàn</button><button type="button" class="light" id="v4610CleanUi">Dọn nút lặp</button><button type="button" class="light" id="v4610Prune">Dọn dữ liệu mồ côi</button><button type="button" class="light" id="v4610Backup">Xuất backup</button><button type="button" class="light" id="v4610ExportReport">Xuất báo cáo</button></div><div id="v4610Status" class="status info" style="margin-top:8px">Sẵn sàng.</div>`;
+    const anchor=$('v469WeakCard')||$('v468TodayCard')||$('v466FlashCard')||document.querySelector('main.app .card:last-of-type'); if(anchor&&anchor.parentNode) anchor.insertAdjacentElement('afterend',card); else (document.querySelector('main.app')||document.body).appendChild(card);
+    $('v4610Scan')?.addEventListener('click',()=>scan(false)); $('v4610Repair')?.addEventListener('click',()=>repair()); $('v4610CleanUi')?.addEventListener('click',()=>{const r=cleanupUi(); notify('✅ Đã dọn nút lặp: '+r.total+' nút.','good'); scan(true);}); $('v4610Prune')?.addEventListener('click',()=>pruneOrphans()); $('v4610Backup')?.addEventListener('click',exportBackup); $('v4610ExportReport')?.addEventListener('click',exportReport); $('v4610StableMode')?.addEventListener('change',e=>stableMode(e.target.checked));
+    stableMode(p.stableMode); renderReport(scan(true));
+  }
+  function updateVersion(){try{document.title=document.title.replace(/V46\.9|V46\.8|V46\.7|V46\.6/g,VERSION); qa('h1').forEach(h=>{if(/Trắc nghiệm Excel Offline/i.test(h.textContent)) h.textContent='Trắc nghiệm Excel Offline PWA '+VERSION;});}catch(e){}}
+  let cleanTimer=0; function scheduleClean(){const p=prefs(); if(!p.autoCleanUi) return; clearTimeout(cleanTimer); cleanTimer=setTimeout(()=>cleanupUi(),250);}
+  function boot(){insert(); updateVersion(); scheduleClean(); scan(true);}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+  setTimeout(boot,800); setTimeout(()=>{try{scheduleClean();}catch(e){}},2000);
+  document.addEventListener('click',()=>setTimeout(scheduleClean,80),true);
+  try{const mo=new MutationObserver(()=>scheduleClean()); mo.observe(document.body,{childList:true,subtree:true});}catch(e){}
+  window.v4610Stable={scan,repair,cleanupUi,backup,pruneOrphans,stableMode};
+})();
+</script>
+
 </body>
 </html>
