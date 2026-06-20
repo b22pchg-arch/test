@@ -1,4 +1,4 @@
-Trắc nghiệm Excel Offline PWA V46.0
+Trắc nghiệm Excel Offline PWA V46.1
 
 Bản tối ưu hiệu năng: lưu cấu hình theo lô, render nền các bảng lớn, giảm ghi localStorage đồng bộ, thêm thẻ Hiệu năng / tối ưu tốc độ.
 
