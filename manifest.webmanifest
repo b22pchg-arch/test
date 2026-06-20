@@ -1,8 +1,8 @@
 {
-  "name": "Trắc nghiệm Excel Offline V46.1",
-  "short_name": "Quiz V46.1",
-  "description": "PWA trắc nghiệm Excel offline V46.1, tối ưu hiệu năng, lưu cấu hình theo lô, render nền, học nhanh và flash card.",
-  "start_url": "./index.html?v=V46.1",
+  "name": "Trắc nghiệm Excel Offline V46.6",
+  "short_name": "Quiz V46.6",
+  "description": "PWA trắc nghiệm Excel offline V46.6, học nhanh thông minh, sửa nút che phương án bị lặp và tăng tốc dữ liệu bằng chỉ mục câu hỏi.",
+  "start_url": "./index.html?v=46.6",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef7f6",
@@ -19,5 +19,5 @@
       "type": "image/png"
     }
   ],
-  "id": "trac-nghiem-excel-offline-v46-1"
+  "id": "trac-nghiem-excel-v46-6"
 }

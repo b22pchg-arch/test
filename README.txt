@@ -1,14 +1,18 @@
-Trắc nghiệm Excel Offline PWA V46.1
+Trắc nghiệm Excel Offline PWA V46.6
 
-Bản tối ưu hiệu năng: lưu cấu hình theo lô, render nền các bảng lớn, giảm ghi localStorage đồng bộ, thêm thẻ Hiệu năng / tối ưu tốc độ.
+Bản sửa nhanh sau V46.4: ổn định chức năng Học nhanh thông minh và sửa lỗi nút “Hiện phương án” bị lặp khi bật Che phương án.
 
-Bản V45.46 - Chu trình học nhanh / tự chọn phương pháp
+Điểm mới V46.6:
+- Mỗi câu chỉ còn 1 nút “Hiện phương án”.
+- Dọn các nút lặp phát sinh từ lớp Chu trình học nhanh V45.45 và Học nhanh thông minh V46.4.
+- Nút “Hiện phương án” mới mở đồng thời cả các lớp che cũ và mới, tránh bấm xong phương án vẫn ẩn.
+- Giữ nguyên Học nhanh thông minh V46.4, chỉ mục dữ liệu V46.3, ổn định lõi V46.2 và tiến trình nạp V46.1.
+- Service worker/cache đã đổi sang V46.6 để PWA nhận bản mới.
 
-Điểm mới:
-- Thêm mục 1f) Chu trình học nhanh / tự chọn phương pháp.
-- Có các chu trình mẫu: 5 phút quét nhanh, 15 phút nhớ nhanh, 30 phút thi thử, chu trình 7 ngày.
-- Người học có thể bật/tắt từng kỹ thuật: che phương án trước, ưu tiên câu nguy hiểm, flash card đảo chiều, tự đưa câu sai vào flash card, ghi lý do sai.
-- Có nút Ôn câu nguy hiểm ngay để lấy các câu yếu, câu ép đề, câu chọn nhiều, số liệu, trình tự, thẩm quyền.
-- Có flash card đảo chiều: hiện đáp án trước rồi lật lại câu hỏi/điều kiện cần nhớ.
-- Có xuất kế hoạch học nhanh dạng txt để chia sẻ hoặc in.
-- Giữ nền ổn định của V45.44: tiến độ đã sửa, ẩn/hiện thẻ, học nhanh/flash card câu yếu, quản lý ngân hàng và PWA cache.
+Gợi ý sử dụng:
+1. Sau khi cài PWA bản mới, dùng nút ép cập nhật hoặc xóa cache cũ nếu trình duyệt vẫn mở bản trước.
+2. Khi bật Che phương án, mỗi câu sẽ chỉ có một nút Hiện phương án.
+3. Nếu vừa nạp ngân hàng lớn, tiếp tục dùng mục Tăng tốc dữ liệu / chỉ mục câu hỏi để tạo lại chỉ mục.
+
+
+V46.6: bổ sung Flash card nâng cao: đảo chiều, khẩu quyết, lịch ôn lại, xuất/nhập JSON và xuất HTML thẻ.
